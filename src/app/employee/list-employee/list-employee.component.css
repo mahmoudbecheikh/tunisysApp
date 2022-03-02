@@ -1,6 +1,5 @@
 table, th, td {
     text-align: center;
-    text-transform: capitalize;
 
 }
 
@@ -12,4 +11,3 @@ table th{
 table tr:hover {
     background-color: #ddd;
 }
-

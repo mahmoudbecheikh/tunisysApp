@@ -1,12 +1,11 @@
-export class User {
+export class Employee {
     _id?: string;
-    displayName?: string;
+    fullName?: string;
     cin? : number ;
     email?: string;
     hashedPassword?: string;
     phone?: number;
     adresse?: string;
-    codeP?: number;
     role?: number;
 
 }
