@@ -1,0 +1,48 @@
+<div class="container contenu">
+    <h2 class="page-title">Ticket</h2>
+    <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
+    <br><br>
+    <table *ngIf="(tickets.length>0);else vide" class="table ">
+        <thead>
+            <tr class="home">
+                <th>ID</th>
+                <th>Sujet</th>
+                <th>Client</th>
+                <th>date</th>
+                <th>Description</th>
+                <th>Manuel</th>
+                <th>Date de modification</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let ticket of tickets">
+                <td>{{ticket._id }}</td>
+                <td>{{ ticket.subject }}</td>
+                <td>{{ ticket.clientFullName }}</td>
+                <td>{{ ticket.date }}</td>
+                <td> {{ ticket.description }}</td>
+                <td> {{ ticket.manual }}</td>
+                <td> {{ ticket.dateUpdated }}</td>
+                <td>
+                    <button class="action-btn" (click)="goToUpdate(ticket._id)">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    <button class="action-btn" (click)="onDelete(ticket._id)">
+                        <i class="material-icons">delete</i>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #vide>
+        <h3 class="text-center">Il n'y a pas de ticket.</h3>
+    </ng-template>
+
+
+</div>
+
+<app-sidebar></app-sidebar>

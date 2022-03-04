@@ -1,0 +1,13 @@
+table, th, td {
+    text-align: center;
+
+}
+
+table th{
+    background-color: #1A5276;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}

@@ -4,17 +4,25 @@ import { AdminComponent } from './admin/admin.component';
 import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 import { ListEmployeeComponent } from './employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
-import { AdminGuardGuard } from './guards/admin-guard.guard';
+import { ErrorComponent } from './error/error.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { AddTicketComponent } from './tickets/add-ticket/add-ticket.component';
+import { ListTicketComponent } from './tickets/list-ticket/list-ticket.component';
+import { UpdateTicketComponent } from './tickets/update-ticket/update-ticket.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
   {
     path: 'admin',
-    canActivate : [AdminGuardGuard],
+    canActivate: [AdminGuard],
     children: [
-      {path : '' , component : AdminComponent},
+      { path: '', component: AdminComponent },
       {
         path: 'employees',
         children: [
@@ -32,11 +40,33 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'tickets',
+        children: [
+          {
+            path: '',
+            component: ListTicketComponent,
+          },
+          {
+            path: 'add',
+            component: AddTicketComponent,
+          },
+          {
+            path: 'update/:id',
+            component: UpdateTicketComponent,
+          },
+        ],
+      },
     ],
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
   },
 ];
 

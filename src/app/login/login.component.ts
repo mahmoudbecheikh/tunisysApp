@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { MailService } from '../services/mail.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,12 @@ export class LoginComponent implements OnInit {
   ]);
   password: FormControl = new FormControl('', [Validators.required]);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private mailService : MailService) {}
 
   ngOnInit(): void {
     this.createForm();
+    this.readMails();
+
   }
 
   createForm() {
@@ -34,9 +37,16 @@ export class LoginComponent implements OnInit {
       if (res.token) 
       {
         localStorage.setItem('token', res.token)
-        if (this.authService.LoggedInAdmin())      
+        if (this.authService.LoggedIn())      
         this.router.navigate(['/admin']);
       }
     });
   }
+
+  readMails(){
+    this.mailService.readMails().subscribe(res=>{
+      console.log(res)
+    })
+  }
+
 }

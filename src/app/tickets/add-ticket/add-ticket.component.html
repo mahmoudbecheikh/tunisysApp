@@ -1,0 +1,55 @@
+<div class="container" style="margin-top: 50px;">
+    <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" formControlName="subject" placeholder="Subject *" class="col-md form-control"
+                        name="subject" id="subject">
+                        <small *ngIf=" subject.invalid && subject.touched && subject.dirty">Subject incorrect</small>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea type="text" formControlName="description" placeholder="description *" class="form-control" name="description"
+                            id="description"> </textarea>  
+                            <small *ngIf=" description.invalid && description.touched && description.dirty">Description incorrect</small>
+                    </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="clientFullName" placeholder="Nom complet *" class="form-control" name="clientFullName"
+                        id="clientFullName">
+                        <small *ngIf=" clientFullName.invalid && clientFullName.touched && clientFullName.dirty">Nom complet incorrect</small>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="email" formControlName="clientEmail" placeholder="Email *" class="form-control" name="clientEmail"
+                        id="email">
+                        <small *ngIf=" clientEmail.invalid && clientEmail.touched && clientEmail.dirty">Email incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="clientTel" placeholder="Tel *"  class="form-control" name="clientTel"
+                        id="clientTel">
+                        <small *ngIf=" clientTel.invalid && clientTel.touched && clientTel.dirty">Tel incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="manual" placeholder="Manual *" class="form-control"
+                        name="manual" id="manual">
+                        <small *ngIf=" manual.invalid && manual.touched && manual.dirty">Manual incorrect</small>
+                </div>
+
+                <div style="margin: 15px -120px;">
+                    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
+                    <div class="btn btn-dark" style="margin: 5px; width: 100px;" (click)="returnToList()" >Annuler</div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<app-sidebar></app-sidebar>

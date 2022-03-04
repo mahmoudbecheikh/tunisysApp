@@ -99,10 +99,6 @@ export class UpdateEmployeeComponent implements OnInit {
     this.empService.updateEmployee(this.employee?._id,this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/employees']);
     });
-    console.log(this.myForm.controls)
-    console.log(this.myForm.valid)
-
-
   }
 
 

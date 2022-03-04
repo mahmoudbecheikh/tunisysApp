@@ -24,17 +24,13 @@ export class AuthService {
     return this.http.get('http://localhost:3000/employees/' + id);
   }
 
-  LoggedInAdmin() {
+  LoggedIn() {
     let token: any = localStorage.getItem('token');
-    let decodeToken = this.helper.decodeToken(token);
 
     if (!token) {
       return false;
     }
 
-    if (decodeToken.role !== 0) {
-      return false;
-    }
     if (this.helper.isTokenExpired(token)) {
       return false;
     }

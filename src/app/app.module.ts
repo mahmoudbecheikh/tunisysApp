@@ -11,6 +11,11 @@ import { UpdateEmployeeComponent } from './employee/update-employee/update-emplo
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
+import { ErrorComponent } from './error/error.component';
+import { HeaderComponent } from './header/header.component';
+import { ListTicketComponent } from './tickets/list-ticket/list-ticket.component';
+import { AddTicketComponent } from './tickets/add-ticket/add-ticket.component';
+import { UpdateTicketComponent } from './tickets/update-ticket/update-ticket.component';
 
 
 @NgModule({
@@ -21,7 +26,12 @@ import { AdminComponent } from './admin/admin.component';
     UpdateEmployeeComponent,
     SidebarComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    ErrorComponent,
+    HeaderComponent,
+    ListTicketComponent,
+    AddTicketComponent,
+    UpdateTicketComponent
 
   ],
   imports: [
