@@ -22,7 +22,7 @@ export class EmployeeService {
   getById(id: any):Observable<Employee> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  updateEmployee(id : any,employee: Employee) {
+  updateEmployee(id : any,employee: Employee) :Observable<Employee>{
     return this.http.put(this.baseURL + `/${id}`, employee);
   }
 

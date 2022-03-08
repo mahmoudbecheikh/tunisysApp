@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
+import { AddDepartementComponent } from './departement/add-departement/add-departement.component';
+import { ListDepartementComponent } from './departement/list-departement/list-departement.component';
+import { UpdateDepartementComponent } from './departement/update-departement/update-departement.component';
 import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 import { ListEmployeeComponent } from './employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
@@ -37,6 +40,23 @@ const routes: Routes = [
           {
             path: 'update/:id',
             component: UpdateEmployeeComponent,
+          },
+        ],
+      },
+      {
+        path: 'departements',
+        children: [
+          {
+            path: '',
+            component: ListDepartementComponent,
+          },
+          {
+            path: 'add',
+            component: AddDepartementComponent,
+          },
+          {
+            path: 'update/:id',
+            component: UpdateDepartementComponent,
           },
         ],
       },

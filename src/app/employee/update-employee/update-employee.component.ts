@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employee } from 'src/models/employee';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 @Component({
   selector: 'app-update-employee',
@@ -15,6 +17,7 @@ export class UpdateEmployeeComponent implements OnInit {
   id? : any ;
   firstName? : String ; 
   lastName? : String ; 
+  helper = new JwtHelperService();
   myForm: FormGroup = new FormGroup({});
   first: FormControl = new FormControl('', [
     Validators.required,
@@ -97,6 +100,15 @@ export class UpdateEmployeeComponent implements OnInit {
 
   onSubmit() {
     this.empService.updateEmployee(this.employee?._id,this.myForm.value).subscribe((res) => {
+      console.log(res) ;
+      let token: any = localStorage.getItem('token');
+      let decodeToken = this.helper.decodeToken(token);
+      let id = decodeToken.id;
+      if(id==res?._id && res.role!=0){
+        localStorage.removeItem('token');
+        this.router.navigate(['/login'])
+      }
+      else
       this.router.navigate(['admin/employees']);
     });
   }

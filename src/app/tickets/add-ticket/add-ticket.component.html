@@ -35,10 +35,13 @@
                         id="clientTel">
                         <small *ngIf=" clientTel.invalid && clientTel.touched && clientTel.dirty">Tel incorrect</small>
                 </div>
+              
                 <div class="form-group">
-                    <input type="text" formControlName="manual" placeholder="Manual *" class="form-control"
-                        name="manual" id="manual">
-                        <small *ngIf=" manual.invalid && manual.touched && manual.dirty">Manual incorrect</small>
+                    <select class="form-control" formControlName="departement">
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.title}}</option>
+                    </select>
+                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
                 </div>
 
                 <div style="margin: 15px -120px;">

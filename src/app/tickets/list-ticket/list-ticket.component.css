@@ -11,3 +11,20 @@ table th{
 table tr:hover {
     background-color: #ddd;
 }
+
+i {
+    margin: 5px;
+    font-weight: bold;
+}
+
+.lni-pencil {
+    color: #4BCA81;
+    font-size: 20px;
+}
+
+
+.lni-trash-can {
+    color: #e71d34;
+    font-size: 20px;
+}
+

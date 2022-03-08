@@ -1,0 +1,32 @@
+<div class="container contenu">
+    <h2 class="page-title">Departements</h2>
+    <div class="btn btn-dark" (click)="toAdd()">Créer un departement </div>
+    <br><br>
+    <table *ngIf="(departements.length>0);else vide" class="table ">
+        <thead>
+            <tr class="home">
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let departement of departements">
+                <td>{{departement._id }}</td>
+                <td>{{ departement.title }}</td>
+                <td>
+                    <i class="lni lni-pencil" (click)="goToUpdate(departement._id)"></i>
+                    <i class="lni lni-trash-can" (click)="onDelete(departement._id)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #vide>
+        <h3 class="text-center">Il n'y a pas d'utilisateurs.</h3>
+    </ng-template>
+
+
+</div>
+
+<app-sidebar></app-sidebar>

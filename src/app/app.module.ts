@@ -16,6 +16,9 @@ import { HeaderComponent } from './header/header.component';
 import { ListTicketComponent } from './tickets/list-ticket/list-ticket.component';
 import { AddTicketComponent } from './tickets/add-ticket/add-ticket.component';
 import { UpdateTicketComponent } from './tickets/update-ticket/update-ticket.component';
+import { AddDepartementComponent } from './departement/add-departement/add-departement.component';
+import { ListDepartementComponent } from './departement/list-departement/list-departement.component';
+import { UpdateDepartementComponent } from './departement/update-departement/update-departement.component';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { UpdateTicketComponent } from './tickets/update-ticket/update-ticket.com
     HeaderComponent,
     ListTicketComponent,
     AddTicketComponent,
-    UpdateTicketComponent
+    UpdateTicketComponent,
+    AddDepartementComponent,
+    ListDepartementComponent,
+    UpdateDepartementComponent
 
   ],
   imports: [

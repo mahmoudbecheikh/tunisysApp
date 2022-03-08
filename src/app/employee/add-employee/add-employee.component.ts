@@ -34,8 +34,9 @@ export class AddEmployeeComponent implements OnInit {
     Validators.minLength(8),
     Validators.maxLength(8),
     Validators.pattern("^[01][0-9]*$"),
-
   ],asyncValidators :[this.validatorCin()], updateOn: 'blur'});
+
+  
   email: FormControl = new FormControl('',{validators : [
     Validators.required,
     Validators.email,

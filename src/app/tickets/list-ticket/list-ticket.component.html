@@ -26,13 +26,8 @@
                 <td> {{ ticket.manual }}</td>
                 <td> {{ ticket.dateUpdated }}</td>
                 <td>
-                    <button class="action-btn" (click)="goToUpdate(ticket._id)">
-                        <i class="material-icons">edit</i>
-                    </button>
-                    <button class="action-btn" (click)="onDelete(ticket._id)">
-                        <i class="material-icons">delete</i>
-                    </button>
-
+                    <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
+                    <i class="lni lni-trash-can" (click)="onDelete(ticket._id)"></i>
                 </td>
             </tr>
         </tbody>

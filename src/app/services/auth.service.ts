@@ -20,7 +20,6 @@ export class AuthService {
     let token: any = localStorage.getItem('token');
     let decodeToken = this.helper.decodeToken(token);
     let id = decodeToken.id;
-
     return this.http.get('http://localhost:3000/employees/' + id);
   }
 

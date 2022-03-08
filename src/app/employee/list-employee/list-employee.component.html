@@ -24,12 +24,8 @@
                 <td> {{ employee.adresse }}</td>
                 <td> {{ employee.role }}</td>
                 <td>
-                    <button class="action-btn" (click)="goToUpdate(employee._id)">
-                        <i class="material-icons">edit</i>
-                    </button>
-                    <button class="action-btn" (click)="onDelete(employee._id)">
-                        <i class="material-icons">delete</i>
-                    </button>
+                    <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i> 
+                    <i class="lni lni-trash-can" (click)="onDelete(employee._id)"></i>
 
                 </td>
             </tr>
