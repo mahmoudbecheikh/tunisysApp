@@ -16,24 +16,30 @@ export class AuthService {
     return this.http.post('http://localhost:3000/login', data);
   }
 
-  getAdmin(): Observable<Employee> {
+  getAuth(): Observable<Employee> {
     let token: any = localStorage.getItem('token');
     let decodeToken = this.helper.decodeToken(token);
     let id = decodeToken.id;
     return this.http.get('http://localhost:3000/employees/' + id);
   }
 
+
+  getRole(): number {
+    let token: any = localStorage.getItem('token');
+    let decodeToken = this.helper.decodeToken(token);
+    let role = decodeToken.role;
+    return role ;
+  }
+
+
   LoggedIn() {
     let token: any = localStorage.getItem('token');
-
     if (!token) {
       return false;
     }
-
     if (this.helper.isTokenExpired(token)) {
       return false;
     }
-
     return true;
   }
 }

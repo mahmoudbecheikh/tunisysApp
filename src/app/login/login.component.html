@@ -1,12 +1,3 @@
-<!-- <form [formGroup]="myForm" (ngSubmit)="onLogin()">
-    <input type="email" formControlName="email" placeholder="Email *" class="form-control" name="email" id="email">
-    <small *ngIf=" email.invalid && email.touched && email.dirty">Email incorrect</small>
-
-    <input type="password" formControlName="password" placeholder="Mot de passe *" class="form-control" name="password"
-        id="password">
-    <small *ngIf=" password.invalid && password.touched && password.dirty">Mot de passe incorrect</small>
-    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
-</form> -->
 
 <div class="main">
     <img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" width="200px" height="200px" style="margin:0px">
@@ -24,8 +15,10 @@
                     id="password">
             </span>
             <button [disabled]="myForm.invalid" type="submit">Se connecter</button>
+
             <a href="#">Mot de passe oublié</a>
         </form>
+        <small *ngIf="error==true">Votre email ou votre mot de passe est incorrect </small>
 
     </div>
 </div>

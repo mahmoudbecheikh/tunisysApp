@@ -1,0 +1,58 @@
+<div class="container" style="margin-top: 50px;">
+    <h3 style="text-align: center;margin-bottom: 50px;">Créer un produit</h3>
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" formControlName="ref" placeholder="ref *" class="col-md form-control" name="ref"
+                        id="ref">
+                    <small *ngIf=" ref.invalid && ref.touched && ref.dirty">ref incorrect</small>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="title" placeholder="Title *" class="form-control" name="title"
+                        id="title">
+                    <small *ngIf=" title.invalid && title.touched && title.dirty">Titre incorrect</small>
+                </div>
+
+                <div class="form-group">
+                    <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                        name="description" id="description"> </textarea>
+                    <small *ngIf=" description.invalid && description.touched && description.dirty">Description
+                        incorrect</small>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" formControlName="quantity" placeholder="quantity *" class="form-control"
+                        name="quantity" id="quantity">
+                    <small *ngIf=" quantity.invalid && quantity.touched && quantity.dirty">Tel incorrect</small>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control" formControlName="subCategory">
+                        <option value="" disabled hidden selected>Sélectionnez une sous categorie</option>
+                        <option *ngFor="let subc of subcategories" value="{{subc._id}}">{{subc.title}}</option>
+                    </select>
+                    <small *ngIf=" subCategory.invalid && subCategory.touched && subCategory.dirty">Sous Categorie
+                        incorrect</small>
+                </div>
+
+                <div style="margin: 15px -120px;">
+                    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid"
+                        value="Ajouter" type="submit" />
+                    <div class="btn btn-dark" style="margin: 5px; width: 100px;" (click)="returnToList()">Annuler</div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<app-sidebar></app-sidebar>

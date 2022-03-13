@@ -1,0 +1,38 @@
+<div class="container" style="margin-top: 50px;">
+    <h3 style="text-align: center;margin-bottom: 50px;">Modifier un ticket</h3>
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" formControlName="title" placeholder="title *" class="col-md form-control"
+                        name="title" id="title">
+                    <small *ngIf=" title.invalid && title.touched && title.dirty">Sous categorie incorrect</small>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+               
+                <div class="form-group">
+                    <select class="form-control" formControlName="category">
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let cat of categories" [selected]="subcategory?.category=='{{cat._id}}'" value="{{cat._id}}">{{cat.title}}</option>
+                    </select>
+
+                    <small *ngIf=" category.invalid && category.touched && category.dirty">Rôle incorrect</small>
+                </div>
+
+                <div style="margin: 15px -120px;">
+                    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid"
+                        value="Ajouter" type="submit" />
+                    <div class="btn btn-dark" style="margin: 5px; width: 100px;" (click)="returnToList()">Annuler</div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<app-sidebar></app-sidebar>

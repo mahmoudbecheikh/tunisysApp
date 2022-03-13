@@ -7,6 +7,5 @@ export class Employee {
     phone?: number;
     adresse?: string;
     role?: number;
-
 }
 

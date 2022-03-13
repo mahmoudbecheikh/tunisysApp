@@ -17,8 +17,12 @@ export class LoginComponent implements OnInit {
     Validators.pattern('.*com$'),
   ]);
   password: FormControl = new FormControl('', [Validators.required]);
-
-  constructor(private authService: AuthService, private router: Router,private mailService : MailService) {}
+  error = false ;
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private mailService: MailService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -33,19 +37,22 @@ export class LoginComponent implements OnInit {
   }
   onLogin() {
     this.authService.login(this.myForm.value).subscribe((res) => {
-      if (res.token) 
-      {
-        localStorage.setItem('token', res.token)
-        if (this.authService.LoggedIn())      
-        this.router.navigate(['/admin']);
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        let role = this.authService.getRole();
+        if (role == 0) this.router.navigate(['/admin']);
+        if (role == 2) this.router.navigate(['/stock']);
+      }
+      else{
+        this.password.setValue('');
+        this.error = true
       }
     });
   }
 
-  readMails(){
-    this.mailService.readMails().subscribe(res=>{
-      console.log(res)
-    })
+  readMails() {
+    this.mailService.readMails().subscribe((res) => {
+      console.log(res);
+    });
   }
-
 }

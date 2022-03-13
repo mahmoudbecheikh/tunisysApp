@@ -1,0 +1,32 @@
+<div class="container contenu">
+    <h2 class="page-title">Cateogorie</h2>
+    <div class="btn btn-dark" (click)="toAdd()">Créer une cateogorie </div>
+    <br><br>
+    <table *ngIf="(categories.length>0);else vide" class="table ">
+        <thead>
+            <tr class="home">
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of categories">
+                <td>{{category._id }}</td>
+                <td>{{ category.title }}</td>
+                <td>
+                    <i class="lni lni-pencil" (click)="goToUpdate(category._id)"></i>
+                    <i class="lni lni-trash-can" (click)="onDelete(category._id)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #vide>
+        <h3 class="text-center">Il n'y a pas de categorie.</h3>
+    </ng-template>
+
+
+</div>
+
+<app-sidebar></app-sidebar>

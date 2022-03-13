@@ -1,19 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { AddDepartementComponent } from './departement/add-departement/add-departement.component';
-import { ListDepartementComponent } from './departement/list-departement/list-departement.component';
-import { UpdateDepartementComponent } from './departement/update-departement/update-departement.component';
-import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
-import { ListEmployeeComponent } from './employee/list-employee/list-employee.component';
-import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
+import { DashbordComponent } from './admin/dashbord/dashbord.component';
+import { AddDepartementComponent } from './admin/departement/add-departement/add-departement.component';
+import { ListDepartementComponent } from './admin/departement/list-departement/list-departement.component';
+import { UpdateDepartementComponent } from './admin/departement/update-departement/update-departement.component';
+import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
+import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
+import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
+import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
+import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
+import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
 import { ErrorComponent } from './error/error.component';
+import { AddCategoryComponent } from './gstock/category/add-category/add-category.component';
+import { ListCategoryComponent } from './gstock/category/list-category/list-category.component';
+import { UpdateCategoryComponent } from './gstock/category/update-category/update-category.component';
+import { DashbordStockComponent } from './gstock/dashbord-stock/dashbord-stock.component';
+import { AddProductComponent } from './gstock/product/add-product/add-product.component';
+import { ListProductComponent } from './gstock/product/list-product/list-product.component';
+import { UpdateProductComponent } from './gstock/product/update-product/update-product.component';
+import { AddSubcategoryComponent } from './gstock/subcategory/add-subcategory/add-subcategory.component';
+import { ListSubcategoryComponent } from './gstock/subcategory/list-subcategory/list-subcategory.component';
+import { UpdateSubcategoryComponent } from './gstock/subcategory/update-subcategory/update-subcategory.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { StockGuard } from './guards/stock.guard';
 import { LoginComponent } from './login/login.component';
-import { AddTicketComponent } from './tickets/add-ticket/add-ticket.component';
-import { ListTicketComponent } from './tickets/list-ticket/list-ticket.component';
-import { UpdateTicketComponent } from './tickets/update-ticket/update-ticket.component';
+
 
 const routes: Routes = [
   {
@@ -25,7 +37,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [AdminGuard],
     children: [
-      { path: '', component: AdminComponent },
+      { path: '',component:DashbordComponent },
       {
         path: 'employees',
         children: [
@@ -79,6 +91,69 @@ const routes: Routes = [
       },
     ],
   },
+
+
+
+  {
+    path: 'stock',
+    canActivate: [StockGuard],
+    children: [
+      { path: '',component:DashbordStockComponent },
+      {
+        path: 'categories',
+        children: [
+          {
+            path: '',
+            component : ListCategoryComponent
+          },
+          {
+            path: 'add',
+            component: AddCategoryComponent,
+          },
+          {
+            path: 'update/:id',
+            component: UpdateCategoryComponent,
+          },
+        ],
+      },
+      {
+        path: 'subcategories',
+        children: [
+          {
+            path: '',
+            component:ListSubcategoryComponent ,
+          },
+          {
+            path: 'add',
+            component: AddSubcategoryComponent,
+          },
+          {
+            path: 'update/:id',
+            component: UpdateSubcategoryComponent,
+          },
+        ],
+      },
+      {
+        path: 'products',
+        children: [
+          {
+            path: '',
+            component: ListProductComponent,
+          },
+          {
+            path: 'add',
+            component: AddProductComponent,
+          },
+          {
+            path: 'update/:id',
+            component: UpdateProductComponent,
+          },
+        ],
+      },
+    ],
+  },
+
+
   {
     path: 'login',
     component: LoginComponent,

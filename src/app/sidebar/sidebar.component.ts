@@ -10,14 +10,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class SidebarComponent implements OnInit {
 
-  admin? : Employee
+  employee? : Employee
   isLoggedIn = false ;
   constructor(private authService : AuthService, private router : Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.LoggedIn();
     if(this.isLoggedIn==true)
-    this.getAdmin()
+    this.getAuth()
   }
 
   logout () { 
@@ -25,9 +25,9 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
-  getAdmin(){
-    this.authService.getAdmin().subscribe(res=>{
-      this.admin = res; 
+  getAuth(){
+    this.authService.getAuth().subscribe(res=>{
+      this.employee = res; 
     })
   }
 
