@@ -9,6 +9,7 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Quantité</th>
+                <th>Sous catégorie</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -19,7 +20,7 @@
                 <td>{{ product.title }}</td>
                 <td>{{ product.description}}</td>
                 <td>{{ product.quantity }}</td>
-                <td> {{ product.description }}</td>
+                <td> {{ product.subCategory?.title }}</td>
                 <td>
                     <i class="lni lni-pencil" (click)="goToUpdate(product._id)"></i>
                     <i class="lni lni-trash-can" (click)="onDelete(product._id)"></i>

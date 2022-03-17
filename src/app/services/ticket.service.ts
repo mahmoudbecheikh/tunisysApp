@@ -27,6 +27,14 @@ export class TicketService {
     return this.http.put(this.baseURL + `/${id}`, ticket);
   }
 
+  confirmerTicket(id: any):Observable<Ticket> {
+    return this.http.get(this.baseURL + `/confirmation/${id}`);
+  }
+
+  listTicketEmploye(id: any):Observable<any> {
+    return this.http.get(this.baseURL + `/employee/${id}`);
+  }
+
   deleteTicket(_id: string) {
     return this.http.delete(this.baseURL + `/${_id}`);
   }

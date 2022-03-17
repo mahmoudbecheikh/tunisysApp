@@ -5,15 +5,13 @@
     <table *ngIf="(categories.length>0);else vide" class="table ">
         <thead>
             <tr class="home">
-                <th>ID</th>
                 <th>Titre</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let category of categories">
-                <td>{{category._id }}</td>
-                <td>{{ category.title }}</td>
+                <td>{{ category.title }} 
                 <td>
                     <i class="lni lni-pencil" (click)="goToUpdate(category._id)"></i>
                     <i class="lni lni-trash-can" (click)="onDelete(category._id)"></i>

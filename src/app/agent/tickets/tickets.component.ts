@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Ticket } from 'src/models/ticket';
 
 @Component({
-  selector: 'app-list-ticket',
-  templateUrl: './list-ticket.component.html',
-  styleUrls: ['./list-ticket.component.css']
+  selector: 'app-tickets',
+  templateUrl: './tickets.component.html',
+  styleUrls: ['./tickets.component.css']
 })
-export class ListTicketComponent implements OnInit {
+export class TicketsComponent implements OnInit {
 
   tickets: Ticket[] = [];
 
-  constructor(private ticketService: TicketService, private router: Router) { }
+  constructor(private ticketService: TicketService,private authService : AuthService,private router: Router) { }
 
   ngOnInit(): void {
     this.getListTicket()
@@ -20,16 +21,20 @@ export class ListTicketComponent implements OnInit {
   }
 
   getListTicket() {
-    this.ticketService.listTicket().subscribe((res) => {
-      console.log('ena'+ res)
-      this.tickets = res as Ticket[];
-    });
+
+    this.authService.getAuth().subscribe(res=>{
+      this.ticketService.listTicketEmploye(res._id).subscribe((res) => {
+        this.tickets = res as Ticket[];
+      });
+    })
+
+
   }
   toAdd() {
     this.router.navigate(['admin/tickets/add']);
   }
 
-  goToUpdate(id: any) {
+  toMore(id: any) {
     const link = ['admin/tickets/update/', id];
     this.router.navigate(link);
   }

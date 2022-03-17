@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     Validators.pattern('.*com$'),
   ]);
   password: FormControl = new FormControl('', [Validators.required]);
-  error = false ;
+  error = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -40,12 +40,20 @@ export class LoginComponent implements OnInit {
       if (res.token) {
         localStorage.setItem('token', res.token);
         let role = this.authService.getRole();
-        if (role == 0) this.router.navigate(['/admin']);
-        if (role == 2) this.router.navigate(['/stock']);
-      }
-      else{
+        switch (role) {
+          case 0:
+            this.router.navigate(['/admin']);
+            break;
+          case 1:
+            this.router.navigate(['/agent']);
+            break;
+          case 2:
+            this.router.navigate(['/stock']);
+            break;
+        }
+      } else {
         this.password.setValue('');
-        this.error = true
+        this.error = true;
       }
     });
   }

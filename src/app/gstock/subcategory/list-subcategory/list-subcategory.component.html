@@ -5,15 +5,15 @@
     <table *ngIf="(subcategories.length>0);else vide" class="table ">
         <thead>
             <tr class="home">
-                <th>ID</th>
                 <th>Titre</th>
+                <th>Catégorie</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let subcategory of subcategories">
-                <td>{{subcategory._id }}</td>
                 <td>{{ subcategory.title }}</td>
+                <td>{{ subcategory.category?.title }}</td>
                 <td>
                     <i class="lni lni-pencil" (click)="goToUpdate(subcategory._id)"></i>
                     <i class="lni lni-trash-can" (click)="onDelete(subcategory._id)"></i>

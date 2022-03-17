@@ -1,0 +1,47 @@
+#subc {
+  width: 40%;
+}
+
+
+mat-form-field input {
+  height: 25px;
+}
+
+mat-form-field {
+  width: 55%;
+  margin-top: -10px;
+}
+
+mat-form-field mat-label {
+  text-align: center;
+}
+
+form .form-control:focus{
+    border-color : #495057;
+    box-shadow: none;
+  }
+
+optgroup label{
+  font-weight: normal;
+}
+
+mat-focused .maft-orm-field-label {
+  color: #495057 !important;
+ }
+
+ .mat-form-field-label{
+  color: #495057 !important;
+ }
+
+ mat-form-field input {
+   color: #495057 !important;
+ }
+
+ .mat-form-field-underline {
+  background-color: #495057 !important;
+} 
+
+.mat-form-field-ripple {
+ background-color: #495057 !important;;
+}
+

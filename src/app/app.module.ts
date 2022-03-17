@@ -19,6 +19,8 @@ import { ListDepartementComponent } from './admin/departement/list-departement/l
 import { UpdateDepartementComponent } from './admin/departement/update-departement/update-departement.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
 
+
+
 import { DashbordStockComponent } from './gstock/dashbord-stock/dashbord-stock.component';
 import { AddProductComponent } from './gstock/product/add-product/add-product.component';
 import { ListProductComponent } from './gstock/product/list-product/list-product.component';
@@ -29,6 +31,12 @@ import { UpdateCategoryComponent } from './gstock/category/update-category/updat
 import { UpdateSubcategoryComponent } from './gstock/subcategory/update-subcategory/update-subcategory.component';
 import { AddSubcategoryComponent } from './gstock/subcategory/add-subcategory/add-subcategory.component';
 import { ListSubcategoryComponent } from './gstock/subcategory/list-subcategory/list-subcategory.component';
+import { TicketsComponent } from './agent/tickets/tickets.component';
+import { EmrpuntsComponent } from './agent/emrpunts/emrpunts.component';
+import { ListEmpruntComponent } from './gstock/emprunts/list-emprunt/list-emprunt.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -57,14 +65,21 @@ import { ListSubcategoryComponent } from './gstock/subcategory/list-subcategory/
     UpdateCategoryComponent,
     UpdateSubcategoryComponent,
     AddSubcategoryComponent,
-    ListSubcategoryComponent
+    ListSubcategoryComponent,
+    TicketsComponent,
+    EmrpuntsComponent,
+    ListEmpruntComponent,
+    
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule
     
   ],
   providers: [],
