@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Employee } from 'src/models/employee';
+import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class SidebarComponent implements OnInit {
 
-  employee? : Employee
+  employee? : Employe
   isLoggedIn = false ;
   constructor(private authService : AuthService, private router : Router) { }
 

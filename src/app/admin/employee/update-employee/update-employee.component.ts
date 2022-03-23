@@ -3,7 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationEr
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { Employee } from 'src/models/employee';
+import { Employe } from 'src/models/employe';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 
@@ -13,18 +13,18 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./update-employee.component.css'],
 })
 export class UpdateEmployeeComponent implements OnInit {
-  employee?: Employee;
+  employe?: Employe;
   id? : any ;
-  firstName? : String ; 
-  lastName? : String ; 
+  prenomEmp? : String ; 
+  nomEmp? : String ; 
   helper = new JwtHelperService();
   myForm: FormGroup = new FormGroup({});
-  first: FormControl = new FormControl('', [
+  prenom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  last: FormControl = new FormControl('', [
+  nom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
@@ -41,11 +41,11 @@ export class UpdateEmployeeComponent implements OnInit {
     Validators.required,
     Validators.email
   ],asyncValidators :[this.validatorEmail()], updateOn: 'blur'});
-  password: FormControl = new FormControl('', [
+  mdp: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(4),
   ]);
-  phone: FormControl = new FormControl('', [
+  tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
@@ -67,38 +67,38 @@ export class UpdateEmployeeComponent implements OnInit {
     this.createForm();
 
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.empService.getById(this.id).subscribe(emp=>{
-      this.employee = emp ;
-      this.firstName  = emp.fullName?.split(" ")[0] ;
-      this.lastName  = emp.fullName?.split(" ")[1] ;
-      this.first.setValue(this.firstName)
-      this.last.setValue(this.lastName)
-      this.cin.setValue(this.employee?.cin)
-      this.email.setValue(this.employee?.email)
-      this.role.setValue(this.employee?.role)
-      this.adresse.setValue(this.employee?.adresse)
-      this.phone.setValue(this.employee?.phone)
+    this.empService.afficherId(this.id).subscribe(emp=>{
+      this.employe = emp ;
+      this.prenomEmp  = emp.nomEmp?.split(" ")[0] ;
+      this.nomEmp = emp.nomEmp?.split(" ")[1] ;
+      this.prenom.setValue(this.prenomEmp)
+      this.nom.setValue(this.nomEmp)
+      this.cin.setValue(this.employe?.cin)
+      this.email.setValue(this.employe?.email)
+      this.role.setValue(this.employe?.role)
+      this.adresse.setValue(this.employe?.adresse)
+      this.tel.setValue(this.employe?.tel)
 
     });
   }
 
   createForm() {
     this.myForm = new FormGroup({
-      first: this.first,
-      last: this.last,
+      prenom: this.prenom,
+      nom: this.nom,
       cin: this.cin,
       email: this.email,
-      password: this.password,
+      mdp: this.mdp,
       adresse: this.adresse,
-      phone: this.phone,
+      tel: this.tel,
       role: this.role,
     });
   }
 
 
 
-  onSubmit() {
-    this.empService.updateEmployee(this.employee?._id,this.myForm.value).subscribe((res) => {
+  modifier() {
+    this.empService.modifier(this.employe?._id,this.myForm.value).subscribe((res) => {
       console.log(res) ;
       let token: any = localStorage.getItem('token');
       let decodeToken = this.helper.decodeToken(token);
@@ -114,19 +114,19 @@ export class UpdateEmployeeComponent implements OnInit {
 
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.getByCin(control.value).pipe(
+      return this.empService.afficherCin(control.value).pipe(
         map((res) => {
-          return (res.length>=1 && this.employee?.cin!=control.value) ? {cinExist : true} : null;
+          return (res && this.employe?.cin!=control.value) ? {cinExist : true} : null;
         })
       );
     };
   }
   validatorEmail(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.getByEmail(control.value).pipe(
+      return this.empService.afficherCin(control.value).pipe(
         map((res) => {
           if(!res) return null ;
-          return (res.length>=1 && this.employee?.email!=control.value) ? {emailExist : true} : null;
+          return (res && this.employe?.email!=control.value) ? {emailExist : true} : null;
         })
       );
     };

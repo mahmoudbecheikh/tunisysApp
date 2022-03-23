@@ -20,9 +20,9 @@ import { Departement } from 'src/models/departement';
 export class UpdateDepartementComponent implements OnInit {
   departement? : Departement ; 
   myForm: FormGroup = new FormGroup({});
-  title: FormControl = new FormControl('', {
+  nom: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.minLength(3)],
-    asyncValidators: [this.validatorTitle()],
+    asyncValidators: [this.validatornom()],
     updateOn: 'blur',
   });
   constructor(
@@ -33,29 +33,29 @@ export class UpdateDepartementComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
-      title: this.title,
+      nom: this.nom,
     });
     let id = this.activatedRoute.snapshot.params['id'];
-    this.depService.getById(id).subscribe(res=>{
+    this.depService.afficherId(id).subscribe(res=>{
       this.departement=res ;
-      this.title.setValue(this.departement?.title);
+      this.nom.setValue(this.departement?.nom);
     })
 
   }
 
-  onSubmit() {
-    this.depService.updateDepartement(this.departement?._id, this.myForm.value).subscribe((res) => {
+  modifier() {
+    this.depService.modifier(this.departement?._id, this.myForm.value).subscribe((res) => {
       
         this.router.navigate(['admin/departements']);
       });
   }
 
 
-  validatorTitle(): AsyncValidatorFn {
+  validatornom(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.depService.getByTitle(control.value).pipe(
+      return this.depService.afficherNom(control.value).pipe(
         map((res) => {
-          return res.length >= 1 && this.departement?.title != control.value
+          return res && this.departement?.nom != control.value
             ? { cinExist: true }
             : null;
         })

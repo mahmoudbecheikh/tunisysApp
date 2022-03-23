@@ -18,30 +18,30 @@ import { DepartementService } from 'src/app/services/departement.service';
 })
 export class AddDepartementComponent implements OnInit {
   myForm: FormGroup = new FormGroup({});
-  title: FormControl = new FormControl('', {
+  nom: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.minLength(3)],
-    asyncValidators: [this.validatorTitle()],
+    asyncValidators: [this.validatornom()],
     updateOn: 'blur',
   });
   constructor(private depService: DepartementService, private router: Router) {}
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
-      title: this.title,
+      nom: this.nom,
     });
   }
-  onSubmit() {
-    this.depService.addDepartement(this.myForm.value).subscribe((res) => {
+  ajouter() {
+    this.depService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/departements']);
     });
   }
 
-  validatorTitle(): AsyncValidatorFn {
+  validatornom(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.depService.getByTitle(control.value).pipe(
+      return this.depService.afficherNom(control.value).pipe(
         map((res) => {
           if (!res) return null;
-          return res.length > 0 ? { titleExist: true } : null;
+          return res ? { nomExist: true } : null;
         })
       );
     };

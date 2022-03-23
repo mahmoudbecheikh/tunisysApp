@@ -4,39 +4,36 @@ import { Observable } from 'rxjs';
 import { Ticket } from 'src/models/ticket';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TicketService {
-
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   readonly baseURL = 'http://localhost:3000/tickets';
 
-
-  addTicket(ticket: Ticket) : Observable<any> {
+  ajouter(ticket: Ticket): Observable<any> {
     return this.http.post(this.baseURL, ticket);
   }
 
-  listTicket() {
+  afficherListe() {
     return this.http.get(this.baseURL);
   }
-  getById(id: any):Observable<Ticket> {
+  afficherId(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  updateTicket(id : any,ticket: Ticket) {
+  modifier(id: any, ticket: Ticket) {
     return this.http.put(this.baseURL + `/${id}`, ticket);
   }
 
-  confirmerTicket(id: any):Observable<Ticket> {
+  confirmer(id: any): Observable<any> {
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
 
-  listTicketEmploye(id: any):Observable<any> {
-    return this.http.get(this.baseURL + `/employee/${id}`);
+  afficherEmploye(idEmp: any): Observable<any> {
+    return this.http.get(this.baseURL + `/employee/${idEmp}`);
   }
 
-  deleteTicket(_id: string) {
+  supprimer(_id: string) {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
-
 }

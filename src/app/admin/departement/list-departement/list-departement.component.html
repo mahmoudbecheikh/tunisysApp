@@ -13,10 +13,10 @@
         <tbody>
             <tr *ngFor="let departement of departements">
                 <td>{{departement._id }}</td>
-                <td>{{ departement.title }}</td>
+                <td>{{ departement.nom }}</td>
                 <td>
                     <i class="lni lni-pencil" (click)="goToUpdate(departement._id)"></i>
-                    <i class="lni lni-trash-can" (click)="onDelete(departement._id)"></i>
+                    <i class="lni lni-trash-can" (click)="supprimer(departement._id)"></i>
                 </td>
             </tr>
         </tbody>

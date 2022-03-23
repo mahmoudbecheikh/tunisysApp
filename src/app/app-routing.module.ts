@@ -10,24 +10,12 @@ import { UpdateEmployeeComponent } from './admin/employee/update-employee/update
 import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
-import { EmrpuntsComponent } from './agent/emrpunts/emrpunts.component';
-import { TicketsComponent } from './agent/tickets/tickets.component';
+import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
+import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { ErrorComponent } from './error/error.component';
-import { AddCategoryComponent } from './gstock/category/add-category/add-category.component';
-import { ListCategoryComponent } from './gstock/category/list-category/list-category.component';
-import { UpdateCategoryComponent } from './gstock/category/update-category/update-category.component';
-import { DashbordStockComponent } from './gstock/dashbord-stock/dashbord-stock.component';
-import { ListEmpruntComponent } from './gstock/emprunts/list-emprunt/list-emprunt.component';
-import { AddProductComponent } from './gstock/product/add-product/add-product.component';
-import { ListProductComponent } from './gstock/product/list-product/list-product.component';
-import { UpdateProductComponent } from './gstock/product/update-product/update-product.component';
-import { AddSubcategoryComponent } from './gstock/subcategory/add-subcategory/add-subcategory.component';
-import { ListSubcategoryComponent } from './gstock/subcategory/list-subcategory/list-subcategory.component';
-import { UpdateSubcategoryComponent } from './gstock/subcategory/update-subcategory/update-subcategory.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { StockGuard } from './guards/stock.guard';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
@@ -107,79 +95,11 @@ const routes: Routes = [
             path: '',
             component: TicketsComponent,
           },
-        ],
-      },
-      {
-        path: 'emprunts',
-        children: [
           {
-            path: '',
-            component: EmrpuntsComponent,
-          }
-        ],
-      },
-    ],
-  },
-
-  {
-    path: 'stock',
-    canActivate: [StockGuard],
-    children: [
-      { path: '', component: DashbordStockComponent },
-      {
-        path: 'categories',
-        children: [
-          {
-            path: '',
-            component: ListCategoryComponent,
-          },
-          {
-            path: 'add',
-            component: AddCategoryComponent,
-          },
-          {
-            path: 'update/:id',
-            component: UpdateCategoryComponent,
+            path: ':id',
+            component: DetailTicketComponent,
           },
         ],
-      },
-      {
-        path: 'subcategories',
-        children: [
-          {
-            path: '',
-            component: ListSubcategoryComponent,
-          },
-          {
-            path: 'add',
-            component: AddSubcategoryComponent,
-          },
-          {
-            path: 'update/:id',
-            component: UpdateSubcategoryComponent,
-          },
-        ],
-      },
-      {
-        path: 'products',
-        children: [
-          {
-            path: '',
-            component: ListProductComponent,
-          },
-          {
-            path: 'add',
-            component: AddProductComponent,
-          },
-          {
-            path: 'update/:id',
-            component: UpdateProductComponent,
-          },
-        ],
-      },
-      {
-        path : 'emprunts' , 
-        component : ListEmpruntComponent
       }
     ],
   },

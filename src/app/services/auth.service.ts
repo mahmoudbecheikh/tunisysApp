@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Employee } from 'src/models/employee';
+import { Employe } from 'src/models/employe';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class AuthService {
     return this.http.post('http://localhost:3000/login', data);
   }
 
-  getAuth(): Observable<Employee> {
+  getAuth(): Observable<Employe> {
     let token: any = localStorage.getItem('token');
     let decodeToken = this.helper.decodeToken(token);
     let id = decodeToken.id;

@@ -11,7 +11,7 @@ export class CustomValidator {
 
 validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.getByCin(control.value).pipe(
+      return this.empService.afficherCin(control.value).pipe(
         map((res) => {
           if (!res) return null;
           console.log(res);

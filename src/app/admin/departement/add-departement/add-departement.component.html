@@ -1,13 +1,13 @@
 <div class="container" style="margin-top: 50px;">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un departement</h3>
 
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myForm" (ngSubmit)="ajouter()">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" formControlName="title" placeholder="Titre *" class="col-md form-control"
-                        name="title" id="title">
-                        <small *ngIf=" title.invalid && title.touched && title.dirty">Titre incorrect</small>
+                    <input type="text" formControlName="nom" placeholder="Titre *" class="col-md form-control"
+                        name="nom" id="nom">
+                        <small *ngIf=" nom.invalid && nom.touched && nom.dirty">Titre incorrect</small>
                     </div>
                     <div style="margin: 15px -120px;">
                         <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>

@@ -1,7 +1,7 @@
 <div class="container" style="margin-top: 50px;">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
 
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myForm" (ngSubmit)="ajouter()">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <select class="form-control" formControlName="departement">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
-                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.title}}</option>
+                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
                     <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
                 </div>

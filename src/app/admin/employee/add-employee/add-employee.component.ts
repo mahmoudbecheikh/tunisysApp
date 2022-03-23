@@ -18,12 +18,12 @@ import { CustomValidator } from 'src/app/validators/async-validation';
 })
 export class AddEmployeeComponent implements OnInit {
   myForm: FormGroup = new FormGroup({});
-  first: FormControl = new FormControl('', [
+  prenom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  last: FormControl = new FormControl('', [
+  nom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
@@ -41,11 +41,11 @@ export class AddEmployeeComponent implements OnInit {
     Validators.required,
     Validators.email
   ],asyncValidators :[this.validatorEmail()], updateOn: 'blur'});
-  password: FormControl = new FormControl('', [
+  mdp: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
-  phone: FormControl = new FormControl('', [
+  tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
@@ -66,28 +66,28 @@ export class AddEmployeeComponent implements OnInit {
 
   createForm() {
     this.myForm = new FormGroup({
-      first: this.first,
-      last: this.last,
+      prenom: this.nom,
+      nom: this.prenom,
       cin: this.cin,
       email: this.email,
-      password: this.password,
+      mdp: this.mdp,
       adresse: this.adresse,
-      phone: this.phone,
+      tel: this.tel,
       role: this.role,
     });
   }
   
-  onSubmit() {
-    this.empService.addEmployee(this.myForm.value).subscribe((res) => {
+  ajouter() {
+    this.empService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/employees']);
     });
   }
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.getByCin(control.value).pipe(
+      return this.empService.afficherCin(control.value).pipe(
         map((res) => {
           if(!res) return null ;
-          return res.length>0 ? {cinExist : true} : null;
+          return res? {cinExist : true} : null;
         })
       );
     };
@@ -96,10 +96,10 @@ export class AddEmployeeComponent implements OnInit {
 
   validatorEmail(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.getByEmail(control.value).pipe(
+      return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
           if(!res) return null ;
-          return res.length>0 ? {emailExist : true} : null;
+          return res ? {emailExist : true} : null;
         })
       );
     };

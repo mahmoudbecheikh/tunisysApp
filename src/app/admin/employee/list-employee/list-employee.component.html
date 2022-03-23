@@ -11,21 +11,20 @@
                 <th>Téléphone</th>
                 <th>Adresse</th>
                 <th>Role</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
 
             <tr *ngFor="let employee of employees">
                 <td>{{employee.cin }}</td>
-                <td>{{ employee.fullName }}</td>
+                <td>{{ employee.nomEmp }}</td>
                 <td>{{ employee.email }}</td>
-                <td>{{ employee.phone }}</td>
+                <td>{{ employee.tel }}</td>
                 <td> {{ employee.adresse }}</td>
                 <td> {{ employee.role }}</td>
                 <td>
                     <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i> 
-                    <i class="lni lni-trash-can" (click)="onDelete(employee._id)"></i>
+                    <i class="lni lni-trash-can" (click)="supprimer(employee._id)"></i>
 
                 </td>
             </tr>

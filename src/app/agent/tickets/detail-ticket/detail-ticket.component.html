@@ -1,0 +1,9 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <textarea class="form-control" formControlName="report" id="report"
+      placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
+    <input class="btn btn-primary" type="submit" on />
+    <i class="lni lni-trash-can" (click)="reset()"></i>
+  </div>
+</form>
+

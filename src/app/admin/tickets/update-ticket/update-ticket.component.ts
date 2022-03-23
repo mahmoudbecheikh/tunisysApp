@@ -17,7 +17,7 @@ export class UpdateTicketComponent implements OnInit {
   myForm: FormGroup = new FormGroup({});
   departements: Departement[] = [];
 
-  subject: FormControl = new FormControl('', [
+  sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
@@ -29,23 +29,43 @@ export class UpdateTicketComponent implements OnInit {
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  clientEmail: FormControl = new FormControl('', [
+  emailClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.pattern('.*com$'),
   ]);
-  clientFullName: FormControl = new FormControl('', [
+  nomClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  clientTel: FormControl = new FormControl('', [
+  tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
-  manual: FormControl = new FormControl('', [
+  manuel: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  fJoint: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  adresse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  siteWeb: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  statut: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  tags: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
@@ -58,40 +78,43 @@ export class UpdateTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.getListDep();
+    this.afficherListe();
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.ticketService.getById(this.id).subscribe((res) => {
+    this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
-      this.subject.setValue(this.ticket.subject);
+      this.sujet.setValue(this.ticket.sujet);
       this.departement.setValue(this.ticket.departement);
       this.description.setValue(this.ticket.description);
-      this.clientEmail.setValue(this.ticket.clientEmail);
-      this.clientFullName.setValue(this.ticket.clientFullName);
-      this.clientTel.setValue(this.ticket.clientTel);
+      this.emailClient.setValue(this.ticket.emailClient);
+      this.nomClient.setValue(this.ticket.nomClient);
+      this.tel.setValue(this.ticket.tel);
+      this.fJoint.setValue(this.ticket.fJoint);
+      this.adresse.setValue(this.ticket.adresse);
+      this.siteWeb.setValue(this.ticket.siteWeb);
+      this.statut.setValue(this.ticket.statut);
+      this.tags.setValue(this.ticket.tags);
     });
   }
 
   createForm() {
     this.myForm = new FormGroup({
-      subject: this.subject,
+      sujet: this.sujet,
       departement: this.departement,
-      clientEmail: this.clientEmail,
-      clientFullName: this.clientFullName,
-      clientTel: this.clientTel,
+      emailClient: this.emailClient,
+      nomClient: this.nomClient,
+      tel: this.tel,
       description: this.description,
     });
   }
 
-  getListDep() {
-    this.depService.listDepartement().subscribe((res) => {
+  afficherListe() {
+    this.depService.afficherListe().subscribe((res) => {
       this.departements = res as Departement[];
     });
   }
 
-  onSubmit() {
-    this.ticketService
-      .updateTicket(this.ticket?._id, this.myForm.value)
-      .subscribe((res) => {
+  modifier() {
+    this.ticketService.modifier(this.ticket?._id, this.myForm.value).subscribe((res) => {
         console.log(this.myForm.value);
         this.router.navigate(['admin/tickets']);
       });

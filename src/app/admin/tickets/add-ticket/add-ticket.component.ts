@@ -49,7 +49,7 @@ export class AddTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.getListDep();
+    this.ajouter();
   }
 
 
@@ -65,8 +65,8 @@ export class AddTicketComponent implements OnInit {
     });
   }
 
-  getListDep() {
-    this.depService.listDepartement().subscribe((res) => {
+  afficherListe() {
+    this.depService.afficherListe().subscribe((res) => {
       this.departements = res as Departement[];
     });
   }
@@ -74,8 +74,8 @@ export class AddTicketComponent implements OnInit {
   returnToList() {
     this.router.navigate(['admin/tickets']);
   }
-  onSubmit() {
-    this.ticketService.addTicket(this.myForm.value).subscribe((res) => {
+  ajouter() {
+    this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/tickets']);
     });
   }

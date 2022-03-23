@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { Employee } from 'src/models/employee';
+import { Employe } from 'src/models/employe';
 
 @Component({
   selector: 'app-list-employee',
@@ -9,17 +9,17 @@ import { Employee } from 'src/models/employee';
   styleUrls: ['./list-employee.component.css'],
 })
 export class ListEmployeeComponent implements OnInit {
-  employees: Employee[] = [];
+  employees: Employe[] = [];
 
   constructor(private empService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getListEmp();
+    this.afficherListe();
   }
 
-  getListEmp() {
-    this.empService.listEmployee().subscribe((res) => {
-      this.employees = res as Employee[];
+  afficherListe() {
+    this.empService.afficherListe().subscribe((res) => {
+      this.employees = res as Employe[];
     });
   }
   toAdd() {
@@ -31,9 +31,9 @@ export class ListEmployeeComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onDelete(id: any) {
-    this.empService.deleteEmployee(id).subscribe((res) => {
-      this.getListEmp()
+  supprimer(id: any) {
+    this.empService.supprimer(id).subscribe((res) => {
+      this.afficherListe()
     });
   }
 }

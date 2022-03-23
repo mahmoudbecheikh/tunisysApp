@@ -1,17 +1,13 @@
 <div class="container contenu">
-    <h2 class="page-title">Ticket</h2>
-    <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
+    <h2 class="page-title">Mes Ticket</h2>
     <br><br>
     <table *ngIf="(tickets.length>0);else vide" class="table ">
         <thead>
             <tr class="home">
                 <th>Sujet</th>
-                <th>Departement</th>
                 <th>Client</th>
-                <th>Etat</th>
                 <th>date</th>
                 <th>Description</th>
-                <th>Manuel</th>
                 <th>Date de modification</th>
                 <th>Action</th>
             </tr>
@@ -20,18 +16,13 @@
 
             <tr *ngFor="let ticket of tickets">
                 <td> {{ ticket.sujet }}</td>
-                <td> {{ ticket.departement?.nom }}</td>
                 <td> {{ ticket.nomClient }}</td>
-                <td> {{ ticket.statut }}</td>
                 <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                 <td> {{ ticket.description }}</td>
-                <td> {{ ticket.manuel }}</td>
                 <td> {{ ticket.dateModif | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                 <td>
-                    <i *ngIf="ticket.statut=='nouveau'" class="lni lni-check-box" (click)="confirmer(ticket._id)"></i>
-                    <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
-                    <i class="lni lni-trash-can" (click)="supprimer(ticket._id)"></i>
-
+                    <!-- <i *ngIf="ticket.status=='nouveau'" class="lni lni-check-box" (click)="onConfirm(ticket._id)"></i> -->
+                    <i class="lni lni-more-alt" (click)="toMore(ticket._id)"></i>
                 </td>
             </tr>
         </tbody>

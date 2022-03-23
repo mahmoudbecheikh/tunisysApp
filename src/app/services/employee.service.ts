@@ -1,42 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from 'src/models/employee';
+import { Employe } from 'src/models/employe';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
-
   readonly baseURL = 'http://localhost:3000/employees';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  addEmployee(employee: Employee) : Observable<any> {
+  ajouter(employee: Employe): Observable<any> {
     return this.http.post(this.baseURL, employee);
   }
 
-  listEmployee() {
+  afficherListe() {
     return this.http.get(this.baseURL);
   }
-  getById(id: any):Observable<Employee> {
+  afficherId(id: any): Observable<Employe> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  updateEmployee(id : any,employee: Employee) :Observable<Employee>{
+  modifier(id: any, employee: Employe): Observable<Employe> {
     return this.http.put(this.baseURL + `/${id}`, employee);
   }
 
-  deleteEmployee(_id: string) {
+  supprimer(_id: string) :Observable<Employe> {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
 
-
-  getByCin(cin: number):Observable<any> {
+  afficherCin(cin: number): Observable<Employe> {
     return this.http.get(this.baseURL + `/emp/${cin}`);
   }
 
-  getByEmail(email: String):Observable<any> {
+  afficherEmail(email: String): Observable<Employe> {
     return this.http.get(this.baseURL + `/employee/${email}`);
   }
-
 }

@@ -18,25 +18,12 @@ import { AddDepartementComponent } from './admin/departement/add-departement/add
 import { ListDepartementComponent } from './admin/departement/list-departement/list-departement.component';
 import { UpdateDepartementComponent } from './admin/departement/update-departement/update-departement.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
-
-
-
-import { DashbordStockComponent } from './gstock/dashbord-stock/dashbord-stock.component';
-import { AddProductComponent } from './gstock/product/add-product/add-product.component';
-import { ListProductComponent } from './gstock/product/list-product/list-product.component';
-import { UpdateProductComponent } from './gstock/product/update-product/update-product.component';
-import { AddCategoryComponent } from './gstock/category/add-category/add-category.component';
-import { ListCategoryComponent } from './gstock/category/list-category/list-category.component';
-import { UpdateCategoryComponent } from './gstock/category/update-category/update-category.component';
-import { UpdateSubcategoryComponent } from './gstock/subcategory/update-subcategory/update-subcategory.component';
-import { AddSubcategoryComponent } from './gstock/subcategory/add-subcategory/add-subcategory.component';
-import { ListSubcategoryComponent } from './gstock/subcategory/list-subcategory/list-subcategory.component';
-import { TicketsComponent } from './agent/tickets/tickets.component';
-import { EmrpuntsComponent } from './agent/emrpunts/emrpunts.component';
-import { ListEmpruntComponent } from './gstock/emprunts/list-emprunt/list-emprunt.component';
+import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
+import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.component';
 
 
 @NgModule({
@@ -56,19 +43,9 @@ import { MatInputModule } from '@angular/material/input';
     ListDepartementComponent,
     UpdateDepartementComponent,
     DashbordComponent,
-    DashbordStockComponent,
-    AddProductComponent,
-    ListProductComponent,
-    UpdateProductComponent,
-    AddCategoryComponent,
-    ListCategoryComponent,
-    UpdateCategoryComponent,
-    UpdateSubcategoryComponent,
-    AddSubcategoryComponent,
-    ListSubcategoryComponent,
     TicketsComponent,
-    EmrpuntsComponent,
-    ListEmpruntComponent,
+    DetailTicketComponent,
+    InboxMailComponent
     
 
   ],

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     Validators.email,
     Validators.pattern('.*com$'),
   ]);
-  password: FormControl = new FormControl('', [Validators.required]);
+  mdp: FormControl = new FormControl('', [Validators.required]);
   error = false;
   constructor(
     private authService: AuthService,
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   createForm() {
     this.myForm = new FormGroup({
       email: this.email,
-      password: this.password,
+      mdp: this.mdp,
     });
   }
   onLogin() {
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
             break;
         }
       } else {
-        this.password.setValue('');
+        this.mdp.setValue('');
         this.error = true;
       }
     });

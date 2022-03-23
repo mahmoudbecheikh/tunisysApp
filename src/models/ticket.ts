@@ -1,18 +1,25 @@
 import { Departement } from "./departement";
-import { Employee } from "./employee";
+import { Employe } from "./employe";
 
 export class Ticket {
     _id?: string;
-    subject?: string;
+    ref?:number;
+    sujet?: string;
     departement? : Departement;
-    employee? :Employee ;
+    employe? :Employe ;
     description? : string ;
-    manual?: string;
-    status? : string
-    clientEmail?: string;
-    clientFullName?: number;
-    clientTel?: number;
+    manuel?: string;
+    statut? : string
+    emailClient?: string;
+    nomClient?: number;
+    tel?: number;
     date?: string;
-    dateUpdated?: string;
+    dateModif?: string;
+    rapport? : string;
+    adresse? : string;
+    siteWeb? : string;
+    fJoint? : string;
+    tags? : string;
+    
 }
 

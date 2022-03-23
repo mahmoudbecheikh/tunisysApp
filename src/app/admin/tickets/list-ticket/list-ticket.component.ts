@@ -15,12 +15,12 @@ export class ListTicketComponent implements OnInit {
   constructor(private ticketService: TicketService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getListTicket()
+    this.afficherList()
 
   }
 
-  getListTicket() {
-    this.ticketService.listTicket().subscribe((res) => {
+  afficherList() {
+    this.ticketService.afficherListe().subscribe((res) => {
       console.log('ena'+ res)
       this.tickets = res as Ticket[];
     });
@@ -34,15 +34,15 @@ export class ListTicketComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onDelete(id: any) {
-    this.ticketService.deleteTicket(id).subscribe((res) => {
-      this.getListTicket()
+  supprimer(id: any) {
+    this.ticketService.supprimer(id).subscribe((res) => {
+      this.afficherList()
     });
   }
 
-  onConfirm(id:any){
-    this.ticketService.confirmerTicket(id).subscribe((res) => {
-      this.getListTicket()
+  confirmer(id:any){
+    this.ticketService.confirmer(id).subscribe((res) => {
+      this.afficherList()
     });
   }
 

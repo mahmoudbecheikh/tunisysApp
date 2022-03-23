@@ -19,7 +19,7 @@ export class ListDepartementComponent implements OnInit {
   }
 
   getListDep() {
-    this.depService.listDepartement().subscribe((res) => {
+    this.depService.afficherListe().subscribe((res) => {
       this.departements = res as Departement[];
     });
   }
@@ -32,8 +32,8 @@ export class ListDepartementComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  onDelete(id: any) {
-    this.depService.deleteDepartement(id).subscribe((res) => {
+  supprimer(id: any) {
+    this.depService.supprimer(id).subscribe((res) => {
       this.getListDep()
     });
   }
