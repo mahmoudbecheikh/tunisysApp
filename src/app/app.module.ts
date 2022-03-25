@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,7 +25,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.component';
-
+import { InboxComponent } from './assistant/inbox/inbox.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TicketAttComponent } from './assistant/ticket-att/ticket-att.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +48,9 @@ import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.componen
     DashbordComponent,
     TicketsComponent,
     DetailTicketComponent,
-    InboxMailComponent
-    
-
+    InboxMailComponent,
+    InboxComponent,
+    TicketAttComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,10 +59,11 @@ import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.componen
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
-    MatInputModule
-    
+    MatInputModule,
+    DragDropModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}

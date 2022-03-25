@@ -15,7 +15,7 @@ export class TicketService {
     return this.http.post(this.baseURL, ticket);
   }
 
-  afficherListe() {
+  afficherListe() :Observable<any>{
     return this.http.get(this.baseURL);
   }
   afficherId(id: any): Observable<Ticket> {

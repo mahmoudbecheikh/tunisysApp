@@ -20,14 +20,21 @@
                         <small *ngIf=" cin.invalid && cin.touched && cin.dirty">CIN incorrect</small>
                 </div>
                 <div class="form-group">
-                    <input type="email" formControlName="email" placeholder="Email *" class="form-control" name="email"
-                        id="email">
-                        <small *ngIf=" email.invalid && email.touched && email.dirty">Email incorrect</small>
+                    <select class="form-control" formControlName="departement">
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
+                    </select>
+                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="mdp" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
+                    <input type="email" formControlName="email" placeholder="Email *" class="form-control" name="email"
+                        id="email">
+                        <small *ngIf=" email.invalid && email.touched && email.dirty">Email incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="password" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
                         name="mdp" id="mdp"> 
                         <small *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe incorrect</small>
                 </div>
@@ -37,21 +44,17 @@
                         <small *ngIf=" tel.invalid && tel.touched && tel.dirty">tel incorrect</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" formControlName="adresse" placeholder="Adresse *" class="form-control"
-                        name="adresse" id="adresse">
-                    <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Adresse incorrect</small>
-                </div>
-                <div class="form-group">
                     <select class="form-control" formControlName="role">
                         <option value="" disabled hidden selected>Sélectionnez un rôle</option>
                         <option value="0">Admin</option>
-                        <option value="1">Agent</option>
-                        <option value="2">Gestionnaire</option>
+                        <option value="1">Assistant</option>
+                        <option value="2">Agent</option>
                     </select>
                     <small *ngIf=" role.invalid && role.touched && role.dirty">Rôle incorrect</small>
                 </div>
-                <div style="margin: 15px -120px;">
-                    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
+                
+                <div>
+                    <input class="btn btn-dark" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
                 </div>
 
             </div>

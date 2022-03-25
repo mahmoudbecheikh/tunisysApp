@@ -10,6 +10,10 @@ import { Employe } from 'src/models/employe';
 })
 export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
+  alphabet1 = ["a","b","c","d","e","f","g"];
+  alphabet2 = ["i","j","k","l","m"];
+  alphabet3 = ["n","o","p","q","r","s"];
+  alphabet4 = ["t","u","v","w","x","y","z"];
 
   constructor(private empService: EmployeeService, private router: Router) {}
 
@@ -36,4 +40,9 @@ export class ListEmployeeComponent implements OnInit {
       this.afficherListe()
     });
   }
+
+  index(alphabets:string[],c:any){
+    return alphabets.includes(c)
+  }
+
 }

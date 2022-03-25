@@ -12,9 +12,11 @@ import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.com
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
 import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
+import { TicketAttComponent } from './assistant/ticket-att/ticket-att.component';
 import { ErrorComponent } from './error/error.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
+import { AssistantGuard } from './guards/assistant.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './login/login.component';
 
@@ -99,6 +101,24 @@ const routes: Routes = [
             path: ':id',
             component: DetailTicketComponent,
           },
+        ],
+      }
+    ],
+  },
+
+  {
+    path: 'assistant',
+    canActivate: [AssistantGuard],
+    children: [
+      { path: '', component:TicketAttComponent  },
+      {
+        path: 'tickets',
+        children: [
+          {
+            path: '',
+            component: TicketAttComponent,
+          },
+
         ],
       }
     ],

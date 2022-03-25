@@ -21,7 +21,6 @@ export class ListTicketComponent implements OnInit {
 
   afficherList() {
     this.ticketService.afficherListe().subscribe((res) => {
-      console.log('ena'+ res)
       this.tickets = res as Ticket[];
     });
   }

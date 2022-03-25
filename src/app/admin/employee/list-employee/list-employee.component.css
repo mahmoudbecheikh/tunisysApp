@@ -1,30 +1,57 @@
-table, th, td {
-    text-align: center;
-
+table,
+th,
+td {
+  text-transform: capitalize;
 }
 
-table th{
-    background-color: #1A5276;
-    color: white;
+span {
+  text-transform: capitalize;
+}
+
+table th {
+  background-color: #1a5276;
+  color: white;
 }
 
 table tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 i {
-    margin: 5px;
-    font-weight: bold;
+  margin: 5px;
+  font-weight: bold;
 }
 
 .lni-pencil {
-    color: #4BCA81;
-    font-size: 20px;
+  color: #4bca81;
+  font-size: 20px;
 }
-
 
 .lni-trash-can {
-    color: #e71d34;
-    font-size: 20px;
+  color: #e71d34;
+  font-size: 20px;
 }
 
+.circle {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  padding: 12px;
+  margin-right: 5px;
+  color: #ffff;
+  text-align: center;
+  font: 22px Arial, sans-serif;
+}
+
+.c1 {
+  background: #00afb9;
+}
+.c2 {
+  background-color: #f07167;
+}
+.c3 {
+  background: #ffb563;
+}
+.c4 {
+  background: #588157;
+}

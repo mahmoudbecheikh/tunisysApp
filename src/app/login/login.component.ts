@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.readMails();
   }
 
   createForm() {
@@ -45,10 +44,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/admin']);
             break;
           case 1:
-            this.router.navigate(['/agent']);
+            this.router.navigate(['/assistant']);
             break;
           case 2:
-            this.router.navigate(['/stock']);
+            this.router.navigate(['/assistant']);
             break;
         }
       } else {
@@ -58,9 +57,5 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  readMails() {
-    this.mailService.readMails().subscribe((res) => {
-      console.log(res);
-    });
-  }
+
 }

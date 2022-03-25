@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="mdp" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
+                    <input type="password" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
                         name="mdp" id="mdp"> 
                         <small *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe incorrect</small>
                 </div>
@@ -38,15 +38,18 @@
                 </div>
             
                 <div class="form-group">
-                    <input type="text" formControlName="adresse"  placeholder="Adresse *" class="form-control"
-                        name="adresse" id="adresse">
-                    <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Adresse incorrect</small>
+                    <select class="form-control" formControlName="departement">
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let dep of departements" [selected]="employe?.departement=='{{dep._id}}'" value="{{dep._id}}">{{dep.nom}}</option>
+                    </select>
+
+                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
                 </div>
                 <div class="form-group">
                     <select class="form-control" formControlName="role">
                         <option value="0" [selected]="employe?.role==0">Admin</option>
-                        <option value="1" [selected]="employe?.role==1">Agent</option>
-                        <option value="2" [selected]="employe?.role==2">Gestionnaire</option>
+                        <option value="1" [selected]="employe?.role==1">Assistant</option>
+                        <option value="2" [selected]="employe?.role==2">Agent</option>
                     </select>
                     <small *ngIf=" role.invalid && role.touched && role.dirty">Rôle incorrect</small>
                 </div>

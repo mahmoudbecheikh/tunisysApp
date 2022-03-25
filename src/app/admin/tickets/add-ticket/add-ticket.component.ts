@@ -14,7 +14,7 @@ export class AddTicketComponent implements OnInit {
   departements: Departement[] = [];
 
   myForm: FormGroup = new FormGroup({});
-  subject: FormControl = new FormControl('', [
+  sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
@@ -28,17 +28,17 @@ export class AddTicketComponent implements OnInit {
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  clientEmail: FormControl = new FormControl('', [
+  emailClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
-  clientFullName: FormControl = new FormControl('', [
+  nomClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  clientTel: FormControl = new FormControl('', [
+  tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
@@ -55,11 +55,11 @@ export class AddTicketComponent implements OnInit {
 
   createForm() {
     this.myForm = new FormGroup({
-      subject: this.subject,
+      sujet: this.sujet,
       departement: this.departement,
-      clientEmail: this.clientEmail,
-      clientFullName: this.clientFullName,
-      clientTel: this.clientTel,
+      emailClient: this.emailClient,
+      nomClient: this.nomClient,
+      tel: this.tel,
       description: this.description,
  
     });

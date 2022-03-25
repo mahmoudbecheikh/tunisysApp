@@ -5,6 +5,8 @@ import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Departement } from 'src/models/departement';
+import { DepartementService } from 'src/app/services/departement.service';
 
 
 @Component({
@@ -13,6 +15,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./update-employee.component.css'],
 })
 export class UpdateEmployeeComponent implements OnInit {
+  departements : Departement [] = []
   employe?: Employe;
   id? : any ;
   prenomEmp? : String ; 
@@ -29,6 +32,7 @@ export class UpdateEmployeeComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
+  departement : FormControl = new FormControl('',Validators.required)
 
   cin: FormControl = new FormControl('',{validators : [
     Validators.required,
@@ -53,19 +57,19 @@ export class UpdateEmployeeComponent implements OnInit {
 
   ]);
   role: FormControl = new FormControl('', [Validators.required]);
-  adresse: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-  ]);
+
   constructor(
     private empService: EmployeeService,
+    private depService : DepartementService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.createForm();
-
+    this.depService.afficherListe().subscribe(res=>{
+      this.departements = res;
+    })
     this.id = this.activatedRoute.snapshot.params['id'];
     this.empService.afficherId(this.id).subscribe(emp=>{
       this.employe = emp ;
@@ -76,7 +80,6 @@ export class UpdateEmployeeComponent implements OnInit {
       this.cin.setValue(this.employe?.cin)
       this.email.setValue(this.employe?.email)
       this.role.setValue(this.employe?.role)
-      this.adresse.setValue(this.employe?.adresse)
       this.tel.setValue(this.employe?.tel)
 
     });
@@ -85,11 +88,11 @@ export class UpdateEmployeeComponent implements OnInit {
   createForm() {
     this.myForm = new FormGroup({
       prenom: this.prenom,
+      departement : this.departement ,
       nom: this.nom,
       cin: this.cin,
       email: this.email,
       mdp: this.mdp,
-      adresse: this.adresse,
       tel: this.tel,
       role: this.role,
     });

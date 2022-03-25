@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EmployeeService {
-  readonly baseURL = 'http://localhost:3000/employees';
+  readonly baseURL = 'http://localhost:3000/employes';
 
   constructor(private http: HttpClient) {}
 

@@ -5,25 +5,34 @@
     <table *ngIf="(employees.length>0);else vide" class="table ">
         <thead>
             <tr class="home">
-                <th>CIN</th>
                 <th>Nom complet</th>
+                <th>CIN</th>
                 <th>Email</th>
                 <th>Téléphone</th>
-                <th>Adresse</th>
+                <th>Departement</th>
                 <th>Role</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
 
             <tr *ngFor="let employee of employees">
+                <td><span class="circle"
+                        [ngClass]="{'c1':index(alphabet1,employee.nomEmp?.substring(0,1)),'c2':index(alphabet2,employee.nomEmp?.substring(0,1)),'c3':index(alphabet3,employee.nomEmp?.substring(0,1)),'c4':index(alphabet4,employee.nomEmp?.substring(0,1)) }">{{employee.nomEmp?.substring(0,1)}}</span><span>{{
+                        employee.nomEmp }}</span>
+                </td>
+
+
                 <td>{{employee.cin }}</td>
-                <td>{{ employee.nomEmp }}</td>
                 <td>{{ employee.email }}</td>
                 <td>{{ employee.tel }}</td>
-                <td> {{ employee.adresse }}</td>
-                <td> {{ employee.role }}</td>
+                <td> {{ employee.departement?.nom }}</td>
+                <td *ngIf="employee.role==0">Admin</td>
+                <td *ngIf="employee.role==1">Assistant</td>
+                <td *ngIf="employee.role==2">Agent</td>
+
                 <td>
-                    <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i> 
+                    <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i>
                     <i class="lni lni-trash-can" (click)="supprimer(employee._id)"></i>
 
                 </td>

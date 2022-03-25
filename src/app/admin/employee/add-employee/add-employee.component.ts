@@ -9,14 +9,17 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { DepartementService } from 'src/app/services/departement.service';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { CustomValidator } from 'src/app/validators/async-validation';
+import { Departement } from 'src/models/departement';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css'],
 })
 export class AddEmployeeComponent implements OnInit {
+  
+  departements : Departement [] = []
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
     Validators.required,
@@ -28,6 +31,8 @@ export class AddEmployeeComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
+
+  departement : FormControl = new FormControl('',Validators.required)
 
   cin: FormControl = new FormControl('',{validators : [
     Validators.required,
@@ -53,25 +58,25 @@ export class AddEmployeeComponent implements OnInit {
 
   ]);
   role: FormControl = new FormControl('', [Validators.required]);
-  adresse: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(4),
-  ]);
 
-  constructor(private empService: EmployeeService, private router: Router) {}
+
+  constructor(private empService: EmployeeService,private depService : DepartementService ,private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
+    this.depService.afficherListe().subscribe(res=>{
+      this.departements = res;
+    })
   }
 
   createForm() {
     this.myForm = new FormGroup({
       prenom: this.nom,
       nom: this.prenom,
+      departement : this.departement,
       cin: this.cin,
       email: this.email,
       mdp: this.mdp,
-      adresse: this.adresse,
       tel: this.tel,
       role: this.role,
     });

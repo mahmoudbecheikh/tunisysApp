@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" formControlName="subject" placeholder="Subject *" class="col-md form-control"
-                        name="subject" id="subject">
-                        <small *ngIf=" subject.invalid && subject.touched && subject.dirty">Subject incorrect</small>
+                    <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
+                        name="sujet" id="sujet">
+                        <small *ngIf=" sujet.invalid && sujet.touched && sujet.dirty">sujet incorrect</small>
                     </div>
 
                     <div class="form-group">
@@ -17,23 +17,23 @@
                     </div>
 
                 <div class="form-group">
-                    <input type="text" formControlName="clientFullName" placeholder="Nom complet *" class="form-control" name="clientFullName"
-                        id="clientFullName">
-                        <small *ngIf=" clientFullName.invalid && clientFullName.touched && clientFullName.dirty">Nom complet incorrect</small>
+                    <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control" name="nomClient"
+                        id="nomClient">
+                        <small *ngIf=" nomClient.invalid && nomClient.touched && nomClient.dirty">Nom complet incorrect</small>
                 </div>
 
 
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="email" formControlName="clientEmail" placeholder="Email *" class="form-control" name="clientEmail"
+                    <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control" name="emailClient"
                         id="email">
-                        <small *ngIf=" clientEmail.invalid && clientEmail.touched && clientEmail.dirty">Email incorrect</small>
+                        <small *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">Email incorrect</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" formControlName="clientTel" placeholder="Tel *"  class="form-control" name="clientTel"
-                        id="clientTel">
-                        <small *ngIf=" clientTel.invalid && clientTel.touched && clientTel.dirty">Tel incorrect</small>
+                    <input type="text" formControlName="tel" placeholder="Tel *"  class="form-control" name="tel"
+                        id="tel">
+                        <small *ngIf=" tel.invalid && tel.touched && tel.dirty">Tel incorrect</small>
                 </div>
               
                 <div class="form-group">

@@ -15,7 +15,7 @@ export class DepartementService {
     return this.http.post(this.baseURL, departement);
   }
 
-  afficherListe() {
+  afficherListe() : Observable<any> {
     return this.http.get(this.baseURL);
   }
   afficherId(id: any): Observable<Departement> {
@@ -30,6 +30,6 @@ export class DepartementService {
   }
 
   afficherNom(title: String): Observable<Departement> {
-    return this.http.get(this.baseURL + `/dep/${title}`);
+    return this.http.get(this.baseURL + `/departement/${title}`);
   }
 }

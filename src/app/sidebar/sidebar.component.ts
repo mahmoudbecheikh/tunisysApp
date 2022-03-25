@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class SidebarComponent implements OnInit {
 
-  employee? : Employe
+  employe? : Employe
   isLoggedIn = false ;
   constructor(private authService : AuthService, private router : Router) { }
 
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
 
   getAuth(){
     this.authService.getAuth().subscribe(res=>{
-      this.employee = res; 
+      this.employe = res; 
     })
   }
 

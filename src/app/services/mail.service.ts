@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class MailService {
 
-  readonly baseURL = 'http://localhost:8000/mails';
+  readonly baseURL = 'http://localhost:3000/mails';
 
 
   constructor(private http : HttpClient) { }

@@ -1,32 +1,102 @@
-<div class="container contenu">
-    <h2 class="page-title">Departements</h2>
-    <div class="btn btn-dark" (click)="toAdd()">Créer un departement </div>
-    <br><br>
-    <table *ngIf="(departements.length>0);else vide" class="table ">
-        <thead>
-            <tr class="home">
-                <th>ID</th>
-                <th>Titre</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let departement of departements">
-                <td>{{departement._id }}</td>
-                <td>{{ departement.nom }}</td>
-                <td>
-                    <i class="lni lni-pencil" (click)="goToUpdate(departement._id)"></i>
-                    <i class="lni lni-trash-can" (click)="supprimer(departement._id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-md-10">
+            <h1>Département</h1>
+            <div class="btn btn-dark" data-toggle="modal" (click)="reset()" data-target="#ajouterDep">Créer</div>
 
-    <ng-template #vide>
-        <h3 class="text-center">Il n'y a pas d'utilisateurs.</h3>
-    </ng-template>
+            <div class="row list" *ngIf="(departements.length>0);else vide">
+
+                <div class="col-md-3" *ngFor="let departement of departements">
+                    <div class="card">
+                        <h2>{{departement.nom}}</h2>
+                        <p>Employés <span style="float: right;">{{departement.employes?.length}}</span></p>
+                        <p>Tickets <span style="float: right;">{{departement.tickets?.length}}</span></p>
+                        <div class="icon">
+                            <i class="lni lni-pencil" data-toggle="modal" data-target="#modifierDep"
+                                (click)="selectDepartement(departement._id)"></i>
+                            <i class="lni lni-trash-can" (click)="supprimer(departement._id)"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <ng-template #vide>
+                <h3 class="text-center">Il n'y a pas de département.</h3>
+            </ng-template>
+        </div>
+    </div>
 
 
 </div>
 
-<app-sidebar></app-sidebar>
+
+<!-- Ajouter -->
+<div class="modal fade" id="ajouterDep" tabindex="-1" role="dialog" aria-labelledby="ajouterDepLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ajouterDepLabel">Créer département</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="myForm" (ngSubmit)="ajouter()">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nom" class="col-form-label">Nom:</label>
+
+                        <input type="text" formControlName="nom" placeholder="Nom *" class="col-md form-control"
+                            name="nom" id="nom">
+                        <small *ngIf=" nom.invalid && nom.touched && nom.dirty">Titre incorrect</small>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" type="submit" [disabled]="myForm.invalid"
+                        class="btn btn-primary">Créer</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modifier -->
+<div class="modal fade" id="modifierDep" tabindex="-1" role="dialog" aria-labelledby="modifierDepLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modifierDepLabel">Modifier département</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="myForm" (ngSubmit)="modifier()">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nom" class="col-form-label">Nom:</label>
+
+                        <input type="text" formControlName="nom" placeholder="Nom *" class="col-md form-control"
+                            name="nom" id="nom">
+                        <small *ngIf=" nom.invalid && nom.touched && nom.dirty">Titre incorrect</small>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" type="submit" [disabled]="myForm.invalid"
+                        class="btn btn-primary">Modifier</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

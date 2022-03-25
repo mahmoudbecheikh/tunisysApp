@@ -15,7 +15,7 @@ export class AgentGuard implements CanActivate {
       return new Promise((resolve, reject) => {
         if (this.authService.LoggedIn() == true) {
           let role = this.authService.getRole();
-          if (role !== 1) {
+          if (role !== 2) {
             resolve(false);
           }
           resolve(true);

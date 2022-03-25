@@ -1,30 +1,47 @@
-table, th, td {
+.btn {
+  margin-bottom: 25px;
+}
+.card {
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin-bottom: 25px;
+}
+
+h1{
     text-align: center;
-
+    margin-top: 25px;
 }
 
-table th{
-    background-color: #1A5276;
-    color: white;
+h2 {
+  text-transform: capitalize;
 }
 
-table tr:hover {
-    background-color: #ddd;
+.card span {
+  font-size: 12px;
+  color: grey;
 }
 
-i {
-    margin: 5px;
-    font-weight: bold;
+.icon {
+  display: inline-block;
+  text-align: right;
+}
+
+.card i {
+  font-weight: bold;
+  margin: 5px;
 }
 
 .lni-pencil {
-    color: #4BCA81;
-    font-size: 20px;
+  color: #4bca81;
+  font-size: 15px;
 }
-
 
 .lni-trash-can {
-    color: #e71d34;
-    font-size: 20px;
+  color: #e71d34;
+  font-size: 15px;
 }
 
+small{
+  color: #e71d34;
+}

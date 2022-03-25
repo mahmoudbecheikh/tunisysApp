@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-md-9">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box first">Ticket</div>
+                <div class="example-box" *ngFor="let ticket of tickets" cdkDrag>
+                    <div>
+                        <span class="sujet">{{ticket.sujet}}</span><br>
+                        <span class="nom">{{ticket.nomClient}}</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary" (click)="confirmer(ticket._id)">Confirmer</button>
+                        <button class="btn btn-info" (click)="confirmer(ticket._id)">Consulter</button>
+
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
