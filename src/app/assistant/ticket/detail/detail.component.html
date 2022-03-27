@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-8">
+            <h1>{{ticket?.sujet}}</h1>
+
+            <div class="row">
+                <div class="info col-sm">
+                    <p>Référence : <span>{{ticket?.ref}}</span></p>
+                    <p>Nom : <span>{{ticket?.nomClient}}</span></p>
+                    <p>Email : <span>{{ticket?.emailClient}}</span></p>
+                    <p>Tel : <span>{{ticket?.siteWeb}}</span></p>
+                    <p>Adresse : <span>{{ticket?.adresse}}</span></p>
+                    <p>Site : <span>{{ticket?.siteWeb}}</span></p>
+
+                </div>
+                <div class="info col-sm">
+                    <p>Département : <span>{{ticket?.departement?.nom}}</span></p>
+                    <p>Employe : <span>---</span> </p>
+                    <p>Manuel : <span>{{ticket?.manuel}}</span> </p>
+                    <p>Statut : <span>{{ticket?.statut}}</span></p>
+                    <p>Date : <span>{{ticket?.date }} </span></p>
+                </div>
+            </div>
+            <div class="row">
+                <h3>Description</h3>
+                <textarea class="form-control" id="exampleFormControlTextarea1" disabled rows="4">
+                        {{ticket?.description}}
+                    </textarea>
+            </div>
+
+            
+            {{files}}
+
+        </div>
+
+
+    </div>
+
+</div>

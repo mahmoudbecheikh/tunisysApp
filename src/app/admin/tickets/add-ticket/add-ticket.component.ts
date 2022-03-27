@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +13,7 @@ import { Departement } from 'src/models/departement';
 })
 export class AddTicketComponent implements OnInit {
   departements: Departement[] = [];
+  formdata = new FormData();
 
   myForm: FormGroup = new FormGroup({});
   sujet: FormControl = new FormControl('', [
@@ -19,9 +21,7 @@ export class AddTicketComponent implements OnInit {
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  departement: FormControl = new FormControl('', [
-    Validators.required
-  ]);
+  departement: FormControl = new FormControl('', [Validators.required]);
   description: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(15),
@@ -30,28 +30,42 @@ export class AddTicketComponent implements OnInit {
 
   emailClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.email
+    Validators.email,
   ]);
   nomClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-
+  adresse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+  ]);
+  siteWeb: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+  ]);
   tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
+  manuel: FormControl = new FormControl('admin');
 
-  constructor(private ticketService : TicketService ,private depService : DepartementService, private router : Router) {}
+  constructor(
+    private ticketService: TicketService,
+    private httpClient: HttpClient,
+    private depService: DepartementService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.ajouter();
+    this.afficherListe()
   }
-
 
   createForm() {
     this.myForm = new FormGroup({
@@ -61,7 +75,9 @@ export class AddTicketComponent implements OnInit {
       nomClient: this.nomClient,
       tel: this.tel,
       description: this.description,
- 
+      manuel: this.manuel,
+      siteWeb: this.siteWeb,
+      adresse: this.adresse,
     });
   }
 
@@ -77,6 +93,24 @@ export class AddTicketComponent implements OnInit {
   ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/tickets']);
+      if(res){
+        this.ticketService.confirmer(res._id)
+        this.formdata.append('id',res._id)
+        this.httpClient.post('http://localhost:3000/multiplefiles', this.formdata).subscribe(
+          (d) => {
+            console.log(d);
+          }
+        );
+      }
     });
   }
+
+  uploadMultiple(event: any) {
+    const files: FileList = event.target.files;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.formdata.append('files', element);
+    }
+  }
+
 }

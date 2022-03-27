@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="form">
+        <form [formGroup]="myForm" (ngSubmit)="envoyer()">
+            <p class="login-text" style="font-size: 2rem; font-weight: 600;">Problèmes de connexion</p>
+            <div class="input-group">
+                <input type="text" class="form-control" formControlName="email" name="email" placeholder="Entrez votre email">
+
+            </div>
+            <div class="input-group">
+                <button name="submit" class="btn btn-primary">Envoyer le lien pour la réinitialisation</button>
+            </div>
+        </form>
+    </div>
+</div>

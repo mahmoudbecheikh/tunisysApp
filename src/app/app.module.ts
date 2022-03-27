@@ -9,7 +9,7 @@ import { ListEmployeeComponent } from './admin/employee/list-employee/list-emplo
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './securite/login/login.component';
 import { ErrorComponent } from './error/error.component';
 import { HeaderComponent } from './header/header.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
@@ -27,7 +27,10 @@ import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-tick
 import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { TicketAttComponent } from './assistant/ticket-att/ticket-att.component';
+import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
+import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
+import { ResetComponent } from './securite/reset/reset.component';
+import { ForgetComponent } from './securite/forget/forget.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { TicketAttComponent } from './assistant/ticket-att/ticket-att.component'
     InboxMailComponent,
     InboxComponent,
     TicketAttComponent,
+    DetailTicketAttComponent,
+    ResetComponent,
+    ForgetComponent,
   ],
   imports: [
     BrowserModule,

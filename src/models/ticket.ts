@@ -18,8 +18,9 @@ export class Ticket {
     rapport? : string;
     adresse? : string;
     siteWeb? : string;
-    fJoint? : string;
+    fJoint? : [];
     tags? : string;
+  static date: string | number | Date;
     
 }
 

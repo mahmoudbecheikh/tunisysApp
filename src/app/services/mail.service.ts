@@ -14,4 +14,8 @@ export class MailService {
   readMails() {
     return this.http.get(this.baseURL);
   }
+
+  envoyerMail(mail : any){
+    return this.http.post(this.baseURL+'/email',mail)
+  }
 }

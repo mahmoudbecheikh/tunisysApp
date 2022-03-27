@@ -22,6 +22,11 @@
                         <small *ngIf=" nomClient.invalid && nomClient.touched && nomClient.dirty">Nom complet incorrect</small>
                 </div>
 
+                <div class="form-group">
+                    <input type="text" formControlName="adresse" placeholder="Adresse*" class="form-control" name="adresse"
+                        id="adresse">
+                        <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Nom complet incorrect</small>
+                </div>
 
             </div>
             <div class="col-md-6">
@@ -35,6 +40,12 @@
                         id="tel">
                         <small *ngIf=" tel.invalid && tel.touched && tel.dirty">Tel incorrect</small>
                 </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="siteWeb" placeholder="Site *" class="form-control" name="siteWeb"
+                        id="siteWeb">
+                        <small *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty">Nom complet incorrect</small>
+                </div>
               
                 <div class="form-group">
                     <select class="form-control" formControlName="departement">
@@ -43,6 +54,11 @@
                     </select>
                     <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
                 </div>
+
+
+    
+
+                <input type="file" (change)="uploadMultiple($event)" multiple />
 
                 <div style="margin: 15px -120px;">
                     <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>

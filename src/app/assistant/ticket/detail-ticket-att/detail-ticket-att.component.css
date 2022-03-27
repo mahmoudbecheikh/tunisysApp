@@ -1,0 +1,96 @@
+
+*::first-letter{
+    text-transform: uppercase;
+}
+
+h1{
+    margin:25px 0px;
+}
+
+
+
+.info{
+    background: #F8F8F8	;
+    padding: 20px;
+    margin-bottom: 5px;
+}
+
+p{
+    position: relative;
+    color: grey;
+    font-size: 12px;
+
+}
+
+
+span{
+    position: absolute;
+    left: 75px;
+    color: black;
+    font-size: 12px;
+}
+
+h3 {
+    margin: 5px;
+}
+
+textarea:disabled {
+    cursor: default; 
+    background-color: white;
+    color: rgb(84, 84, 84);
+    border-color: rgba(118, 118, 118, 0.3);
+  }
+
+
+i{
+font-size: 18px;
+}
+
+
+
+.file{
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+
+.file img{
+    width: 50px;
+    height: 50px;
+}
+
+textarea {
+    border:  none;
+}
+
+textarea:focus, 
+textarea.form-control:focus{
+    box-shadow: inset 0 -1px 0 white;
+
+}
+
+.form-group{
+    width: 75%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+
+input {
+    width: 20%;
+    margin-bottom: 10px;
+}
+
+
+
+.form-control{
+    width: 75%;
+}
+
+/* i {
+    float: right;
+    margin-right: 20px;
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+} */
+

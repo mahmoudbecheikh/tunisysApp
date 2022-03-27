@@ -14,6 +14,7 @@
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   background: white;
+  cursor: grab;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,6 +27,7 @@
   background: #17a2b8;
   color: white;
   font-size: 20px;
+  cursor: auto;
 }
 
 .nom {

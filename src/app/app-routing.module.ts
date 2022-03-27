@@ -12,13 +12,17 @@ import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.com
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
 import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
-import { TicketAttComponent } from './assistant/ticket-att/ticket-att.component';
+import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
+import { DetailComponent } from './assistant/ticket/detail/detail.component';
+import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
 import { ErrorComponent } from './error/error.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
 import { AssistantGuard } from './guards/assistant.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { LoginComponent } from './login/login.component';
+import { ForgetComponent } from './securite/forget/forget.component';
+import { LoginComponent } from './securite/login/login.component';
+import { ResetComponent } from './securite/reset/reset.component';
 
 const routes: Routes = [
   {
@@ -26,6 +30,7 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full',
   },
+
   {
     path: 'admin',
     canActivate: [AdminGuard],
@@ -118,7 +123,10 @@ const routes: Routes = [
             path: '',
             component: TicketAttComponent,
           },
-
+          {
+            path: ':id',
+            component: DetailTicketAttComponent,
+          },
         ],
       }
     ],
@@ -128,6 +136,14 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'oublie',
+    component: ForgetComponent,
+  },
+  {
+    path: 'reinitialise/:id/:token',
+    component: ResetComponent,
   },
   {
     path: '**',

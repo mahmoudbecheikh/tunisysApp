@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="form">
+        <form [formGroup]="myForm" (ngSubmit)="changer()">
+            <p class="login-text" style="font-size: 2rem; font-weight: 600;">Réinitialisation</p>
+            <div class="input-group">
+                <input type="password" name="password" formControlName='password' placeholder="Entrez votre mot de passe">
+            </div>
+            <div class="input-group">
+                <input type="password" name="confirmPassword" formControlName='confirmPassword' placeholder="Confirmer votre mot de passe">
+            </div>
+            <div class="input-group">
+                <button name="submit" class="btn">Changer</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ticket } from 'src/models/ticket';
@@ -36,4 +36,12 @@ export class TicketService {
   supprimer(_id: string) {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
+
+  downloadFile(file:String){
+    var body = {filename:file};
+    return this.http.post('http://localhost:3000/download',body,{
+        responseType : 'blob',
+        headers:new HttpHeaders().append('Content-Type','application/json')
+    });
+}
 }

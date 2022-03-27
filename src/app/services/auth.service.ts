@@ -16,6 +16,13 @@ export class AuthService {
     return this.http.post('http://localhost:3000/login', data);
   }
 
+  forget(email :string){
+    return this.http.post('http://localhost:3000/forget',email);
+  }
+  changer(data : any,id : any,token:any){
+    return this.http.post('http://localhost:3000/reset'+`/${id}/${token}`,data);
+  }
+
   getAuth(): Observable<Employe> {
     let token: any = localStorage.getItem('token');
     let decodeToken = this.helper.decodeToken(token);
@@ -38,6 +45,7 @@ export class AuthService {
       return false;
     }
     if (this.helper.isTokenExpired(token)) {
+      console.log('expired')
       return false;
     }
     return true;

@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
       if (this.authService.LoggedIn() == false) {
         resolve(true);
       } else {
-        this.location.back();
+        // this.location.back();
         resolve(false);
       }
     });

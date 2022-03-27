@@ -1,6 +1,6 @@
-
 <div class="main">
-    <img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" width="200px" height="200px" style="margin:0px">
+    <img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" width="200px" height="200px"
+        style="margin:0px">
 
     <div class="loginbox">
         <h1>Se connecter</h1>
@@ -11,12 +11,11 @@
             </span><br>
             <span>
                 <i class="lni lni-lock"></i>
-                <input type="password" formControlName="mdp" placeholder="Mot de passe *" name="password"
-                    id="password">
+                <input type="password" formControlName="mdp" placeholder="Mot de passe *" name="password" id="password">
             </span>
             <button [disabled]="myForm.invalid" type="submit">Se connecter</button>
 
-            <a href="#">Mot de passe oublié</a>
+            <a [routerLink]="['/oublie']">Mot de passe oublié</a>
         </form>
         <small *ngIf="error==true">Votre email ou votre mot de passe est incorrect </small>
 
