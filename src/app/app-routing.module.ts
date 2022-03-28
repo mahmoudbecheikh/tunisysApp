@@ -20,6 +20,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
 import { AssistantGuard } from './guards/assistant.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { ChangeComponent } from './securite/change/change.component';
 import { ForgetComponent } from './securite/forget/forget.component';
 import { LoginComponent } from './securite/login/login.component';
 import { ResetComponent } from './securite/reset/reset.component';
@@ -142,8 +143,12 @@ const routes: Routes = [
     component: ForgetComponent,
   },
   {
-    path: 'reinitialise/:id/:token',
+    path: 'reinitialise/:token/:tokenExpire',
     component: ResetComponent,
+  },
+  {
+    path : 'change',
+    component:ChangeComponent
   },
   {
     path: '**',

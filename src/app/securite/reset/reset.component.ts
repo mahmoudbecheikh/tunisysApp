@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -17,23 +17,57 @@ export class ResetComponent implements OnInit {
   confirmPassword: FormControl = new FormControl('', {
     validators: [Validators.required],
   });
-  constructor(private authService:AuthService,private activateRouter : ActivatedRoute) {}
+
+  error?: Boolean = false;
+  invalid?: Boolean = false;
+  tokenExpire: any;
+  token: any;
+  constructor(
+    private authService: AuthService,
+    private activateRouter: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
       password: this.password,
-      confirmPassword : this.confirmPassword
+      confirmPassword: this.confirmPassword,
+    });
+    this.tokenExpire = this.activateRouter.snapshot.params['tokenExpire'];
+    this.token = this.activateRouter.snapshot.params['token'];
+    if (this.tokenExpire < Date.now()) this.invalid = true;
+  }
+
+  changer() {
+    this.authService.reset(this.myForm.value, this.token).subscribe((res) => {
+      if (res.employe) {
+        let data = {
+          email: res.employe.email,
+          mdp: this.password.value,
+        };
+        this.authService.login(data).subscribe((res) => {
+          console.log(res);
+          if (res.token) {
+            localStorage.setItem('token', res.token);
+            let role = this.authService.getRole();
+            switch (role) {
+              case 0:
+                this.router.navigate(['/admin']);
+                break;
+              case 1:
+                this.router.navigate(['/assistant']);
+                break;
+              case 2:
+                this.router.navigate(['/assistant']);
+                break;
+            }
+          }
+        });
+      } else {
+        if (res.invalid == true) this.invalid = true;
+        if (res.error == true) this.error = true;
+        this.myForm.reset();
+      }
     });
   }
-
-
-  changer(){
-    let id = this.activateRouter.snapshot.params['id']
-    let token = this.activateRouter.snapshot.params['token']
-
-    this.authService.changer(this.myForm.value,id,token).subscribe(res=>{
-      console.log(res)
-    })
-  }
-
 }

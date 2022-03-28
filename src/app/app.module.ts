@@ -31,6 +31,7 @@ import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.com
 import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
 import { ResetComponent } from './securite/reset/reset.component';
 import { ForgetComponent } from './securite/forget/forget.component';
+import { ChangeComponent } from './securite/change/change.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ForgetComponent } from './securite/forget/forget.component';
     DetailTicketAttComponent,
     ResetComponent,
     ForgetComponent,
+    ChangeComponent,
   ],
   imports: [
     BrowserModule,

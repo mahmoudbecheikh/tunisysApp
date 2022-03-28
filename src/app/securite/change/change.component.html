@@ -1,0 +1,32 @@
+
+
+
+
+   
+    
+            <h1>Changer mot de passe</h1>
+            <form [formGroup]="myForm" (ngSubmit)="changer()">
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" formControlName='password'
+                        placeholder="Actuel">
+                        <small *ngIf=" password.invalid && password.touched && password.dirty">Actuel incorrect</small>
+
+                </div>
+                <div class="form-group">
+                    <input type="password" name="newPassword" class="form-control" formControlName='newPassword'placeholder="Nouveau">
+                    <small *ngIf=" newPassword.invalid && newPassword.touched && newPassword.dirty">Nouveau incorrect</small>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="confirmPassword" class="form-control" formControlName='confirmPassword'
+                        placeholder="Confirmer">
+                        <small *ngIf=" confirmPassword.invalid && confirmPassword.touched && confirmPassword.dirty">Confirme incorrect</small>
+
+                </div>
+                <button class="btn btn-primary" [disabled]="myForm.invalid" type="submit">Enregistrer les informations</button>
+    
+            </form>
+            <small *ngIf="error">Entrez un mot de passe valide et réessayez.</small>
+    
+

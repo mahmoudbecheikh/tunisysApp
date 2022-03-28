@@ -1,16 +1,33 @@
-<div class="container">
-    <div class="form">
-        <form [formGroup]="myForm" (ngSubmit)="changer()">
-            <p class="login-text" style="font-size: 2rem; font-weight: 600;">Réinitialisation</p>
-            <div class="input-group">
-                <input type="password" name="password" formControlName='password' placeholder="Entrez votre mot de passe">
-            </div>
-            <div class="input-group">
-                <input type="password" name="confirmPassword" formControlName='confirmPassword' placeholder="Confirmer votre mot de passe">
-            </div>
-            <div class="input-group">
-                <button name="submit" class="btn">Changer</button>
-            </div>
-        </form>
-    </div>
+
+
+<div *ngIf="invalid;else valid" >
+    <h1>Le lien que vous avez suivi a expiré ou invalide</h1>
 </div>
+
+<ng-template #valid>
+    <div class="main">
+        <img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" width="200px" height="200px"
+            style="margin:0px">
+    
+        <div class="loginbox">
+            <h1>Réinitialisation</h1>
+            <form [formGroup]="myForm" (ngSubmit)="changer()">
+                <span>
+                    <i class="lni lni-user"></i>
+                    <input type="password" name="password" formControlName='password'
+                        placeholder="Entrez votre mot de passe">
+                </span><br>
+                <span>
+                    <i class="lni lni-lock"></i>
+                    <input type="password" name="confirmPassword" formControlName='confirmPassword'
+                        placeholder="Confirmer votre mot de passe">
+                </span>
+                <button [disabled]="myForm.invalid" type="submit">Changer</button>
+    
+            </form>
+            <small *ngIf="error">Les mots de passe ne sont pas identiques</small>
+    
+        </div>
+    </div>
+</ng-template>
+

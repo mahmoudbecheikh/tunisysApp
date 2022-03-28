@@ -15,7 +15,7 @@ export class DetailTicketAttComponent implements OnInit {
   ticket?: Ticket;
   id: any;
   files?: [];
-  localUrl? : any
+  localUrl?: any;
 
   myForm: FormGroup = new FormGroup({});
   emailClient: FormControl = new FormControl('', [
@@ -32,19 +32,21 @@ export class DetailTicketAttComponent implements OnInit {
     Validators.minLength(15),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  file : FormControl = new FormControl('')
+  file: FormControl = new FormControl('');
+  fileSource: FormControl = new FormControl('', [Validators.required]);
   constructor(
     private activatedRoute: ActivatedRoute,
     private ticketService: TicketService,
-    private mailService : MailService
+    private mailService: MailService
   ) {}
 
   createForm() {
     this.myForm = new FormGroup({
       sujet: this.sujet,
-      email : this.emailClient,
-      text : this.text,
-      file : this.file
+      email: this.emailClient,
+      text: this.text,
+      file: this.file,
+      fileSource: this.fileSource,
     });
   }
 
@@ -55,7 +57,7 @@ export class DetailTicketAttComponent implements OnInit {
       this.files = res.fJoint;
       console.log(this.ticket);
     });
-    this.createForm()
+    this.createForm();
   }
 
   download(fileName: string) {
@@ -64,25 +66,26 @@ export class DetailTicketAttComponent implements OnInit {
     });
   }
 
-  envoyer(){
-    // this.mailService.envoyerMail(this.myForm.value).subscribe(res=>{
-    //   console.log(res)
-    // })
-    console.log(this.myForm.value)
+  envoyer() {
+    const formData = new FormData();
+    Object.keys(this.myForm.controls).forEach((key) => {
+      let formC = this.myForm.get(key);
+      formData.append(key, formC?.value);
+    });
+    this.mailService.envoyerMail(formData).subscribe(res=>{
+      console.log(res)
+    })
+
+
+    console.log(formData);
   }
 
-  uploadMultiple(event: any) {
-    const files: any = event.target.files;
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-          this.localUrl = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(this.localUrl)
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.myForm.patchValue({
+        fileSource: file,
+      });
+    }
   }
-    console.log(files)
-    
-  }
-
 }

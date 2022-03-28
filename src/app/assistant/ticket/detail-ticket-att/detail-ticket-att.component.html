@@ -50,7 +50,7 @@
                 </div>
 
                 <label for="file" style="cursor: pointer;"> <i class="lni lni-paperclip"></i></label>
-                <input type="file" name="file" id="file" (change)="uploadMultiple($event)"  formControlName="file" style="visibility: hidden;display: none;">
+                <input type="file" name="file" id="file" (change)="onFileChange($event)"  formControlName="file" style="visibility: hidden;display: none;">
 
                 <input class="btn btn-primary" type="submit" />
 
