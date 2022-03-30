@@ -32,7 +32,23 @@ export class AuthGuard implements CanActivate {
       if (this.authService.LoggedIn() == false) {
         resolve(true);
       } else {
-        // this.location.back();
+        let token: any = localStorage.getItem('token');
+        let role = this.authService.getRole()
+        if (token) {
+          switch (role) {
+            case 0:
+              this.router.navigate(['/admin']);
+              break;
+            case 1:
+              this.router.navigate(['/assistant']);
+              break;
+            case 2:
+              this.router.navigate(['/assistant']);
+              break;
+            default:
+              this.router.navigate(['/login']);
+          }
+        }
         resolve(false);
       }
     });

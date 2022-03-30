@@ -1,1 +1,18 @@
-<p>inbox works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-md-9">
+            <div *ngFor="let mail of mails" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                <h1>{{mail.sujet}}</h1>
+                <p>{{mail.name}}<span>{{mail.fom}}</span></p>
+                <div style="line-break: loose" [innerHtml]="mail.body"></div>
+                <p>{{mail.date}}</p>
+                <i class="lni lni-pencil" (click)="vu(mail.uid)"></i>
+                <i class="lni lni-trash-can" (click)="supprimer(mail.uid)"></i>
+
+            </div>
+        </div>
+    </div>
+</div>

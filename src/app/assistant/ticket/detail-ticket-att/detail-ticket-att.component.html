@@ -43,14 +43,15 @@
 
             <form [formGroup]="myForm" (ngSubmit)="envoyer()">
                 <input type="text" class="form-control" formControlName="email" placeholder="Destinataire">
-                <input type="text" class="form-control"  formControlName="sujet" placeholder="Objet">
+                <input type="text" class="form-control" formControlName="sujet" placeholder="Objet">
                 <div class="form-group">
                     <textarea class="form-control" formControlName="text" id="desc"
                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
                 </div>
 
                 <label for="file" style="cursor: pointer;"> <i class="lni lni-paperclip"></i></label>
-                <input type="file" name="file" id="file" (change)="onFileChange($event)"  formControlName="file" style="visibility: hidden;display: none;">
+                <input type="file" name="file" id="file" multiple (change)="uploadMultiple($event)"
+                    style="visibility: hidden;display: none;">
 
                 <input class="btn btn-primary" type="submit" />
 

@@ -12,6 +12,7 @@ import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.com
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
 import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
+import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
 import { DetailComponent } from './assistant/ticket/detail/detail.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
@@ -129,6 +130,10 @@ const routes: Routes = [
             component: DetailTicketAttComponent,
           },
         ],
+      },
+      {
+        path : 'inbox',
+        component : InboxComponent
       }
     ],
   },

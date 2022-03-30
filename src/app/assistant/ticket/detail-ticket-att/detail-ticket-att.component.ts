@@ -16,7 +16,7 @@ export class DetailTicketAttComponent implements OnInit {
   id: any;
   files?: [];
   localUrl?: any;
-
+  formdata = new FormData();
   myForm: FormGroup = new FormGroup({});
   emailClient: FormControl = new FormControl('', [
     Validators.required,
@@ -45,8 +45,6 @@ export class DetailTicketAttComponent implements OnInit {
       sujet: this.sujet,
       email: this.emailClient,
       text: this.text,
-      file: this.file,
-      fileSource: this.fileSource,
     });
   }
 
@@ -67,25 +65,22 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
   envoyer() {
-    const formData = new FormData();
-    Object.keys(this.myForm.controls).forEach((key) => {
-      let formC = this.myForm.get(key);
-      formData.append(key, formC?.value);
+    this.formdata.append('sujet', this.sujet.value);
+    this.formdata.append('email', this.emailClient.value);
+    this.formdata.append('text', this.text.value);
+    this.mailService.envoyerMail(this.formdata).subscribe((res) => {
+      console.log('****'+res);
+      this.myForm.reset();
+      this.formdata = new FormData();
+      console.log('aaaa')
     });
-    this.mailService.envoyerMail(formData).subscribe(res=>{
-      console.log(res)
-    })
-
-
-    console.log(formData);
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.myForm.patchValue({
-        fileSource: file,
-      });
+  uploadMultiple(event: any) {
+    const files: FileList = event.target.files;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.formdata.append('files', element);
     }
   }
 }
