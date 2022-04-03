@@ -17,6 +17,7 @@ export class DetailTicketAttComponent implements OnInit {
   files?: [];
   localUrl?: any;
   formdata = new FormData();
+  mails = [];
   myForm: FormGroup = new FormGroup({});
   emailClient: FormControl = new FormControl('', [
     Validators.required,
@@ -53,7 +54,19 @@ export class DetailTicketAttComponent implements OnInit {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.files = res.fJoint;
-      console.log(this.ticket);
+      let data = {
+        from: res.emailClient,
+        date: res.date,
+        option: 'ALL',
+      };
+      this.mailService.afficherEnvoye(data).subscribe((mails) => {
+        console.log(mails)
+        this.mails.concat(mails);
+      });
+      this.mailService.afficherListe(data).subscribe((mails) => {
+        console.log(mails)
+        this.mails.concat(mails);
+      });
     });
     this.createForm();
   }
@@ -69,10 +82,8 @@ export class DetailTicketAttComponent implements OnInit {
     this.formdata.append('email', this.emailClient.value);
     this.formdata.append('text', this.text.value);
     this.mailService.envoyerMail(this.formdata).subscribe((res) => {
-      console.log('****'+res);
       this.myForm.reset();
       this.formdata = new FormData();
-      console.log('aaaa')
     });
   }
 

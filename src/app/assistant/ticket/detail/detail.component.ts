@@ -17,7 +17,6 @@ export class DetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private ticketService: TicketService,
-    private httpClient : HttpClient
   ) {}
   
 
@@ -26,7 +25,6 @@ export class DetailComponent implements OnInit {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.files = res.fJoint
-      console.log(this.ticket);
     });
   }
 

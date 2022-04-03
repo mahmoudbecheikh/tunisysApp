@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,19 +10,23 @@ export class MailService {
 
   constructor(private http: HttpClient) {}
 
-  affcherListe(email:any , option:any):Observable<any> {
-    return this.http.get(this.baseURL + `/${email}/${option}`);
+  afficherListe(data: any): Observable<any> {
+    return this.http.get(this.baseURL, { params: data });
   }
 
-  envoyerMail(data: any) :Observable<any> {
+  afficherEnvoye(data: any): Observable<any> {
+    return this.http.get(this.baseURL + '/sent', { params: data });
+  }
+
+  envoyerMail(data: any): Observable<any> {
     return this.http.post(this.baseURL + '/email', data);
   }
 
-  supprimer(email :any ,uid:any){
+  supprimer(email: any, uid: any) {
     return this.http.delete(this.baseURL + `/${email}/${uid}`);
   }
 
-  modifier(data : any){
-    return this.http.put(this.baseURL + `/${data.email}/${data.uid}`,data);
+  modifier(data: any) {
+    return this.http.put(this.baseURL + `/${data.email}/${data.uid}`, data);
   }
 }

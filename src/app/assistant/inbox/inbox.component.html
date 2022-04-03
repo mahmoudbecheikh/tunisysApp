@@ -5,12 +5,23 @@
         </div>
         <div class="col-md-9">
             <div *ngFor="let mail of mails" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                <h1>{{mail.sujet}}</h1>
+                <h1>{{mail.subject}}</h1>
                 <p>{{mail.name}}<span>{{mail.fom}}</span></p>
                 <div style="line-break: loose" [innerHtml]="mail.body"></div>
                 <p>{{mail.date}}</p>
+
+                <div class="row files">
+                    <div class="col-sm2 file" *ngFor="let attachment of mail.attachments" (click)='download(attachment)'>
+                        <img width="25px" height="25px" src="../../../../assets/images/file.png">
+                        <p>{{attachment.filename}}</p>
+                    </div>
+                </div>
                 <i class="lni lni-pencil" (click)="vu(mail.uid)"></i>
                 <i class="lni lni-trash-can" (click)="supprimer(mail.uid)"></i>
+
+
+
+
 
             </div>
         </div>
