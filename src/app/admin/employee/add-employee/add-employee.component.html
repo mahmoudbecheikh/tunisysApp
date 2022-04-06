@@ -1,66 +1,85 @@
+<app-sidebar></app-sidebar>
+
 <div class="container" style="margin-top: 50px;">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un employé</h3>
-
     <form [formGroup]="myForm" (ngSubmit)="ajouter()">
         <div class="row">
-            <div class="col-md-6">
+
+            <div class="col-lg-6">
                 <div class="form-group">
-                    <input type="text" formControlName="prenom" placeholder="Prénom *" class="col-md form-control"
+                    <input type="text" formControlName="prenom" placeholder="Prénom *" class="form-control"
                         name="prenom" id="prenom">
-                        <small *ngIf=" prenom.invalid && prenom.touched && prenom.dirty">Prénom incorrect</small>
-                    </div>
+                    <small> <span *ngIf="prenom.invalid && prenom.touched && prenom.dirty"> Champ
+                            obligatoire</span></small>
+                </div>
+
                 <div class="form-group">
                     <input type="text" formControlName="nom" placeholder="Nom *" class="form-control" name="nom"
                         id="nom">
-                        <small *ngIf=" nom.invalid && nom.touched && nom.dirty">Nom incorrect</small>
+                    <small> <span *ngIf="nom.invalid && nom.touched && nom.dirty"> Champ obligatoire</span></small>
                 </div>
                 <div class="form-group">
-                    <input type="text" formControlName="cin" placeholder="CIN *" [ngClass]="{'form-control--loading':cin.pending}" class="form-control" name="cin"
+                    <input type="text" formControlName="cin" placeholder="CIN *" class="form-control" name="cin"
                         id="cin">
-                        <small *ngIf=" cin.invalid && cin.touched && cin.dirty">CIN incorrect</small>
+                    <small> <span *ngIf=" cin.invalid && cin.touched && cin.dirty"> Votre CIN est
+                            invalide</span></small>
+
                 </div>
-                <div class="form-group">
-                    <select class="form-control" formControlName="departement">
-                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
-                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
-                    </select>
-                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
-                </div>
-            </div>
-            <div class="col-md-6">
+
                 <div class="form-group">
                     <input type="email" formControlName="email" placeholder="Email *" class="form-control" name="email"
                         id="email">
-                        <small *ngIf=" email.invalid && email.touched && email.dirty">Email incorrect</small>
+                    <small> <span *ngIf=" email.invalid && email.touched && email.dirty"> Veuillez entrer une adresse
+                            e-mail valide</span></small>
+
                 </div>
+
+
+            </div>
+
+            <div class="col-lg-6">
                 <div class="form-group">
                     <input type="password" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
-                        name="mdp" id="mdp"> 
-                        <small *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe incorrect</small>
+                        name="mdp" id="mdp">
+                    <small> <span *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe doit contenir au moins 8 caracteres, une majuscule, une miniscule et un
+                            chiffre</span></small>
+
                 </div>
                 <div class="form-group">
-                    <input type="text" formControlName="tel" placeholder="tel *" class="form-control"
-                        name="tel" id="tel">
-                        <small *ngIf=" tel.invalid && tel.touched && tel.dirty">tel incorrect</small>
+                    <input type="text" formControlName="tel" placeholder="Téléphone *" class="form-control" name="tel"
+                        id="tel">
+                    <small> <span *ngIf=" tel.invalid && tel.touched && tel.dirty"> Champ obligatoire</span></small>
+
                 </div>
                 <div class="form-group">
-                    <select class="form-control" formControlName="role">
+                    <select class="form-control" formControlName="role" (change)="changeValue()">
                         <option value="" disabled hidden selected>Sélectionnez un rôle</option>
                         <option value="0">Admin</option>
                         <option value="1">Assistant</option>
                         <option value="2">Agent</option>
                     </select>
-                    <small *ngIf=" role.invalid && role.touched && role.dirty">Rôle incorrect</small>
-                </div>
-                
-                <div>
-                    <input class="btn btn-dark" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
+                    <small> <span *ngIf=" role.invalid && role.touched && role.dirty"> Veuillez selectionnez un
+                            role</span></small>
                 </div>
 
+                <div class="form-group">
+                    <select class="form-control" [attr.disabled]="role.value==0 ? '' : null"
+                        formControlName="departement">
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
+                    </select>
+
+                    <small> <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Veuillez
+                            selectionnez un departement</span></small>
+
+
+                </div>
             </div>
 
         </div>
+        
+        <div class="text-center">
+            <input class="btn btn-primary" style="margin-top: 25px; width: 20%;" [disabled]="myForm.invalid" value="Ajouter" type="submit" />
+        </div>
     </form>
 </div>
-
-<app-sidebar></app-sidebar>

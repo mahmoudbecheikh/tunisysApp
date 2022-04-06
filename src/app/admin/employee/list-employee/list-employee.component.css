@@ -1,14 +1,20 @@
-table,
-th,
-td {
-  text-transform: capitalize;
+*::first-letter {
+  text-transform: uppercase;
 }
 
-span {
-  text-transform: capitalize;
+.container {
+  margin-left: 175px;
+  margin-top: 50px;
+}
+
+table,
+td,
+th {
+  text-align: center;
 }
 
 table th {
+  font-weight: 500;
   background-color: #1a5276;
   color: white;
 }
@@ -17,9 +23,19 @@ table tr:hover {
   background-color: #ddd;
 }
 
+td:first-child {
+  text-align: left;
+}
+
+.name::first-letter {
+  text-transform: uppercase;
+}
+
+
 i {
   margin: 5px;
   font-weight: bold;
+
 }
 
 .lni-pencil {
@@ -36,22 +52,9 @@ i {
   border-radius: 50%;
   width: 34px;
   height: 34px;
-  padding: 12px;
-  margin-right: 5px;
+  padding-top: 6px;
+
   color: #ffff;
   text-align: center;
   font: 22px Arial, sans-serif;
-}
-
-.c1 {
-  background: #00afb9;
-}
-.c2 {
-  background-color: #f07167;
-}
-.c3 {
-  background: #ffb563;
-}
-.c4 {
-  background: #588157;
 }

@@ -24,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
-import { InboxMailComponent } from './agent/mails/inbox-mail/inbox-mail.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
@@ -52,7 +51,6 @@ import { ChangeComponent } from './securite/change/change.component';
     DashbordComponent,
     TicketsComponent,
     DetailTicketComponent,
-    InboxMailComponent,
     InboxComponent,
     TicketAttComponent,
     DetailTicketAttComponent,

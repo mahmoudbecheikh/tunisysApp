@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
+import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-list-employee',
@@ -10,12 +12,13 @@ import { Employe } from 'src/models/employe';
 })
 export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
-  alphabet1 = ["a","b","c","d","e","f","g"];
-  alphabet2 = ["i","j","k","l","m"];
-  alphabet3 = ["n","o","p","q","r","s"];
-  alphabet4 = ["t","u","v","w","x","y","z"];
+  colors = ['#00afb9', '#f07167'];
 
-  constructor(private empService: EmployeeService, private router: Router) {}
+  constructor(
+    private empService: EmployeeService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.afficherListe();
@@ -37,12 +40,20 @@ export class ListEmployeeComponent implements OnInit {
 
   supprimer(id: any) {
     this.empService.supprimer(id).subscribe((res) => {
-      this.afficherListe()
+      this.afficherListe();
+      if (res._id == id) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
-  index(alphabets:string[],c:any){
-    return alphabets.includes(c)
+  index(alphabets: string[], c: any) {
+    return alphabets.includes(c);
   }
 
+  rand() {
+    var item = this.colors[Math.floor(Math.random() * this.colors.length)];
+    return '#00afb9';
+  }
 }

@@ -1,10 +1,24 @@
-table, th, td {
+*::first-letter {
+    text-transform: uppercase;
+}
+
+
+.container {
+    margin-left: 175px;
+    margin-top: 50px;
+}
+
+
+table,
+th,
+td {
     text-align: center;
 
 }
 
-table th{
-    background-color: #1A5276;
+table th {
+    font-weight: 500;
+    background-color: #1a5276;
     color: white;
 }
 
@@ -15,16 +29,15 @@ table tr:hover {
 i {
     margin: 5px;
     font-weight: bold;
+    font-size: 15px;
+
 }
 
 .lni-pencil {
     color: #4BCA81;
-    font-size: 20px;
 }
 
 
 .lni-trash-can {
     color: #e71d34;
-    font-size: 20px;
 }
-

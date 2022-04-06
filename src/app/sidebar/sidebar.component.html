@@ -1,5 +1,53 @@
+<div class="sidebar">
+    <div class="logo_content">
+        <div class="logo">
+        </div>
+        <i style="margin-left: 15px;" (click)="open()" class='bx bx-menu' id="btn"></i>
+
+    </div>
+    <ul class="nav_list">
+
+        <li>
+            <a [routerLink]="['/admin']" routerLinkActive="router-link-active">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+            <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+            <a [routerLink]="['/admin/departements']" routerLinkActive="router-link-active">
+                <i class='bx bx-cube-alt'></i>
+                <span class="links_name">Départements</span>
+            </a>
+            <span class="tooltip">Départements</span>
+        </li>
+        <li>
+            <a [routerLink]="['/admin/employees']" routerLinkActive="router-link-active">
+                <i class='bx bx-user'></i>
+                <span class="links_name">Employés</span>
+            </a>
+            <span class="tooltip">Employés</span>
+        </li>
+        <li>
+            <a [routerLink]="['/admin/tickets']" routerLinkActive="router-link-active">
+                <i class='bx bx-purchase-tag-alt'></i>
+                <span class="links_name">Tickets</span>
+            </a>
+            <span class="tooltip">Tickets</span>
+        </li>
 
 
-{{employe?.nomEmp}}
-<div class="btn btn-dark" (click)="logout()">Logout</div>
-<a [routerLink]="['/change']">Changer mot de passe</a>
+
+    </ul>
+    <div class="content">
+        <div class="user">
+            <div class="user_details">
+                <div class="name_job">
+                    <div class="name">{{nomEmp}}</div>
+                    <div class="job">{{role}}</div>
+                </div>
+            </div>
+            <i class='bx bx-log-out'  (click)="logout()" id="log_out"></i>
+        </div>
+    </div>
+</div>

@@ -18,8 +18,7 @@ import { Departement } from 'src/models/departement';
   styleUrls: ['./add-employee.component.css'],
 })
 export class AddEmployeeComponent implements OnInit {
-  
-  departements : Departement [] = []
+  departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
     Validators.required,
@@ -32,48 +31,55 @@ export class AddEmployeeComponent implements OnInit {
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  departement : FormControl = new FormControl('',Validators.required)
+  departement: FormControl = new FormControl('', Validators.required);
 
-  cin: FormControl = new FormControl('',{validators : [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.maxLength(8),
-    Validators.pattern("^[01][0-9]*$"),
-  ],asyncValidators :[this.validatorCin()], updateOn: 'blur'});
+  cin: FormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(8),
+      Validators.pattern('^[01][0-9]*$'),
+    ],
+    asyncValidators: [this.validatorCin()],
+    updateOn: 'blur',
+  });
 
-  
-  email: FormControl = new FormControl('',{validators : [
-    Validators.required,
-    Validators.email
-  ],asyncValidators :[this.validatorEmail()], updateOn: 'blur'});
+  email: FormControl = new FormControl('', {
+    validators: [Validators.required, Validators.email],
+    asyncValidators: [this.validatorEmail()],
+    updateOn: 'blur',
+  });
   mdp: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
+    Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/),
   ]);
+
   tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
-    Validators.pattern("^[234579][0-9]*$"),
-
+    Validators.pattern('^[234579][0-9]*$'),
   ]);
   role: FormControl = new FormControl('', [Validators.required]);
 
-
-  constructor(private empService: EmployeeService,private depService : DepartementService ,private router: Router) {}
+  constructor(
+    private empService: EmployeeService,
+    private depService: DepartementService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.depService.afficherListe().subscribe(res=>{
+    this.depService.afficherListe().subscribe((res) => {
       this.departements = res;
-    })
+    });
   }
 
   createForm() {
     this.myForm = new FormGroup({
-      prenom: this.nom,
-      nom: this.prenom,
-      departement : this.departement,
+      prenom: this.prenom,
+      nom: this.nom,
+      departement: this.departement,
       cin: this.cin,
       email: this.email,
       mdp: this.mdp,
@@ -81,30 +87,44 @@ export class AddEmployeeComponent implements OnInit {
       role: this.role,
     });
   }
-  
+
   ajouter() {
+    if (this.role.value == 0) {
+      this.departement.setValue(null);
+    }
+
     this.empService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/employees']);
     });
   }
+
+  changeValue() {
+    console.log(this.role.value);
+    if (this.role.value == 0) {
+      this.departement.clearValidators();
+    } else {
+      this.departement.setValidators([Validators.required]);
+    }
+    this.departement.updateValueAndValidity();
+  }
+
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherCin(control.value).pipe(
         map((res) => {
-          if(!res) return null ;
-          return res? {cinExist : true} : null;
+          if (!res) return null;
+          return res ? { cinExist: true } : null;
         })
       );
     };
   }
 
-
   validatorEmail(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
-          if(!res) return null ;
-          return res ? {emailExist : true} : null;
+          if (!res) return null;
+          return res ? { emailExist: true } : null;
         })
       );
     };

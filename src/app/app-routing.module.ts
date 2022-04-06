@@ -14,7 +14,6 @@ import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-tick
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
-import { DetailComponent } from './assistant/ticket/detail/detail.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
 import { ErrorComponent } from './error/error.component';
 import { AdminGuard } from './guards/admin.guard';
@@ -79,9 +78,14 @@ const routes: Routes = [
             path: '',
             component: ListTicketComponent,
           },
+        
           {
             path: 'add',
             component: AddTicketComponent,
+          },
+          {
+            path: ':id',
+            component: DetailTicketAttComponent,
           },
           {
             path: 'update/:id',
@@ -109,7 +113,7 @@ const routes: Routes = [
             component: DetailTicketComponent,
           },
         ],
-      }
+      },
     ],
   },
 
@@ -117,7 +121,7 @@ const routes: Routes = [
     path: 'assistant',
     canActivate: [AssistantGuard],
     children: [
-      { path: '', component:TicketAttComponent  },
+      { path: '', component: TicketAttComponent },
       {
         path: 'tickets',
         children: [
@@ -132,9 +136,9 @@ const routes: Routes = [
         ],
       },
       {
-        path : 'inbox',
-        component : InboxComponent
-      }
+        path: 'inbox',
+        component: InboxComponent,
+      },
     ],
   },
 
@@ -152,8 +156,8 @@ const routes: Routes = [
     component: ResetComponent,
   },
   {
-    path : 'change',
-    component:ChangeComponent
+    path: 'change',
+    component: ChangeComponent,
   },
   {
     path: '**',

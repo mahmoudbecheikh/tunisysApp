@@ -1,8 +1,7 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
 
-        </div>
+<app-sidebar></app-sidebar>
+<div class="container">
+    <div class="row">
         <div class="col-md-8">
             <h1>{{ticket?.sujet}}</h1>
 
@@ -54,11 +53,17 @@
                     style="visibility: hidden;display: none;">
 
                 <input class="btn btn-primary" type="submit" />
-
-
-                {{mails|json}}
-
             </form>
+
+
+            <div *ngFor="let mail of mails" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                <h1>{{mail.subject}}</h1>
+                <p>{{mail.name}}<span>{{mail.fom}}</span></p>
+                <div style="line-break: loose" [innerHtml]="mail.body"></div>
+                <p>{{mail.date}}</p>
+
+            
+            </div>
 
         </div>
 

@@ -37,6 +37,9 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.authService.login(this.myForm.value).subscribe((res) => {
       if (res.token) {
+
+        this.authService.logged = true
+
         localStorage.setItem('token', res.token);
         let role = this.authService.getRole();
         switch (role) {

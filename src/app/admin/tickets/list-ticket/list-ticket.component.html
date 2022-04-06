@@ -1,36 +1,35 @@
 <div class="container contenu">
-    <h2 class="page-title">Ticket</h2>
+    <h1 class="page-title text-center">Ticket</h1>
     <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
     <br><br>
-    <table *ngIf="(tickets.length>0);else vide" class="table ">
+    <table *ngIf="(tickets.length>0);else vide" class="table table-bordered" >
         <thead>
             <tr class="home">
-                <th>Sujet</th>
-                <th>Departement</th>
-                <th>Client</th>
-                <th>Etat</th>
-                <th>date</th>
-                <th>Description</th>
-                <th>Manuel</th>
-                <th>Date de modification</th>
-                <th>Action</th>
+                <th scope="col">Sujet</th>
+                <th scope="col">Departement</th>
+                <th scope="col">Client</th>
+                <th scope="col">Etat</th>
+                <th scope="col">date</th>
+                <th scope="col">Manuel</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
+
+
         <tbody>
 
             <tr *ngFor="let ticket of tickets">
-                <td> {{ ticket.sujet }}</td>
+                <td scope="row"> {{ ticket.sujet }}</td>
                 <td> {{ ticket.departement?.nom }}</td>
                 <td> {{ ticket.nomClient }}</td>
                 <td> {{ ticket.statut }}</td>
                 <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                <td> {{ ticket.description }}</td>
                 <td> {{ ticket.manuel }}</td>
-                <td> {{ ticket.dateModif | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
                 <td>
-                    <i *ngIf="ticket.statut=='nouveau'" class="lni lni-check-box" (click)="confirmer(ticket._id)"></i>
-                    <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
+                    <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
+                    <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square" (click)="confirmer(ticket._id)"></i>
                     <i class="lni lni-trash-can" (click)="supprimer(ticket._id)"></i>
+                    <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
 
                 </td>
             </tr>

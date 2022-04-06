@@ -45,3 +45,13 @@ h2 {
 small{
   color: #e71d34;
 }
+
+.home_content {
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 78px);
+  left: 175px;
+  background: var(--sky-color);
+  padding: 20px;
+  transition: all 0.5s ease;
+}

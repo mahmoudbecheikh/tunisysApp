@@ -54,6 +54,7 @@ export class AddTicketComponent implements OnInit {
     Validators.pattern('^[234579][0-9]*$'),
   ]);
   manuel: FormControl = new FormControl('admin');
+  statut: FormControl = new FormControl('en attente');
 
   constructor(
     private ticketService: TicketService,
@@ -64,7 +65,7 @@ export class AddTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.afficherListe()
+    this.afficherListe();
   }
 
   createForm() {
@@ -78,6 +79,7 @@ export class AddTicketComponent implements OnInit {
       manuel: this.manuel,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
+      statut: this.statut,
     });
   }
 
@@ -92,15 +94,15 @@ export class AddTicketComponent implements OnInit {
   }
   ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
-      this.router.navigate(['admin/tickets']);
-      if(res){
-        this.ticketService.confirmer(res._id)
-        this.formdata.append('id',res._id)
-        this.httpClient.post('http://localhost:3000/multiplefiles', this.formdata).subscribe(
-          (d) => {
-            console.log(d);
-          }
-        );
+      if (res) {
+        this.ticketService.confirmer(res._id).subscribe(response=>{
+          this.formdata.append('id', res._id);
+          this.httpClient.post('http://localhost:3000/multiplefiles', this.formdata).subscribe((d) => {
+              console.log(d);
+            });
+          this.router.navigate(['admin/tickets']);
+        })
+      
       }
     });
   }
@@ -112,5 +114,4 @@ export class AddTicketComponent implements OnInit {
       this.formdata.append('files', element);
     }
   }
-
 }

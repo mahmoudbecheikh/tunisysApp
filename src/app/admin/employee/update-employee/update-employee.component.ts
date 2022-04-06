@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -8,19 +15,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Departement } from 'src/models/departement';
 import { DepartementService } from 'src/app/services/departement.service';
 
-
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
   styleUrls: ['./update-employee.component.css'],
 })
 export class UpdateEmployeeComponent implements OnInit {
-  departements : Departement [] = []
+  departements: Departement[] = [];
   employe?: Employe;
-  id? : any ;
-  prenomEmp? : String ; 
-  nomEmp? : String ; 
+  id?: any;
+  prenomEmp?: String;
+  nomEmp?: String;
   helper = new JwtHelperService();
+
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
     Validators.required,
@@ -32,64 +39,73 @@ export class UpdateEmployeeComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  departement : FormControl = new FormControl('',Validators.required)
 
-  cin: FormControl = new FormControl('',{validators : [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.maxLength(8),
-    Validators.pattern("^[01][0-9]*$"),
+  departement: FormControl = new FormControl('', Validators.required);
 
-  ],asyncValidators :[this.validatorCin()], updateOn: 'blur'});
-  email: FormControl = new FormControl('',{validators : [
-    Validators.required,
-    Validators.email
-  ],asyncValidators :[this.validatorEmail()], updateOn: 'blur'});
+  cin: FormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(8),
+      Validators.pattern('^[01][0-9]*$'),
+    ],
+    asyncValidators: [this.validatorCin()],
+    updateOn: 'blur',
+  });
+
+  email: FormControl = new FormControl('', {
+    validators: [Validators.required, Validators.email],
+    asyncValidators: [this.validatorEmail()],
+    updateOn: 'blur',
+  });
   mdp: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(4),
+    Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/),
   ]);
+
   tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
-    Validators.pattern("^[234579][0-9]*$"),
-
+    Validators.pattern('^[234579][0-9]*$'),
   ]);
   role: FormControl = new FormControl('', [Validators.required]);
 
   constructor(
     private empService: EmployeeService,
-    private depService : DepartementService,
+    private depService: DepartementService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.depService.afficherListe().subscribe(res=>{
+    this.depService.afficherListe().subscribe((res) => {
       this.departements = res;
-    })
-    this.id = this.activatedRoute.snapshot.params['id'];
-    this.empService.afficherId(this.id).subscribe(emp=>{
-      this.employe = emp ;
-      this.prenomEmp  = emp.nomEmp?.split(" ")[0] ;
-      this.nomEmp = emp.nomEmp?.split(" ")[1] ;
-      this.prenom.setValue(this.prenomEmp)
-      this.nom.setValue(this.nomEmp)
-      this.cin.setValue(this.employe?.cin)
-      this.email.setValue(this.employe?.email)
-      this.role.setValue(this.employe?.role)
-      this.tel.setValue(this.employe?.tel)
-
     });
+    this.id = this.activatedRoute.snapshot.params['id'];
+    this.empService.afficherId(this.id).subscribe((emp) => {
+      this.employe = emp;
+      this.prenomEmp = emp.nomEmp?.split(' ')[0];
+      this.nomEmp = emp.nomEmp?.split(' ')[1];
+      this.prenom.setValue(this.prenomEmp);
+      this.nom.setValue(this.nomEmp);
+      this.cin.setValue(this.employe?.cin);
+      this.email.setValue(this.employe?.email);
+      this.role.setValue(this.employe?.role);
+      this.tel.setValue(this.employe?.tel);
+    });
+    if (this.role.value == 0) {
+      this.departement.clearValidators();
+      this.departement.updateValueAndValidity();
+    }
   }
 
   createForm() {
     this.myForm = new FormGroup({
       prenom: this.prenom,
-      departement : this.departement ,
       nom: this.nom,
+      departement: this.departement,
       cin: this.cin,
       email: this.email,
       mdp: this.mdp,
@@ -98,28 +114,39 @@ export class UpdateEmployeeComponent implements OnInit {
     });
   }
 
-
-
   modifier() {
-    this.empService.modifier(this.employe?._id,this.myForm.value).subscribe((res) => {
-      console.log(res) ;
-      let token: any = localStorage.getItem('token');
-      let decodeToken = this.helper.decodeToken(token);
-      let id = decodeToken.id;
-      if(id==res?._id && res.role!=0){
-        localStorage.removeItem('token');
-        this.router.navigate(['/login'])
-      }
-      else
-      this.router.navigate(['admin/employees']);
-    });
+    this.empService
+      .modifier(this.employe?._id, this.myForm.value)
+      .subscribe((res) => {
+        console.log(res);
+        let token: any = localStorage.getItem('token');
+        let decodeToken = this.helper.decodeToken(token);
+        let id = decodeToken.id;
+        console.log('ena '+id);
+        if (id == res?._id && res.role != 0) {
+          localStorage.removeItem('token');
+          this.router.navigate(['/login']);
+        } else this.router.navigate(['admin/employees']);
+      });
+  }
+
+  changeValue() {
+    console.log(this.role.value);
+    if (this.role.value == 0) {
+      this.departement.clearValidators();
+    } else {
+      this.departement.setValidators([Validators.required]);
+    }
+    this.departement.updateValueAndValidity();
   }
 
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherCin(control.value).pipe(
         map((res) => {
-          return (res && this.employe?.cin!=control.value) ? {cinExist : true} : null;
+          return res && this.employe?.cin != control.value
+            ? { cinExist: true }
+            : null;
         })
       );
     };
@@ -128,8 +155,10 @@ export class UpdateEmployeeComponent implements OnInit {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherCin(control.value).pipe(
         map((res) => {
-          if(!res) return null ;
-          return (res && this.employe?.email!=control.value) ? {emailExist : true} : null;
+          if (!res) return null;
+          return res && this.employe?.email != control.value
+            ? { emailExist: true }
+            : null;
         })
       );
     };

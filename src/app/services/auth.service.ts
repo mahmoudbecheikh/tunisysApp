@@ -9,7 +9,7 @@ import { Employe } from 'src/models/employe';
 })
 export class AuthService {
   helper = new JwtHelperService();
-
+  logged = false ;
   constructor(private http: HttpClient) {}
 
   login(data: any): Observable<any> {
