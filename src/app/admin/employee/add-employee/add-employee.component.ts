@@ -89,7 +89,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ajouter() {
-    if (this.role.value == 0) {
+    if (this.role.value == 0 || this.role.value==1) {
       this.departement.setValue(null);
     }
 
@@ -100,7 +100,7 @@ export class AddEmployeeComponent implements OnInit {
 
   changeValue() {
     console.log(this.role.value);
-    if (this.role.value == 0) {
+    if (this.role.value == 0 || this.role.value==1) {
       this.departement.clearValidators();
     } else {
       this.departement.setValidators([Validators.required]);

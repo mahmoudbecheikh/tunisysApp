@@ -95,7 +95,7 @@ export class UpdateEmployeeComponent implements OnInit {
       this.role.setValue(this.employe?.role);
       this.tel.setValue(this.employe?.tel);
     });
-    if (this.role.value == 0) {
+    if (this.role.value == 0 || this.role.value==1) {
       this.departement.clearValidators();
       this.departement.updateValueAndValidity();
     }
@@ -132,7 +132,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
   changeValue() {
     console.log(this.role.value);
-    if (this.role.value == 0) {
+    if (this.role.value == 0 || this.role.value==1) {
       this.departement.clearValidators();
     } else {
       this.departement.setValidators([Validators.required]);

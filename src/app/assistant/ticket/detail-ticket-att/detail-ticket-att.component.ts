@@ -15,6 +15,7 @@ export class DetailTicketAttComponent implements OnInit {
   ticket?: Ticket;
   id: any;
   files?: [];
+  attachements? :any = [];
   localUrl?: any;
   formdata = new FormData();
   mails: any = [];
@@ -93,6 +94,7 @@ export class DetailTicketAttComponent implements OnInit {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdata.append('files', element);
+      this.attachements.push(element.name)
     }
   }
 }

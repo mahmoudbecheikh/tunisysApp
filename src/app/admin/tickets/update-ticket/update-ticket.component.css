@@ -1,11 +1,28 @@
-.form-group{
-    margin-top: 15px;
-}
-
 small {
     color: #cc0033;
     display: inline-block;
     font-size: 12px;
-    line-height: 15px;
-    ;}
-  
+    ;
+}
+
+.container {
+    margin-left: 175px;
+    margin-top: 50px;
+}
+
+.file {
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+
+.file img {
+    width: 50px;
+    height: 50px;
+}
+
+.lni-close{
+    font-size: 10px;
+    color: #cc0033;
+    font-weight: bold;
+}

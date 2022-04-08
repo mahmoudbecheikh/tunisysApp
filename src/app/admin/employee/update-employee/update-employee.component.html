@@ -67,7 +67,7 @@
 
                 <div class="form-group">
                     <select class="form-control" formControlName="departement"
-                        [attr.disabled]="role.value==0 ? '' : null">
+                        [attr.disabled]="role.value==0 || role.value==1 ? '' : null">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" [selected]="employe?.departement=='{{dep._id}}'"
                             value="{{dep._id}}">{{dep.nom}}</option>

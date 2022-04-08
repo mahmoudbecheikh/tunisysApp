@@ -1,74 +1,121 @@
-<div class="container" style="margin-top: 50px;">
+<app-sidebar></app-sidebar>
+<div class="container">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
 
     <form [formGroup]="myForm" (ngSubmit)="ajouter()">
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
-                        name="sujet" id="sujet">
-                        <small *ngIf=" sujet.invalid && sujet.touched && sujet.dirty">sujet incorrect</small>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea type="text" formControlName="description" placeholder="description *" class="form-control" name="description"
-                            id="description"> </textarea>  
-                            <small *ngIf=" description.invalid && description.touched && description.dirty">Description incorrect</small>
-                    </div>
 
                 <div class="form-group">
-                    <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control" name="nomClient"
-                        id="nomClient">
-                        <small *ngIf=" nomClient.invalid && nomClient.touched && nomClient.dirty">Nom complet incorrect</small>
+                    <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control"
+                        name="nomClient" id="nomClient">
+                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> Votre CIN
+                        </span>
+                    </small>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" formControlName="adresse" placeholder="Adresse*" class="form-control" name="adresse"
-                        id="adresse">
-                        <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Nom complet incorrect</small>
+                    <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control"
+                        name="emailClient" id="email">
+                    <small> <span *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">
+                            Votre CIN
+                        </span>
+                    </small>
                 </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="telClient" placeholder="Tel *" class="form-control" name="tel"
+                        id="tel">
+                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Votre CIN
+                        </span>
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="siteWeb" placeholder="Site *" class="form-control"
+                        name="siteWeb" id="siteWeb">
+                    <small>
+                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> Votre CIN
+                        </span>
+                    </small>
+                </div>
+
+
+
+                <div class="form-group">
+                    <input type="text" formControlName="adresse" placeholder="Adresse*" class="form-control"
+                        name="adresse" id="adresse">
+                    <small>
+                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Votre CIN </span>
+                    </small>
+                </div>
+
+
+
+
 
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control" name="emailClient"
-                        id="email">
-                        <small *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">Email incorrect</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="tel" placeholder="Tel *"  class="form-control" name="tel"
-                        id="tel">
-                        <small *ngIf=" tel.invalid && tel.touched && tel.dirty">Tel incorrect</small>
-                </div>
 
-                <div class="form-group">
-                    <input type="text" formControlName="siteWeb" placeholder="Site *" class="form-control" name="siteWeb"
-                        id="siteWeb">
-                        <small *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty">Nom complet incorrect</small>
-                </div>
-              
+
                 <div class="form-group">
                     <select class="form-control" formControlName="departement">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
-                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle incorrect</small>
+                    <small>
+                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Votre CIN
+                        </span>
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
+                        name="sujet" id="sujet">
+                    <small>
+                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty"> Votre CIN est
+                            invalide
+                        </span>
+                    </small>
                 </div>
 
 
-    
 
-                <input type="file" (change)="uploadMultiple($event)" multiple />
-
-                <div style="margin: 15px -120px;">
-                    <input class="btn btn-dark" style="margin: 5px; width: 100px;" [disabled]="myForm.invalid" value="Ajouter" type="submit"/>
-                    <div class="btn btn-dark" style="margin: 5px; width: 100px;" (click)="returnToList()" >Annuler</div>
+                <div class="form-group">
+                    <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                        name="description" id="description" rows="7"> </textarea>
+                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Votre CIN
+                        </span></small>
                 </div>
+
+
+
 
             </div>
+        </div>
 
+        <div class="form-group" style="width: 75%; margin:10px auto;" >
+            <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                <label for="file" style="text-align: center; cursor: pointer;">
+                    <p style="color: grey;margin-top: 15px;">
+                        Déposer des fichier
+                    </p>
+                    <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                </label>
+                <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                    style="visibility: hidden;display: none;">
+
+                <div class="row files">
+                    <div class="col-sm-2 file" *ngFor="let file of attachmentList">
+                        <img src="../../assets/images/file.png">
+                        <p style="word-wrap: break-word">{{file}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 20%;" value="Ajouter" type="submit" />
         </div>
     </form>
 </div>
-
-<app-sidebar></app-sidebar>

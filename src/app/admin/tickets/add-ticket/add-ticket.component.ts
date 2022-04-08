@@ -13,6 +13,8 @@ import { Departement } from 'src/models/departement';
 })
 export class AddTicketComponent implements OnInit {
   departements: Departement[] = [];
+  attachmentList:any = [];
+
   formdata = new FormData();
 
   myForm: FormGroup = new FormGroup({});
@@ -21,13 +23,11 @@ export class AddTicketComponent implements OnInit {
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  departement: FormControl = new FormControl('', [Validators.required]);
   description: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(15),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-
   emailClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -45,9 +45,9 @@ export class AddTicketComponent implements OnInit {
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern("((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)")
   ]);
-  tel: FormControl = new FormControl('', [
+  telClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
@@ -55,6 +55,7 @@ export class AddTicketComponent implements OnInit {
   ]);
   manuel: FormControl = new FormControl('admin');
   statut: FormControl = new FormControl('en attente');
+  departement: FormControl = new FormControl('', [Validators.required]);
 
   constructor(
     private ticketService: TicketService,
@@ -74,7 +75,7 @@ export class AddTicketComponent implements OnInit {
       departement: this.departement,
       emailClient: this.emailClient,
       nomClient: this.nomClient,
-      tel: this.tel,
+      telClient: this.telClient,
       description: this.description,
       manuel: this.manuel,
       siteWeb: this.siteWeb,
@@ -112,6 +113,7 @@ export class AddTicketComponent implements OnInit {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdata.append('files', element);
+      this.attachmentList.push(element.name)
     }
   }
 }

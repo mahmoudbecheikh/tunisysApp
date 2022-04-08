@@ -31,7 +31,6 @@
                         id="email">
                     <small> <span *ngIf=" email.invalid && email.touched && email.dirty"> Veuillez entrer une adresse
                             e-mail valide</span></small>
-
                 </div>
 
 
@@ -63,7 +62,7 @@
                 </div>
 
                 <div class="form-group">
-                    <select class="form-control" [attr.disabled]="role.value==0 ? '' : null"
+                    <select class="form-control" [attr.disabled]="role.value==0 || role.value==1 ? '' : null"
                         formControlName="departement">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
@@ -71,8 +70,6 @@
 
                     <small> <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Veuillez
                             selectionnez un departement</span></small>
-
-
                 </div>
             </div>
 

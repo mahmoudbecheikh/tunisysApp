@@ -5,8 +5,7 @@
         <i style="margin-left: 15px;" (click)="open()" class='bx bx-menu' id="btn"></i>
 
     </div>
-    <ul class="nav_list">
-
+    <ul class="nav_list" *ngIf="employe?.role==0">
         <li>
             <a [routerLink]="['/admin']" routerLinkActive="router-link-active">
                 <i class='bx bx-grid-alt'></i>
@@ -35,8 +34,26 @@
             </a>
             <span class="tooltip">Tickets</span>
         </li>
+    </ul>
 
+    <ul class="nav_list" *ngIf="employe?.role==1">
+        
+        <li>
+            <a [routerLink]="['/assistant/tickets']" routerLinkActive="router-link-active">
+                <i class='bx bx-purchase-tag-alt'></i>
+                <span class="links_name">Tickets</span>
+            </a>
+            <span class="tooltip">Tickets</span>
+        </li>
 
+                
+        <li>
+            <a [routerLink]="['/assistant/inbox']" routerLinkActive="router-link-active">
+                <i class='bx bx-envelope'></i>
+                <span class="links_name">Tickets</span>
+            </a>
+            <span class="tooltip">Tickets</span>
+        </li>
 
     </ul>
     <div class="content">
@@ -47,7 +64,7 @@
                     <div class="job">{{role}}</div>
                 </div>
             </div>
-            <i class='bx bx-log-out'  (click)="logout()" id="log_out"></i>
+            <i class='bx bx-log-out' (click)="logout()" id="log_out"></i>
         </div>
     </div>
 </div>

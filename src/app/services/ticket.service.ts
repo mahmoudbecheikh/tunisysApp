@@ -21,7 +21,7 @@ export class TicketService {
   afficherId(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  modifier(id: any, ticket: Ticket) {
+  modifier(id: any, ticket: Ticket):Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, ticket);
   }
 
@@ -36,6 +36,11 @@ export class TicketService {
   supprimer(_id: string) {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
+
+
+  uploadFiles(data:any){
+    return this.http.post('http://localhost:3000/multiplefiles',data) ;
+}
 
   downloadFile(file:String){
     var body = {filename:file};

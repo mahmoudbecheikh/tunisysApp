@@ -1,11 +1,262 @@
+body {
+    background: #DCDCDC;
+    margin-top: 20px;
+}
+
+.email-app {
+    display: flex;
+}
+
+.container {
+    margin-left: 175px;
+    margin-top: 50px;
+}
+
+i {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 3px;
+}
+
 .file{
-    cursor: pointer;
     padding: 5px;
     text-align: center;
     margin: 5px;
-}
-
-.file img{
+  }
+  
+  .file img{
     width: 50px;
     height: 50px;
+  }
+
+
+.email-app .email-list-wrapper {
+    /* width: 30%; */
+    margin-right: 1.5rem;
+}
+
+.email-app .email-list-wrapper .email-list-scroll-container {
+    height: 100vh;
+    position: relative;
+}
+
+.email-app .email-list-wrapper .email-list-header {
+    padding: 1rem 0;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.email-app .email-list-wrapper .email-list {
+    height: calc(100vh - 70px);
+    list-style-type: none;
+    padding: 0;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item {
+    margin-bottom: 1.2rem;
+    background-color: #ffffff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    cursor: default;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item.active {
+    border: 1.5px solid #22b9ff;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .recipient {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0;
+    margin-bottom: .7rem;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .recipient img {
+    margin-right: .5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .recipient .recipient-name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1;
+    color: #727686;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .recipient .recipient-name:hover {
+    color: #22b9ff;
+    text-decoration: none;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .email-subject {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #394044;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: .7rem;
+    text-decoration: none;
+    line-height: 1.5;
+    transition: all, 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .email-app .email-list-wrapper .email-list .email-list-item .email-subject {
+        transition: none;
+    }
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .email-subject .unread {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 100%;
+    display: block;
+    background: #22b9ff;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .email-subject:hover {
+    color: #22b9ff;
+}
+
+.email-app .email-list-wrapper .email-list .email-list-item .email-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+
+.email-app .email-list-wrapper .email-list .email-list-item .email-footer .email-action a svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+.email-app .email-desc-wrapper {
+    width: 60%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);
+}
+
+.email-app .email-desc-wrapper .email-header {
+    margin-bottom: 1.5rem;
+}
+
+.email-app .email-desc-wrapper .email-header .email-date {
+    color: #727686;
+    font-size: 13px;
+    margin-bottom: .5rem;
+}
+
+.email-app .email-desc-wrapper .email-header .email-subject {
+    color: #394044;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: .8rem;
+    flex-shrink: 0;
+}
+
+.email-app .email-desc-wrapper .email-header .recipient {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: #727686;
+}
+
+.email-app .email-desc-wrapper .email-header .recipient span {
+    font-weight: 500;
+    color: #394044;
+}
+
+.email-app .email-desc-wrapper .email-body {
+    color: #727686;
+    margin-bottom: 2rem;
+}
+
+.email-app .email-desc-wrapper .email-body p {
+    font-size: 13px;
+    margin-bottom: 1rem;
+    line-height: 2;
+    word-wrap: break-word;}
+
+.email-app .email-desc-wrapper .email-attachment {
+    margin-bottom: 2rem;
+}
+
+.email-app .email-desc-wrapper .email-attachment .file-info {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.email-app .email-desc-wrapper .email-attachment .file-info .file-size {
+    color: #B1BAC5;
+    margin-right: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.email-app .email-desc-wrapper .email-attachment .file-info .file-size svg {
+    width: 20px;
+    height: 20px;
+    margin-right: .5rem;
+}
+
+
+
+.email-app .email-desc-wrapper .email-attachment .attachment-list {
+    padding: 0;
+    height: 100%;
+}
+
+.email-app .email-desc-wrapper .email-attachment .attachment-list .attachment-list-item {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: 80px;
+    margin: 0 .5rem .5rem 0;
+    border-radius: 4px;
+}
+
+.email-app .email-desc-wrapper .email-attachment .attachment-list .attachment-list-item span {
+    height: 80px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 80px;
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.email-app .email-desc-wrapper .email-attachment .attachment-list .attachment-list-item img {
+    width: 75%;
+    height: 75%;
+}
+
+.email-app .email-desc-wrapper .email-attachment .attachment-list .attachment-list-item:hover {
+    cursor: pointer;
 }

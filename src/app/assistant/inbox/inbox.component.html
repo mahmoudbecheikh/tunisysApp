@@ -1,29 +1,186 @@
+<app-sidebar></app-sidebar>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <app-sidebar></app-sidebar>
-        </div>
-        <div class="col-md-9">
-            <div *ngFor="let mail of mails" style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                <h1>{{mail.subject}}</h1>
-                <p>{{mail.name}}<span>{{mail.fom}}</span></p>
-                <div style="line-break: loose" [innerHtml]="mail.body"></div>
-                <p>{{mail.date}}</p>
+        <div class="col-sm-9">
+            <div class="content-wrapper">
+                <div class="email-app card-margin">
 
-                <div class="row files">
-                    <div class="col-sm2 file" *ngFor="let attachment of mail.attachments" (click)='download(attachment)'>
-                        <img width="25px" height="25px" src="../../../../assets/images/file.png">
-                        <p>{{attachment.filename}}</p>
+                    <div class="email-list-wrapper">
+
+                        <div id="email-app-body" class="email-list-scroll-container ps ps--active-y">
+
+                            <ul class="email-list">
+                                <li *ngFor="let mail of mails" class="email-list-item"
+                                    [ngClass]="{'active': mailSelected && mail.uid===mailSelected.uid}"
+                                    (click)='select(mail)'>
+                                    <div class="recipient">
+                                        <img src="../../../assets/images/client.png" alt="Profile Picture" />
+                                        <p class="recipient-name">{{mail.name}}</p>
+                                    </div>
+                                    <p class="email-subject" *ngIf="mail.subject;else vide">{{mail.subject}} <i
+                                            class="unread"></i></p>
+                                    <ng-template #vide>
+                                        <p class="email-subject">(aucun objet)<i class="unread"></i></p>
+
+                                    </ng-template>
+                                    <div class="email-footer">
+
+                                        <div class="email-action">
+
+                                            <i (click)="vu(mail.uid)" class="lni lni-checkmark"></i>
+
+                                            <i (click)="supprimer(mail.uid)" class="lni lni-trash-can"></i>
+
+
+
+                                        </div>
+
+
+                                        <span class="email-time">{{mail.date | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+                                    </div>
+                                </li>
+                                <!-- <li class="email-list-item active">
+                                    <div class="recipient">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="Profile Picture" />
+                                        <a href="#" class="recipient-name">Poul Smith</a>
+                                    </div>
+                                    <a href="#" class="email-subject">Prepare Mockup as per the spec document and Submit by
+                                        Monday!!!<i class="unread">&nbsp;</i></a>
+                                    <div class="email-footer">
+        
+                                        <span class="email-time">11:50 AM</span>
+                                    </div>
+                                </li> -->
+
+                            </ul>
+                        </div>
+
                     </div>
+
+                    <div *ngIf="mailSelected" class="email-desc-wrapper">
+                        <div class="email-header">
+                            <div class="email-date">{{mailSelected.date | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
+                            <div class="email-subject" *ngIf="mailSelected.subject ; else vide">{{mailSelected.subject}}
+                            </div>
+                            <ng-template #vide>
+                                <div class="email-subject">(aucun objet)</div>
+                            </ng-template>
+                            <p class="recipient"><span>From:</span>{{mailSelected.name}} &lt;{{mailSelected.from}}&gt;
+                            </p>
+                        </div>
+                        <div class="email-body">
+                            <p [innerHtml]="mailSelected.body">
+
+                            </p>
+
+                        </div>
+                        <div class="email-attachment">
+                            <div class="file-info">
+                                <div class="file-size">
+                                    <i style="width: 25px;height: 25px;" class="lni lni-paperclip"></i>
+                                    <span>Attachment</span>
+                                </div>
+
+                            </div>
+                            <ul class="attachment-list">
+                                <li *ngFor="let attachment of mailSelected.attachments" (click)='download(attachment)'
+                                    class="attachment-list-item"><img src="../../../../assets/images/file.png"
+                                        alt="Showcase" title="Showcase" />
+                                    {{attachment.filename}}
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
-                <i class="lni lni-pencil" (click)="vu(mail.uid)"></i>
-                <i class="lni lni-trash-can" (click)="supprimer(mail.uid)"></i>
-
-
-
 
 
             </div>
         </div>
+
+        <div *ngIf="mailSelected" class="col-sm-3">
+            <h3 style="text-align: center;">Créer Ticket</h3>
+            <form [formGroup]="myForm" (ngSubmit)="ajouter()">
+                <div class="form-group">
+                    <select class="form-control" formControlName="departement">
+                        {{departements}}
+                        <option value="" disabled hidden selected>Sélectionnez un departement</option>
+                        <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
+                    </select>
+                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
+                        name="sujet" id="sujet">
+                    <small *ngIf=" sujet.invalid && sujet.touched && sujet.dirty">sujet incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control"
+                        name="nomClient" id="nomClient">
+                    <small *ngIf=" nomClient.invalid && nomClient.touched && nomClient.dirty">Nom
+                        complet
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="siteWeb" placeholder="siteWeb *" class="form-control"
+                        name="siteWeb" id="siteWeb" />
+                    <small *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty">Site Web
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control"
+                        name="emailClient" id="email">
+                    <small *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">Email
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="tel" placeholder="Tel *" class="form-control" name="tel"
+                        id="tel">
+                    <small *ngIf=" tel.invalid && tel.touched && tel.dirty">Tel incorrect</small>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" formControlName="adresse" placeholder="adresse " class="form-control"
+                        name="adresse" id="adresse" />
+                    <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Adresse
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                        name="description" id="description"> </textarea>
+                    <small *ngIf=" description.invalid && description.touched && description.dirty">Description
+                        incorrect</small>
+                </div>
+                <div class="form-group">
+                    <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                        <label for="file" style="text-align: center; cursor: pointer;">
+                            <p style="color: grey;margin-top: 15px;">
+                                Déposer des fichier
+                            </p>
+                            <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                        </label>
+                        <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                            style="visibility: hidden;display: none;">
+
+                        <div class="row files">
+                            <div class="col-sm-2 file" *ngFor="let file of files">
+                                <img src="../../assets/images/file.png">
+                                <p style="word-wrap: break-word">{{file}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <input class="btn btn-primary" [disabled]="myForm.invalid" value="Créer" type="submit" />
+                </div>
+
+            </form>
+        </div>
+
     </div>
+
 </div>

@@ -23,6 +23,11 @@
 }
 
 
+.container {
+  margin-left: 190px;
+  margin-top: 50px;
+}
+
 .first {
   background: #17a2b8;
   color: white;
