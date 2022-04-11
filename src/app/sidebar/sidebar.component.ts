@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
         case 1:
           this.role = 'Assistant';
           break;
-        case 12:
+        case 2:
           this.role = 'Agent';
           break;
         default:

@@ -8,9 +8,9 @@ import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
 import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
+import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
-import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';

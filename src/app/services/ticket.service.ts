@@ -21,8 +21,12 @@ export class TicketService {
   afficherId(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  modifier(id: any, ticket: Ticket):Observable<any> {
+  modifier(id: any, ticket: any):Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, ticket);
+  }
+
+  changerStatut(tickets : any):Observable<any> {
+    return this.http.put(this.baseURL, tickets);
   }
 
   confirmer(id: any): Observable<any> {

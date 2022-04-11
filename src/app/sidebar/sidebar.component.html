@@ -34,10 +34,17 @@
             </a>
             <span class="tooltip">Tickets</span>
         </li>
+        <li>
+            <a [routerLink]="['/change']" routerLinkActive="router-link-active">
+                <i class='bx bxs-user-account'></i>
+                <span class="links_name">Profil</span>
+            </a>
+            <span class="tooltip">Profil</span>
+        </li>
     </ul>
 
     <ul class="nav_list" *ngIf="employe?.role==1">
-        
+
         <li>
             <a [routerLink]="['/assistant/tickets']" routerLinkActive="router-link-active">
                 <i class='bx bx-purchase-tag-alt'></i>
@@ -46,15 +53,42 @@
             <span class="tooltip">Tickets</span>
         </li>
 
-                
         <li>
             <a [routerLink]="['/assistant/inbox']" routerLinkActive="router-link-active">
                 <i class='bx bx-envelope'></i>
                 <span class="links_name">Tickets</span>
             </a>
+            <span class="tooltip">Boîte</span>
+        </li>
+
+        <li>
+            <a [routerLink]="['/change']" routerLinkActive="router-link-active">
+                <i class='bx bxs-user-account'></i>
+                <span class="links_name">Profil</span>
+            </a>
+            <span class="tooltip">Profil</span>
+        </li>
+        
+    </ul>
+
+    <ul class="nav_list" *ngIf="employe?.role==2">
+
+        <li>
+            <a [routerLink]="['/agent/tickets']" routerLinkActive="router-link-active">
+                <i class='bx bx-purchase-tag-alt'></i>
+                <span class="links_name">Tickets</span>
+            </a>
             <span class="tooltip">Tickets</span>
         </li>
 
+        <li>
+            <a [routerLink]="['/change']" routerLinkActive="router-link-active">
+                <i class='bx bxs-user-account'></i>
+                <span class="links_name">Profil</span>
+            </a>
+            <span class="tooltip">Profil</span>
+        </li>
+        
     </ul>
     <div class="content">
         <div class="user">

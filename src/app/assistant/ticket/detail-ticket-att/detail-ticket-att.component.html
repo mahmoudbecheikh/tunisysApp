@@ -1,7 +1,7 @@
 <app-sidebar></app-sidebar>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm">
             <h1>{{ticket?.sujet}}</h1>
 
             <div class="row">
@@ -16,7 +16,10 @@
                 </div>
                 <div class="info col-sm">
                     <p>Département : <span>{{ticket?.departement?.nom}}</span></p>
-                    <p>Employe : <span>---</span> </p>
+                    <p>Employe : <span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}</span>
+                        <span *ngIf="!ticket?.employe">---</span>
+                    </p>
+
                     <p>Manuel : <span>{{ticket?.manuel}}</span> </p>
                     <p>Statut : <span>{{ticket?.statut}}</span></p>
                     <p>Date : <span> {{ ticket?.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span></p>
@@ -25,6 +28,12 @@
                 </div>
             </div>
 
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
             <h3>Description</h3>
             <div class="row">
                 <div class="col-sm desc">
@@ -33,33 +42,51 @@
                     </textarea>
                 </div>
             </div>
+        </div>
 
-
-
+        <div class="col-sm text-center">
             <h3>Pièce jointe</h3>
-            <div class="row files">
+            <div style="margin: 10px;" class="row files">
                 <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file)'>
                     <img src="../../../../assets/images/file.png">
                     <p>{{file}}</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-6 inbox">
+    <div class="row">
 
-            <div *ngFor="let mail of mails"
-                style="width:90%; margin: 2px auto;  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px">
-                <h1>{{mail.subject}}</h1>
-                <p>{{mail.date | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
-                <p>{{mail.name}}</p>
-                <p>{{mail.from}}</p>
-                <div style="    word-wrap: break-word;
-                " [innerHtml]="mail.body"></div>
-            </div>
+        <div class="col-sm">
+            <h3>Messages</h3>
 
-            <form style="width:90%; margin: 10px auto;" [formGroup]="myForm" (ngSubmit)="envoyer()">
-                <input type="text" class="form-control" name="email" id="email" formControlName="email" placeholder="Destinataire">
-                <input type="text" class="form-control" name="sujet" id="sujet" formControlName="sujet" placeholder="Objet">
+            <table class="table">
+                <tbody>
+                    <tr *ngFor="let mail of mails">
+                        <th scope="row" *ngIf="mail.from=='tunisys.mb.sj@gmail.com';else tuni">Tunisys
+                        </th>
+                        <ng-template #tuni>
+                            <th>{{mail.name}}</th>
+                        </ng-template>
+                        <td>
+                            {{mail.subject}}
+                            <p style="word-wrap: break-word;  word-break: break-all;
+                            " [innerHtml]="mail.body"></p>
+                        </td>
+                        <td> <p>{{mail.date | date: 'dd/MM/yyyy HH:mm:ss'}}</p></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm">
+            <h3 style="text-align: center;">Nouveau message</h3>
+            <form [formGroup]="myForm" (ngSubmit)="envoyer()">
+                <input type="text" class="form-control" name="email" id="email" formControlName="email"
+                    placeholder="Destinataire">
+                <input type="text" class="form-control" name="sujet" id="sujet" formControlName="sujet"
+                    placeholder="Objet">
                 <div class="form-group">
                     <textarea class="form-control" formControlName="text" id="desc"
                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
@@ -71,14 +98,14 @@
                 <input type="file" name="file" id="file" multiple (change)="uploadMultiple($event)"
                     style="visibility: hidden;display: none;">
                 <input class="btn btn-primary" type="submit" [disabled]="myForm.invalid" />
-                <i  class="lni lni-trash-can"></i>
+                <i class="lni lni-trash-can"></i>
                 <label for="file"> <i class="lni lni-paperclip"></i></label>
 
             </form>
-
         </div>
-
-
     </div>
+
+
+    <!-- width:90%; margin: 2px auto -->
 
 </div>

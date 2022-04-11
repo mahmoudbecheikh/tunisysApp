@@ -15,7 +15,7 @@ export class DetailTicketAttComponent implements OnInit {
   ticket?: Ticket;
   id: any;
   files?: [];
-  attachements? :any = [];
+  attachements?: any = [];
   localUrl?: any;
   formdata = new FormData();
   mails: any = [];
@@ -53,7 +53,9 @@ export class DetailTicketAttComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticketService.afficherId(this.id).subscribe((res) => {
+      console.log(res);
       this.ticket = res;
+      this.emailClient.setValue(this.ticket.emailClient);
       this.files = res.fJoint;
       let data = {
         email: res.emailClient,
@@ -65,11 +67,12 @@ export class DetailTicketAttComponent implements OnInit {
       });
       this.mailService.afficherListe(data).subscribe((mails) => {
         this.mails = this.mails.concat(mails);
-        this.mails = this.mails.sort((a: any, b: any) =>
-          a.date > b.date ? 1 : -1
-        );
       });
     });
+
+    this.mails = this.mails.sort((a: any, b: any) =>
+      a.date > b.date ? 1 : -1
+    );
     this.createForm();
   }
 
@@ -94,7 +97,7 @@ export class DetailTicketAttComponent implements OnInit {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdata.append('files', element);
-      this.attachements.push(element.name)
+      this.attachements.push(element.name);
     }
   }
 }

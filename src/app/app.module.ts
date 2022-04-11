@@ -23,7 +23,6 @@ import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
-import { DetailTicketComponent } from './agent/tickets/detail-ticket/detail-ticket.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
@@ -31,6 +30,7 @@ import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/d
 import { ResetComponent } from './securite/reset/reset.component';
 import { ForgetComponent } from './securite/forget/forget.component';
 import { ChangeComponent } from './securite/change/change.component';
+import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 
 @NgModule({
   declarations: [
@@ -50,13 +50,13 @@ import { ChangeComponent } from './securite/change/change.component';
     UpdateDepartementComponent,
     DashbordComponent,
     TicketsComponent,
-    DetailTicketComponent,
     InboxComponent,
     TicketAttComponent,
     DetailTicketAttComponent,
     ResetComponent,
     ForgetComponent,
     ChangeComponent,
+    DetailTicketComponent,
   ],
   imports: [
     BrowserModule,

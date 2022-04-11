@@ -92,6 +92,10 @@ input {
     margin-bottom: 10px;
 }
 
+mat-form-field{
+    width: 50%;
+}
+
 th,td{
     vertical-align:middle
 
@@ -109,5 +113,4 @@ th,td{
     font-weight: bold;
     color: black;
 } */
-
 

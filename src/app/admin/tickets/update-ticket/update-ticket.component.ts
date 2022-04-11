@@ -66,7 +66,6 @@ export class UpdateTicketComponent implements OnInit {
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private httpClient: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -117,11 +116,11 @@ export class UpdateTicketComponent implements OnInit {
         if (res) {
           this.ticketService.confirmer(res._id).subscribe((response) => {
             this.formdata.append('id', res._id);
-            this.httpClient
-              .post('http://localhost:3000/multiplefiles', this.formdata)
-              .subscribe((d) => {
-                console.log(d);
-              });
+
+            this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
+              console.log(files);
+            });
+
             this.router.navigate(['admin/tickets']);
           });
         }

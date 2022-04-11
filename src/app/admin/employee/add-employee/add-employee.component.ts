@@ -19,6 +19,7 @@ import { Departement } from 'src/models/departement';
 })
 export class AddEmployeeComponent implements OnInit {
   departements: Departement[] = [];
+
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
     Validators.required,
@@ -107,6 +108,9 @@ export class AddEmployeeComponent implements OnInit {
     }
     this.departement.updateValueAndValidity();
   }
+
+
+
 
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {

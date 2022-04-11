@@ -1,0 +1,48 @@
+<app-sidebar></app-sidebar>
+
+<div class="container">
+    <form [formGroup]="formRech">
+        <mat-form-field>
+            <input type="text" placeholder="Rechercher" aria-label="Sujet" matInput formControlName="sujet"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let ticket of ticketFilter" (click)="find(ticket.sujet)" [value]="ticket.sujet">
+                    {{ticket.sujet}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <input class="btn btn-primary" (click)="findBtn(sujet.value)" [disabled]="sujet.value==''"
+            style="margin: 20px auto; width: 20%;" value="Ajouter" type="submit" />
+    </form>
+    <ul *ngIf="show">
+        <li *ngFor="let ticket of results">
+            <p>{{ticket.sujet}} </p>
+            <p>{{ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-sm">
+            <form [formGroup]="formRapport" (ngSubmit)="modifier()">
+                <div class="form-group">
+                    <textarea type="text" formControlName="rapport" placeholder="Rapport *" class="form-control"
+                        name="description" id="description" rows="7"> </textarea>
+
+                </div>
+                <input class="btn btn-primary" [disabled]="formRapport.invalid" style="margin: 20px auto; width: 20%;"
+                    value="Ajouter" type="submit" />
+            </form>
+
+            <ul>
+                <!-- <li *ngFor="let rap of rapportModify"  (click)="editRapport()">
+                    {{rap}} 
+
+                </li> -->
+            </ul>
+
+        </div>
+    </div>
+
+
+
+</div>

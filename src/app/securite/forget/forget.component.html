@@ -1,14 +1,22 @@
-<div class="container">
-    <div class="form">
-        <form [formGroup]="myForm" (ngSubmit)="envoyer()">
-            <p class="login-text" style="font-size: 2rem; font-weight: 600;">Problèmes de connexion</p>
-            <div class="input-group">
-                <input type="text" class="form-control" formControlName="email" name="email" placeholder="Entrez votre email">
+<div class="main">
+    <img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" width="200px" height="200px"
+        style="margin:0px">
 
-            </div>
-            <div class="input-group">
-                <button name="submit" class="btn btn-primary">Envoyer le lien pour la réinitialisation</button>
-            </div>
+    <div class="loginbox">
+        <h3>Problèmes de connexion</h3>
+        <form [formGroup]="myForm" (ngSubmit)="envoyer()">
+            <span>
+                <i class="lni lni-user"></i>
+                <input type="email" formControlName="email" placeholder="Email *" name="email" id="email">
+            </span><br>
+
+            <button [disabled]="myForm.invalid" type="submit">Envoyer un lien de réinitialisation</button>
+
+            <!-- <a [routerLink]="['/login']">Revenir à l'écran de connexion</a> -->
         </form>
+        <!-- <small *ngIf="error==true">Aucun utilisateur trouvé
+
+        </small> -->
+
     </div>
 </div>

@@ -137,9 +137,9 @@
                         incorrect</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" formControlName="tel" placeholder="Tel *" class="form-control" name="tel"
+                    <input type="text" formControlName="telClient" placeholder="Tel *" class="form-control" name="tel"
                         id="tel">
-                    <small *ngIf=" tel.invalid && tel.touched && tel.dirty">Tel incorrect</small>
+                    <small *ngIf=" telClient.invalid && telClient.touched && telClient.dirty">Tel incorrect</small>
                 </div>
 
                 <div class="form-group">
@@ -167,7 +167,7 @@
 
                         <div class="row files">
                             <div class="col-sm-2 file" *ngFor="let file of files">
-                                <img src="../../assets/images/file.png">
+                                <img  src="../../assets/images/file.png">
                                 <p style="word-wrap: break-word">{{file}}</p>
                             </div>
                         </div>

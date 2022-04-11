@@ -1,38 +1,43 @@
-<div class="container contenu">
-    <h2 class="page-title">Mes Ticket</h2>
-    <br><br>
-    <table *ngIf="(tickets.length>0);else vide" class="table ">
-        <thead>
-            <tr class="home">
-                <th>Sujet</th>
-                <th>Client</th>
-                <th>date</th>
-                <th>Description</th>
-                <th>Date de modification</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+<app-sidebar></app-sidebar>
 
-            <tr *ngFor="let ticket of tickets">
-                <td> {{ ticket.sujet }}</td>
-                <td> {{ ticket.nomClient }}</td>
-                <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                <td> {{ ticket.description }}</td>
-                <td> {{ ticket.dateModif | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-                <td>
-                    <!-- <i *ngIf="ticket.status=='nouveau'" class="lni lni-check-box" (click)="onConfirm(ticket._id)"></i> -->
-                    <i class="lni lni-more-alt" (click)="toMore(ticket._id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container" >
 
-    <ng-template #vide>
-        <h3 class="text-center">Il n'y a pas de ticket.</h3>
-    </ng-template>
+    <h1 class="text-center">Mes tickets attribués</h1>
+    <div class="btn btn-secondary" (click)="check()">Enregistrer les modification</div>
+
+        <div class="row" cdkDropListGroup>
+            <div class="col-sm column" cdkDropList [cdkDropListData]="faire"  (cdkDropListDropped)="drop($event)">
+                <h2  style="border-bottom:5px solid #FF5733">A faire</h2>
+
+                <div>
+                    <div class="item" *ngFor="let item of faire" cdkDrag>
+                        <p></p>{{item.sujet}}
+                        <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm column"  cdkDropList [cdkDropListData]="cours"(cdkDropListDropped)="drop($event)">
+                <h2 style="border-bottom:5px solid #2E86C1">En cours</h2>
+
+                <div>
+                    <div class="item" *ngFor="let item of cours" cdkDrag>{{item.sujet}}</div>
+                </div>
+            </div>
+
+            <div class="col-sm column" cdkDropList [cdkDropListData]="resolu" (cdkDropListDropped)="drop($event)">
+                <h2 style="border-bottom:5px solid #239B56">Résolu</h2>
+
+                <div>
+                    <div class="item" *ngFor="let item of resolu" cdkDrag>{{item.sujet}}</div>
+                </div>
+            </div>
+        </div>
+
+
 
 
 </div>
-
-<app-sidebar></app-sidebar>

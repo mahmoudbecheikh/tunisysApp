@@ -39,7 +39,8 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <input type="password" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
-                        name="mdp" id="mdp">
+                        name="mdp" id="mdp"/>
+
                     <small> <span *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe doit contenir au moins 8 caracteres, une majuscule, une miniscule et un
                             chiffre</span></small>
 

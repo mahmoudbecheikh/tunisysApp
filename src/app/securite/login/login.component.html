@@ -11,7 +11,8 @@
             </span><br>
             <span>
                 <i class="lni lni-lock"></i>
-                <input type="password" formControlName="mdp" placeholder="Mot de passe *" name="password" id="password">
+                <input  [type]="show ? 'text' : 'password'" formControlName="mdp" placeholder="Mot de passe *" name="password" id="password">
+                <i (click)="change()" class="lni lni-eye"></i>
             </span>
             <button [disabled]="myForm.invalid" type="submit">Se connecter</button>
 

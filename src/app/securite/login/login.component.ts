@@ -11,6 +11,8 @@ import { MailService } from '../../services/mail.service';
 })
 export class LoginComponent implements OnInit {
   myForm: FormGroup = new FormGroup({});
+  show = false;
+
   email: FormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/assistant']);
             break;
           case 2:
-            this.router.navigate(['/assistant']);
+            this.router.navigate(['/agent']);
             break;
         }
       } else {
@@ -58,6 +60,12 @@ export class LoginComponent implements OnInit {
         this.error = true;
       }
     });
+  }
+
+  change()
+  {
+      this.show = !this.show;
+      
   }
 
 

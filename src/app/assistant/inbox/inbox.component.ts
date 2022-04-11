@@ -13,7 +13,6 @@ import { TicketService } from 'src/app/services/ticket.service';
   styleUrls: ['./inbox.component.css'],
 })
 export class InboxComponent implements OnInit {
-
   mails: any = [];
   mailSelected: any;
 
@@ -45,7 +44,7 @@ export class InboxComponent implements OnInit {
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
 
-  tel: FormControl = new FormControl('', [
+  telClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
@@ -69,26 +68,32 @@ export class InboxComponent implements OnInit {
 
   formdata = new FormData();
 
-  constructor(private mailService: MailService,private depService : DepartementService,private ticketService : TicketService) {}
-
+  constructor(
+    private mailService: MailService,
+    private depService: DepartementService,
+    private ticketService: TicketService
+  ) {}
 
   ngOnInit(): void {
-    this.createForm()
-    this.afficherDepartements()
+    this.createForm();
+    this.afficherDepartements();
     this.afficherListe();
   }
 
-ajouter() {
+  ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       if (res) {
+        this.vu(this.mailSelected.uid)
         this.formdata.append('id', res._id);
-        this.ticketService.uploadFiles(this.formdata).subscribe((res) => {
-          console.log(res)
-         
+        this.ticketService.confirmer(res._id).subscribe((response) => {
+          this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
+            console.log(files);
+          });
+          this.formdata.delete('files');
+          this.myForm.reset();
+          this.files = [];
         });
       }
-      this.myForm.reset()
-      this.attachmentList=[]
     });
   }
 
@@ -98,7 +103,7 @@ ajouter() {
       departement: this.departement,
       emailClient: this.emailClient,
       nomClient: this.nomClient,
-      tel: this.tel,
+      telClient: this.telClient,
       description: this.description,
       manuel: this.manuel,
       statut: this.statut,
@@ -107,11 +112,11 @@ ajouter() {
     });
   }
 
-  afficherDepartements(){
-    this.depService.afficherListe().subscribe(res=>{
-      console.log(res)
-      this.departements = res ;
-    })
+  afficherDepartements() {
+    this.depService.afficherListe().subscribe((res) => {
+      console.log(res);
+      this.departements = res;
+    });
   }
 
   afficherListe() {
@@ -140,7 +145,7 @@ ajouter() {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdata.append('files', element);
-      this.files.push(element.name)
+      this.files.push(element.name);
     }
   }
 

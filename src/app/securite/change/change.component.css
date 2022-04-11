@@ -1,3 +1,13 @@
-form{
+form {
     width: 50%;
 }
+
+.container {
+    margin-left: 190px;
+    margin-top: 50px;
+}
+
+small{
+    color: #e71d34;
+  }
+  

@@ -1,5 +1,5 @@
 .example-list {
-  margin: 25px auto;
+  margin: 40px auto;
   max-width: 100%;
   border: solid 1px #ccc;
   min-height: 60px;
@@ -21,6 +21,19 @@
   justify-content: space-between;
   font-size: 14px;
 }
+
+.file {
+  cursor: pointer;
+  padding: 5px;
+  text-align: center;
+  margin: 8px;
+}
+
+.file img {
+  width: 50px;
+  height: 50px;
+}
+
 
 
 .container {
