@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-reset',
@@ -19,11 +20,12 @@ export class ResetComponent implements OnInit {
   });
 
   error?: Boolean = false;
-  invalid?: Boolean = false;
+  valid?: Boolean = true;
   tokenExpire: any;
   token: any;
   constructor(
     private authService: AuthService,
+    private employeService : EmployeeService,
     private activateRouter: ActivatedRoute,
     private router: Router
   ) {}
@@ -35,7 +37,19 @@ export class ResetComponent implements OnInit {
     });
     this.tokenExpire = this.activateRouter.snapshot.params['tokenExpire'];
     this.token = this.activateRouter.snapshot.params['token'];
-    if (this.tokenExpire < Date.now()) this.invalid = true;
+    if (!isNaN(this.tokenExpire)) {
+      this.employeService.afficherToken(this.token, this.tokenExpire)
+        .subscribe((res) => {
+          if (res) {
+            console.log(res);
+            if (res?.jetonUtilise) this.valid = false;
+          } else {
+            this.valid = false;
+          }
+        });
+    } else {
+      this.valid = false;
+    }
   }
 
   changer() {
@@ -64,7 +78,7 @@ export class ResetComponent implements OnInit {
           }
         });
       } else {
-        if (res.invalid == true) this.invalid = true;
+        if (res.invalid == true) this.valid = true;
         if (res.error == true) this.error = true;
         this.myForm.reset();
       }

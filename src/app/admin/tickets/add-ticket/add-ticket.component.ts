@@ -25,8 +25,7 @@ export class AddTicketComponent implements OnInit {
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(10),
   ]);
   emailClient: FormControl = new FormControl('', [
     Validators.required,
@@ -34,13 +33,12 @@ export class AddTicketComponent implements OnInit {
   ]);
   nomClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
   adresse: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(6)
   ]);
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
@@ -59,7 +57,6 @@ export class AddTicketComponent implements OnInit {
 
   constructor(
     private ticketService: TicketService,
-    private httpClient: HttpClient,
     private depService: DepartementService,
     private router: Router
   ) {}
@@ -96,6 +93,7 @@ export class AddTicketComponent implements OnInit {
   ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       if (res) {
+        console.log(res)
         this.ticketService.confirmer(res._id).subscribe(response=>{
           this.formdata.append('id', res._id);
           this.ticketService.uploadFiles(this.formdata).subscribe((files) => {

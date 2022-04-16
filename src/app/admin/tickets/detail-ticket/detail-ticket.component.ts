@@ -44,7 +44,7 @@ export class DetailTicketComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
-      this.rapportModify = res.rapport
+      // this.rapportModify = res.rapport
 
     });
 
@@ -104,7 +104,7 @@ export class DetailTicketComponent implements OnInit {
       adresse: this.ticket?.adresse,
       siteWeb: this.ticket?.siteWeb,
       statut: this.ticket?.statut,
-      rapport: this.rapportModify,
+      rapport: this.rapport.value,
     };
     this.ticketService.modifier(this.ticket?._id, ticketModify).subscribe((res) => {
         this.ticket = res;

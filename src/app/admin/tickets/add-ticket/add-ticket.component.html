@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control"
                         name="nomClient" id="nomClient">
-                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> Votre CIN
+                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> le champs nom ne doit contenir que des lettres
                         </span>
                     </small>
                 </div>
@@ -18,7 +18,8 @@
                     <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control"
                         name="emailClient" id="email">
                     <small> <span *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">
-                            Votre CIN
+                        Veuillez entrer une adresse
+                        e-mail valide
                         </span>
                     </small>
                 </div>
@@ -26,7 +27,7 @@
                 <div class="form-group">
                     <input type="text" formControlName="telClient" placeholder="Tel *" class="form-control" name="tel"
                         id="tel">
-                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Votre CIN
+                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Veuillez entrer un numero de telephone valide
                         </span>
                     </small>
                 </div>
@@ -35,7 +36,7 @@
                     <input type="text" formControlName="siteWeb" placeholder="Site *" class="form-control"
                         name="siteWeb" id="siteWeb">
                     <small>
-                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> Votre CIN
+                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> veuillez entrer un lien valide de votre site 
                         </span>
                     </small>
                 </div>
@@ -46,10 +47,9 @@
                     <input type="text" formControlName="adresse" placeholder="Adresse*" class="form-control"
                         name="adresse" id="adresse">
                     <small>
-                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Votre CIN </span>
+                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Veuillez entrer une adresse valide </span>
                     </small>
                 </div>
-
 
 
 
@@ -64,7 +64,8 @@
                         <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
                     <small>
-                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Votre CIN
+                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> 
+                            Veuillez selectionner un département !
                         </span>
                     </small>
                 </div>
@@ -73,8 +74,7 @@
                     <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
                         name="sujet" id="sujet">
                     <small>
-                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty"> Votre CIN est
-                            invalide
+                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty"> Veuilez remplir soigneusement le champs sujet
                         </span>
                     </small>
                 </div>
@@ -84,7 +84,7 @@
                 <div class="form-group">
                     <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
                         name="description" id="description" rows="7"> </textarea>
-                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Votre CIN
+                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller remplir soigneusemnt le champs description
                         </span></small>
                 </div>
 

@@ -41,9 +41,8 @@ export class TicketService {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
 
-
   uploadFiles(data:any){
-    return this.http.post('http://localhost:3000/multiplefiles',data) ;
+    return this.http.post(this.baseURL+'/fichiers',data) ;
 }
 
   downloadFile(file:String){

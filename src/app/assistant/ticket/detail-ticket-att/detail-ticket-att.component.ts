@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Ticket } from 'src/models/ticket';
 import { saveAs } from 'file-saver';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MailService } from 'src/app/services/mail.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Employe } from 'src/models/employe';
 
 @Component({
   selector: 'app-detail-ticket-att',
@@ -12,6 +14,7 @@ import { MailService } from 'src/app/services/mail.service';
   styleUrls: ['./detail-ticket-att.component.css'],
 })
 export class DetailTicketAttComponent implements OnInit {
+  employe? : Employe
   ticket?: Ticket;
   id: any;
   files?: [];
@@ -19,6 +22,7 @@ export class DetailTicketAttComponent implements OnInit {
   localUrl?: any;
   formdata = new FormData();
   mails: any = [];
+
   myForm: FormGroup = new FormGroup({});
   emailClient: FormControl = new FormControl('', [
     Validators.required,
@@ -39,7 +43,9 @@ export class DetailTicketAttComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private ticketService: TicketService,
-    private mailService: MailService
+    private mailService: MailService,
+    private router : Router,
+    private authService : AuthService
   ) {}
 
   createForm() {
@@ -52,6 +58,11 @@ export class DetailTicketAttComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
+
+    this.authService.getAuth().subscribe((res) => {
+      this.employe = res;
+    })
+
     this.ticketService.afficherId(this.id).subscribe((res) => {
       console.log(res);
       this.ticket = res;
@@ -100,4 +111,10 @@ export class DetailTicketAttComponent implements OnInit {
       this.attachements.push(element.name);
     }
   }
+
+  rapport(){
+    const link = ['agent/tickets/rapport/', this.id];
+    this.router.navigate(link);
+  }
+
 }

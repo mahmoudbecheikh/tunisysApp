@@ -13,7 +13,23 @@ table,
 th,
 td {
     text-align: center;
+}
 
+table td {
+    font-weight: 400;
+
+}
+
+.badge{
+    width:75px;
+}
+
+.bg-primary {
+    background-color: #5DADE2 !important;
+}
+
+.bg-warning {
+    background-color: #F5B041 !important;
 }
 
 table th {
@@ -35,6 +51,13 @@ i {
 
 .lni-pencil {
     color: #4BCA81;
+}
+
+.badge {
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 

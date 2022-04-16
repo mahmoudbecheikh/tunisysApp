@@ -9,14 +9,15 @@
                 <div class="form-group">
                     <input type="text" formControlName="prenom" placeholder="Prénom *" class="form-control"
                         name="prenom" id="prenom">
-                    <small> <span *ngIf="prenom.invalid && prenom.touched && prenom.dirty"> Champ
-                            obligatoire</span></small>
+                    <small> <span *ngIf="prenom.invalid && prenom.touched && prenom.dirty"> le champs prenom ne doit
+                            contenir que des lettres</span></small>
                 </div>
 
                 <div class="form-group">
                     <input type="text" formControlName="nom" placeholder="Nom *" class="form-control" name="nom"
                         id="nom">
-                    <small> <span *ngIf="nom.invalid && nom.touched && nom.dirty"> Champ obligatoire</span></small>
+                    <small> <span *ngIf="nom.invalid && nom.touched && nom.dirty"> le champs nom ne doit contenir que
+                            des lettres</span></small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="cin" placeholder="CIN *" class="form-control" name="cin"
@@ -49,12 +50,13 @@
                 <div class="form-group">
                     <input type="text" formControlName="tel" placeholder="Téléphone *" class="form-control" name="tel"
                         id="tel">
-                    <small> <span *ngIf=" tel.invalid && tel.touched && tel.dirty"> Champ obligatoire</span></small>
+                    <small> <span *ngIf=" tel.invalid && tel.touched && tel.dirty"> Veuillez entrer un numero de
+                            telephone valide</span></small>
 
                 </div>
                 <div class="form-group">
 
-                    <select class="form-control" formControlName="role" (change)="changeValue()">
+                    <select class="form-control" formControlName="role" (change)="changeValue()" [attr.disabled]="true">
                         <option value="0" [selected]="employe?.role==0">Admin</option>
                         <option value="1" [selected]="employe?.role==1">Assistant</option>
                         <option value="2" [selected]="employe?.role==2">Agent</option>
@@ -69,7 +71,7 @@
                     <select class="form-control" formControlName="departement"
                         [attr.disabled]="role.value==0 || role.value==1 ? '' : null">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
-                        <option *ngFor="let dep of departements" [selected]="employe?.departement=='{{dep._id}}'"
+                        <option *ngFor="let dep of departements" [selected]="employe?.departement?._id==dep._id"
                             value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
 

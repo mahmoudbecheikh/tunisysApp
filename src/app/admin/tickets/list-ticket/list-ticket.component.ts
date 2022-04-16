@@ -46,6 +46,8 @@ export class ListTicketComponent implements OnInit {
 
   confirmer(id:any){
     this.ticketService.confirmer(id).subscribe((res) => {
+      console.log(res)
+      console.log()
       this.afficherList()
     });
   }

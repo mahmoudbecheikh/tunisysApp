@@ -9,14 +9,13 @@
                 <div class="form-group">
                     <input type="text" formControlName="prenom" placeholder="Prénom *" class="form-control"
                         name="prenom" id="prenom">
-                    <small> <span *ngIf="prenom.invalid && prenom.touched && prenom.dirty"> Champ
-                            obligatoire</span></small>
+                    <small> <span *ngIf="prenom.invalid && prenom.touched && prenom.dirty"> le champs prenom ne doit contenir que des lettres</span></small>
                 </div>
 
                 <div class="form-group">
                     <input type="text" formControlName="nom" placeholder="Nom *" class="form-control" name="nom"
                         id="nom">
-                    <small> <span *ngIf="nom.invalid && nom.touched && nom.dirty"> Champ obligatoire</span></small>
+                    <small> <span *ngIf="nom.invalid && nom.touched && nom.dirty"> le champs nom ne doit contenir que des lettres</span> </small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="cin" placeholder="CIN *" class="form-control" name="cin"
@@ -41,14 +40,14 @@
                     <input type="password" formControlName="mdp" placeholder="Mot de passe *" class="form-control"
                         name="mdp" id="mdp"/>
 
-                    <small> <span *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Mot de passe doit contenir au moins 8 caracteres, une majuscule, une miniscule et un
+                    <small> <span *ngIf=" mdp.invalid && mdp.touched && mdp.dirty">Le champs mot de passe doit contenir au moins 8 caracteres, une majuscule, une miniscule et un
                             chiffre</span></small>
 
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="tel" placeholder="Téléphone *" class="form-control" name="tel"
                         id="tel">
-                    <small> <span *ngIf=" tel.invalid && tel.touched && tel.dirty"> Champ obligatoire</span></small>
+                    <small> <span *ngIf=" tel.invalid && tel.touched && tel.dirty">  Veuillez entrer un numero de telephone valide</span></small>
 
                 </div>
                 <div class="form-group">
@@ -59,7 +58,7 @@
                         <option value="2">Agent</option>
                     </select>
                     <small> <span *ngIf=" role.invalid && role.touched && role.dirty"> Veuillez selectionnez un
-                            role</span></small>
+                            role svp ! </span></small>
                 </div>
 
                 <div class="form-group">
@@ -70,7 +69,7 @@
                     </select>
 
                     <small> <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Veuillez
-                            selectionnez un departement</span></small>
+                            selectionnez un departement svp !</span></small>
                 </div>
             </div>
 

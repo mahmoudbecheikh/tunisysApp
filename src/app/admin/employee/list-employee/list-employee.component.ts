@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
   employe?: Employe;
-  colors :string[]= [];
+  colors: string[] = [];
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,
@@ -26,7 +26,7 @@ export class ListEmployeeComponent implements OnInit {
   afficherListe() {
     this.empService.afficherListe().subscribe((res) => {
       this.employees = res as Employe[];
-      this.rand(res)
+      this.rand(res);
     });
   }
   toAdd() {
@@ -39,14 +39,17 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   supprimer(id: any) {
+
     this.empService.supprimer(id).subscribe((res) => {
-      this.authService.getAuth().subscribe((emp) => {
-        this.afficherListe();
-        if (emp._id == id) {
-          localStorage.removeItem('token');
-          this.router.navigate(['/login']);
-        }
-      });
+      console.log(res)
+      this.afficherListe();
+
+    });
+    this.authService.getAuth().subscribe((emp) => {
+      if (emp._id == id) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -56,11 +59,11 @@ export class ListEmployeeComponent implements OnInit {
 
   rand(array: any) {
     let i = 0;
-    let colors = ['#f07167', '#FA8072', '#26978B','#C70039','#FFCE5F'];
+    let colors = ['#f07167', '#FA8072', '#26978B', '#C70039', '#FFCE5F'];
     while (i <= array.length) {
-      var item =colors[Math.floor(Math.random() * colors.length)];
-      this.colors.push(item)
-      i++
+      var item = colors[Math.floor(Math.random() * colors.length)];
+      this.colors.push(item);
+      i++;
     }
   }
 }

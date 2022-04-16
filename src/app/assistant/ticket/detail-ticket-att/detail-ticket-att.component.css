@@ -29,7 +29,7 @@ p {
     position: relative;
     color: grey;
     font-size: 12px;
-
+    font-weight: 400;
 }
 
 
@@ -52,9 +52,24 @@ textarea:disabled,
 
 
 i {
-    font-size: 18px;
+    font-size: 15px;
     margin: 5px;
 }
+
+.badge{
+    width:75px;
+    color: white;
+    font-weight: 500;
+}
+
+.bg-primary {
+    background-color: #5DADE2 !important;
+}
+
+.bg-warning {
+    background-color: #F5B041 !important;
+}
+
 
 form i , label {
     cursor: pointer;
@@ -109,5 +124,6 @@ th,td{
     font-weight: bold;
     color: black;
 } */
+
 
 

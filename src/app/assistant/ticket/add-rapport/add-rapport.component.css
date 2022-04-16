@@ -1,0 +1,40 @@
+form {
+    margin: 10px auto;
+    width: 90%;
+}
+
+.file {
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+
+.container {
+    margin-left: 175px;
+    margin-top: 50px;
+}
+
+.file img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.file p {
+    cursor: pointer;
+}
+
+.lni-close {
+    font-size: 10px;
+    color: #cc0033;
+    font-weight: bold;
+}
+
+span {
+    color: grey;
+}
+
+.form-control:focus
+.btn:focus {
+    box-shadow: none;
+}

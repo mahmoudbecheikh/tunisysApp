@@ -2,6 +2,12 @@
     <h1 class="page-title text-center">Ticket</h1>
     <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
     <br><br>
+    <select name="cars" id="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </select>
     <table *ngIf="(tickets.length>0);else vide" class="table table-bordered" >
         <thead>
             <tr class="home">
@@ -22,7 +28,13 @@
                 <td scope="row"> {{ ticket.sujet }}</td>
                 <td> {{ ticket.departement?.nom }}</td>
                 <td> {{ ticket.nomClient }}</td>
-                <td> {{ ticket.statut }}</td>
+                <td>
+                    <span class="badge bg-secondary"  *ngIf="ticket.statut=='en attente'">{{ ticket.statut }}</span>
+                    <span class="badge bg-warning"  *ngIf="ticket.statut=='a faire'">{{ ticket.statut }}</span>
+                    <span class="badge bg-primary"  *ngIf="ticket.statut=='en cours'">{{ ticket.statut }}</span>
+                    <span class="badge bg-success"  *ngIf="ticket.statut=='resolu'">{{ ticket.statut }}</span>
+
+                </td>
                 <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                 <td> {{ ticket.manuel }}</td>
                 <td>

@@ -28,7 +28,7 @@ export class UpdateTicketComponent implements OnInit {
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
+    Validators.minLength(10),
   ]);
   emailClient: FormControl = new FormControl('', [
     Validators.required,
@@ -36,20 +36,17 @@ export class UpdateTicketComponent implements OnInit {
   ]);
   nomClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
   adresse: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(6)
   ]);
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern(
-      '((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
-    ),
+    Validators.pattern("((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)")
   ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,

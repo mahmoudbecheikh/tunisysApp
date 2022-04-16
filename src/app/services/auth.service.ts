@@ -26,7 +26,6 @@ export class AuthService {
 
   change(data:any,id:any) : Observable<any>{
     return this.http.put('http://localhost:3000/change' + `/${id}`, data);
-
   }
 
   getAuth(): Observable<Employe> {

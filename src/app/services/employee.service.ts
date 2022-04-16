@@ -21,7 +21,11 @@ export class EmployeeService {
   afficherId(id: any): Observable<Employe> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  modifier(id: any, employee: Employe): Observable<Employe> {
+
+  afficherToken(token: any,tokenExpire:any): Observable<any> {
+    return this.http.get(this.baseURL + `/${token}/${tokenExpire}`);
+  }
+  modifier(id: any, employee: Employe): Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, employee);
   }
 
@@ -30,10 +34,13 @@ export class EmployeeService {
   }
 
   afficherCin(cin: number): Observable<Employe> {
+    console.log(cin)
     return this.http.get(this.baseURL + `/emp/${cin}`);
   }
 
   afficherEmail(email: String): Observable<Employe> {
+    console.log(email)
+
     return this.http.get(this.baseURL + `/employee/${email}`);
   }
 }

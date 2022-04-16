@@ -6,6 +6,7 @@ import { Departement } from 'src/models/departement';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartementService } from 'src/app/services/departement.service';
 import { TicketService } from 'src/app/services/ticket.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-inbox',
@@ -15,7 +16,6 @@ import { TicketService } from 'src/app/services/ticket.service';
 export class InboxComponent implements OnInit {
   mails: any = [];
   mailSelected: any;
-
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
 
@@ -65,14 +65,16 @@ export class InboxComponent implements OnInit {
 
   manuel: FormControl = new FormControl('assistant');
   statut: FormControl = new FormControl('en attente');
+  loading$ = this.spinnerService.loading$;
 
   formdata = new FormData();
 
   constructor(
     private mailService: MailService,
     private depService: DepartementService,
-    private ticketService: TicketService
-  ) {}
+    private ticketService: TicketService,
+    private spinnerService : SpinnerService
+        ) {}
 
   ngOnInit(): void {
     this.createForm();

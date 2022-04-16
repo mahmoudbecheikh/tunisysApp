@@ -1,0 +1,101 @@
+<app-sidebar></app-sidebar>
+<div class="container">
+    <h3 style="text-align: center;margin-bottom: 50px;">Rapport</h3>
+    <span style="margin-left: 55px;" *ngIf="rapport">Modifie le : {{rapport?.dateModification | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+    <div class="row">
+
+        <form [formGroup]="myForm" *ngIf="!rapport" (ngSubmit)="ajouter()">
+
+            <div class="form-group">
+                <input type="text" formControlName="recapSujet" placeholder="sujet *" class="col-md form-control"
+                    name="sujet" id="sujet">
+                <small>
+                    <span *ngIf=" recapSujet.invalid && recapSujet.touched && recapSujet.dirty"> Veuilez remplir
+                        soigneusement le champs sujet
+                    </span>
+                </small>
+            </div>
+            <div class="form-group">
+                <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                    name="description" id="description" rows="7"> </textarea>
+                <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller
+                        remplir soigneusemnt le champs description
+                    </span></small>
+            </div>
+            <div class="form-group">
+                <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                    <label for="file" style="text-align: center; cursor: pointer;">
+                        <p style="color: grey;margin-top: 15px;">
+                            Déposer des fichier
+                        </p>
+                        <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                    </label>
+                    <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                        style="visibility: hidden;display: none;">
+
+                    <div class="row files">
+                        <div class="col-sm-2 file" *ngFor="let file of attachmentList">
+                            <img src="../../assets/images/file.png">
+                            <p style="word-wrap: break-word">{{file}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 20%;"
+                    value="Ajouter" type="submit" />
+            </div>
+        </form>
+        <div class="col-md">
+
+            <form [formGroup]="myForm" *ngIf="rapport" (ngSubmit)="modifier()">
+                <div class="form-group">
+                    <input type="text" formControlName="recapSujet" placeholder="sujet *" class="col-md form-control"
+                        name="sujet" id="sujet">
+                    <small>
+                        <span *ngIf=" recapSujet.invalid && recapSujet.touched && recapSujet.dirty"> Veuilez remplir
+                            soigneusement le champs sujet
+                        </span>
+                    </small>
+                </div>
+                <div class="form-group">
+                    <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                        name="description" id="description" rows="7"> </textarea>
+                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller
+                            remplir soigneusemnt le champs description
+                        </span></small>
+                </div>
+                <div class="form-group">
+                    <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                        <label for="file" style="text-align: center; cursor: pointer;">
+                            <p style="color: grey;margin-top: 15px;">
+                                Déposer des fichier
+                            </p>
+                            <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                        </label>
+                        <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                            style="visibility: hidden;display: none;">
+
+                        <div class="row files">
+                            <div class="col-sm-2 file" *ngFor="let file of attachmentList;; let index = index;">
+
+                                <img (click)="download(file)" src="../../assets/images/file.png">
+                                <i (click)="delete(index)" class="lni lni-close"></i>
+
+                                <p (click)="download(file)" style="word-wrap: break-word">{{file}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 25%;"
+                        value="Enregistrer les modifications" type="submit" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>

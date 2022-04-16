@@ -89,6 +89,7 @@ export class UpdateEmployeeComponent implements OnInit {
       this.prenomEmp = emp.nomEmp?.split(' ')[0];
       this.nomEmp = emp.nomEmp?.split(' ')[1];
       this.prenom.setValue(this.prenomEmp);
+      this.departement.setValue(this.employe?.departement?._id)
       this.nom.setValue(this.nomEmp);
       this.cin.setValue(this.employe?.cin);
       this.email.setValue(this.employe?.email);
@@ -118,11 +119,11 @@ export class UpdateEmployeeComponent implements OnInit {
     this.empService
       .modifier(this.employe?._id, this.myForm.value)
       .subscribe((res) => {
+
         console.log(res);
         let token: any = localStorage.getItem('token');
         let decodeToken = this.helper.decodeToken(token);
         let id = decodeToken.id;
-        console.log('ena '+id);
         if (id == res?._id && res.role != 0) {
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
@@ -153,8 +154,9 @@ export class UpdateEmployeeComponent implements OnInit {
   }
   validatorEmail(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.empService.afficherCin(control.value).pipe(
+      return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
+
           if (!res) return null;
           return res && this.employe?.email != control.value
             ? { emailExist: true }

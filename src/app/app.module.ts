@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
@@ -31,6 +31,11 @@ import { ResetComponent } from './securite/reset/reset.component';
 import { ForgetComponent } from './securite/forget/forget.component';
 import { ChangeComponent } from './securite/change/change.component';
 import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,6 +62,7 @@ import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-tick
     ForgetComponent,
     ChangeComponent,
     DetailTicketComponent,
+    AddRapportComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,8 +73,15 @@ import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-tick
     MatAutocompleteModule,
     MatInputModule,
     DragDropModule,
+    NgbModule,
+    MatProgressSpinnerModule
+    
   ],
-  providers: [],
+  providers: [{
+    provide :HTTP_INTERCEPTORS,
+    useClass : SpinnerInterceptor,
+    multi : true
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

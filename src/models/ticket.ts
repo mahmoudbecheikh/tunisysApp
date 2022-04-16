@@ -1,5 +1,6 @@
 import { Departement } from "./departement";
 import { Employe } from "./employe";
+import { Rapport } from "./rapport";
 
 export class Ticket {
     _id?: string;
@@ -15,11 +16,12 @@ export class Ticket {
     telClient?: number;
     date?: string;
     dateModif?: string;
-    rapport? : [];
+    rapport? : Rapport ;
     adresse? : string;
     siteWeb? : string;
     fJoint? : [];
     tags? : string;
+    feedBack? : any
   static date: string | number | Date;
     
 }
