@@ -89,3 +89,24 @@ button{
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+
+.example-chip-list {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.badge{
+  font-size: 15px;
+  font-weight: 400;
+  background: white;
+  color: black;
+  margin:5px 5px;
+  cursor: pointer;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.badge:hover{
+  background-color: #17a2b8;
+  color: white;
+}

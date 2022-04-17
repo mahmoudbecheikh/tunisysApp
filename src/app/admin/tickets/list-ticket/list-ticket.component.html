@@ -1,56 +1,67 @@
 <div class="container contenu">
     <h1 class="page-title text-center">Ticket</h1>
+
     <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
-    <br><br>
-    <select name="cars" id="cars">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
-    <table *ngIf="(tickets.length>0);else vide" class="table table-bordered" >
-        <thead>
-            <tr class="home">
-                <th scope="col">Sujet</th>
-                <th scope="col">Departement</th>
-                <th scope="col">Client</th>
-                <th scope="col">Etat</th>
-                <th scope="col">date</th>
-                <th scope="col">Manuel</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <select [formControl]="option" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="date">Date</option>
+                <option value="statut">Statut</option>
+                <option value="manuel">Manuel</option>
+                <option value="departement">Departement</option>
+            </select> -->
+
+            <table *ngIf="(tickets.length>0);else vide" class="table table-bordered">
+                <thead>
+                    <tr class="home">
+                        <th scope="col">Sujet</th>
+                        <th scope="col">Departement</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">date</th>
+                        <th scope="col">Manuel</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
 
 
-        <tbody>
+                <tbody>
 
-            <tr *ngFor="let ticket of tickets">
-                <td scope="row"> {{ ticket.sujet }}</td>
-                <td> {{ ticket.departement?.nom }}</td>
-                <td> {{ ticket.nomClient }}</td>
-                <td>
-                    <span class="badge bg-secondary"  *ngIf="ticket.statut=='en attente'">{{ ticket.statut }}</span>
-                    <span class="badge bg-warning"  *ngIf="ticket.statut=='a faire'">{{ ticket.statut }}</span>
-                    <span class="badge bg-primary"  *ngIf="ticket.statut=='en cours'">{{ ticket.statut }}</span>
-                    <span class="badge bg-success"  *ngIf="ticket.statut=='resolu'">{{ ticket.statut }}</span>
+                    <tr *ngFor="let ticket of tickets">
+                        <td scope="row"> {{ ticket.sujet }}</td>
+                        <td> {{ ticket.departement?.nom }}</td>
+                        <td> {{ ticket.nomClient }}</td>
+                        <td>
+                            <span class="badge bg-secondary" *ngIf="ticket.statut=='en attente'">{{ ticket.statut
+                                }}</span>
+                            <span class="badge bg-warning" *ngIf="ticket.statut=='a faire'">{{ ticket.statut }}</span>
+                            <span class="badge bg-primary" *ngIf="ticket.statut=='en cours'">{{ ticket.statut }}</span>
+                            <span class="badge bg-success" *ngIf="ticket.statut=='resolu'">{{ ticket.statut }}</span>
 
-                </td>
-                <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                <td> {{ ticket.manuel }}</td>
-                <td>
-                    <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
-                    <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square" (click)="confirmer(ticket._id)"></i>
-                    <i class="lni lni-trash-can" (click)="supprimer(ticket._id)"></i>
-                    <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
+                        </td>
+                        <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td> {{ ticket.manuel }}</td>
+                        <td>
+                            <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
+                            <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square"
+                                (click)="confirmer(ticket._id)"></i>
+                            <i class="lni lni-trash-can" (click)="supprimer(ticket._id)"></i>
+                            <i class="lni lni-pencil" (click)="goToUpdate(ticket._id)"></i>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <ng-template #vide>
-        <h3 class="text-center">Il n'y a pas de ticket.</h3>
-    </ng-template>
+            <ng-template #vide>
+                <h3 class="text-center">Il n'y a pas de ticket.</h3>
+            </ng-template>
+
+        </div>
+
+    </div>
 
 
 </div>

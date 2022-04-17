@@ -36,7 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
-
+import { MatChipsModule } from '@angular/material/chips'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +74,8 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
     MatInputModule,
     DragDropModule,
     NgbModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatChipsModule
     
   ],
   providers: [{

@@ -25,6 +25,10 @@ export class TicketService {
     return this.http.put(this.baseURL + `/${id}`, ticket);
   }
 
+  modifierTags(id: any, tags: any):Observable<any> {
+    return this.http.put(this.baseURL + `/tags/${id}`, tags);
+  }
+
   changerStatut(tickets : any):Observable<any> {
     return this.http.put(this.baseURL, tickets);
   }
