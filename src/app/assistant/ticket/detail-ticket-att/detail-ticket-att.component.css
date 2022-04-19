@@ -33,7 +33,7 @@ p {
 }
 
 
-span {
+ .info span {
     position: absolute;
     left: 100px;
     color: black;
@@ -56,7 +56,7 @@ i {
     margin: 5px;
 }
 
-.badge{
+.info .badge{
     width:75px;
     color: white;
     font-weight: 500;
@@ -124,6 +124,29 @@ th,td{
     font-weight: bold;
     color: black;
 } */
+.example-chip-list {
+    margin-top: 25px;
+    width: 100%;
+  }
 
 
+.badge{
+    font-size: 15px;
+    font-weight: 400;
+    background: white;
+    color: black;
+    margin:5px 5px;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  
+  .badge:hover{
+    background-color: #17a2b8;
+    color: white;
+  }
 
+.lni-close{
+    font-size: 10px;
+    font-weight: 500;
+    color: black;
+}

@@ -1,9 +1,10 @@
 <app-sidebar></app-sidebar>
+<app-header></app-header>
 
 <div class="container">
     <div class="row">
-        <!-- <div class="col-sm-8"> -->
-        <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="col-sm-8">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box first">Les tickets en attente</div>
                 <div class="example-box" *ngFor="let ticket of tickets" cdkDrag>
                     <div>
@@ -15,35 +16,13 @@
                         <button class="btn btn-info" (click)="consulter(ticket._id)">Consulter</button>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
 
-        <div *ngFor="let fruit of filteredFruits ">
-            <span class="badge badge-light" (click)="selected(fruit)">{{fruit}}</span>
+
         </div>
-        <form [formGroup]="formTag" (ngSubmit)="enregistrer()">
 
-        <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Favorite Fruits</mat-label>
-            <mat-chip-list #chipList aria-label="Fruit selection">
-                <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
-                    {{fruit}}
-                    <button matChipRemove>
-                        x
-                    </button>
-                </mat-chip>
-                <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-
-            </mat-autocomplete>
-        </mat-form-field>
-        <input class="btn btn-primary" [disabled]="formTag.invalid" value="Enregistrer" type="submit" />
-        </form>
-        <!-- </div> -->
-
-        <!-- <div  class="col-sm-4">
+        <div  class="col-sm-4">
             <h3 style="text-align: center;">Créer Ticket</h3>
             <form [formGroup]="myForm" (ngSubmit)="ajouter()">
                 <div class="form-group">
@@ -122,7 +101,7 @@
                 </div>
     
             </form>
-        </div> -->
+        </div>
     </div>
 
 </div>

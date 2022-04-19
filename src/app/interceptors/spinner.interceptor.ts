@@ -28,7 +28,6 @@ export class SpinnerInterceptor implements HttpInterceptor {
 
         this.requestsCompleted++;
 
-        console.log(this.requestsCompleted, this.totalRequests);
 
         if (this.requestsCompleted === this.totalRequests) {
           this.spinner.hide();

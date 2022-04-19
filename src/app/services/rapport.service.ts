@@ -23,21 +23,9 @@ export class RapportService {
     return this.http.get(this.baseURL + `/${id}`);
   }
 
-  // afficherListe() : Observable<any> {
-  //   return this.http.get(this.baseURL);
-  // }
-  // afficherId(id: any): Observable<Departement> {
-  //   return this.http.get(this.baseURL + `/${id}`);
-  // }
   modifier(id: any, rapport: Rapport): Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, rapport);
   }
 
-  // supprimer(_id: string) {
-  //   return this.http.delete(this.baseURL + `/${_id}`);
-  // }
 
-  // afficherNom(title: String): Observable<Departement> {
-  //   return this.http.get(this.baseURL + `/departement/${title}`);
-  // }
 }

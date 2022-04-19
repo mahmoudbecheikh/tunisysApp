@@ -15,7 +15,7 @@ export class EmployeeService {
     return this.http.post(this.baseURL, employee);
   }
 
-  afficherListe() {
+  afficherListe() :Observable<any> {
     return this.http.get(this.baseURL);
   }
   afficherId(id: any): Observable<Employe> {

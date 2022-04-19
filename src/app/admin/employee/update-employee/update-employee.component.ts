@@ -86,8 +86,8 @@ export class UpdateEmployeeComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.empService.afficherId(this.id).subscribe((emp) => {
       this.employe = emp;
-      this.prenomEmp = emp.nomEmp?.split(' ')[0];
-      this.nomEmp = emp.nomEmp?.split(' ')[1];
+      this.prenomEmp = emp.prenomEmp
+      this.nomEmp = emp.nomEmp
       this.prenom.setValue(this.prenomEmp);
       this.departement.setValue(this.employe?.departement?._id)
       this.nom.setValue(this.nomEmp);

@@ -1,47 +1,73 @@
 <app-sidebar></app-sidebar>
+<app-header></app-header>
 
-<div class="container" >
+<div class="container">
 
     <h1 class="text-center">Mes tickets attribués</h1>
     <div class="btn btn-secondary" (click)="check()">Enregistrer les modification</div>
 
-        <div class="row" cdkDropListGroup>
-            <div class="col-sm column" cdkDropList [cdkDropListData]="faire"  (cdkDropListDropped)="drop($event)">
-                <h2  style="border-bottom:5px solid #FF5733">A faire</h2>
+    <div class="row" cdkDropListGroup>
+        <div class="col-sm column" cdkDropList [cdkDropListData]="faire" (cdkDropListDropped)="drop($event)">
+            <h2 style="border-bottom:5px solid #FF5733">A faire</h2>
 
-                <div>
-                    <div class="item" *ngFor="let item of faire" cdkDrag>
-                       {{item.sujet}}
-                        <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+            <div>
+                <div class="item" *ngFor="let item of faire" cdkDrag>
+                    {{item.sujet}}
+                    <br>
+                    <span
+                        class="badge badge-danger">{{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}</span>
+                    <ng-container *ngFor="let collab of item.collaborateurs">
+                        <span class="badge badge-info">
+                            {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}}</span>
+                    </ng-container>
+                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
 
 
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-sm column"  cdkDropList [cdkDropListData]="cours"(cdkDropListDropped)="drop($event)">
-                <h2 style="border-bottom:5px solid #2E86C1">En cours</h2>
-
-                <div>
-                    <div class="item" *ngFor="let item of cours" cdkDrag>
-                        {{item.sujet}}
-                        <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm column" cdkDropList [cdkDropListData]="resolu" (cdkDropListDropped)="drop($event)">
-                <h2 style="border-bottom:5px solid #239B56">Résolu</h2>
-
-                <div>
-                    <div class="item" *ngFor="let item of resolu" cdkDrag>
-                        {{item.sujet}}
-                        <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
-                    </div>
                 </div>
             </div>
         </div>
+
+
+        <div class="col-sm column" cdkDropList [cdkDropListData]="cours" (cdkDropListDropped)="drop($event)">
+            <h2 style="border-bottom:5px solid #2E86C1">En cours</h2>
+
+            <div>
+                <div class="item" *ngFor="let item of cours" cdkDrag>
+                    {{item.sujet}}
+                    <br>
+                    <span
+                        class="badge badge-danger">{{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}</span>
+                    <ng-container *ngFor="let collab of item.collaborateurs">
+                        <span class="badge badge-info">
+                            {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}}</span>
+                    </ng-container>
+                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm column" cdkDropList [cdkDropListData]="resolu" (cdkDropListDropped)="drop($event)">
+            <h2 style="border-bottom:5px solid #239B56">Résolu</h2>
+
+            <div>
+                <div class="item" *ngFor="let item of resolu" cdkDrag>
+                    {{item.sujet}}
+                    <br>
+                    <span
+                        class="badge badge-danger">{{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}</span>
+                    <ng-container *ngFor="let collab of item.collaborateurs">
+                        <span class="badge badge-info">
+                            {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}}</span>
+                            <span class="tooltip">Employés</span>
+
+                    </ng-container>
+
+
+                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

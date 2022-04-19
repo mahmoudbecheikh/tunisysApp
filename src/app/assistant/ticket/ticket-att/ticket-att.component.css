@@ -50,21 +50,22 @@
 
 .nom {
   color: grey;
-    font-size: 11px;
-}
-.sujet{
-    font-weight: bold;
-    font-size: 13px;
+  font-size: 11px;
 }
 
-i{
-    font-size: 20px;
+.sujet {
+  font-weight: bold;
+  font-size: 13px;
 }
 
-button{
-    font-size: 12px;
-    border-radius: 1rem;
-    margin-left: 5px;
+i {
+  font-size: 20px;
+}
+
+button {
+  font-size: 12px;
+  border-radius: 1rem;
+  margin-left: 5px;
 }
 
 .cdk-drag-preview {
@@ -90,23 +91,3 @@ button{
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-
-.example-chip-list {
-  margin-top: 25px;
-  width: 100%;
-}
-
-.badge{
-  font-size: 15px;
-  font-weight: 400;
-  background: white;
-  color: black;
-  margin:5px 5px;
-  cursor: pointer;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-.badge:hover{
-  background-color: #17a2b8;
-  color: white;
-}

@@ -20,7 +20,8 @@ export class Ticket {
     adresse? : string;
     siteWeb? : string;
     fJoint? : [];
-    tags? : string;
+    tags? : [];
+    collaborateurs? : string [];
     feedBack? : any
   static date: string | number | Date;
     
