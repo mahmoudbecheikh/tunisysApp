@@ -43,6 +43,7 @@
                                     <div class="notification-list_detail">
                                         <p><b>{{notif.envoyeur.nomEmp}}</b> </p>
                                         <div *ngIf="notif.contenu=='invitation';else not">
+                                            <p>{{notif.ticket.sujet}}</p> 
                                             <div class="btn btn-primary" (click)="confirmer(notif)" >Confirmer</div>
                                             <div class="btn btn-dark" (click)="supprimer(notif)">Supprimer</div>
                                         </div>

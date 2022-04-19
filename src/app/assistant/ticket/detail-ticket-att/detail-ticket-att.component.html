@@ -1,34 +1,29 @@
 <app-sidebar></app-sidebar>
-
+<app-header></app-header>
 <div class="container">
 
 
-    <div (click)="rapport()" *ngIf="employe?.role==2" class="btn btn-primary">
+    <div (click)="rapport()" style="float: right;" *ngIf="employe?.role==2" class="btn btn-primary">
         Rapport
     </div>
-    <!-- <select class="form-control" [formControl]="employeCtrl">
-        <option value="" disabled hidden selected>Sélectionnez un departement</option>
-        <ng-container *ngFor="let emp of employes">
-            <option *ngIf="employe?._id!=emp._id" [disabled]="verify(emp?._id)" value="{{emp._id}}">{{emp.nomEmp}}
-                <span>(Deja envoyee)</span> </option>
-        </ng-container>
-    </select> -->
+
 
     <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             Inviter
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu" (click)="$event.stopPropagation()">
             <ng-container *ngFor="let emp of employes">
 
-                <div *ngIf="(employe?._id!=emp._id) && !this.ticket?.collaborateurs?.includes(emp._id)" class="dropdown-item">
-                    {{emp.nomEmp}}
-   
-                    <div class="badge badge-secondary" *ngIf="!verify(emp?._id);else annuler"
+                <div *ngIf="(employe?._id!=emp._id) && !ticket?.collaborateurs?.includes(emp._id)"
+                    class="dropdown-item">
+                    {{emp.nomEmp}} {{emp.prenomEmp}}
+
+                    <div class="badge badge-primary" *ngIf="!verify(emp?._id);else annuler"
                         (click)="envoyerNotif(emp._id)">Envoyer</div>
                     <ng-template #annuler>
-                        <div class="badge badge-secondary" (click)="supprimer(emp._id)">Annuler</div>
+                        <div class="badge badge-primary" (click)="supprimer(emp._id)">Annuler</div>
                     </ng-template>
                 </div>
             </ng-container>
@@ -37,11 +32,10 @@
 
         </div>
     </div>
-    <!-- 
 
-    <div (click)="envoyerNotif()" *ngIf="employe?.role==2" class="btn btn-primary">
-        Envoyer
-    </div> -->
+
+    <i class='bx bx-log-out' *ngIf="ticket?.collaborateurs?.includes(employe?._id)"  (click)="quitter()" id="log_out"></i>
+
 
 
 
@@ -61,7 +55,8 @@
                 </div>
                 <div class="info col-sm">
                     <p>Département : <span>{{ticket?.departement?.nom}}</span></p>
-                    <p>Employe : <span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}</span>
+                    <p>Employe : <span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}
+                            {{ticket?.employe?.prenomEmp}}</span>
                         <span *ngIf="!ticket?.employe">---</span>
                     </p>
 
@@ -131,7 +126,7 @@
         <div class="col-sm">
             <h3>Messages</h3>
 
-            <table class="table">
+            <table class="table" *ngIf="mails.length>0;else aucun">
                 <tbody>
                     <tr *ngFor="let mail of mails">
                         <th scope="row" *ngIf="mail.from=='tunisys.mb.sj@gmail.com';else tuni">Tunisys
@@ -151,6 +146,10 @@
 
                 </tbody>
             </table>
+            <ng-template #aucun>
+                <p>
+                    Il n'y a aucun message </p>
+            </ng-template>
         </div>
 
         <div class="col-sm">

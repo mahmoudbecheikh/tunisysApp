@@ -21,7 +21,7 @@ export class Ticket {
     siteWeb? : string;
     fJoint? : [];
     tags? : [];
-    collaborateurs? : string [];
+    collaborateurs? : any [];
     feedBack? : any
   static date: string | number | Date;
     

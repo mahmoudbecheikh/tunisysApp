@@ -37,6 +37,11 @@ export class TicketService {
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
 
+  quitter(idTicket: any,idEmp : any): Observable<any> {
+    return this.http.get(this.baseURL + `/${idTicket}/${idEmp}`);
+  }
+
+
   afficherEmploye(idEmp: any): Observable<any> {
     return this.http.get(this.baseURL + `/employee/${idEmp}`);
   }

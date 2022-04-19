@@ -257,7 +257,11 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
 
-  verifyCollab (id:any){
-    return this.ticket?.collaborateurs?.includes(id)
+
+
+  quitter(){
+    this.ticketService.quitter(this.ticket?._id,this.employe?._id).subscribe(res=>{
+      console.log(res)
+    })
   }
 }

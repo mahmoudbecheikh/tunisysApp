@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
   getAuth() {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
-      this.nomEmp = res.nomEmp?.split(' ')[1];
+      this.nomEmp = res.prenomEmp;
 
       switch (res.role) {
         case 0:
