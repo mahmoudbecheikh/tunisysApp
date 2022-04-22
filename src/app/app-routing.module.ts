@@ -7,6 +7,7 @@ import { UpdateDepartementComponent } from './admin/departement/update-departeme
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
+import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
 import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
 import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
@@ -21,6 +22,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
 import { AssistantGuard } from './guards/assistant.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
 import { ChangeComponent } from './securite/change/change.component';
 import { ForgetComponent } from './securite/forget/forget.component';
 import { LoginComponent } from './securite/login/login.component';
@@ -93,6 +95,12 @@ const routes: Routes = [
           },
         ],
       },
+
+      {
+        path: 'reclamation',
+        component :ListReclamationComponent
+      },
+
     ],
   },
 
@@ -144,6 +152,11 @@ const routes: Routes = [
         component: InboxComponent,
       },
     ],
+  },
+
+  {
+    path: 'pdf/:id',
+    component: PreviewPdfComponent
   },
 
   {

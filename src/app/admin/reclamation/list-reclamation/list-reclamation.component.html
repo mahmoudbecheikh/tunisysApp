@@ -1,0 +1,50 @@
+<div class="container contenu">
+    <h1 class="page-title text-center">Reclamation</h1>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <table *ngIf="(reclamations.length>0);else vide" class="table table-bordered">
+                <thead>
+                    <tr class="home">
+                        <th scope="col">Departement</th>
+                        <th scope="col">Employé</th>
+                        <th scope="col">Ticket</th>
+                        <th scope="col">Raison</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    <tr *ngFor="let rec of reclamations">
+                        <td scope="row"> {{ rec.departement.nom }}</td>
+                        <td>{{ rec.employe.nomEmp }} {{ rec.employe.prenomEmp }}</td>
+                        <td>  <a [routerLink]="['/admin/tickets/'+rec.ticket._id]">{{ rec.ticket.sujet }}</a> </td>
+                        <td> {{ rec.raison }}</td>
+                        <td> {{ rec.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>
+                            <i class="lni lni-trash-can" (click)="supprimer(rec._id)"></i>
+
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #vide>
+                <h3 class="text-center">Il n'y a pas de réclamations</h3>
+            </ng-template>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<app-sidebar></app-sidebar>

@@ -7,26 +7,27 @@
         <form [formGroup]="myForm" *ngIf="!rapport" (ngSubmit)="ajouter()">
 
             <div class="form-group">
-                <input type="text" formControlName="recapSujet" placeholder="sujet *" class="col-md form-control"
+                <input type="text" formControlName="recapSujet" placeholder="Récaputulation du sujet de ticket *" class="col-md form-control"
                     name="sujet" id="sujet">
                 <small>
                     <span *ngIf=" recapSujet.invalid && recapSujet.touched && recapSujet.dirty"> Veuilez remplir
-                        soigneusement le champs sujet
+                        soigneusement le champs Récap sujet
                     </span>
                 </small>
             </div>
             <div class="form-group">
-                <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
+                <textarea type="text" formControlName="description" placeholder="démarches de la résolution *" class="form-control"
                     name="description" id="description" rows="7"> </textarea>
                 <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller
-                        remplir soigneusemnt le champs description
+                        remplir soigneusemnt le champs démarches de la résolution
                     </span></small>
             </div>
+
             <div class="form-group">
                 <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
                     <label for="file" style="text-align: center; cursor: pointer;">
                         <p style="color: grey;margin-top: 15px;">
-                            Déposer des fichier
+                            Déposer des fichiers
                         </p>
                         <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
                     </label>
@@ -42,13 +43,17 @@
                 </div>
             </div>
 
+          
+
             <div class="text-center">
                 <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 20%;"
                     value="Ajouter" type="submit" />
             </div>
         </form>
         <div class="col-md">
-
+            <div (click)="export()" style="float: right;"  class="btn btn-secondary">
+                Export
+            </div>
             <form [formGroup]="myForm" *ngIf="rapport" (ngSubmit)="modifier()">
                 <div class="form-group">
                     <input type="text" formControlName="recapSujet" placeholder="sujet *" class="col-md form-control"
@@ -88,7 +93,12 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <p style="margin:15px 0px">collaborateur(s)</p>
+                        <span class="badge badge-info" *ngFor="let collab of ticketSelected?.collaborateurs">
+                        {{collab.nomEmp }} {{collab.prenomEmp}}
+                    </span>
+                </div>
                 <div class="text-center">
                     <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 25%;"
                         value="Enregistrer les modifications" type="submit" />

@@ -103,6 +103,14 @@
             </div>
         </div>
 
+        <ng-container *ngFor="let dep of departements">
+            <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id" formControlName="employe">
+                <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?._id==emp._id" value="{{emp._id}}">   {{emp.nomEmp}}</option>
+                <option value="auto">Automatique</option>
+            </select>
+        </ng-container>
+
+
         <div class="form-group" style="width: 75%; margin:10px auto;">
             <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
                 <label for="file" style="text-align: center; cursor: pointer;">

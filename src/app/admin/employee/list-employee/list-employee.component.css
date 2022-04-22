@@ -13,6 +13,7 @@ th {
   text-align: center;
 }
 
+
 table th {
   font-weight: 500;
   background-color: #1a5276;
@@ -57,4 +58,30 @@ i {
   color: #ffff;
   text-align: center;
   font: 22px Arial, sans-serif;
+}
+
+.paginator{
+  position: fixed;
+  bottom: 50px;
+  left: 40%;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+}
+
+.paginator /deep/ .ngx-pagination .current {
+  background: #1a5276;
+  border-radius: 4px;
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+.paginator /deep/ .ngx-pagination a:hover, .ngx-pagination button:hover {
+  background: #d4d4d4;
+  border-radius: 3px;
+ 
+}
+
+.paginator /deep/ .ngx-pagination a:focus, .ngx-pagination button:focus {
+  outline: none;
+  background: #d4d4d4;
 }

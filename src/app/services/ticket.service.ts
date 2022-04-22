@@ -41,6 +41,7 @@ export class TicketService {
     return this.http.get(this.baseURL + `/${idTicket}/${idEmp}`);
   }
 
+ 
 
   afficherEmploye(idEmp: any): Observable<any> {
     return this.http.get(this.baseURL + `/employee/${idEmp}`);
@@ -63,5 +64,15 @@ export class TicketService {
 }
 
 
+reclamer(data: any): Observable<any> {
+  return this.http.post('http://localhost:3000/reclamation', data);
+}
+
+supprimerReclamation(id: any): Observable<any> {
+  return this.http.delete('http://localhost:3000/reclamation'+`/${id}`);
+}
+afficherReclamation(): Observable<any> {
+  return this.http.get('http://localhost:3000/reclamation');
+}
 
 }

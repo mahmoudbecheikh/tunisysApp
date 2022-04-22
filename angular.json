@@ -18,7 +18,9 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "buffer"
+              "buffer",
+              "jspdf",
+              "canvg"
             ],
             "outputPath": "dist/tunisys-app",
             "index": "src/index.html",

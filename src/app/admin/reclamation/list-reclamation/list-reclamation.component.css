@@ -1,0 +1,55 @@
+*::first-letter {
+    text-transform: uppercase;
+  }
+  
+  .container {
+    margin-left: 175px;
+    margin-top: 50px;
+  }
+  
+  table,
+  td,
+  th {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  table th {
+    font-weight: 500;
+    background-color: #1a5276;
+    color: white;
+  }
+  
+  table tr:hover {
+    background-color: #ddd;
+  }
+  
+  td:first-child {
+    text-align: left;
+  }
+  
+  .name::first-letter {
+    text-transform: uppercase;
+  }
+  
+  
+  i {
+    margin: 5px;
+    font-weight: bold;
+  
+  }
+  
+  .lni-pencil {
+    color: #4bca81;
+    font-size: 20px;
+  }
+  
+  .lni-trash-can {
+    color: #e71d34;
+    font-size: 20px;
+  }
+  
+a{
+    color: black;
+    text-decoration: none;
+}

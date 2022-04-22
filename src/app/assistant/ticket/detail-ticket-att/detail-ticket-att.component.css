@@ -26,7 +26,7 @@ h3 {
     margin-bottom: 5px;
 }
 
-p {
+.info p {
     position: relative;
     color: grey;
     font-size: 12px;
@@ -90,13 +90,13 @@ label {
     height: 50px;
 }
 
-textarea {
+form textarea {
     border: none;
     border-radius: 1px;
 }
 
-textarea:focus,
-textarea.form-control:focus {
+form textarea:focus,
+form textarea.form-control:focus {
     box-shadow: inset 0 -1px 0 white;
 
 }
@@ -179,3 +179,31 @@ form .badge:hover {
     background-color: #e9ecef;
     color: black;
 }
+
+li .badge{
+    float: right;
+    margin-right: 80px;
+    background-color: #17a2b8;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 5px 20px;
+}
+
+li{
+    margin: 10px 2px;
+    list-style-type: none;
+    text-transform: capitalize;
+    font-size: 15px;
+
+}
+
+.modal-title h2{
+    text-align: center !important;
+}
+
+.lni-user{
+    font-weight: bold;
+    font-size: 14px;
+}
+

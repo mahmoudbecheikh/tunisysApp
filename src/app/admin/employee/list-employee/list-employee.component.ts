@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
@@ -13,6 +13,8 @@ export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
   employe?: Employe;
   colors: string[] = [];
+  p: number = 1;
+ 
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,

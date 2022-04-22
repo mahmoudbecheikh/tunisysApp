@@ -36,7 +36,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
-import { MatChipsModule } from '@angular/material/chips'; 
+import { MatChipsModule } from '@angular/material/chips';
+import { SearchComponent } from './search/search.component';
+import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
+import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +66,9 @@ import { MatChipsModule } from '@angular/material/chips';
     ChangeComponent,
     DetailTicketComponent,
     AddRapportComponent,
+    SearchComponent,
+    PreviewPdfComponent,
+    ListReclamationComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +81,8 @@ import { MatChipsModule } from '@angular/material/chips';
     DragDropModule,
     NgbModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    NgxPaginationModule
     
   ],
   providers: [{

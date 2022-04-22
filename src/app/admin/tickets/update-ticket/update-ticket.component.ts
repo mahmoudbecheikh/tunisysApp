@@ -41,12 +41,14 @@ export class UpdateTicketComponent implements OnInit {
   ]);
   adresse: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6)
+    Validators.minLength(6),
   ]);
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)")
+    Validators.pattern(
+      '((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
+    ),
   ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,
@@ -54,6 +56,7 @@ export class UpdateTicketComponent implements OnInit {
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
+  employe: FormControl = new FormControl();
   manuel: FormControl = new FormControl('admin');
   statut: FormControl = new FormControl('en attente');
   departement: FormControl = new FormControl('', [Validators.required]);
@@ -62,7 +65,7 @@ export class UpdateTicketComponent implements OnInit {
     private depService: DepartementService,
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +100,7 @@ export class UpdateTicketComponent implements OnInit {
       adresse: this.adresse,
       statut: this.statut,
       FjointDeleted: this.FjointDeleted,
+      employe: this.employe,
     });
   }
   afficherListe() {
@@ -107,21 +111,38 @@ export class UpdateTicketComponent implements OnInit {
 
   modifier() {
     this.FjointDeleted.setValue(this.attachmentDeleted);
-    this.ticketService
-      .modifier(this.ticket?._id, this.myForm.value)
-      .subscribe((res) => {
-        if (res) {
-          this.ticketService.confirmer(res._id).subscribe((response) => {
-            this.formdata.append('id', res._id);
+    if (this.employe.value == 'auto') {
+      this.employe.setValue(null);
+      this.ticketService
+        .modifier(this.ticket?._id, this.myForm.value)
+        .subscribe((res) => {
+          if (res) {
+            this.ticketService.confirmer(res._id).subscribe((response) => {
+              this.formdata.append('id', res._id);
 
+              this.ticketService
+                .uploadFiles(this.formdata)
+                .subscribe((files) => {
+                  console.log(files);
+                });
+
+              this.router.navigate(['admin/tickets']);
+            });
+          }
+        });
+    } else {
+      this.ticketService
+        .modifier(this.ticket?._id, this.myForm.value)
+        .subscribe((res) => {
+          if (res) {
             this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
               console.log(files);
             });
 
             this.router.navigate(['admin/tickets']);
-          });
-        }
-      });
+          }
+        });
+    }
   }
 
   uploadMultiple(event: any) {

@@ -3,12 +3,13 @@
 <div class="container">
 
 
-    <div (click)="rapport()" style="float: right;" *ngIf="employe?.role==2" class="btn btn-primary">
+    <div (click)="rapport()" style="float: right;"  class="btn btn-primary">
         Rapport
     </div>
 
 
-    <div class="btn-group">
+
+    <!-- <div class="btn-group">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             Inviter
@@ -31,18 +32,59 @@
 
 
         </div>
+    </div> -->
+
+
+    <i class='bx bx-log-out' *ngIf="ticket?.collaborateurs?.includes(employe?._id)" (click)="quitter()"
+        id="log_out"></i>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" *ngIf="employe?.role==2 && employe?._id==ticket?.employe?._id"
+        data-toggle="modal" data-target="#invModal">
+        <i class="lni lni-plus" style="font-weight: 800;"></i> inviter
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="invModal" tabindex="-1" role="dialog" aria-labelledby="invModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title w-100 text-center" id="invModalLabel">Invitez des employes à rejoindre cette
+                        ticket
+                    </h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <ng-container *ngFor="let emp of employes">
+                            <li *ngIf="(employe?._id!=emp._id) && !ticket?.collaborateurs?.includes(emp._id)">
+                                <i class="lni lni-user"></i>
+                                <span> {{emp.nomEmp}} {{emp.prenomEmp}}
+                                </span>
+                                <span class="badge badge-primary" *ngIf="!verify(emp?._id);else annuler"
+                                    (click)="envoyerNotif(emp._id)">Envoyer</span>
+                                <ng-template #annuler>
+                                    <div class="badge badge-primary" (click)="supprimer(emp._id)">Annuler</div>
+                                </ng-template>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <i class='bx bx-log-out' *ngIf="ticket?.collaborateurs?.includes(employe?._id)"  (click)="quitter()" id="log_out"></i>
-
-
-
+    <a [routerLink]="['/admin/tickets/update/'+ticket?._id]"><div class="btn btn-info" style="float: right;" *ngIf="employe?.role==0">Modifier</div></a> 
 
     <div class="row">
         <div class="col-sm">
             <h1>{{ticket?.sujet}}</h1>
-
             <div class="row">
                 <div class="info col-sm">
                     <p>Référence : <span>{{ticket?.ref}}</span></p>
@@ -202,5 +244,14 @@
 
     </form>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control"
+            name="raison" id="raison" rows="7"> </textarea>
+            <input class="btn btn-primary" type="button"  (click)="reclamer()" [disabled]="raison.invalid" *ngIf="employe?.role==2" value="Reclamer" />
+                
+        </div>
+    </div>
 
+    
 </div>

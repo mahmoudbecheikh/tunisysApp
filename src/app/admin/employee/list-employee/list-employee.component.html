@@ -17,10 +17,13 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let employee of employees ; let i = index">
+            <tr *ngFor="let employee of employees | paginate: { 
+            itemsPerPage: 5,
+            currentPage :p,
+            totalItems: employees.length} ; let i = index">
                 <td scope="row">
                     <div class="row">
-                        <div class="col-sm"  [style.background]="colors[i]" style="margin-left:10px;" class="circle" >
+                        <div class="col-sm" [style.background]="colors[i]" style="margin-left:10px;" class="circle">
                             {{employee.nomEmp?.substr(0,1)}}
                         </div>
                         <div style="margin-top: 5px;" class="col-sm">
@@ -44,8 +47,13 @@
                     <i class="lni lni-trash-can" (click)="supprimer(employee._id)"></i>
                 </td>
             </tr>
+
         </tbody>
+
     </table>
+
+        <pagination-controls class="paginator" previousLabel="Retour" nextLabel="Suivant"
+            (pageChange)="p = $event"></pagination-controls>
 
     <ng-template #vide>
         <h3 class="text-center">Il n'y a pas des employés.</h3>

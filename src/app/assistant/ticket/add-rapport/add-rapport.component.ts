@@ -5,6 +5,7 @@ import { RapportService } from 'src/app/services/rapport.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Rapport } from 'src/models/rapport';
 import { saveAs } from 'file-saver';
+import { Ticket } from 'src/models/ticket';
 
 @Component({
   selector: 'app-add-rapport',
@@ -29,12 +30,15 @@ export class AddRapportComponent implements OnInit {
     Validators.required,
     Validators.minLength(10),
   ]);
+  collaborateur: FormControl = new FormControl();
   FjointDeleted: FormControl = new FormControl();
   ticket: FormControl = new FormControl();
+  ticketSelected? : Ticket ; 
   constructor(
     private rapportService: RapportService,
     private ticketService: TicketService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +47,7 @@ export class AddRapportComponent implements OnInit {
     this.ticket.setValue(this.id);
     this.ticketService.afficherId(this.id).subscribe((ticket) => {
       if (ticket.rapport) {
+        this.ticketSelected = ticket
         this.rapport = ticket.rapport;
         this.recapSujet.setValue(this.rapport?.recapSujet);
         this.description.setValue(this.rapport?.description);
@@ -56,6 +61,7 @@ export class AddRapportComponent implements OnInit {
       ticket: this.ticket,
       recapSujet: this.recapSujet,
       description: this.description,
+      collaborateur: this.collaborateur,
       FjointDeleted: this.FjointDeleted,
     });
   }
@@ -64,7 +70,8 @@ export class AddRapportComponent implements OnInit {
     this.rapportService.ajouter(this.myForm.value).subscribe((res) => {
       if (res) {
         this.formdata.append('id', res._id);
-        this.rapportService.uploadFiles(this.formdata).subscribe((res) => {
+        this.rapportService.uploadFiles(this.formdata).subscribe((files) => {
+          this.rapport = res ;
           this.formdata = new FormData();
           this.myForm.reset();
           this.attachmentList = [];
@@ -108,5 +115,10 @@ export class AddRapportComponent implements OnInit {
   delete(index: any) {
     this.attachmentDeleted.push(this.attachmentList[index]);
     this.attachmentList.splice(index, 1);
+  }
+
+  export(){
+    const link = ['pdf/', this.id];
+    this.router.navigate(link);
   }
 }

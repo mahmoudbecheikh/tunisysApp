@@ -14,8 +14,8 @@ export class MailService {
     return this.http.get(this.baseURL, { params: data });
   }
 
-  afficherEnvoye(data: any): Observable<any> {
-    return this.http.get(this.baseURL + '/sent', { params: data });
+  afficherDiscussion(data: any): Observable<any> {
+    return this.http.get(this.baseURL+'/discussion', { params: data });
   }
 
   envoyerMail(data: any): Observable<any> {

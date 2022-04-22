@@ -50,6 +50,12 @@ export class DetailTicketAttComponent implements OnInit {
     Validators.minLength(15),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
+
+  raison: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(15),
+  ]);
+
   file: FormControl = new FormControl('');
   @ViewChild('tagInput') tagInput?: ElementRef<HTMLInputElement>;
   employes: any;
@@ -63,7 +69,9 @@ export class DetailTicketAttComponent implements OnInit {
     private authService: AuthService,
     private depService: DepartementService,
     private notifService: NotificationService
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   createForm() {
     this.myForm = new FormGroup({
@@ -112,16 +120,12 @@ export class DetailTicketAttComponent implements OnInit {
       date: date,
       option: 'ALL',
     };
-    this.mailService.afficherEnvoye(data).subscribe((mails) => {
-      this.mails = this.mails.concat(mails);
+    this.mailService.afficherDiscussion(data).subscribe((mails) => {
+      this.mails = mails;
+      this.mails = this.mails.sort((a: any, b: any) =>
+        a.date > b.date ? 1 : -1
+      );
     });
-    this.mailService.afficherListe(data).subscribe((mails) => {
-      this.mails = this.mails.concat(mails);
-    });
-
-    this.mails = this.mails.sort((a: any, b: any) =>
-      a.date > b.date ? 1 : -1
-    );
   }
 
   afficherEmploye() {
@@ -130,7 +134,6 @@ export class DetailTicketAttComponent implements OnInit {
       .subscribe((dep) => {
         this.employes = dep.employes;
         this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
-          console.log(res);
           this.notifEnv = res;
         });
       });
@@ -221,7 +224,6 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
   envoyerNotif(employe: any) {
-    console.log(employe);
     let data = {
       envoyeur: this.employe,
       recepteur: employe,
@@ -229,17 +231,16 @@ export class DetailTicketAttComponent implements OnInit {
       ticket: this.ticket,
     };
     this.notifService.envoyer(data).subscribe((res) => {
-      console.log(res);
       this.afficherEmploye();
     });
   }
 
   verify(id: any) {
     let idTicket = this.id;
-    let ticket = this.ticket
+    let ticket = this.ticket;
     if (this.notifEnv && id) {
       let notif = this.notifEnv.filter(function (el: any) {
-        return el.recepteur._id == id && el.ticket._id == ticket?._id 
+        return el.recepteur._id == id && el.ticket._id == ticket?._id;
       });
       return notif.length > 0;
     } else {
@@ -251,17 +252,28 @@ export class DetailTicketAttComponent implements OnInit {
       return el.recepteur._id == id;
     });
     this.notifService.supprimer(notif[0]._id).subscribe((res) => {
-      console.log(res);
       this.afficherEmploye();
     });
   }
 
+  quitter() {
+    this.ticketService
+      .quitter(this.ticket?._id, this.employe?._id)
+      .subscribe((res) => {
+        this.router.navigate(['agent/']);
+      });
+  }
 
-
-
-  quitter(){
-    this.ticketService.quitter(this.ticket?._id,this.employe?._id).subscribe(res=>{
-      console.log(res)
-    })
+  reclamer() {
+    let data = {
+      raison: this.raison.value,
+      idEmp: this.ticket?.employe?._id,
+      idTicket: this.ticket?._id,
+      idDep: this.ticket?.departement?._id,
+    };
+    this.ticketService.reclamer(data).subscribe((res) => {
+      this.raison.setValue('');
+      console.log(res);
+    });
   }
 }
