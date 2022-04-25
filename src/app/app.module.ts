@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
@@ -39,7 +39,9 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MatChipsModule } from '@angular/material/chips';
 import { SearchComponent } from './search/search.component';
 import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
-import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component'; 
+import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
+import { DefaultComponent } from './default/default.component';
+import { ListeComponent } from './assistant/ticket/liste/liste.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +71,8 @@ import { ListReclamationComponent } from './admin/reclamation/list-reclamation/l
     SearchComponent,
     PreviewPdfComponent,
     ListReclamationComponent,
+    DefaultComponent,
+    ListeComponent,
   ],
   imports: [
     BrowserModule,

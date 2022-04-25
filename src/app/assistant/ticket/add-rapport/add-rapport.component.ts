@@ -6,6 +6,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { Rapport } from 'src/models/rapport';
 import { saveAs } from 'file-saver';
 import { Ticket } from 'src/models/ticket';
+import { AuthService } from 'src/app/services/auth.service';
+import { Employe } from 'src/models/employe';
 
 @Component({
   selector: 'app-add-rapport',
@@ -20,6 +22,7 @@ export class AddRapportComponent implements OnInit {
   update = false;
   id?: any;
   rapport?: Rapport;
+  employe?  :Employe
   myForm: FormGroup = new FormGroup({});
   recapSujet: FormControl = new FormControl('', [
     Validators.required,
@@ -38,6 +41,7 @@ export class AddRapportComponent implements OnInit {
     private rapportService: RapportService,
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
+    private authService : AuthService,
     private router : Router
   ) {}
 
@@ -53,6 +57,9 @@ export class AddRapportComponent implements OnInit {
         this.description.setValue(this.rapport?.description);
         this.attachmentList = this.rapport?.fJoint;
       }
+    });
+    this.authService.getAuth().subscribe((res) => {
+      this.employe = res;
     });
   }
 
@@ -117,8 +124,4 @@ export class AddRapportComponent implements OnInit {
     this.attachmentList.splice(index, 1);
   }
 
-  export(){
-    const link = ['pdf/', this.id];
-    this.router.navigate(link);
-  }
 }

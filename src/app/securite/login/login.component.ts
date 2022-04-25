@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private mailService: MailService
+    private mailService: MailService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('token', res.token);
         let role = this.authService.getRole();
+        this.cd.detectChanges()
         switch (role) {
           case 0:
             this.router.navigate(['/admin']);
@@ -54,6 +56,7 @@ export class LoginComponent implements OnInit {
           case 2:
             this.router.navigate(['/agent']);
             break;
+        
         }
       } else {
         this.mdp.setValue('');

@@ -1,5 +1,4 @@
-<app-sidebar></app-sidebar>
-<div class="container">
+<div class="container-fluid">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
 
     <form [formGroup]="myForm" (ngSubmit)="ajouter()">
@@ -88,14 +87,20 @@
                         </span></small>
                 </div>
 
+               
 
 
 
             </div>
         </div>
 
+        
+        <div class="form-group;">
+            <input style="width:75% ;margin:10px auto;"  type="date" formControlName="dateLimite" name="dateLimite" class="form-control"
+            min="{{dateNow | date:'yyyy-MM-dd'}}" id="dateLimite">
+        </div>
         <div class="form-group" style="width: 75%; margin:10px auto;" >
-            <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+            <div class="upload">
                 <label for="file" style="text-align: center; cursor: pointer;">
                     <p style="color: grey;margin-top: 15px;">
                         Déposer des fichier

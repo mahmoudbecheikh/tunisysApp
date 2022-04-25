@@ -13,4 +13,8 @@ export class DashbordComponent implements OnInit {
 
   }
 
+  console(){
+    console.log('aaaaaaaa')
+  }
+
 }

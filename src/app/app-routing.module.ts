@@ -16,7 +16,9 @@ import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
 import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
+import { ListeComponent } from './assistant/ticket/liste/liste.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
+import { DefaultComponent } from './default/default.component';
 import { ErrorComponent } from './error/error.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AgentGuard } from './guards/agent.guard';
@@ -31,132 +33,146 @@ import { ResetComponent } from './securite/reset/reset.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
-    pathMatch: 'full',
-  },
-
-  {
-    path: 'admin',
-    canActivate: [AdminGuard],
+    component: DefaultComponent,
     children: [
-      { path: '', component: DashbordComponent },
       {
-        path: 'employees',
+        path: 'admin',
+        canActivate: [AdminGuard],
         children: [
+          { path: '', component: DashbordComponent },
           {
-            path: '',
-            component: ListEmployeeComponent,
+            path: 'employees',
+            children: [
+              {
+                path: '',
+                component: ListEmployeeComponent,
+              },
+              {
+                path: 'add',
+                component: AddEmployeeComponent,
+              },
+              {
+                path: 'update/:id',
+                component: UpdateEmployeeComponent,
+              },
+            ],
           },
           {
-            path: 'add',
-            component: AddEmployeeComponent,
+            path: 'departements',
+            children: [
+              {
+                path: '',
+                component: ListDepartementComponent,
+              },
+              {
+                path: 'add',
+                component: AddDepartementComponent,
+              },
+              {
+                path: 'update/:id',
+                component: UpdateDepartementComponent,
+              },
+            ],
           },
           {
-            path: 'update/:id',
-            component: UpdateEmployeeComponent,
+            path: 'tickets',
+            children: [
+              {
+                path: '',
+                component: ListTicketComponent,
+              },
+              {
+                path: 'add',
+                component: AddTicketComponent,
+              },
+              {
+                path: ':id',
+                component: DetailTicketAttComponent,
+              },
+              {
+                path: 'update/:id',
+                component: UpdateTicketComponent,
+              },
+              {
+                path: 'rapport/:id',
+                component: AddRapportComponent,
+              },
+            ],
           },
-        ],
-      },
-      {
-        path: 'departements',
-        children: [
-          {
-            path: '',
-            component: ListDepartementComponent,
-          },
-          {
-            path: 'add',
-            component: AddDepartementComponent,
-          },
-          {
-            path: 'update/:id',
-            component: UpdateDepartementComponent,
-          },
-        ],
-      },
-      {
-        path: 'tickets',
-        children: [
-          {
-            path: '',
-            component: ListTicketComponent,
-          },
-          {
-            path: 'add',
-            component: AddTicketComponent,
-          },
-          {
-            path: ':id',
-            component: DetailTicketAttComponent,
-          },
-          {
-            path: 'update/:id',
-            component: UpdateTicketComponent,
-          },
-        ],
-      },
 
-      {
-        path: 'reclamation',
-        component :ListReclamationComponent
-      },
-
-    ],
-  },
-
-  {
-    path: 'agent',
-    canActivate: [AgentGuard],
-    children: [
-      { path: '', component: TicketsComponent },
-      {
-        path: 'tickets',
-        children: [
           {
-            path: '',
-            component: TicketsComponent,
+            path: 'reclamation',
+            component: ListReclamationComponent,
           },
-          {
-            path: ':id',
-            component: DetailTicketAttComponent,
-          },
-          {
-            path: 'rapport/:id',
-            component: AddRapportComponent,
-          }
-        ],
-      },
-    ],
-  },
-
-  {
-    path: 'assistant',
-    canActivate: [AssistantGuard],
-    children: [
-      { path: '', component: TicketAttComponent },
-      {
-        path: 'tickets',
-        children: [
-          {
-            path: '',
-            component: TicketAttComponent,
-          },
-          {
-            path: ':id',
-            component: DetailTicketAttComponent,
-          }
         ],
       },
       {
-        path: 'inbox',
-        component: InboxComponent,
+        path: 'agent',
+        canActivate: [AgentGuard],
+        children: [
+          { path: '', component: TicketsComponent },
+          {
+            path: 'tickets',
+            children: [
+              {
+                path: '',
+                component: TicketsComponent,
+              },
+              {
+                path: ':id',
+                component: DetailTicketAttComponent,
+              },
+              {
+                path: 'rapport/:id',
+                component: AddRapportComponent,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'assistant',
+        canActivate: [AssistantGuard],
+        children: [
+          { path: '', component: TicketAttComponent },
+          {
+            path: 'tickets',
+            children: [
+              {
+                path: '',
+                component: TicketAttComponent,
+              },
+              {
+                path: ':id',
+                component: DetailTicketAttComponent,
+              },
+              {
+                path: 'rapport/:id',
+                component: AddRapportComponent,
+              },
+            ],
+            
+          },
+          {
+            path:'liste',
+            component : ListeComponent
+          },
+          {
+            path: 'inbox',
+            component: InboxComponent,
+          },
+        ],
+      },
+      {
+        path: 'change',
+        component: ChangeComponent,
       },
     ],
   },
 
   {
     path: 'pdf/:id',
-    component: PreviewPdfComponent
+    component: PreviewPdfComponent,
   },
 
   {
@@ -172,10 +188,7 @@ const routes: Routes = [
     path: 'reinitialise/:token/:tokenExpire',
     component: ResetComponent,
   },
-  {
-    path: 'change',
-    component: ChangeComponent,
-  },
+
   {
     path: '**',
     component: ErrorComponent,

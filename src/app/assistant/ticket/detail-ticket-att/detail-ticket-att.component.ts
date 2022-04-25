@@ -20,6 +20,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class DetailTicketAttComponent implements OnInit {
   employe?: Employe;
   ticket?: Ticket;
+  collaborateurs : any
   id: any;
   files?: [];
   attachements?: any = [];
@@ -90,10 +91,12 @@ export class DetailTicketAttComponent implements OnInit {
 
     this.ticketService.afficherId(this.id).subscribe((res) => {
       if (res) {
+        console.log(res.collaborateurs);
         this.afficherMails(res?.emailClient, res.date);
         this.afficherTags();
 
         this.ticket = res;
+        this.collaborateurs = res.collaborateurs;
         this.afficherEmploye();
 
         this.tags = res.tags;
@@ -121,10 +124,13 @@ export class DetailTicketAttComponent implements OnInit {
       option: 'ALL',
     };
     this.mailService.afficherDiscussion(data).subscribe((mails) => {
-      this.mails = mails;
-      this.mails = this.mails.sort((a: any, b: any) =>
+      if(mails){
+        this.mails = mails;
+        this.mails = this.mails.sort((a: any, b: any) =>
         a.date > b.date ? 1 : -1
       );
+      }
+
     });
   }
 
@@ -133,11 +139,15 @@ export class DetailTicketAttComponent implements OnInit {
       .afficherId(this.ticket?.departement?._id)
       .subscribe((dep) => {
         this.employes = dep.employes;
+        
         this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
           this.notifEnv = res;
         });
       });
   }
+
+
+
 
   afficherTags() {
     this.ticketService.afficherListe().subscribe((tickets) => {
@@ -185,8 +195,20 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
   rapport() {
-    const link = ['agent/tickets/rapport/', this.id];
-    this.router.navigate(link);
+    let link = ['admin/tickets/rapport/', this.id];
+    switch (this.employe?.role) {
+      case 0:
+        this.router.navigate(link);
+        break;
+      case 1:
+        link = ['assistant/tickets/rapport/', this.id];
+        this.router.navigate(link);
+        break;
+      case 2:
+        link = ['agent/tickets/rapport/', this.id];
+        this.router.navigate(link);
+        break;
+    }
   }
 
   add(event: MatChipInputEvent): void {
@@ -276,4 +298,15 @@ export class DetailTicketAttComponent implements OnInit {
       console.log(res);
     });
   }
+
+  verifyCollab(id:any){
+    if(this.collaborateurs)
+      for (let index = 0; index < this.collaborateurs?.length; index++) {
+        const employe = this.collaborateurs[index];
+        console.log(employe)
+        if(employe._id==id) return true;
+      }
+    return false
+}
+
 }

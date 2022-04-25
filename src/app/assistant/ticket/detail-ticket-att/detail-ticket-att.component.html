@@ -1,41 +1,18 @@
-<app-sidebar></app-sidebar>
-<app-header></app-header>
-<div class="container">
+<div class="container-fluid">
 
 
-    <div (click)="rapport()" style="float: right;"  class="btn btn-primary">
+    <div (click)="rapport()" *ngIf="verifyCollab(employe?._id) || employe?._id==ticket?.employe?._id;else export" style="float: right;" class="btn btn-primary">
         Rapport
     </div>
 
-
-
-    <!-- <div class="btn-group">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Inviter
-        </button>
-        <div class="dropdown-menu" (click)="$event.stopPropagation()">
-            <ng-container *ngFor="let emp of employes">
-
-                <div *ngIf="(employe?._id!=emp._id) && !ticket?.collaborateurs?.includes(emp._id)"
-                    class="dropdown-item">
-                    {{emp.nomEmp}} {{emp.prenomEmp}}
-
-                    <div class="badge badge-primary" *ngIf="!verify(emp?._id);else annuler"
-                        (click)="envoyerNotif(emp._id)">Envoyer</div>
-                    <ng-template #annuler>
-                        <div class="badge badge-primary" (click)="supprimer(emp._id)">Annuler</div>
-                    </ng-template>
-                </div>
-            </ng-container>
-
-
-
+    <ng-template #export>
+        <div [routerLink]="['/pdf/'+id]" style="float: right;"  class="btn btn-secondary">
+            Export
         </div>
-    </div> -->
+    </ng-template>
 
 
-    <i class='bx bx-log-out' *ngIf="ticket?.collaborateurs?.includes(employe?._id)" (click)="quitter()"
+    <i class='bx bx-log-out' *ngIf="verifyCollab(employe?._id)" (click)="quitter()"
         id="log_out"></i>
 
 
@@ -60,7 +37,7 @@
                 <div class="modal-body">
                     <ul>
                         <ng-container *ngFor="let emp of employes">
-                            <li *ngIf="(employe?._id!=emp._id) && !ticket?.collaborateurs?.includes(emp._id)">
+                            <li *ngIf="!verifyCollab(emp._id) && employe?._id!= emp._id">
                                 <i class="lni lni-user"></i>
                                 <span> {{emp.nomEmp}} {{emp.prenomEmp}}
                                 </span>
@@ -80,11 +57,14 @@
         </div>
     </div>
 
-    <a [routerLink]="['/admin/tickets/update/'+ticket?._id]"><div class="btn btn-info" style="float: right;" *ngIf="employe?.role==0">Modifier</div></a> 
+
 
     <div class="row">
         <div class="col-sm">
-            <h1>{{ticket?.sujet}}</h1>
+            <h1>{{ticket?.sujet}} <i *ngIf="employe?.role==0" [routerLink]="['/admin/tickets/update/'+ticket?._id]"
+                    class="lni lni-pencil"></i></h1>
+
+
             <div class="row">
                 <div class="info col-sm">
                     <p>Référence : <span>{{ticket?.ref}}</span></p>
@@ -246,12 +226,13 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control"
-            name="raison" id="raison" rows="7"> </textarea>
-            <input class="btn btn-primary" type="button"  (click)="reclamer()" [disabled]="raison.invalid" *ngIf="employe?.role==2" value="Reclamer" />
-                
+            <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control" name="raison"
+                id="raison" rows="7"> </textarea>
+            <input class="btn btn-primary" type="button" (click)="reclamer()" [disabled]="raison.invalid"
+                *ngIf="employe?.role==2" value="Reclamer" />
+
         </div>
     </div>
 
-    
+
 </div>

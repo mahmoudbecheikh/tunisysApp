@@ -1,9 +1,8 @@
-<app-sidebar></app-sidebar>
 <ng-container *ngIf="loading$ | async">
     <div class="overlay"></div>
     <mat-progress-spinner [mode]="'indeterminate'" ></mat-progress-spinner>
   </ng-container>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-9">
             <div class="content-wrapper">
@@ -157,8 +156,12 @@
                     <small *ngIf=" description.invalid && description.touched && description.dirty">Description
                         incorrect</small>
                 </div>
+                <div class="form-group;">
+                    <input type="date" formControlName="dateLimite" name="dateLimite" class="form-control"
+                        min="{{dateNow | date:'yyyy-MM-dd'}}" id="dateLimite">
+                </div>
                 <div class="form-group">
-                    <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                    <div class="upload">
                         <label for="file" style="text-align: center; cursor: pointer;">
                             <p style="color: grey;margin-top: 15px;">
                                 Déposer des fichier

@@ -31,9 +31,9 @@ export class PreviewPdfComponent implements OnInit {
 
   
   public openPDF(): void {
-    let DATA: any = document.getElementById('htmlData');
+    let DATA: any = document.getElementById('table');
     html2canvas(DATA).then((canvas) => {
-      let fileWidth = 300;
+      let fileWidth = 200;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL('image/png');
       let PDF = new jsPDF('p', 'mm', 'a4');

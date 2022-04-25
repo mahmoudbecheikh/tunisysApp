@@ -22,6 +22,27 @@
   font-size: 14px;
 }
 
+*::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: lightgray;
+}
+
+
+.upload {
+  margin-top: 15px;
+  border: 2px dotted grey;
+  text-align: center;
+  height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
 .file {
   cursor: pointer;
   padding: 5px;

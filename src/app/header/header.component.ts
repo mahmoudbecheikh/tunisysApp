@@ -102,4 +102,7 @@ export class HeaderComponent implements OnInit {
     });
     this.resultsToSibling.emit(this.results);
   }
+
+
+  
 }

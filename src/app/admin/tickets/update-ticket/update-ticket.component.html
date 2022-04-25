@@ -1,5 +1,4 @@
-<app-sidebar></app-sidebar>
-<div class="container">
+<div class="container-fluid">
     <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
 
     <form [formGroup]="myForm" (ngSubmit)="modifier()">
@@ -56,7 +55,14 @@
                 </div>
 
 
-
+                <ng-container *ngFor="let dep of departements">
+                    <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id"
+                        formControlName="employe">
+                        <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?._id==emp._id"
+                            value="{{emp._id}}"> {{emp.nomEmp}}</option>
+                        <option value="auto">Automatique</option>
+                    </select>
+                </ng-container>
 
 
             </div>
@@ -97,22 +103,21 @@
                         </span></small>
                 </div>
 
+                <div class="form-group;">
+                    <input type="date" formControlName="dateLimite" name="dateLimite" class="form-control"
+                        min="{{dateNow | date:'yyyy-MM-dd'}}" id="dateLimite">
+                </div>
 
 
 
             </div>
         </div>
 
-        <ng-container *ngFor="let dep of departements">
-            <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id" formControlName="employe">
-                <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?._id==emp._id" value="{{emp._id}}">   {{emp.nomEmp}}</option>
-                <option value="auto">Automatique</option>
-            </select>
-        </ng-container>
+
 
 
         <div class="form-group" style="width: 75%; margin:10px auto;">
-            <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+            <div class="upload">
                 <label for="file" style="text-align: center; cursor: pointer;">
                     <p style="color: grey;margin-top: 15px;">
                         Déposer des fichier

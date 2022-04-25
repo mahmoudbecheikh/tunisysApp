@@ -12,6 +12,28 @@ body {
     margin-top: 50px;
 }
 
+
+.upload {
+    margin-top: 15px;
+    border: 2px dotted grey;
+    text-align: center;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+
+*::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
+
+  
 i {
     font-size: 15px;
     font-weight: bold;

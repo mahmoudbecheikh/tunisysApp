@@ -2,6 +2,16 @@
     text-transform: uppercase;
 }
 
+*::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
+
 h1,
 h3 {
     margin: 25px 0px;
@@ -55,6 +65,11 @@ textarea:disabled,
 i {
     font-size: 15px;
     margin: 5px;
+}
+
+.lni-pencil{
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .info .badge {

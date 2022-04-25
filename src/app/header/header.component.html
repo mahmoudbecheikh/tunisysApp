@@ -1,136 +1,55 @@
-<!-- <ul>
-    <li  *ngFor="let notif of notifications"  [ngStyle]="{'color':notif.lue?'grey':'black' }" >
-        {{notif.envoyeur.nomEmp}}
-        {{notif.envoyeur.nomEmp}}
-        {{notif.contenu}}
-        {{notif.lue}}
-        {{notif.date | date: 'dd/MM/yyyy HH:mm:ss'}}
-        <div class="btn btn-primary" (click)="confirmer(notif)" >Confirmer</div>
-        <div class="btn btn-dark" (click)="supprimer(notif)">Supprimer</div>
-
-    </li>
-</ul>
-
-<div class="btn btn-warning" (click)="marquer()">Marquer</div> -->
-
-
-<!-- Navbar-->
-<!-- Navbar -->
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+<div class="upper-bar">
+    <!-- <form class="wrap">
+        <div class="search sm-2">
+            <input type="text" class="searchTerm" placeholder="Cherchez">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    
-                    <li class="nav-item"  >
-                        <form [formGroup]="formRech">
-                            <mat-form-field >
-                                <input type="text" placeholder="Tapez" aria-label="Sujet" matInput
-                                    formControlName="sujet" [matAutocomplete]="auto" value="{{sujet.value}}">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let ticket of ticketFilter" (click)="find(ticket.sujet)"
-                                        [value]="ticket.sujet" data-toggle="modal"
-                                        data-target="#searchModal">
-                                        <i class="lni lni-search-alt"></i>
-                                        {{ticket.sujet}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
+        </div>
+    </form> -->
 
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-outline-dark" data-toggle="modal"
-                                data-target="#searchModal" (click)="findBtn(sujet.value)" [disabled]="sujet.value.trim()==''">
-                                Recherche
-                            </button>
+    <div class="notif">
+        <i class="bx bx-bell" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"></i>
+        <span class="badge badge-danger">{{notifications?.length}}</span>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="searchModal" tabindex="-1" role="dialog"
-                                aria-labelledby="searchModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="searchModalLabel">Résultat de : {{sujet.value}}
-                                            </h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <span class="res"> {{results?.length}} résultats 
-                                            </span>
+        <div class="dropdown">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <h4 class="dropdown-header">Notifications <i class="bx bx-trash"
+                        style="float: right;margin-top: 5px;"></i></h4>
+                <p *ngIf="notifications?.length<=0;else exist" style="text-align: center;"> <i style="font-size: 15px;" class="bx bx-info-circle"></i>
+                    Aucune notification</p>
+                <ng-template #exist>
+                    <ng-container *ngFor="let notif of notifications">
+                        <div class="dropdown-item">
+                            <i class="bx bx-info-circle circle"></i>
+                            <div class="data">
+                                <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
+                                <p>{{notif.ticket.sujet}}</p>
+                                <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                                <br>
+                                <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu=='invitation'">
+                                    <div class="btn-sm btn-primary" (click)="confirmer(notif)">Confirmer</div>
 
-                                            <ul *ngIf="show">
-                                                <li *ngFor="let ticket of results">
-                                                    <a [routerLink]="['/agent/tickets/'+ticket._id]" data-dismiss="modal">{{ticket.sujet}} </a>
-                                                    <p>{{ticket.description}}</p>
-                                                    <span style="color: grey;">{{ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Fermer</button>                                        </div>
-                                    </div>
+                                    <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
+
                                 </div>
                             </div>
-
-
-
-                            <!-- <input class="btn btn-primary" (click)="findBtn(sujet.value)" [disabled]="sujet.value==''"
-                                style="margin: 20px auto; width: 20%;" value="Ajouter" type="submit" /> -->
-                        </form>
-                        <!-- <ul *ngIf="show">
-                            <li *ngFor="let ticket of results">
-                                <p>{{ticket.sujet}} </p>
-                                <p>{{ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</p>
-                            </li>
-                        </ul> -->
-                    </li>
-                    <li class="nav-item dropdown notification-ui show">
-                        <a class="nav-link dropdown-toggle notification-ui_icon" href="#" id="navbarDropdown"
-                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell"></i>
-                            <span class="unread-notification"></span>
-                        </a>
-                        <div class="dropdown-menu notification-ui_dd show" aria-labelledby="navbarDropdown">
-                            <div class="notification-ui_dd-header">
-                                <h3 class="text-center">Notification</h3>
-                            </div>
-
-                            <div class="notification-ui_dd-content" *ngFor="let notif of notifications">
-                                <div class="notification-list">
-
-                                    <div class="notification-list_detail">
-                                        <p><b>{{notif.envoyeur.nomEmp}}</b> </p>
-                                        <div *ngIf="notif.contenu=='invitation';else not">
-                                            <p>{{notif.ticket.sujet}}</p>
-                                            <div class="btn btn-primary" (click)="confirmer(notif)">Confirmer</div>
-                                            <div class="btn btn-dark" (click)="supprimer(notif)">Supprimer</div>
-                                        </div>
-                                        <ng-template #not>
-                                            {{notif}}
-                                        </ng-template>
-                                        <p><small>{{notif.date}}</small></p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
                         </div>
-                    </li>
+                        <div class="dropdown-divider"></div>
+                    </ng-container>
+                </ng-template>
 
 
-                </ul>
+
             </div>
         </div>
-    </nav>
-</header>
-<!-- Navbar -->
-<!-- Navbar -->
+
+
+    </div>
+    <div class="name">
+        <p>
+            <span class="circle"> {{employe?.nomEmp?.substr(0,1)}}</span> {{employe?.nomEmp}} {{employe?.prenomEmp}}  
+        </p>
+    </div>
+</div>

@@ -16,6 +16,8 @@ export class Ticket {
     telClient?: number;
     date?: string;
     dateModif?: string;
+    dateLimite? : string ;
+
     rapport? : Rapport ;
     adresse? : string;
     siteWeb? : string;

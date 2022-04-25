@@ -56,11 +56,15 @@ export class UpdateTicketComponent implements OnInit {
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
-  employe: FormControl = new FormControl();
   manuel: FormControl = new FormControl('admin');
   statut: FormControl = new FormControl('en attente');
+  employe: FormControl = new FormControl();
+
   departement: FormControl = new FormControl('', [Validators.required]);
   FjointDeleted: FormControl = new FormControl();
+  dateLimite : FormControl = new FormControl();
+  dateNow: any;
+
   constructor(
     private depService: DepartementService,
     private ticketService: TicketService,
@@ -85,6 +89,8 @@ export class UpdateTicketComponent implements OnInit {
       this.statut.setValue(this.ticket.statut);
       this.attachmentList = this.ticket.fJoint;
     });
+    this.dateNow = new Date();
+
   }
 
   createForm() {
@@ -101,6 +107,8 @@ export class UpdateTicketComponent implements OnInit {
       statut: this.statut,
       FjointDeleted: this.FjointDeleted,
       employe: this.employe,
+      dateLimite : this.dateLimite
+
     });
   }
   afficherListe() {

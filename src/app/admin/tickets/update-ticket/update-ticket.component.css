@@ -10,6 +10,25 @@ small {
     margin-top: 50px;
 }
 
+
+.upload {
+    border: 2px dotted grey;
+    text-align: center;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  *::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: lightgray;
+  }
+
 .file {
     padding: 5px;
     text-align: center;

@@ -21,13 +21,11 @@ export class InboxComponent implements OnInit {
 
   attachmentList: any = [];
   files: any = [];
-
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  departement: FormControl = new FormControl('', Validators.required);
   description: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(15),
@@ -62,10 +60,14 @@ export class InboxComponent implements OnInit {
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
+  departement: FormControl = new FormControl('', Validators.required);
 
   manuel: FormControl = new FormControl('assistant');
   statut: FormControl = new FormControl('en attente');
   loading$ = this.spinnerService.loading$;
+  dateLimite: FormControl = new FormControl();
+
+  dateNow: any;
 
   formdata = new FormData();
 
@@ -73,19 +75,20 @@ export class InboxComponent implements OnInit {
     private mailService: MailService,
     private depService: DepartementService,
     private ticketService: TicketService,
-    private spinnerService : SpinnerService
-        ) {}
+    private spinnerService: SpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.afficherDepartements();
     this.afficherListe();
+    this.dateNow = new Date();
   }
 
   ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       if (res) {
-        this.vu(this.mailSelected.uid)
+        this.vu(this.mailSelected.uid);
         this.formdata.append('id', res._id);
         this.ticketService.confirmer(res._id).subscribe((response) => {
           this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
@@ -111,6 +114,7 @@ export class InboxComponent implements OnInit {
       statut: this.statut,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
+      dateLimite: this.dateLimite,
     });
   }
 

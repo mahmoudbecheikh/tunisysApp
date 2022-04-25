@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DepartementService } from 'src/app/services/departement.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Departement } from 'src/models/departement';
@@ -54,17 +55,26 @@ export class AddTicketComponent implements OnInit {
   manuel: FormControl = new FormControl('admin');
   statut: FormControl = new FormControl('en attente');
   departement: FormControl = new FormControl('', [Validators.required]);
+  dateLimite : FormControl = new FormControl();
+  dateNow: any;
+
+
 
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,
-    private router: Router
+    private router: Router,
   ) {}
+
 
   ngOnInit(): void {
     this.createForm();
     this.afficherListe();
+    this.dateNow = new Date();
+
   }
+
+  
 
   createForm() {
     this.myForm = new FormGroup({
@@ -78,6 +88,7 @@ export class AddTicketComponent implements OnInit {
       siteWeb: this.siteWeb,
       adresse: this.adresse,
       statut: this.statut,
+      dateLimite : this.dateLimite
     });
   }
 

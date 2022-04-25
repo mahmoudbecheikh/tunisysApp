@@ -1,36 +1,29 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <app-sidebar></app-sidebar>
-        </div>
-        <div class="col-md-10">
-            <h1>Département</h1>
-            <div class="btn btn-dark" data-toggle="modal" (click)="reset()" data-target="#ajouterDep">Créer</div>
 
-            <div class="row list" *ngIf="(departements.length>0);else vide">
+    <h1>Département</h1>
+    <div class="btn btn-dark" data-toggle="modal" (click)="reset()" data-target="#ajouterDep">Créer</div>
 
-                <div class="col-md-3" *ngFor="let departement of departements">
-                    <div class="card">
-                        <h2>{{departement.nom}}</h2>
-                        <p>Employés <span style="float: right;">{{departement.employes?.length}}</span></p>
-                        <p>Tickets <span style="float: right;">{{departement.tickets?.length}}</span></p>
-                        <div class="icon">
-                            <i class="lni lni-pencil" data-toggle="modal" data-target="#modifierDep"
-                                (click)="selectDepartement(departement._id)"></i>
-                            <i class="lni lni-trash-can" (click)="supprimer(departement._id)"></i>
-                        </div>
+    <div class="row list" *ngIf="(departements.length>0);else vide">
 
-                    </div>
+        <div class="col-md-3" *ngFor="let departement of departements">
+            <div class="card">
+                <h2>{{departement.nom}}</h2>
+                <p>Employés <span style="float: right;">{{departement.employes?.length}}</span></p>
+                <p>Tickets <span style="float: right;">{{departement.tickets?.length}}</span></p>
+                <div class="icon">
+                    <i class="lni lni-pencil" data-toggle="modal" data-target="#modifierDep"
+                        (click)="selectDepartement(departement._id)"></i>
+                    <i class="lni lni-trash-can" (click)="supprimer(departement._id)"></i>
                 </div>
+
             </div>
-            <ng-template #vide>
-                <h3 class="text-center">Il n'y a pas de département.</h3>
-            </ng-template>
         </div>
     </div>
-
-
+    <ng-template #vide>
+        <h3 class="text-center">Il n'y a pas de département.</h3>
+    </ng-template>
 </div>
+
 
 
 <!-- Ajouter -->

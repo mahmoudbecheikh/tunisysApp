@@ -13,6 +13,10 @@
     text-align: center;
     vertical-align: middle;
   }
+
+  table td {
+    height: 50px;
+  }
   
   table th {
     font-weight: 500;
@@ -52,4 +56,19 @@
 a{
     color: black;
     text-decoration: none;
+}
+
+.raison{
+  height: 100%;
+  overflow-y: scroll;
+}
+
+*::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: lightgray;
 }

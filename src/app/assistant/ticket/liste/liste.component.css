@@ -1,0 +1,111 @@
+*::first-letter {
+    text-transform: uppercase;
+}
+
+h1,h3{
+    text-align: center;
+}
+
+.container {
+    margin-left: 175px;
+    margin-top: 50px;
+}
+
+
+.col-md-10{
+    margin-right: -10px;
+}
+
+table{
+    margin-bottom: 25px;
+}
+
+table,
+th,
+td {
+    text-align: center;
+}
+
+table td {
+    font-weight: 400;
+    vertical-align: middle;
+
+
+}
+
+.badge {
+    width: 75px;
+}
+
+.bg-primary {
+    background-color: #5DADE2 !important;
+}
+
+.bg-warning {
+    background-color: #F5B041 !important;
+}
+
+table th {
+    font-weight: 500;
+    background-color: #1a5276;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+i {
+    margin: 5px;
+    font-weight: bold;
+    font-size: 15px;
+
+}
+
+.lni-pencil {
+    color: #4BCA81;
+}
+
+.badge {
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+.lni-trash-can {
+    color: #e71d34;
+}
+
+
+
+.paginator {
+    text-align: center;
+    left: 40%;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+}
+
+.paginator /deep/ .ngx-pagination .current {
+    background: #1a5276;
+    border-radius: 4px;
+    padding-left: 9px;
+    padding-right: 9px;
+}
+
+.paginator /deep/ .ngx-pagination a:hover,
+.ngx-pagination button:hover {
+    background: #d4d4d4;
+    border-radius: 3px;
+
+}
+
+.paginator /deep/ .ngx-pagination a:focus,
+.ngx-pagination button:focus {
+    outline: none;
+    background: #d4d4d4;
+}
+
+
+

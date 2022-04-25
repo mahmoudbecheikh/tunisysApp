@@ -1,6 +1,4 @@
-import { T } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DepartementService } from 'src/app/services/departement.service';
@@ -22,7 +20,6 @@ export class ListTicketComponent implements OnInit {
 
   statutsArray: string[] = ['en attente', 'a faire', 'en cours', 'resolu'];
   manuelsArray: string[] = ['admin', 'assistant', 'client'];
-
   form: FormGroup = new FormGroup({});
   departements: FormArray = new FormArray([]);
   statuts: FormArray = new FormArray([]);
@@ -43,6 +40,9 @@ export class ListTicketComponent implements OnInit {
       statuts: this.statuts,
       manuels: this.manuels,
     });
+
+
+
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
@@ -72,9 +72,9 @@ export class ListTicketComponent implements OnInit {
     else {
       this.ticketsFilter = this.tickets.filter(function (el) {
         return (
-          departements.includes(el.departement?.nom) &&
-          statuts.includes(el.statut) &&
-          manuels.includes(el.manuel)
+          (departements.includes(el.departement?.nom) || departements.length==0) &&
+          (statuts.includes(el.statut) || statuts.length==0)&&
+          (manuels.includes(el.manuel) || manuels.length==0 )
         );
       });
     }
@@ -113,8 +113,19 @@ export class ListTicketComponent implements OnInit {
 
           break;
       }
-      console.log(option);
     });
+  }
+
+  verify(id:any){
+    for (let i = 0; i < this.tickets.length; i++) {
+      let ticket = this.tickets[i];
+      if(ticket._id == id) {
+        if(ticket.dateLimite && new Date(ticket?.dateLimite ).getTime() < Date.now())
+        return true
+        else return false
+      }
+    }
+    return true
   }
 
   listDepartement() {

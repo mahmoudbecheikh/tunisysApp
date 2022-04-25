@@ -18,53 +18,48 @@ export class TicketAttComponent implements OnInit {
   myForm: FormGroup = new FormGroup({});
   attachmentList: any = [];
   files: any = [];
+  dateLimite: FormControl = new FormControl();
+  dateNow: any;
 
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-  departement: FormControl = new FormControl('', Validators.required);
   description: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(10),
   ]);
-
   emailClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('.*com$'),
+    Validators.email,
   ]);
   nomClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(3),
     Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
-
+  adresse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  siteWeb: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern(
+      '((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
+    ),
+  ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
-
-  siteWeb: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
-  ]);
-
-  adresse: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
-  ]);
+  departement: FormControl = new FormControl('', Validators.required);
 
   manuel: FormControl = new FormControl('assistant');
   statut: FormControl = new FormControl('en attente');
-
-  
-
 
   formdata = new FormData();
   constructor(
@@ -77,21 +72,15 @@ export class TicketAttComponent implements OnInit {
     this.afficherListe();
     this.createForm();
     this.afficherDepartements();
-    
+    this.dateNow = new Date();
   }
-
-
-
-
 
   afficherListe() {
     this.ticketService.afficherListe().subscribe((res) => {
       for (let i = 0; i < res.length; i++) {
         const ticket = res[i];
         if (ticket.statut == 'en attente') this.tickets.push(ticket);
-
       }
-
     });
   }
 
@@ -123,6 +112,7 @@ export class TicketAttComponent implements OnInit {
       statut: this.statut,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
+      dateLimite: this.dateLimite,
     });
   }
 
@@ -158,6 +148,4 @@ export class TicketAttComponent implements OnInit {
       this.files.push(element.name);
     }
   }
-
-
 }

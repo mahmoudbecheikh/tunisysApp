@@ -9,8 +9,13 @@
 }
 
 
+.col-md-10{
+    margin-right: -10px;
+}
 
-
+table{
+    margin-bottom: 25px;
+}
 
 table,
 th,
@@ -71,9 +76,9 @@ i {
 }
 
 
+
 .paginator {
-    position: fixed;
-    bottom: 50px;
+    text-align: center;
     left: 40%;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
@@ -100,36 +105,10 @@ i {
 }
 
 
-.wrapper {
-    padding: 30px;
-    max-width: 1200px;
-    margin: auto
-}
 
-.h3 {
-    font-weight: 900
-}
 
-.views {
-    font-size: 0.85rem
-}
 
-.btn {
-    color: #666;
-    font-size: 0.85rem
-}
 
-.btn:hover {
-    color: #61b15a
-}
-
-.green-label {
-    background-color: #defadb;
-    color: #48b83e;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    margin: 0 3px
-}
 
 .radio,
 .checkbox {
@@ -157,47 +136,8 @@ i {
     opacity: 0
 }
 
-.checkmark {
-    position: absolute;
-    top: 0px;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 50%
-}
 
-.options input:checked~.checkmark:after {
-    display: block
-}
 
-.options .checkmark:after {
-    content: "";
-    width: 9px;
-    height: 9px;
-    display: block;
-    background: white;
-    position: absolute;
-    top: 52%;
-    left: 51%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 300ms ease-in-out 0s
-}
-
-.options input[type="radio"]:checked~.checkmark {
-    background: #61b15a;
-    transition: 300ms ease-in-out 0s
-}
-
-.options input[type="radio"]:checked~.checkmark:after {
-    transform: translate(-50%, -50%) scale(1)
-}
-
-.count {
-    font-size: 0.8rem
-}
 
 label {
     cursor: pointer
@@ -236,7 +176,7 @@ label {
 }
 
 .tick input:checked~.check {
-    background-color: #61b15a
+    background-color: #5DADE2
 }
 
 .check:after {
@@ -260,25 +200,16 @@ label {
     transform: rotate(45deg) scale(2)
 }
 
-#country {
-    font-size: 0.8rem;
-    border: none;
-    border-left: 1px solid #ccc;
-    padding: 0px 10px;
-    outline: none;
-    font-weight: 900
-}
 
-.close {
-    font-size: 1.2rem
-}
+
+
 
 div.text-muted {
     font-size: 0.85rem
 }
 
 #sidebar {
-    width: 130%;
+    width: 120%;
     float: left;
     padding: 10px;
     border : 1px solid #dee2e6
@@ -294,10 +225,7 @@ div.text-muted {
     padding: 0.3rem 0.4rem 0.3rem 0rem
 }
 
-.badge-primary {
-    background-color: #defadb;
-    color: #48b83e
-}
+
 
 .brand .check {
     background-color: #fff;
@@ -322,7 +250,7 @@ div.text-muted {
 }
 
 .rating .fas.fa-star {
-    color: #ffbb00;
+    color: #45B39D;
     padding: 0px 3px
 }
 
@@ -333,45 +261,88 @@ div.text-muted {
 
 .brand .tick input:checked~.check,
 .rating .tick input:checked~.check {
-    background-color: #61b15a
+    background-color: #5DADE2
 }
 
 
 
-div.h6,
-h6 {
-    margin: 0
-}
 
 
-.rebate {
-    font-size: 0.9rem
-}
+/* ******************* */
 
-.btn.btn-primary {
-    background-color: #48b83e;
+
+select{
+    background-color: #2E86C1;
+    width: 175px;
     color: #fff;
-    border: 1px solid #008000;
-    border-radius: 10px;
-    font-weight: 800
+    padding-left: 5px;
+    border: none;
+    height: 30px;
+    font-weight: 500;
 }
 
-.btn.btn-primary:hover {
-    background-color: #48b83ee8
-}
-
-img {
-    width: 192px;
-    height: 132px;
-    object-fit: contain
-}
-
-.clear {
-    clear: both
-}
-
-.btn.btn-success {
-    visibility: hidden
+select option{
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 15px;
+    margin: 40px;
 }
 
 
+select:focus{
+    outline: none !important;
+}
+
+
+
+/* ************ */
+
+
+.modal button:focus {
+    box-shadow: none !important;
+    outline-width: 0
+}
+
+.card {
+    border-radius: 12px;
+    width: calc(500px + 10 * ((100vw - 320px) / 680));
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8)
+}
+
+.card-header {
+    border-radius: 12px !important
+}
+
+.modal-body .btn-danger {
+    border-radius: 11px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+}
+
+.madal .btn-light {
+    background: transparent !important;
+    border: 0px !important;
+}
+
+.madal .btn-light:hover {
+    border-color: #fff !important
+}
+
+.modal .btn-light:active {
+    border-color: #fff !important
+}
+
+@media (max-width: 526px) {
+    .card {
+        width: unset
+    }
+}
+
+.madal span {
+    font-size: 30px !important
+}
+
+.modal-content {
+    background: transparent !important
+}

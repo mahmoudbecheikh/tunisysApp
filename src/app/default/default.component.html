@@ -63,11 +63,17 @@
         <li>
             <a [routerLink]="['/assistant/inbox']" routerLinkActive="router-link-active">
                 <i class='bx bx-envelope'></i>
-                <span class="links_name">Tickets</span>
+                <span class="links_name">Boîte</span>
             </a>
             <span class="tooltip">Boîte</span>
         </li>
-
+        <li>
+            <a [routerLink]="['/assistant/liste']" routerLinkActive="router-link-active">
+                <i class='bx bx-history'></i>
+                <span class="links_name">Historique</span>
+            </a>
+            <span class="tooltip">Historique</span>
+        </li>
         <li>
             <a [routerLink]="['/change']" routerLinkActive="router-link-active">
                 <i class='bx bxs-user-account'></i>
@@ -75,7 +81,7 @@
             </a>
             <span class="tooltip">Profil</span>
         </li>
-        
+
     </ul>
 
     <ul class="nav_list" *ngIf="employe?.role==2">
@@ -95,12 +101,13 @@
             </a>
             <span class="tooltip">Profil</span>
         </li>
-        
+
     </ul>
     <div class="content">
         <div class="user">
             <div class="user_details">
                 <div class="name_job">
+                    <div class="name">{{nomEmp}}</div>
                     <div class="job">{{role}}</div>
                 </div>
             </div>
@@ -108,4 +115,9 @@
         </div>
     </div>
 </div>
-
+<div class="home_content">
+        <app-header></app-header>
+    <div class="main">
+        <router-outlet></router-outlet>
+    </div>
+</div>
