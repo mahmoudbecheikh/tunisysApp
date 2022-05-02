@@ -1,7 +1,9 @@
-<app-sidebar></app-sidebar>
 <div class="container-fluid">
     <h3 style="text-align: center;margin-bottom: 50px;">Rapport</h3>
     <span style="margin-left: 55px;" *ngIf="rapport">Modifie le : {{rapport?.dateModification | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+    <div [routerLink]="['/pdf/'+id]" *ngIf="ticketSelected?.statut=='resolu'" style="float: right; margin-bottom: 25px;"  class="btn btn-secondary">
+        <i class="bx bx-download"></i> Export
+    </div>
     <div class="row">
 
         <form [formGroup]="myForm" *ngIf="!rapport" (ngSubmit)="ajouter()">
@@ -51,10 +53,9 @@
             </div>
         </form>
 
+        
         <div class="col-md">
-            <div [routerLink]="['/pdf/'+id]" style="float: right;"  class="btn btn-secondary">
-                Export
-            </div>
+
             <form [formGroup]="myForm" *ngIf="rapport" (ngSubmit)="modifier()">
                 <div class="form-group">
                     <input type="text" formControlName="recapSujet" placeholder="sujet *" class="col-md form-control"
@@ -73,7 +74,7 @@
                         </span></small>
                 </div>
                 <div class="form-group">
-                    <div style="border :2px dotted grey;text-align: center;height: 150px; overflow-y: scroll;">
+                    <div class="upload" >
                         <label for="file" style="text-align: center; cursor: pointer;">
                             <p style="color: grey;margin-top: 15px;">
                                 Déposer des fichier

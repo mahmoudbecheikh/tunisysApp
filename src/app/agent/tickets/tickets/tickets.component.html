@@ -1,11 +1,11 @@
-
 <div class="container-fluid">
 
     <h1 class="text-center">Mes tickets attribués</h1>
-    <div class="btn btn-secondary" (click)="check()">Enregistrer les modification</div>
-
+    <input type="submit" class="btn btn-secondary" [disabled]="!change" (click)="check()"
+        value="Enregistrer les modification" />
     <div class="row" cdkDropListGroup>
-        <div class="col-sm column" cdkDropList [cdkDropListData]="faire" (cdkDropListDropped)="drop($event)">
+        <div class="col-sm column" cdkDropList id="0" [cdkDropListData]="faire"
+            (cdkDropListDropped)="drop($event)">
             <h2 style="border-bottom:5px solid #FF5733">A faire</h2>
 
             <div>
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div class="col-sm column" cdkDropList [cdkDropListData]="cours" (cdkDropListDropped)="drop($event)">
+        <div class="col-sm column" cdkDropList id="1" [cdkDropListData]="cours" (cdkDropListDropped)="drop($event)">
             <h2 style="border-bottom:5px solid #2E86C1">En cours</h2>
 
             <div>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="col-sm column" cdkDropList [cdkDropListData]="resolu" (cdkDropListDropped)="drop($event)">
+        <div class="col-sm column" id="2" cdkDropList [cdkDropListData]="resolu" (cdkDropListDropped)="drop($event)">
             <h2 style="border-bottom:5px solid #239B56">Résolu</h2>
 
             <div>

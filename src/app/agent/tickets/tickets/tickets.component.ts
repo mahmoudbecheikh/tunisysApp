@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Employe } from 'src/models/employe';
-import { Ticket } from 'src/models/ticket';
 
 @Component({
   selector: 'app-tickets',
@@ -23,17 +22,18 @@ export class TicketsComponent implements OnInit {
   cours: any[] = [];
   resolu: any[] = [];
   changement: any[] = [];
-  employe? : Employe 
+  employe?: Employe;
+  change = false;
   constructor(
     private ticketService: TicketService,
     private authService: AuthService,
     private router: Router,
-    private empService : EmployeeService
+    private empService: EmployeeService
   ) {}
 
   ngOnInit(): void {
     this.getListTicket();
-    this.getAuth()
+    this.getAuth();
   }
 
   getAuth() {
@@ -45,8 +45,8 @@ export class TicketsComponent implements OnInit {
   getListTicket() {
     this.authService.getAuth().subscribe((res) => {
       this.ticketService.afficherEmploye(res._id).subscribe((res) => {
-        console.log(res)
-        this.tickets=res;
+        console.log(res);
+        this.tickets = res;
         for (let i = 0; i < res.length; i++) {
           let ticket = res[i];
           switch (ticket.statut) {
@@ -72,7 +72,7 @@ export class TicketsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      
+
       console.log(event.container.data);
     } else {
       transferArrayItem(
@@ -81,7 +81,45 @@ export class TicketsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      this.change = true
+
+      // if (Number(event.container.id) > Number(event.previousContainer.id)) {
+      //   transferArrayItem(
+      //     event.previousContainer.data,
+      //     event.container.data,
+      //     event.previousIndex,
+      //     event.currentIndex
+      //   );
+      // } else {
+      //   console.log('Tnajemch twakher');
+      // }
+      // switch (event.container.id) {
+      //   case 'faireListe':
+      //     if (event.previousContainer.data )
+      //       this.change = false;
+      //     else this.change = true;
+
+      //     break;
+      //   case 'coursListe':
+      //     console.log(event.container.data)
+      //     console.log(this.cours)
+      //     if (this.arraysAreEqual(event.container.data, this.cours))
+      //     this.change = false;
+      //     else this.change = true;
+
+      //     break;
+      //   case 'resoluListe':
+      //     if (this.arraysAreEqual(event.container.data, this.resolu))
+      //     this.change = false;
+      //     else this.change = true;
+      //     break;
+      // }
+      // console.log(this.change);
     }
+  }
+
+  arraysAreEqual(ary1: any, ary2: any) {
+    return ary1.join('') == ary2.join('');
   }
 
   toMore(id: any) {
@@ -101,46 +139,59 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  detail(id:any){
+  detail(id: any) {
     const link = ['agent/tickets/', id];
     this.router.navigate(link);
   }
 
   check() {
-
-    this.changement=[]
+    this.changement = [];
     for (let i = 0; i < this.tickets.length; i++) {
-      let ticket =this.tickets[i] ;
+      let ticket = this.tickets[i];
       let statut = '';
-      let ticketModify ;
+      let ticketModify;
       switch (ticket.statut) {
-
         case 'a faire':
           if (this.cours.includes(ticket)) statut = 'en cours';
           if (this.resolu.includes(ticket)) statut = 'resolu';
           break;
         case 'en cours':
-          if (this.faire.includes(ticket)) statut = 'a faire';
           if (this.resolu.includes(ticket)) statut = 'resolu';
-          break;
-        case 'resolu':
-          if (this.faire.includes(ticket)) statut = 'a faire';
-          if (this.cours.includes(ticket)) statut = 'en cours';
           break;
       }
 
-      if(statut!=''){
-        ticketModify = {
-          data : this.tickets[i],
-          statut : statut
+      if (statut != '') {
+       
+        if(this.tickets[i].statut=='en cours' && !ticket.rapport){
+          console.log('Lezmk tekteb rapport')
         }
-        this.changement.push(ticketModify)
+        else {
+          ticketModify = {
+            data: this.tickets[i],
+            statut: statut,
+          };
+          this.changement.push(ticketModify);
+
+        } 
       }
     }
-    if(this.changement.length>0)
-    this.ticketService.changerStatut(this.changement).subscribe(res=>{
-      console.log(this.changement)
-    })
-    else console.log('famech jdid')
+    if (this.changement.length > 0)
+      this.ticketService.changerStatut(this.changement).subscribe((res) => {
+        this.changement = [];
+        this.faire = [];
+        this.cours = [];
+        this.resolu = [];
+        this.getListTicket();
+        console.log('Hawka badaltk denya');
+
+      });
+    else {
+      this.changement = [];
+      this.faire = [];
+      this.cours = [];
+      this.resolu = [];
+      this.getListTicket();
+      console.log('famech jdid');
+    }
   }
 }

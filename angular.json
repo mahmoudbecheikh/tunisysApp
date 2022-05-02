@@ -20,7 +20,8 @@
             "allowedCommonJsDependencies": [
               "buffer",
               "jspdf",
-              "canvg"
+              "canvg",
+              "chart.js"
             ],
             "outputPath": "dist/tunisys-app",
             "index": "src/index.html",

@@ -18,47 +18,41 @@ export class InboxComponent implements OnInit {
   mailSelected: any;
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
-
   attachmentList: any = [];
   files: any = [];
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(10),
   ]);
-
   emailClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('.*com$'),
+    Validators.email,
   ]);
   nomClient: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.minLength(3),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
-
+  adresse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+  ]);
+  siteWeb: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+    Validators.pattern('(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'),
+  ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
-  ]);
-
-  siteWeb: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
-  ]);
-
-  adresse: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
   ]);
   departement: FormControl = new FormControl('', Validators.required);
 

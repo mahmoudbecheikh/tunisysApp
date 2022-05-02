@@ -14,6 +14,17 @@ export class MailService {
     return this.http.get(this.baseURL, { params: data });
   }
 
+  ajouterReponse(data : any): Observable<any> {
+    return this.http.post(this.baseURL+'/brouillon', data);
+  }
+
+  afficherReponses() :Observable<any>{
+    return this.http.get(this.baseURL+'/brouillon');
+  }
+  supprimerReponse(id: any) {
+    return this.http.delete(this.baseURL + `/${id}`);
+  }
+
   afficherDiscussion(data: any): Observable<any> {
     return this.http.get(this.baseURL+'/discussion', { params: data });
   }

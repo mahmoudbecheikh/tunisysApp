@@ -91,7 +91,7 @@ a,a:hover{
   color: #83acf1 ; 
   text-decoration: none ;
 }
-.lni-eye{
+.lni-eye , .bx-low-vision{
   font-size: 15px;
   font-weight: 900;
   margin-left: 300px;

@@ -58,8 +58,8 @@
                 <ng-container *ngFor="let dep of departements">
                     <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id"
                         formControlName="employe">
-                        <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?._id==emp._id"
-                            value="{{emp._id}}"> {{emp.nomEmp}}</option>
+                        <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?.cin===emp.cin"
+                            value="{{emp._id}}">  {{ticket?.employe?.cin}} {{ticket?.employe?.cin===emp.cin}} {{emp.cin}} {{emp.nomEmp}}</option>
                         <option value="auto">Automatique</option>
                     </select>
                 </ng-container>

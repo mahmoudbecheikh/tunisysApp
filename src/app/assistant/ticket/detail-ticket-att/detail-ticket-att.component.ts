@@ -20,7 +20,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class DetailTicketAttComponent implements OnInit {
   employe?: Employe;
   ticket?: Ticket;
-  collaborateurs : any
+  collaborateurs: any;
   id: any;
   files?: [];
   attachements?: any = [];
@@ -33,7 +33,8 @@ export class DetailTicketAttComponent implements OnInit {
   filtredTags?: string[];
   tags: any = [];
   allTags: string[] = [];
-
+  reponses: any;
+  formReponse: FormGroup = new FormGroup({});
   formTag: FormGroup = new FormGroup({});
   myForm: FormGroup = new FormGroup({});
 
@@ -44,15 +45,25 @@ export class DetailTicketAttComponent implements OnInit {
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   text: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(15),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
 
   raison: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(15),
+  ]);
+
+  titreReponse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(15),
+  ]);
+
+  textReponse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(15),
   ]);
@@ -80,10 +91,21 @@ export class DetailTicketAttComponent implements OnInit {
       email: this.emailClient,
       text: this.text,
     });
+    this.formReponse = new FormGroup({
+      titreReponse: this.titreReponse,
+      textReponse: this.textReponse,
+    });
+    this.formTag = new FormGroup({
+      tags: this.tagsCtrl,
+    });
   }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
+
+    this.createForm();
+
+    this.afficherReponse();
 
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
@@ -105,10 +127,6 @@ export class DetailTicketAttComponent implements OnInit {
       }
     });
 
-    this.createForm();
-    this.formTag = new FormGroup({
-      tags: this.tagsCtrl,
-    });
     this.tagsCtrl.valueChanges.subscribe((res) => {
       if (res == '') this.filtredTags = [];
       else {
@@ -124,13 +142,12 @@ export class DetailTicketAttComponent implements OnInit {
       option: 'ALL',
     };
     this.mailService.afficherDiscussion(data).subscribe((mails) => {
-      if(mails){
+      if (mails) {
         this.mails = mails;
         this.mails = this.mails.sort((a: any, b: any) =>
-        a.date > b.date ? 1 : -1
-      );
+          a.date > b.date ? 1 : -1
+        );
       }
-
     });
   }
 
@@ -139,15 +156,12 @@ export class DetailTicketAttComponent implements OnInit {
       .afficherId(this.ticket?.departement?._id)
       .subscribe((dep) => {
         this.employes = dep.employes;
-        
+
         this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
           this.notifEnv = res;
         });
       });
   }
-
-
-
 
   afficherTags() {
     this.ticketService.afficherListe().subscribe((tickets) => {
@@ -299,14 +313,39 @@ export class DetailTicketAttComponent implements OnInit {
     });
   }
 
-  verifyCollab(id:any){
-    if(this.collaborateurs)
+  verifyCollab(id: any) {
+    if (this.collaborateurs)
       for (let index = 0; index < this.collaborateurs?.length; index++) {
         const employe = this.collaborateurs[index];
-        console.log(employe)
-        if(employe._id==id) return true;
+        console.log(employe);
+        if (employe._id == id) return true;
       }
-    return false
-}
+    return false;
+  }
 
+  afficherReponse() {
+    this.mailService.afficherReponses().subscribe((res) => {
+      console.log(res);
+      this.reponses = res;
+    });
+  }
+
+  ajouterReponse() {
+    this.mailService
+      .ajouterReponse(this.formReponse.value)
+      .subscribe((reponse) => {
+        this.formReponse.reset();
+        this.afficherReponse();
+      });
+  }
+
+  supprimerReponse(id: any) {
+    this.mailService.supprimerReponse(id).subscribe((res) => {
+      this.afficherReponse();
+    });
+  }
+
+  inserer(text: any) {
+    this.text.setValue(text);
+  }
 }

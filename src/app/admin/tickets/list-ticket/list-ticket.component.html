@@ -37,7 +37,7 @@
                         itemsPerPage: 5,
                         currentPage :p,
                         totalItems: tickets.length}">
-                        <td scope="row">  <i *ngIf="verify(ticket._id)" style="color: red;" class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
+                        <td scope="row">  <i *ngIf="verify(ticket._id)&& ticket.statut!='resolu'" style="color: red;" class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
                         <td> {{ ticket.departement?.nom }}</td>
                         <td> {{ ticket.nomClient }}</td>
                         <td>

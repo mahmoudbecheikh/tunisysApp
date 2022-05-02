@@ -24,12 +24,12 @@ export class AddEmployeeComponent implements OnInit {
   prenom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   nom: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
 
   departement: FormControl = new FormControl('', Validators.required);

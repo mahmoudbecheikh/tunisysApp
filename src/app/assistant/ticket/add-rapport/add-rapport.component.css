@@ -9,20 +9,36 @@ form {
     margin: 5px;
 }
 
-.container {
-    margin-left: 175px;
+.upload {
+    border: 2px dotted grey;
+    text-align: center;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+.btn-secondary {
+    background-color: #E5E8E8;
+    border: none;
+    color: black;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+form {
     margin-top: 50px;
 }
 
 *::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
-  }
-  
-  *::-webkit-scrollbar-thumb {
+}
+
+*::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: lightgray;
-  }
+}
 
 .file img {
     width: 50px;
@@ -44,8 +60,7 @@ span {
     color: grey;
 }
 
-.form-control:focus
-.btn:focus {
+.form-control:focus .btn:focus {
     box-shadow: none;
 }
 

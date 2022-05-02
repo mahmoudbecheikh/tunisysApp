@@ -24,7 +24,7 @@ export class TicketAttComponent implements OnInit {
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -37,18 +37,17 @@ export class TicketAttComponent implements OnInit {
   nomClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   adresse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern(
-      '((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
-    ),
+    Validators.pattern('(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
   ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,
@@ -94,6 +93,8 @@ export class TicketAttComponent implements OnInit {
           });
           this.formdata.delete('files');
           this.myForm.reset();
+          this.statut.setValue('en attente');
+          this.manuel.setValue('assistant');
           this.files = [];
         });
       }

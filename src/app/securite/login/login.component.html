@@ -11,8 +11,10 @@
             </span><br>
             <span>
                 <i class="lni lni-lock"></i>
-                <input  [type]="show ? 'text' : 'password'" formControlName="mdp" placeholder="Mot de passe *" name="password" id="password">
-                <i (click)="change()" class="lni lni-eye"></i>
+                <input [type]="show ? 'text' : 'password'" formControlName="mdp" placeholder="Mot de passe *"
+                    name="password" id="password">
+                <i (click)="change()" [ngClass]="(show==true)?'bx bx-low-vision':'lni lni-eye'"></i>
+
             </span>
             <button [disabled]="myForm.invalid" type="submit">Se connecter</button>
 

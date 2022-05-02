@@ -42,6 +42,8 @@ import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
 import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
 import { DefaultComponent } from './default/default.component';
 import { ListeComponent } from './assistant/ticket/liste/liste.component'; 
+import { ChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,8 +88,9 @@ import { ListeComponent } from './assistant/ticket/liste/liste.component';
     NgbModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    NgxPaginationModule
-    
+    NgxPaginationModule,
+    ChartsModule
+
   ],
   providers: [{
     provide :HTTP_INTERCEPTORS,

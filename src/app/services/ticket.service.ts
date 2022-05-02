@@ -15,21 +15,21 @@ export class TicketService {
     return this.http.post(this.baseURL, ticket);
   }
 
-  afficherListe() :Observable<any>{
+  afficherListe(): Observable<any> {
     return this.http.get(this.baseURL);
   }
   afficherId(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/${id}`);
   }
-  modifier(id: any, ticket: any):Observable<any> {
+  modifier(id: any, ticket: any): Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, ticket);
   }
 
-  modifierTags(id: any, tags: any):Observable<any> {
+  modifierTags(id: any, tags: any): Observable<any> {
     return this.http.put(this.baseURL + `/tags/${id}`, tags);
   }
 
-  changerStatut(tickets : any):Observable<any> {
+  changerStatut(tickets: any): Observable<any> {
     return this.http.put(this.baseURL, tickets);
   }
 
@@ -37,11 +37,9 @@ export class TicketService {
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
 
-  quitter(idTicket: any,idEmp : any): Observable<any> {
+  quitter(idTicket: any, idEmp: any): Observable<any> {
     return this.http.get(this.baseURL + `/${idTicket}/${idEmp}`);
   }
-
- 
 
   afficherEmploye(idEmp: any): Observable<any> {
     return this.http.get(this.baseURL + `/employee/${idEmp}`);
@@ -51,28 +49,31 @@ export class TicketService {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
 
-  uploadFiles(data:any){
-    return this.http.post(this.baseURL+'/fichiers',data) ;
-}
+  uploadFiles(data: any) {
+    return this.http.post(this.baseURL + '/fichiers', data);
+  }
 
-  downloadFile(file:String){
-    var body = {filename:file};
-    return this.http.post('http://localhost:3000/download',body,{
-        responseType : 'blob',
-        headers:new HttpHeaders().append('Content-Type','application/json')
+  downloadFile(file: String) {
+    var body = { filename: file };
+    return this.http.post('http://localhost:3000/download', body, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json'),
     });
-}
+  }
 
+  reclamer(data: any): Observable<any> {
+    return this.http.post('http://localhost:3000/reclamation', data);
+  }
 
-reclamer(data: any): Observable<any> {
-  return this.http.post('http://localhost:3000/reclamation', data);
-}
+  supprimerReclamation(id: any): Observable<any> {
+    return this.http.delete('http://localhost:3000/reclamation' + `/${id}`);
+  }
+  afficherReclamation(): Observable<any> {
+    return this.http.get('http://localhost:3000/reclamation');
+  }
 
-supprimerReclamation(id: any): Observable<any> {
-  return this.http.delete('http://localhost:3000/reclamation'+`/${id}`);
-}
-afficherReclamation(): Observable<any> {
-  return this.http.get('http://localhost:3000/reclamation');
-}
+  afficherStat() : Observable<any>{
+    return this.http.get('http://localhost:3000/stat');
 
+  }
 }

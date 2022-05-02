@@ -32,7 +32,7 @@ export class AddDepartementComponent implements OnInit {
   }
   ajouter() {
     this.depService.ajouter(this.myForm.value).subscribe((res) => {
-      this.router.navigate(['admin/departements']);
+      console.log(res)
     });
   }
 

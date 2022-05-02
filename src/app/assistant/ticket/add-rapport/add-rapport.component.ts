@@ -27,7 +27,7 @@ export class AddRapportComponent implements OnInit {
   recapSujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern("([a-zA-Z',.-]+( [a-zA-Z',.-]+)*)"),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -78,10 +78,12 @@ export class AddRapportComponent implements OnInit {
       if (res) {
         this.formdata.append('id', res._id);
         this.rapportService.uploadFiles(this.formdata).subscribe((files) => {
-          this.rapport = res ;
-          this.formdata = new FormData();
           this.myForm.reset();
-          this.attachmentList = [];
+          this.formdata = new FormData();
+          this.rapport = res ;
+          this.recapSujet.setValue(this.rapport?.recapSujet);
+          this.description.setValue(this.rapport?.description);
+  
         });
       }
     });
