@@ -24,14 +24,17 @@
                             <i class="bx bx-info-circle circle"></i>
                             <div class="data">
                                 <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
-                                <p>{{notif.ticket.sujet}}</p>
+                                <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
+                                <ng-template #not> <p>{{notif.contenu}}</p>  </ng-template>
                                 <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
                                 <br>
                                 <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu=='invitation'">
                                     <div class="btn-sm btn-primary" (click)="confirmer(notif)">Confirmer</div>
+                                    <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
+                                </div>
+                                <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu!='invitation'">
 
                                     <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
-
                                 </div>
                             </div>
                         </div>

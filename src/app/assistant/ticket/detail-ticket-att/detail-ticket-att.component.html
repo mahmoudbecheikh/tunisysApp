@@ -21,7 +21,7 @@
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" *ngIf="employe?.role==2 && employe?._id==ticket?.employe?._id"
         data-toggle="modal" data-target="#invModal">
-        <i class="lni lni-plus" style="font-weight: 800;"></i> inviter
+        <i class="lni lni-plus" style="font-weight: 800;" (click)="afficherNotifEnv()" ></i> inviter
     </button>
     <!-- Modal -->
     <div class="modal fade" id="invModal" tabindex="-1" role="dialog" aria-labelledby="invModalLabel"

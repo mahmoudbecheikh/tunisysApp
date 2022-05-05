@@ -57,8 +57,14 @@ export class AddTicketComponent implements OnInit {
   statut: FormControl = new FormControl('en attente');
   departement: FormControl = new FormControl('', [Validators.required]);
   dateLimite : FormControl = new FormControl();
-  dateNow: any;
 
+  selectedDate: any;
+  minDate = new Date()
+
+  onSelect(event:any){
+    this.selectedDate= event;
+    this.dateLimite.setValue(event)
+  }
 
 
   constructor(
@@ -71,7 +77,6 @@ export class AddTicketComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.afficherListe();
-    this.dateNow = new Date();
 
   }
 

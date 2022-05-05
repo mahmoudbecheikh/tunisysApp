@@ -24,6 +24,7 @@ export class ListTicketComponent implements OnInit {
   departements: FormArray = new FormArray([]);
   statuts: FormArray = new FormArray([]);
   manuels: FormArray = new FormArray([]);
+  notes :FormArray = new FormArray([]);
 
   constructor(
     private ticketService: TicketService,
@@ -39,6 +40,7 @@ export class ListTicketComponent implements OnInit {
       departements: this.departements,
       statuts: this.statuts,
       manuels: this.manuels,
+      notes : this.notes
     });
 
 
@@ -46,6 +48,7 @@ export class ListTicketComponent implements OnInit {
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
+    console.log(this.form.value)
     if (e.target.checked) {
       formArray.push(new FormControl(e.target.value));
     } else {
@@ -65,16 +68,20 @@ export class ListTicketComponent implements OnInit {
     let departements = this.departements.value;
     let statuts = this.statuts.value;
     let manuels = this.manuels.value;
-
+    let notes = this.notes.value;
     if(this.statuts.length==0 && this.departements.length==0 && this.manuels.length==0 ){
       this.ticketsFilter = this.tickets
     }
     else {
       this.ticketsFilter = this.tickets.filter(function (el) {
+        if(el.feedBack)
+        console.log(el.feedBack.note)
         return (
           (departements.includes(el.departement?.nom) || departements.length==0) &&
           (statuts.includes(el.statut) || statuts.length==0)&&
-          (manuels.includes(el.manuel) || manuels.length==0 )
+          (manuels.includes(el.manuel) || manuels.length==0 )&&
+          (  (el.feedBack || notes.includes(el.feedBack.note))  || notes.length==0 )
+
         );
       });
     }

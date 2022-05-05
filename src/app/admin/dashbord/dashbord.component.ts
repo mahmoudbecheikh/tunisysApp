@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label, MultiDataSet } from 'ng2-charts';
+import { SocketService } from 'src/app/services/socket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
@@ -9,13 +10,21 @@ import { TicketService } from 'src/app/services/ticket.service';
   styleUrls: ['./dashbord.component.css'],
 })
 export class DashbordComponent implements OnInit {
-  constructor(private ticketService: TicketService) {}
+  constructor(private ticketService: TicketService,private socketService : SocketService) {}
 
   employesResData: any[] = [];
   employesResLabel: any[] = [];
+  selectedDate: any;
+  minDate = new Date()
 
+  onSelect(event:any){
+    this.selectedDate= event;
+  }
+
+  
 
   ngOnInit(): void {
+
     this.ticketService.afficherStat().subscribe((res) => {
       for (const emp of res.notes) {
         this.employesResLabel.push(emp._id.nomEmp + ' ' + emp._id.prenomEmp);

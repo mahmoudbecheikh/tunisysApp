@@ -41,9 +41,13 @@ import { SearchComponent } from './search/search.component';
 import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
 import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
 import { DefaultComponent } from './default/default.component';
-import { ListeComponent } from './assistant/ticket/liste/liste.component'; 
+import { ListeComponent } from './assistant/ticket/liste/liste.component';
 import { ChartsModule } from 'ng2-charts';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,14 +93,18 @@ import { ChartsModule } from 'ng2-charts';
     MatProgressSpinnerModule,
     MatChipsModule,
     NgxPaginationModule,
-    ChartsModule
-
+    MatDatepickerModule,
+    MatNativeDateModule ,
+    ChartsModule,
+    SocketIoModule.forRoot(config)
   ],
-  providers: [{
-    provide :HTTP_INTERCEPTORS,
-    useClass : SpinnerInterceptor,
-    multi : true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class NotificationService {
   envoyer(data: any) {
     return this.http.post(this.baseURL, data);
   }
-  confirmer(id: any){
+  confirmer(id: any) : Observable<any>{
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
   afficherRecep(id: any) {
@@ -21,7 +22,7 @@ export class NotificationService {
   afficherEnv(id: any) {
     return this.http.get(this.baseURL + `/env/${id}`);
   }
-  supprimer(_id: string) {
+  supprimer(_id: string) :Observable<any> {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
   marquer(data:any){

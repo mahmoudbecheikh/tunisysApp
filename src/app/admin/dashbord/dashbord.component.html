@@ -1,20 +1,16 @@
-<div class="chart-wrapper"  style="height:300px;width:400px;">
-  <canvas baseChart
-      [datasets]="lineChartData" 
-      [labels]="lineChartLabels" 
-      [options]="lineChartOptions"
-      [colors]="lineChartColor"
-      [legend]="lineChartLegend" 
-      [chartType]="lineChartType" 
-      [plugins]="lineChartPlugins">
+<div class="chart-wrapper" style="height:300px;width:400px;">
+  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+    [colors]="lineChartColor" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
   </canvas>
 </div>
 
 
-<div class="chart-wrapper"  style="height:300px;width:400px;">
-  <canvas baseChart 
-  [data]="doughnutChartData"
-  [labels]="doughnutChartLabels"
-  [chartType]="doughnutChartType">
-</canvas>
+<div class="chart-wrapper" style="height:300px;width:400px;">
+  <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
+  </canvas>
 </div>
+<mat-card>
+  <mat-calendar class="calendar" [minDate]="minDate" [selected]="selectedDate" (selectedChange)="onSelect($event)">
+  </mat-calendar>
+</mat-card>
+<p>Selected date: {{selectedDate}}</p>

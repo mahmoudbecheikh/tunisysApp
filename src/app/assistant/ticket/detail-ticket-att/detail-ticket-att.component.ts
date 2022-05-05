@@ -12,6 +12,7 @@ import { ElementRef } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { DepartementService } from 'src/app/services/departement.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { SocketService } from 'src/app/services/socket.service';
 @Component({
   selector: 'app-detail-ticket-att',
   templateUrl: './detail-ticket-att.component.html',
@@ -80,7 +81,8 @@ export class DetailTicketAttComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private depService: DepartementService,
-    private notifService: NotificationService
+    private notifService: NotificationService,
+    private socketSerice: SocketService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -113,7 +115,6 @@ export class DetailTicketAttComponent implements OnInit {
 
     this.ticketService.afficherId(this.id).subscribe((res) => {
       if (res) {
-        console.log(res.collaborateurs);
         this.afficherMails(res?.emailClient, res.date);
         this.afficherTags();
 
@@ -157,10 +158,14 @@ export class DetailTicketAttComponent implements OnInit {
       .subscribe((dep) => {
         this.employes = dep.employes;
 
-        this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
-          this.notifEnv = res;
-        });
+       this.afficherNotifEnv()
       });
+  }
+
+  afficherNotifEnv(){
+    this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
+      this.notifEnv = res;
+    });
   }
 
   afficherTags() {
@@ -268,6 +273,7 @@ export class DetailTicketAttComponent implements OnInit {
     };
     this.notifService.envoyer(data).subscribe((res) => {
       this.afficherEmploye();
+      
     });
   }
 
@@ -309,7 +315,6 @@ export class DetailTicketAttComponent implements OnInit {
     };
     this.ticketService.reclamer(data).subscribe((res) => {
       this.raison.setValue('');
-      console.log(res);
     });
   }
 
@@ -317,7 +322,6 @@ export class DetailTicketAttComponent implements OnInit {
     if (this.collaborateurs)
       for (let index = 0; index < this.collaborateurs?.length; index++) {
         const employe = this.collaborateurs[index];
-        console.log(employe);
         if (employe._id == id) return true;
       }
     return false;
@@ -325,7 +329,6 @@ export class DetailTicketAttComponent implements OnInit {
 
   afficherReponse() {
     this.mailService.afficherReponses().subscribe((res) => {
-      console.log(res);
       this.reponses = res;
     });
   }
@@ -348,4 +351,7 @@ export class DetailTicketAttComponent implements OnInit {
   inserer(text: any) {
     this.text.setValue(text);
   }
+
+
+
 }

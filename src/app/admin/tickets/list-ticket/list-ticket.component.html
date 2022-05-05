@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
     <h1 class="text-center">Ticket</h1>
 
@@ -37,7 +36,8 @@
                         itemsPerPage: 5,
                         currentPage :p,
                         totalItems: tickets.length}">
-                        <td scope="row">  <i *ngIf="verify(ticket._id)&& ticket.statut!='resolu'" style="color: red;" class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
+                        <td scope="row"> <i *ngIf="verify(ticket._id)&& ticket.statut!='resolu'" style="color: red;"
+                                class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
                         <td> {{ ticket.departement?.nom }}</td>
                         <td> {{ ticket.nomClient }}</td>
                         <td>
@@ -93,8 +93,8 @@
                     </tr>
                 </tbody>
             </table>
-                <pagination-controls class="paginator" previousLabel="Retour" nextLabel="Suivant" (pageChange)="p = $event">
-                </pagination-controls>
+            <pagination-controls class="paginator" previousLabel="Retour" nextLabel="Suivant" (pageChange)="p = $event">
+            </pagination-controls>
 
             <ng-template #vide>
                 <h3 class="text-center">Il n'y a pas de ticket.</h3>
@@ -105,7 +105,7 @@
             <section id="sidebar">
                 <form [formGroup]="form">
                     <div class="py-3">
-                        <h5 class="font-weight-bold">Categories</h5>
+                        <h5 class="font-weight-bold">Départements</h5>
                         <div class="brand">
                             <div *ngFor="let dep of departementsArray"
                                 class="form-inline d-flex align-items-center py-1">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="py-3">
-                        <h5 class="font-weight-bold">Brands</h5>
+                        <h5 class="font-weight-bold">Statuts</h5>
                         <div class="brand">
                             <div class="form-inline d-flex align-items-center py-1" *ngFor="let statut of statutsArray">
                                 <label class="tick"> {{statut}}<input type="checkbox" [value]="statut"
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="py-3">
-                        <h5 class="font-weight-bold">Brands</h5>
+                        <h5 class="font-weight-bold">Manuels</h5>
                         <div class="brand">
                             <div class="div-inline d-flex align-items-center py-1" *ngFor="let manuel of manuelsArray">
                                 <label class="tick"> {{manuel}}<input type="checkbox" [value]="manuel"
@@ -141,29 +141,30 @@
                             <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
-                                        class="fas fa-star"></span> <input type="checkbox"> <span class="check"></span>
+                                        class="fas fa-star"></span> <input type="checkbox" [value]="5" (change)="onCheckboxChange(notes,$event)"> <span class="check"></span>
                                 </label> </div>
                             <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
-                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span
+                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox" [value]="4" (change)="onCheckboxChange(notes,$event)"> <span
                                         class="check"></span> </label> </div>
                             <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
                                         class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span>
-                                    <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span
+                                    <span class="far fa-star px-1 text-muted"></span> <input type="checkbox" [value]="3" (change)="onCheckboxChange(notes,$event)"> <span
                                         class="check"></span> </label> </div>
                             <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span
                                         class="far fa-star px-1 text-muted"></span> <span
                                         class="far fa-star px-1 text-muted"></span> <span
-                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span
+                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox" [value]="2" (change)="onCheckboxChange(notes,$event)"> <span
                                         class="check"></span> </label> </div>
-                            <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span
+                            <div class="form-inline d-flex align-items-center py-2"> <label class="tick"> 
+                                <span
                                         class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span>
                                     <span class="far fa-star px-1 text-muted"></span> <span
                                         class="far fa-star px-1 text-muted"></span> <span
-                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span
+                                        class="far fa-star px-1 text-muted"></span> <input type="checkbox" [value]="1" (change)="onCheckboxChange(notes,$event)"> <span
                                         class="check"></span> </label> </div>
                         </div>
                     </div>

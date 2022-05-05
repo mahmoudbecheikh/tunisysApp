@@ -50,7 +50,25 @@
                     </small>
                 </div>
 
-
+                <div class="form-group"  >
+                    <div class="upload">
+                        <label for="file" style="text-align: center; cursor: pointer;">
+                            <p style="color: grey;margin-top: 15px;">
+                                Déposer des fichier
+                            </p>
+                            <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                        </label>
+                        <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                            style="visibility: hidden;display: none;">
+        
+                        <div class="row files">
+                            <div class="col-sm-2 file" *ngFor="let file of attachmentList">
+                                <img src="../../assets/images/file.png">
+                                <p style="word-wrap: break-word">{{file}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -87,7 +105,13 @@
                         </span></small>
                 </div>
 
-               
+                <div class="form-group;">
+                    <div class="calendar">
+                        <mat-calendar  [minDate]="minDate" [selected]="dateLimite.value" (selectedChange)="onSelect($event)">
+                        </mat-calendar>
+                    </div>
+                     
+                </div>
 
 
 
@@ -95,32 +119,11 @@
         </div>
 
         
-        <div class="form-group;">
-            <input style="width:75% ;margin:10px auto;"  type="date" formControlName="dateLimite" name="dateLimite" class="form-control"
-            min="{{dateNow | date:'yyyy-MM-dd'}}" id="dateLimite">
-        </div>
-        <div class="form-group" style="width: 75%; margin:10px auto;" >
-            <div class="upload">
-                <label for="file" style="text-align: center; cursor: pointer;">
-                    <p style="color: grey;margin-top: 15px;">
-                        Déposer des fichier
-                    </p>
-                    <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
-                </label>
-                <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
-                    style="visibility: hidden;display: none;">
 
-                <div class="row files">
-                    <div class="col-sm-2 file" *ngFor="let file of attachmentList">
-                        <img src="../../assets/images/file.png">
-                        <p style="word-wrap: break-word">{{file}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="text-center">
-            <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 20%;" value="Ajouter" type="submit" />
+            <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 35px auto; width: 20%;" value="Ajouter" type="submit" />
         </div>
     </form>
 </div>

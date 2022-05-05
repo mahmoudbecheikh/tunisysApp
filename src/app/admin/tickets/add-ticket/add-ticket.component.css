@@ -15,10 +15,19 @@ small {
 .upload {
   border: 2px dotted grey;
   text-align: center;
-  height: 150px;
+  height: 250px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.calendar {
+  width: 275px ;
+  height: 250px;
+  margin: 0px auto;
+  margin-top: -35px;
+}
+
+
 
 *::-webkit-scrollbar {
   -webkit-appearance: none;

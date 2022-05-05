@@ -1,8 +1,10 @@
+import { not } from '@angular/compiler/src/output/output_ast';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
+import { SocketService } from '../services/socket.service';
 import { TicketService } from '../services/ticket.service';
 
 @Component({
@@ -25,7 +27,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private notifService: NotificationService,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -36,12 +39,12 @@ export class HeaderComponent implements OnInit {
     this.formRech = new FormGroup({
       sujet: this.sujet,
     });
-    
+
     this.ticketService.afficherListe().subscribe((res) => {
       this.tickets = res;
     });
     this.sujet.valueChanges.subscribe((response) => {
-      if (response.trim()=='') this.ticketFilter = [];
+      if (response.trim() == '') this.ticketFilter = [];
       else {
         this.filterData(response);
         this.ticketFilter = [...new Set(this.ticketFilter)];
@@ -52,17 +55,61 @@ export class HeaderComponent implements OnInit {
   afficherNotif() {
     this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
       this.notifications = res;
+      this.socketService.listen('notification').subscribe((notif) => {
+        if (
+          notif?.notification.recepteur._id.toString() ==
+          this.employe?._id?.toString()
+        ) {
+          this.notifications.push(notif.notification);
+        }
+      });
+
+      this.socketService.listen('notificationDeleted').subscribe(res=>{
+        console.log(res)
+        for (const notif of this.notifications) {
+          if(notif._id==res.notification._id) this.notifications.splice(this.notifications.indexOf(notif),1)
+        }
+      })
     });
   }
+
+
 
   confirmer(notif: any) {
     this.notifService.confirmer(notif._id).subscribe((res) => {
       this.supprimer(notif);
+      this.afficherNotif()
+       let data = {
+        envoyeur: res?.recepteur,
+        recepteur: res?.envoyeur,
+        contenu: 'Hawka keblouu',
+        ticket: res?.ticket,
+        lue: false,
+      }
+      this.notifService.envoyer(data).subscribe(res=>{
+        console.log(res)
+        this.afficherNotif();
+
+      })
     });
   }
   supprimer(notif: any) {
+    
     this.notifService.supprimer(notif._id).subscribe((res) => {
+      if(res.contenu=='invitation'){
+        let data = {
+          envoyeur: res?.recepteur,
+          recepteur: res?.envoyeur,
+          contenu: 'Votre demande makeblouhelkch l masakh',
+          ticket: res?.ticket,
+          lue: false,
+        }
+        this.notifService.envoyer(data).subscribe(res=>{
+          console.log(res)
+        })
+      }
       this.afficherNotif();
+
     });
   }
   marquer() {
@@ -102,7 +149,4 @@ export class HeaderComponent implements OnInit {
     });
     this.resultsToSibling.emit(this.results);
   }
-
-
-  
 }
