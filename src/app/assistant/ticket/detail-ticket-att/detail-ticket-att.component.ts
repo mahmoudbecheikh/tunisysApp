@@ -33,7 +33,9 @@ export class DetailTicketAttComponent implements OnInit {
   tagsCtrl = new FormControl();
   filtredTags?: string[];
   tags: any = [];
+
   allTags: string[] = [];
+  suggestions: any;
   reponses: any;
   formReponse: FormGroup = new FormGroup({});
   formTag: FormGroup = new FormGroup({});
@@ -82,7 +84,7 @@ export class DetailTicketAttComponent implements OnInit {
     private authService: AuthService,
     private depService: DepartementService,
     private notifService: NotificationService,
-    private socketSerice: SocketService
+    private socketService: SocketService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -113,6 +115,24 @@ export class DetailTicketAttComponent implements OnInit {
       this.employe = res;
     });
 
+    this.socketService.listen('confirmNotif').subscribe((res) => {
+      if (res) {
+        this.afficherNotifEnv();
+        this.ticketService.afficherId(this.id).subscribe((res) => {
+          this.collaborateurs = res.collaborateurs;
+        });
+      }
+    });
+
+    this.socketService.listen('delNotif').subscribe((res) => {
+      if (res) {
+        this.afficherNotifEnv();
+        this.ticketService.afficherId(this.id).subscribe((res) => {
+          this.collaborateurs = res.collaborateurs;
+        });
+      }
+    });
+
     this.ticketService.afficherId(this.id).subscribe((res) => {
       if (res) {
         this.afficherMails(res?.emailClient, res.date);
@@ -121,7 +141,7 @@ export class DetailTicketAttComponent implements OnInit {
         this.ticket = res;
         this.collaborateurs = res.collaborateurs;
         this.afficherEmploye();
-
+        this.afficherSuggestion();
         this.tags = res.tags;
         this.emailClient.setValue(this.ticket.emailClient);
         this.files = res.fJoint;
@@ -158,13 +178,19 @@ export class DetailTicketAttComponent implements OnInit {
       .subscribe((dep) => {
         this.employes = dep.employes;
 
-       this.afficherNotifEnv()
+        this.afficherNotifEnv();
       });
   }
 
-  afficherNotifEnv(){
+  afficherNotifEnv() {
     this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
       this.notifEnv = res;
+    });
+  }
+
+  afficherSuggestion() {
+    this.ticketService.suggestion(this.ticket?._id).subscribe((res) => {
+      this.suggestions = res;
     });
   }
 
@@ -273,28 +299,28 @@ export class DetailTicketAttComponent implements OnInit {
     };
     this.notifService.envoyer(data).subscribe((res) => {
       this.afficherEmploye();
-      
+      this.afficherNotifEnv();
     });
+    // this.socketService.emit('envoyerNotif',data)
   }
 
   verify(id: any) {
-    let idTicket = this.id;
-    let ticket = this.ticket;
-    if (this.notifEnv && id) {
-      let notif = this.notifEnv.filter(function (el: any) {
-        return el.recepteur._id == id && el.ticket._id == ticket?._id;
-      });
-      return notif.length > 0;
-    } else {
-      return false;
-    }
+    if (this.notifEnv)
+      for (const notif of this.notifEnv) {
+        if (notif.recepteur._id == id && this.ticket?._id == notif.ticket._id)
+          return true;
+      }
+    return false;
   }
   supprimer(id: any) {
     let notif = this.notifEnv.filter(function (el: any) {
       return el.recepteur._id == id;
     });
+
     this.notifService.supprimer(notif[0]._id).subscribe((res) => {
-      this.afficherEmploye();
+      if (res) {
+        this.afficherEmploye();
+      }
     });
   }
 
@@ -351,7 +377,4 @@ export class DetailTicketAttComponent implements OnInit {
   inserer(text: any) {
     this.text.setValue(text);
   }
-
-
-
 }

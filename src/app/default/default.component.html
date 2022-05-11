@@ -116,8 +116,11 @@
     </div>
 </div>
 <div class="home_content">
-        <app-header></app-header>
+
+    <app-header (selectEmployeEvent)="select($event)"></app-header>
     <div class="main">
+        <app-chat [employeSelected]="employeSelected" [messages]="messages" ></app-chat>
+
         <router-outlet></router-outlet>
     </div>
 </div>

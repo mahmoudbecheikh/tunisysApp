@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Employe } from 'src/models/employe';
 
@@ -28,12 +29,17 @@ export class TicketsComponent implements OnInit {
     private ticketService: TicketService,
     private authService: AuthService,
     private router: Router,
-    private empService: EmployeeService
+    private empService: EmployeeService,
+    private socketService : SocketService
   ) {}
 
   ngOnInit(): void {
     this.getListTicket();
     this.getAuth();
+    this.socketService.listen('confirmNotif').subscribe(res=>{
+      if(res)
+      this.getListTicket()
+    })
   }
 
   getAuth() {
@@ -43,9 +49,12 @@ export class TicketsComponent implements OnInit {
   }
 
   getListTicket() {
+    this.changement = [];
+    this.faire = [];
+    this.cours = [];
+    this.resolu = [];
     this.authService.getAuth().subscribe((res) => {
       this.ticketService.afficherEmploye(res._id).subscribe((res) => {
-        console.log(res);
         this.tickets = res;
         for (let i = 0; i < res.length; i++) {
           let ticket = res[i];

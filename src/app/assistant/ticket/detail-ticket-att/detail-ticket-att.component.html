@@ -299,4 +299,10 @@
     </div>
 
 
+    <div>
+        <a [routerLink]="['/agent/tickets/'+ticket?._id]" *ngFor="let ticket of suggestions">
+            {{ticket?.sujet}}
+        </a>
+    </div>
+
 </div>

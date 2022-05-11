@@ -1,0 +1,64 @@
+<div class="container" *ngIf="employeSelected">
+
+    <div class="chat">
+        <div class="chat-header">
+            <div class="profile">
+                <div class="left">
+                    <img src="../../assets/images/client.png" class="arrow">
+                    <h2>{{employeSelected.nom}}</h2>
+                    <span>online</span>
+                </div>
+                <div class="right">
+
+                    <p class="icon" (click)="close() ">X</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="chat-box"  #scrollable class="chat-box" >
+            <ng-container *ngFor="let message of messages">
+
+                <div class="chat-r" *ngIf="message.envoyeur == employe?._id;else rec">
+                    <div class="sp"></div>
+
+                    <div class="mess mess-r">
+                        <p>
+                            {{message.contenu}}
+                        </p>
+                        <div class="check">
+                            <span> {{message.date}}</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #rec>
+                    <div class="chat-l">
+
+                        <div class="mess mess-l">
+                            <p>
+                                {{message.contenu}}
+                            </p>
+                            <div class="check">
+                                <span> {{message.date}}</span>
+                            </div>
+                        </div>
+                        <div class="sp"></div>
+
+                    </div>
+                </ng-template>
+
+            </ng-container>
+
+        </div>
+
+        <div class="chat-footer">
+            <form [formGroup]="myForm" (ngSubmit)="envoyer()" class="form-inline">
+                <textarea placeholder="Type a message" formControlName="contenu"></textarea>
+
+                <button type="submit"  [disabled]="myForm.invalid" style="border: none;"> <i class="bx bx-send"></i> </button>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

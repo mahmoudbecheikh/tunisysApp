@@ -1,57 +1,119 @@
 <div class="upper-bar">
-    <!-- <form class="wrap">
-        <div class="search sm-2">
-            <input type="text" class="searchTerm" placeholder="Cherchez">
-            <button type="submit" class="searchButton">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </form> -->
 
-    <div class="notif">
-        <i class="bx bx-bell" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+
+   
+
+    <div class="icons">
+        <div class="message">
+            <i class="bx bx-message-rounded"  id="messageDropdown" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"></i>
-        <span class="badge badge-danger">{{notifications?.length}}</span>
+            <span class="badge badge-danger">{{notifications?.length}}</span>
+            <div class="dropdown">
+                <div class="dropdown-menu"  onclick="event.stopPropagation()"aria-labelledby="messageDropdown">
+                    <h4 class="dropdown-header">Messages </h4>
+                    <form [formGroup]="formRech">
+                        <mat-form-field >
+                            <input type="text" placeholder="Rechercher" aria-label="Nom" matInput
+                                formControlName="nom" [matAutocomplete]="auto" value="{{nom.value}}">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let employe of employeFilter" (click)='select(employe)'
+                                    [value]="employe.nom" data-toggle="modal"
+                                    data-target="#searchModal">
+                                    <i class="lni lni-search-alt"></i>
+                                    {{employe.nom}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    
 
-        <div class="dropdown">
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <h4 class="dropdown-header">Notifications </h4>
-                <p *ngIf="notifications?.length<=0;else exist" style="text-align: center;"> <i style="font-size: 15px;" class="bx bx-info-circle"></i>
-                    Aucune notification</p>
-                <ng-template #exist>
-                    <ng-container *ngFor="let notif of notifications">
-                        <div class="dropdown-item">
-                            <i class="bx bx-info-circle circle"></i>
-                            <div class="data">
-                                <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
-                                <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
-                                <ng-template #not> <p>{{notif.contenu}}</p>  </ng-template>
-                                <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
-                                <br>
-                                <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu=='invitation'">
-                                    <div class="btn-sm btn-primary" (click)="confirmer(notif)">Confirmer</div>
-                                    <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
-                                </div>
-                                <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu!='invitation'">
+                    
+       
+                    
+                    </form>
+                    <p *ngIf="notifications?.length<=0;else exist" style="text-align: center;"> <i style="font-size: 15px;"
+                            class="bx bx-info-circle"></i>
+                        Aucun message</p>
+                    <ng-template #exist>
+                        <ng-container *ngFor="let notif of notifications">
+                            <div class="dropdown-item">
+                                <i class="bx bx-info-circle circle"></i>
+                                <div class="data">
+                                    <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
+                                    <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
+                                    <ng-template #not>
+                                        <p>{{notif.contenu}}</p>
+                                    </ng-template>
+                                    <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy  HH:mm:ss'}}</span>
+                                    <br>
 
-                                    <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                    </ng-container>
-                </ng-template>
-
-
-
+                            <div class="dropdown-divider"></div>
+                        </ng-container>
+                    </ng-template>
+        
+        
+        
+                </div>
+        
+        
             </div>
         </div>
-
+        <div class="notif">
+            <i class="bx bx-bell" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"></i>
+            <span class="badge badge-danger">{{notifications?.length}}</span>
+            <div class="dropdown">
+                <div class="dropdown-menu "  aria-labelledby="notificationDropdown">
+                    <h4 class="dropdown-header">Notifications </h4>
+                    <p *ngIf="notifications?.length<=0;else exist" style="text-align: center;"> <i style="font-size: 15px;"
+                            class="bx bx-info-circle"></i>
+                        Aucune notification</p>
+                    <ng-template #exist>
+                        <ng-container *ngFor="let notif of notifications">
+                            <div class="dropdown-item">
+                                <i class="bx bx-info-circle circle"></i>
+                                <div class="data">
+                                    <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
+                                    <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
+                                    <ng-template #not>
+                                        <p>{{notif.contenu}}</p>
+                                    </ng-template>
+                                    <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy  HH:mm:ss'}}</span>
+                                    <br>
+                                    <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu=='invitation'">
+                                        <div class="btn-sm btn-primary" (click)="confirmer(notif)">Confirmer</div>
+                                        <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
+                                    </div>
+                                    <div style=" display: flex; justify-content: left;" *ngIf="notif.contenu!='invitation'">
+        
+                                        <div class="btn-sm btn-secondary" (click)="supprimer(notif)">Supprimer</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                        </ng-container>
+                    </ng-template>
+        
+        
+        
+                </div>
+        
+        
+            </div>
+        </div>
+        <div class="name">
+            <p>
+                <span class="circle"> {{employe?.nomEmp?.substr(0,1)}}</span> {{employe?.nomEmp}} {{employe?.prenomEmp}}
+            </p>
+        </div>
 
     </div>
-    <div class="name">
-        <p>
-            <span class="circle"> {{employe?.nomEmp?.substr(0,1)}}</span> {{employe?.nomEmp}} {{employe?.prenomEmp}}  
-        </p>
-    </div>
+
+
+
+
+
+
+
 </div>

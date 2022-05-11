@@ -78,13 +78,14 @@ export class AddRapportComponent implements OnInit {
       if (res) {
         this.formdata.append('id', res._id);
         this.rapportService.uploadFiles(this.formdata).subscribe((files) => {
-          this.myForm.reset();
-          this.formdata = new FormData();
-          this.rapport = res ;
-          this.recapSujet.setValue(this.rapport?.recapSujet);
-          this.description.setValue(this.rapport?.description);
-  
+         console.log(files)
         });
+        this.myForm.reset();
+        this.formdata = new FormData();
+        this.rapport = res ;
+        this.recapSujet.setValue(this.rapport?.recapSujet);
+        this.description.setValue(this.rapport?.description);
+
       }
     });
   }

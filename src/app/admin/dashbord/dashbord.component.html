@@ -1,16 +1,106 @@
-<div class="chart-wrapper" style="height:300px;width:400px;">
-  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-    [colors]="lineChartColor" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
-  </canvas>
-</div>
+<div class="container-fluid">
+
+  <h2>Aperçu</h2>
+  <div class="row" style="margin-left: -35px; background-color: white;">
+    <div class="col-sm">
+      <div class="card">
+        <h3>Departement</h3>
+        <p>nombre totale : {{nbrDep}}</p>
+
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <h3>Employe</h3>
+        <p>nombre totale : {{nbrEmp}}</p>
+
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <h3>Ticket</h3>
+        <p>nombre totale : {{nbrTicket}}</p>
+
+      </div>
+    </div>
+  </div>
 
 
-<div class="chart-wrapper" style="height:300px;width:400px;">
-  <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
-  </canvas>
-</div>
-<mat-card>
-  <mat-calendar class="calendar" [minDate]="minDate" [selected]="selectedDate" (selectedChange)="onSelect($event)">
-  </mat-calendar>
-</mat-card>
-<p>Selected date: {{selectedDate}}</p>
+  <h2>Les statuts des ticket</h2>
+
+  <div class="row" >
+    <div class="col-sm statut" *ngFor="let statut of statuts">
+      <i class="bx"
+        [ngClass]="{'bxs-hourglass-top': statut.statut === 'en attente', 'bx-time' : statut.statut === 'a faire' , 'bx-loader-circle': statut.statut=='en cours' , 'bx-task': statut.statut=='resolu' }">
+      </i>
+      <div>
+        <p> Ticket {{statut.statut}} </p>
+        <span> {{statut.count}}
+        </span>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+      <div class="chart">
+        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [colors]="lineChartColor" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="chart">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+          [colors]="pieChartColor" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+        </canvas>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-5 ">
+      <table class="table table-bordered">
+       
+        <tbody>
+          <tr *ngFor="let iyem of moyenneDate">
+            <td>
+              <span style="font-weight: 500 ; word-spacing:1cm;"> {{iyem.moyenne}} </span>
+             <br>
+               <p style="color:grey ;"> Délai moyenne pour une ticket {{iyem.statut}} <i class="bx bx-info-circle" style="font-size:15px ;"></i></p></td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-sm-7">
+      <div class="chart">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [colors]="barChartColor" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+      <div class="row feedBack">
+        <div class="col-sm"  *ngFor="let item of feedBacks"> 
+            <i class="lni"
+              [ngClass]="{'lni-smile': item.feedBack=== 'positif', 'lni-speechless' : item.feedBack=== 'neutre' , 'lni-sad': item.feedBack=='negatif' }"></i>
+            <p>{{item.note}}%</p>
+
+        </div>
+
+
+      </div>
+    </div>
+    <div class="col-sm">
+
+    </div>
+  </div>

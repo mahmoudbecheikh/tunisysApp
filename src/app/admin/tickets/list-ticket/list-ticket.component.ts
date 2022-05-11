@@ -24,7 +24,7 @@ export class ListTicketComponent implements OnInit {
   departements: FormArray = new FormArray([]);
   statuts: FormArray = new FormArray([]);
   manuels: FormArray = new FormArray([]);
-  notes :FormArray = new FormArray([]);
+  notes: FormArray = new FormArray([]);
 
   constructor(
     private ticketService: TicketService,
@@ -40,15 +40,11 @@ export class ListTicketComponent implements OnInit {
       departements: this.departements,
       statuts: this.statuts,
       manuels: this.manuels,
-      notes : this.notes
+      notes: this.notes,
     });
-
-
-
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
-    console.log(this.form.value)
     if (e.target.checked) {
       formArray.push(new FormControl(e.target.value));
     } else {
@@ -61,6 +57,7 @@ export class ListTicketComponent implements OnInit {
         i++;
       });
     }
+    console.log(this.form.value);
     this.submit();
   }
 
@@ -69,23 +66,24 @@ export class ListTicketComponent implements OnInit {
     let statuts = this.statuts.value;
     let manuels = this.manuels.value;
     let notes = this.notes.value;
-    if(this.statuts.length==0 && this.departements.length==0 && this.manuels.length==0 ){
-      this.ticketsFilter = this.tickets
-    }
-    else {
+    if (
+      this.statuts.length == 0 &&
+      this.departements.length == 0 &&
+      this.manuels.length == 0
+    ) {
+      this.ticketsFilter = this.tickets;
+    } else {
       this.ticketsFilter = this.tickets.filter(function (el) {
-        if(el.feedBack)
-        console.log(el.feedBack.note)
+        console.log(notes.includes(String(el.feedBack?.note)))
         return (
-          (departements.includes(el.departement?.nom) || departements.length==0) &&
-          (statuts.includes(el.statut) || statuts.length==0)&&
-          (manuels.includes(el.manuel) || manuels.length==0 )&&
-          (  (el.feedBack || notes.includes(el.feedBack.note))  || notes.length==0 )
-
+          (departements.includes(el.departement?.nom) ||
+            departements.length == 0) &&
+          (statuts.includes(el.statut) || statuts.length == 0) &&
+          (manuels.includes(el.manuel) || manuels.length == 0) &&
+          ( ( el.feedBack &&  notes.includes(String(el.feedBack.note))) || notes.length == 0)
         );
       });
     }
-    
   }
 
   trier() {
@@ -110,10 +108,12 @@ export class ListTicketComponent implements OnInit {
           this.ticketsFilter = this.ticketsFilter.sort((a: any, b: any) =>
             a.statut.toLowerCase() > b.statut.toLowerCase() ? 1 : -1
           );
-          console.log(this.ticketsFilter)
+          console.log(this.ticketsFilter);
           this.ticketsFilter.unshift(
             this.ticketsFilter.splice(
-              this.ticketsFilter.findIndex((item) => item.statut === 'en attente'),
+              this.ticketsFilter.findIndex(
+                (item) => item.statut === 'en attente'
+              ),
               1
             )[0]
           );
@@ -123,16 +123,19 @@ export class ListTicketComponent implements OnInit {
     });
   }
 
-  verify(id:any){
+  verify(id: any) {
     for (let i = 0; i < this.tickets.length; i++) {
       let ticket = this.tickets[i];
-      if(ticket._id == id) {
-        if(ticket.dateLimite && new Date(ticket?.dateLimite ).getTime() < Date.now())
-        return true
-        else return false
+      if (ticket._id == id) {
+        if (
+          ticket.dateLimite &&
+          new Date(ticket?.dateLimite).getTime() < Date.now()
+        )
+          return true;
+        else return false;
       }
     }
-    return true
+    return true;
   }
 
   listDepartement() {

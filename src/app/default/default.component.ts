@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
-import { Location } from '@angular/common';
+import { filter, pairwise } from 'rxjs/operators';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-default',
@@ -13,9 +14,15 @@ export class DefaultComponent implements OnInit {
   employe?: Employe;
   isLoggedIn = false;
   nomEmp?: string;
-  role?: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  role?: any;
+  previousUrl?: string;
+  currentUrl?: string;
+  messages : any
+  employeSelected : any
+  constructor(private authService: AuthService, private router: Router,private chatService : ChatService) {
+   
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.LoggedIn();
@@ -24,6 +31,8 @@ export class DefaultComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+   
+
   }
 
   open() {
@@ -40,7 +49,6 @@ export class DefaultComponent implements OnInit {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
       this.nomEmp = res.prenomEmp;
-
       switch (res.role) {
         case 0:
           this.role = 'Admin';
@@ -56,4 +64,17 @@ export class DefaultComponent implements OnInit {
       }
     });
   }
+
+  select(event:any){
+    console.log(event)
+    this.employeSelected = event
+    if(event)
+    this.chatService.afficherConversation(this.employe?._id,event._id).subscribe(res=>{
+      if(res)
+        this.messages = res.messages 
+      else this.messages= []
+    })
+    
+  }
+
 }

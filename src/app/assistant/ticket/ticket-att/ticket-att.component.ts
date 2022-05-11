@@ -130,7 +130,7 @@ export class TicketAttComponent implements OnInit {
 
   confirmer(id: any) {
     this.ticketService.confirmer(id).subscribe((res) => {
-      if (res != null) this.afficherListe();
+      this.afficherListe();
     });
   }
 

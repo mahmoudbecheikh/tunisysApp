@@ -1,31 +1,41 @@
-*::first-letter{
+*::first-letter {
   text-transform: uppercase;
 }
 
 .upper-bar {
-  background-color: #EEEEEE;
+  background-color: #F2F3F4;
   padding: 20px;
   width: 100%;
   height: 75px;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 
-.notif{
-  text-align: right;
-  margin-right: 205px;
-  cursor: pointer;
+
+.icons{
+  position: fixed;
+  top: 25px;
+  right: 15px;
+  display: flex;
+  float: right;
 }
 
-.name {
-  margin-top: -30px;
-  text-align: right;
+.icons > div{
+  margin: 0px 15px;
 }
 
-.name p{
+.icons i {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+
+
+
+
+.name p {
   color: #154360;
   font-size: 12px;
   text-transform: capitalize;
-  margin-right: 5px;
+  
 }
 
 .upper-bar .circle {
@@ -33,52 +43,51 @@
   text-transform: uppercase;
   width: 38px;
   height: 38px;
-  padding: 7px;
+  padding: 7px 10px;
   background: #5D6D7E;
   color: #ffff;
   text-align: center;
   font: 22px Arial, sans-serif;
-  margin-left: 10px
 }
 
-.dropdown-item .circle{
+.dropdown-item .circle {
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  padding-top: 6px;
-  background: #5D6D7E;
+  background: #424949;
   color: #ffff;
-  text-align: center;
   font: 22px Arial, sans-serif;
   margin-top: 5px;
 }
+
+.bx-info-circle {
+  left: 15px;
+  text-align: center;
+}
+
+
 
 
 .upper-bar span {
   margin-right: 10px;
 }
 
-form {
-  width:50%;
-}
 
-.bx-bell {
-  font-size: 25px;
-  font-weight: 500;
+
+
+
+.bx-bell,.bx-message-rounded {
   position: relative;
   cursor: pointer;
 }
 
-.notif .badge {
-  margin-left:-10px ;
+.badge-danger {
+  margin-left: -10px;
   margin-top: -10px;
   position: absolute;
 }
 
-.dropdown-header{
+.dropdown-header {
   margin-top: -10px;
-  background-color:   #2E86C1
-  ;
+  background-color: #2E86C1;
   color: white;
   font-weight: 500;
 }
@@ -89,77 +98,147 @@ form {
   max-height: 280px;
   width: 400px;
   overflow-y: auto;
-  left:90% !important;
+  left: 90% !important;
   transform: translate(-50%, 0) !important;
 
 }
 
-.dropdown-item{
+.dropdown-item {
   display: flex;
   justify-content: left;
   cursor: pointer;
+  font-weight: 400;
 }
 
-.dropdown-item .btn-sm{
-  margin:0px 2px;
+.dropdown-item p {
+  font-weight: 200;
 }
 
-.btn-secondary{
+
+
+.dropdown-item .btn-sm {
+  margin: 0px 2px;
+}
+
+.btn-secondary {
   background-color: #B2BABB;
 }
-.btn-primary{
+
+.btn-primary {
   background-color: #3498DB;
 }
 
-.data{
+.data {
+  white-space: pre-line;
   margin-left: 25px;
 }
 
 
 .dropdown-menu::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 4px;        
-}    
+  width: 4px;
+}
+
 .dropdown-menu::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background-color: lightgray;
 }
 
 
-.search {
-  width: 50%;
-  margin-left: 15px;
-  display: flex;
+ul {
+  list-style-type: none
 }
 
-.searchTerm {
-  width: 100%;
-  border: 1px solid #154360;
-  border-right: none;
-  padding: 10px;
-  height: 100%;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  background: #fafafa;
-  color: #9DBFAF;
+li p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-right: 15px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  margin-bottom: 2px;
+
+
 }
 
-.searchButton i{
-  font-size: 15px;
+a::first-letter,
+p::first-letter {
+  text-transform: uppercase;
 }
 
-.searchTerm:focus{
-  color: #154360;
+li {
+  margin: 25px 0px;
 }
 
-.searchButton {
-  width: 40px;
-  height: 43px;
-  border: 1px solid #154360;
-  background:#154360;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
+.res,
+.modal-title {
+  margin-left: 40px;
+}
+
+a {
+  color: #21618C;
+  text-decoration: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
+  margin-bottom: 3px;
+
+}
+
+/* button{
+  margin-top: -10px;
+} */
+
+form{
+  margin: 25px;
+}
+
+input{
+  border: 1px solid grey;
+  margin-bottom: 0px;
+  height: 35px;
+  color: #21618C;
+  border-radius: 5px;  
+}
+
+
+
+mat-form-field{
+  width: 350px;
+}
+
+
+
+
+
+::ng-deep .mat-form-field .mat-input-element {
+  color: black;
+}
+::ng-deep .mat-form-field .mat-form-field-label {
+  margin-top: 10px;
+  margin-left: 5px;
+  color: grey;
+}
+::ng-deep .mat-form-field .mat-form-field-underline {
+  background-color: transparent;
+}
+::ng-deep .mat-form-field .mat-form-field-ripple {
+  background-color: transparent;
+}
+::ng-deep .mat-form-field .mat-form-field-required-marker {
+  color: transparent;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: transparent;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: transparent;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
+  color: transparent;
+}
+::ng-deep .mat-form-field.mat-focused .mat-input-element {
+  color: black;
 }

@@ -3,6 +3,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
+import { ChatService } from '../services/chat.service';
+import { EmployeeService } from '../services/employee.service';
 import { NotificationService } from '../services/notification.service';
 import { SocketService } from '../services/socket.service';
 import { TicketService } from '../services/ticket.service';
@@ -15,102 +17,121 @@ import { TicketService } from '../services/ticket.service';
 export class HeaderComponent implements OnInit {
   notifications: any;
   employe?: Employe;
-  tickets?: any[] = [];
-  ticketFilter?: any[] = [];
+  employes?: any[] = [];
+  employeFilter?: any[] = [];
   results?: any[] = [];
   show: boolean = false;
 
   formRech: FormGroup = new FormGroup({});
-  sujet: FormControl = new FormControl('', []);
-  @Output() resultsToSibling = new EventEmitter<any>();
+  nom: FormControl = new FormControl('', []);
+  @Output() selectEmployeEvent = new EventEmitter<any>();
 
   constructor(
     private authService: AuthService,
     private notifService: NotificationService,
     private ticketService: TicketService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private employeService : EmployeeService
   ) {}
 
   ngOnInit(): void {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
+      this.socketService.emit('joinRoom', { id: res?._id });
+
       this.afficherNotif();
     });
     this.formRech = new FormGroup({
-      sujet: this.sujet,
+      nom: this.nom,
     });
 
-    this.ticketService.afficherListe().subscribe((res) => {
-      this.tickets = res;
+
+    
+    
+
+
+    this.employeService.afficherListe().subscribe((res) => {
+      if (res){
+        for (const employe of res) {
+          let nom = employe.nomEmp+' '+employe.prenomEmp
+          this.employes?.push({_id : employe._id , nom :nom})
+        }
+      }
+
     });
-    this.sujet.valueChanges.subscribe((response) => {
-      if (response.trim() == '') this.ticketFilter = [];
+    this.nom.valueChanges.subscribe((response) => {
+      if (response && response.trim() == '') this.employeFilter = [];
       else {
         this.filterData(response);
-        this.ticketFilter = [...new Set(this.ticketFilter)];
+        this.employeFilter = [...new Set(this.employeFilter)];
       }
+    });
+
+    this.socketService.listen('delNotif').subscribe((res) => {
+      console.log(res)
+      if (res) {
+        this.afficherNotif();
+      }
+    });
+
+    this.socketService.listen('confirmNotif').subscribe((res) => {
+      if (res) {
+        this.afficherNotif();
+      }
+    });
+
+    this.socketService.listen('newNotif').subscribe((res) => {
+      this.afficherNotif();
     });
   }
 
   afficherNotif() {
     this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
       this.notifications = res;
-      this.socketService.listen('notification').subscribe((notif) => {
-        if (
-          notif?.notification.recepteur._id.toString() ==
-          this.employe?._id?.toString()
-        ) {
-          this.notifications.push(notif.notification);
-        }
-      });
-
-      this.socketService.listen('notificationDeleted').subscribe(res=>{
-        console.log(res)
-        for (const notif of this.notifications) {
-          if(notif._id==res.notification._id) this.notifications.splice(this.notifications.indexOf(notif),1)
-        }
-      })
     });
   }
-
-
 
   confirmer(notif: any) {
-    this.notifService.confirmer(notif._id).subscribe((res) => {
-      this.supprimer(notif);
-      this.afficherNotif()
-       let data = {
-        envoyeur: res?.recepteur,
-        recepteur: res?.envoyeur,
-        contenu: 'Hawka keblouu',
-        ticket: res?.ticket,
-        lue: false,
-      }
-      this.notifService.envoyer(data).subscribe(res=>{
-        console.log(res)
-        this.afficherNotif();
 
-      })
-    });
+    this.notifService.confirmer(notif._id).subscribe(res=>{
+      console.log(res)
+      if(res){
+        if (res.contenu == 'invitation') {
+          let data = {
+            envoyeur: res.recepteur,
+            recepteur: res.envoyeur,
+            contenu: 'Votre demande keblou hawka',
+            ticket: res.ticket,
+            lue: false,
+          };
+          this.notifService.envoyer(data).subscribe(res=>{
+            console.log(data)
+            console.log('ena envoyer mtaa confirmer')
+            this.afficherNotif()
+          })
+        }
+      }
+    })
+
+    this.socketService.emit('confirmerNotif', notif._id);
   }
   supprimer(notif: any) {
-    
-    this.notifService.supprimer(notif._id).subscribe((res) => {
-      if(res.contenu=='invitation'){
-        let data = {
-          envoyeur: res?.recepteur,
-          recepteur: res?.envoyeur,
-          contenu: 'Votre demande makeblouhelkch l masakh',
-          ticket: res?.ticket,
-          lue: false,
+    this.notifService.supprimer(notif._id).subscribe(res=>{
+      if(res){
+        if (res.contenu == 'invitation') {
+          let data = {
+            envoyeur: res.recepteur,
+            recepteur: res.envoyeur,
+            contenu: 'Votre demande keblouch l masakh hawka',
+            ticket: res.ticket,
+            lue: false,
+          };
+          this.notifService.envoyer(data).subscribe(res=>{
+            this.afficherNotif()
+          })
         }
-        this.notifService.envoyer(data).subscribe(res=>{
-          console.log(res)
-        })
       }
-      this.afficherNotif();
-
-    });
+    })
   }
   marquer() {
     let notif = this.notifications.filter(function (el: any) {
@@ -122,31 +143,17 @@ export class HeaderComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
-    this.ticketFilter = this.tickets?.filter((item) => {
-      return item.sujet.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
+    if(enteredData)
+    this.employeFilter = this.employes?.filter((item) => {
+      return item.nom.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
     });
-    this.ticketFilter = [
-      ...new Map(
-        this.ticketFilter?.map((item) => [item['sujet'], item])
-      ).values(),
-    ];
   }
 
-  find(ticket: any) {
-    this.show = true;
-    this.results = [];
-    if (this.tickets)
-      for (let item of this.tickets) {
-        if (ticket == item.sujet) this.results?.push(item);
-      }
+  select(employe:any){
+    this.formRech.reset();
+    this.selectEmployeEvent.emit(employe);
+
   }
 
-  findBtn(sujet: any) {
-    this.show = true;
-    this.results = [];
-    this.results = this.tickets?.filter((item) => {
-      return item.sujet.toLowerCase().indexOf(sujet.toLowerCase()) > -1;
-    });
-    this.resultsToSibling.emit(this.results);
-  }
+
 }

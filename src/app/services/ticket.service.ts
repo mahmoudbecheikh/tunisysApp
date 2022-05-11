@@ -29,6 +29,11 @@ export class TicketService {
     return this.http.put(this.baseURL + `/tags/${id}`, tags);
   }
 
+  suggestion(id:any) : Observable<any>{
+    return this.http.get(this.baseURL + `/suggestion/${id}`);
+
+  }
+
   changerStatut(tickets: any): Observable<any> {
     return this.http.put(this.baseURL, tickets);
   }

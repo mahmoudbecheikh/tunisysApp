@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Color, Label, MultiDataSet } from 'ng2-charts';
+import {
+  Color,
+  Label,
+  monkeyPatchChartJsLegend,
+  monkeyPatchChartJsTooltip,
+  SingleDataSet,
+} from 'ng2-charts';
 import { SocketService } from 'src/app/services/socket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 
@@ -10,28 +16,63 @@ import { TicketService } from 'src/app/services/ticket.service';
   styleUrls: ['./dashbord.component.css'],
 })
 export class DashbordComponent implements OnInit {
-  constructor(private ticketService: TicketService,private socketService : SocketService) {}
+  constructor(private ticketService: TicketService) {
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
+  }
 
   employesResData: any[] = [];
   employesResLabel: any[] = [];
-  selectedDate: any;
-  minDate = new Date()
 
-  onSelect(event:any){
-    this.selectedDate= event;
-  }
+  ticketMoisData: any[] = [];
 
-  
+  moyenneDate : any []= []
+
+  statuts: any[] = [];
+  manuels: any = [];
+  feedBacks : any[] = []
+  nbrEmp : any
+  nbrDep : any
+  nbrTicket : any
 
   ngOnInit(): void {
-
     this.ticketService.afficherStat().subscribe((res) => {
       for (const emp of res.notes) {
         this.employesResLabel.push(emp._id.nomEmp + ' ' + emp._id.prenomEmp);
         this.employesResData.push(emp.count);
       }
+
+      for (let i = 1; i <= 12; i++) {
+        let number = this.verify(res.ticketParMois, i);
+        if (number != -1) {
+          this.ticketMoisData.push(number);
+        } else {
+          this.ticketMoisData.push(0);
+        }
+      }
+
+      for (const manuel of res.manuels) {
+        this.manuels.push(manuel.count);
+      }
+
+
+
+      this.moyenneDate = res.moyenneDate ;
+      this.feedBacks = res.feedBacks 
+      this.statuts = res.statuts;
+      this.nbrDep = res.departement ; 
+      this.nbrEmp = res.employe ;
+      this.nbrTicket = res.ticket
     });
   }
+
+  verify(array: any, i: number) {
+    for (const element of array) {
+      if (element._id == i) return element.number;
+    }
+    return -1;
+  }
+
   lineChartData: ChartDataSets[] = [
     {
       data: this.employesResData,
@@ -47,12 +88,12 @@ export class DashbordComponent implements OnInit {
     },
   ];
   lineChartLabels: Label[] = this.employesResLabel;
-  lineChartColor : Color[] = [
+  lineChartColor: Color[] = [
     {
-      borderColor :'',
-      backgroundColor : '#21618C'
-    }
-  ]
+      borderColor: '',
+      backgroundColor: '#21618C',
+    },
+  ];
   lineChartOptions = {
     legend: { display: false },
 
@@ -75,11 +116,49 @@ export class DashbordComponent implements OnInit {
   lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType: ChartType = 'horizontalBar';
+  // ***********************
 
-  
-  doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
-  doughnutChartData: MultiDataSet = [
-    [55, 25, 20]
+  pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  pieChartColor: Color[] = [
+    {
+      backgroundColor: ['#003f5c', '#ffa600', '#ff6361      '],
+    },
   ];
-  doughnutChartType: ChartType = 'doughnut';
+  pieChartLabels: Label[] = [['Admin'], ['Assistant'], 'Client'];
+  pieChartData: SingleDataSet = this.manuels;
+  pieChartType: ChartType = 'pie';
+  pieChartLegend = true;
+  pieChartPlugins = [];
+  // ************************
+  barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  barChartLabels: Label[] = [
+    'Janvier',
+    'Février',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juillet',
+    'Aout',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre',
+  ];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartColor: Color[] = [
+    {
+      borderColor: '',
+      backgroundColor: '#3498DB',
+    },
+  ];
+  barChartPlugins = [];
+  barChartData: ChartDataSets[] = [
+    { data: this.ticketMoisData, label: 'Les ticket par mois' },
+  ];
 }
