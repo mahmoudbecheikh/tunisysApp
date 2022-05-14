@@ -66,14 +66,9 @@ export class DefaultComponent implements OnInit {
   }
 
   select(event:any){
-    console.log(event)
     this.employeSelected = event
-    if(event)
-    this.chatService.afficherConversation(this.employe?._id,event._id).subscribe(res=>{
-      if(res)
-        this.messages = res.messages 
-      else this.messages= []
-    })
+    console.log(event)
+    
     
   }
 

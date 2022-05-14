@@ -18,4 +18,12 @@ export class ChatService {
   ajouterMessage(data : any): Observable<any> {
     return this.http.post(this.baseURL+'/message', data);
   }
+
+  afficherNonLue(recepteur : any) {
+    return this.http.get(this.baseURL+`/${recepteur}`)
+  }
+
+  modifierMessages(env: any,rec : any ,data : any): Observable<any> {
+    return this.http.put(this.baseURL+`/${env}/${rec}`, data);
+  }
 }

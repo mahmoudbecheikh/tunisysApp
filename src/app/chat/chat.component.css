@@ -3,7 +3,13 @@
 	margin: 0;
 	box-sizing: border-box;
 	font-family: sans-serif;
+
 }
+
+*::first-letter{
+	text-transform: uppercase;
+}
+
 .container {
 	width: 350px;
 	margin: auto;
@@ -45,14 +51,20 @@
 	color: #2874A6;
     margin-left: 45px;
 	font-size: 20px;
+	margin-top: 15px;
 }
 .profile span {
-	color: #ccc;
+	color: grey;
 	position: absolute;
 	top: 30px;
 	left: 55px;
 	font-size: 14px;
 }
+.circle {
+	border-radius: 50%;
+	background: green;
+	font: 12px 
+  }
 .right .icon {
 	display: inline-block;
 	width: 25px;
@@ -91,7 +103,7 @@
 	background: #F7FCF6;
 	padding: 10px;
 	border-radius: 10px;
-	margin: 20px 0px;
+	margin: 10px 0px;
 	cursor: pointer;
 }
 .chat-box .mess p {
@@ -148,9 +160,10 @@
 	outline: none;
 	font-size: 19px;
 	padding-left: 40px;
-	padding-right: 90px;
+	padding-right: 40px;
 	border: 2px solid #ccc;
 	color: #555;
+	overflow: hidden;
 	resize: none;
 }
 .chat-footer .mic {

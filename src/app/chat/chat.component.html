@@ -1,12 +1,12 @@
-<div class="container" *ngIf="employeSelected">
+<div class="container" *ngIf="user">
 
-    <div class="chat">
+    <div class="chat" (click)="messageNonLue()">
         <div class="chat-header">
             <div class="profile">
                 <div class="left">
                     <img src="../../assets/images/client.png" class="arrow">
-                    <h2>{{employeSelected.nom}}</h2>
-                    <span>online</span>
+                    <h2>{{user.nomEmp}} {{user.prenomEmp}}  <i  *ngIf="enLigne.includes(user._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
+                        " class="bx bx-circle"></i></h2>
                 </div>
                 <div class="right">
 
@@ -15,8 +15,8 @@
                 </div>
             </div>
         </div>
-        <div id="chat-box"  #scrollable class="chat-box" >
-            <ng-container *ngFor="let message of messages">
+        <div id="chat-box" #scrollable class="chat-box">
+            <ng-container *ngFor="let message of messages; let i = index">
 
                 <div class="chat-r" *ngIf="message.envoyeur == employe?._id;else rec">
                     <div class="sp"></div>
@@ -26,7 +26,9 @@
                             {{message.contenu}}
                         </p>
                         <div class="check">
-                            <span> {{message.date}}</span>
+                            <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
+                            <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
+
                         </div>
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                                 {{message.contenu}}
                             </p>
                             <div class="check">
-                                <span> {{message.date}}</span>
+                                <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
                             </div>
                         </div>
                         <div class="sp"></div>
@@ -54,7 +56,8 @@
             <form [formGroup]="myForm" (ngSubmit)="envoyer()" class="form-inline">
                 <textarea placeholder="Type a message" formControlName="contenu"></textarea>
 
-                <button type="submit"  [disabled]="myForm.invalid" style="border: none;"> <i class="bx bx-send"></i> </button>
+                <button type="submit" [disabled]="myForm.invalid" style="border: none;"> <i class="bx bx-send"></i>
+                </button>
 
             </form>
 

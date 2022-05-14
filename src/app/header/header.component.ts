@@ -16,22 +16,27 @@ import { TicketService } from '../services/ticket.service';
 })
 export class HeaderComponent implements OnInit {
   notifications: any;
+  messages: any;
+  nonLue: number = 0;
   employe?: Employe;
   employes?: any[] = [];
   employeFilter?: any[] = [];
   results?: any[] = [];
   show: boolean = false;
+  colors: string[] = [];
+
 
   formRech: FormGroup = new FormGroup({});
   nom: FormControl = new FormControl('', []);
   @Output() selectEmployeEvent = new EventEmitter<any>();
+   sound = new Audio( '../../assets/sounds/notification.mp3');    
 
   constructor(
     private authService: AuthService,
     private notifService: NotificationService,
-    private ticketService: TicketService,
     private socketService: SocketService,
-    private employeService : EmployeeService
+    private employeService: EmployeeService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -40,24 +45,35 @@ export class HeaderComponent implements OnInit {
       this.socketService.emit('joinRoom', { id: res?._id });
 
       this.afficherNotif();
+      this.afficherMsg();
     });
     this.formRech = new FormGroup({
       nom: this.nom,
     });
 
+    this.socketService.listen('newMsg').subscribe((msg) => {
+      if (msg) {
+        console.log('aaa')
+        this.afficherMsg();
+        this.sound.play()
 
-    
-    
+      }
+    });
 
+    this.socketService.listen('updateMsg').subscribe((res) => {
+      if(res){
+        console.log('aaa')
+        this.afficherMsg();
 
+      }
+    });
     this.employeService.afficherListe().subscribe((res) => {
-      if (res){
+      if (res) {
         for (const employe of res) {
-          let nom = employe.nomEmp+' '+employe.prenomEmp
-          this.employes?.push({_id : employe._id , nom :nom})
+          let nom = employe.nomEmp + ' ' + employe.prenomEmp;
+          this.employes?.push({ _id: employe._id, nom: nom , nomEmp : employe.nomEmp , prenomEmp : employe.prenomEmp });
         }
       }
-
     });
     this.nom.valueChanges.subscribe((response) => {
       if (response && response.trim() == '') this.employeFilter = [];
@@ -68,7 +84,6 @@ export class HeaderComponent implements OnInit {
     });
 
     this.socketService.listen('delNotif').subscribe((res) => {
-      console.log(res)
       if (res) {
         this.afficherNotif();
       }
@@ -82,6 +97,21 @@ export class HeaderComponent implements OnInit {
 
     this.socketService.listen('newNotif').subscribe((res) => {
       this.afficherNotif();
+      this.sound.play()
+
+    });
+  }
+
+  afficherMsg() {
+    this.nonLue=0
+    this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
+      if (res) {
+        this.rand(res);
+        this.messages = res;
+        for (const msg of this.messages) {
+          if (!msg.message.lue && msg.envoyeur._id!=this.employe?._id) this.nonLue += 1;
+        }
+      }
     });
   }
 
@@ -92,10 +122,8 @@ export class HeaderComponent implements OnInit {
   }
 
   confirmer(notif: any) {
-
-    this.notifService.confirmer(notif._id).subscribe(res=>{
-      console.log(res)
-      if(res){
+    this.notifService.confirmer(notif._id).subscribe((res) => {
+      if (res) {
         if (res.contenu == 'invitation') {
           let data = {
             envoyeur: res.recepteur,
@@ -104,20 +132,19 @@ export class HeaderComponent implements OnInit {
             ticket: res.ticket,
             lue: false,
           };
-          this.notifService.envoyer(data).subscribe(res=>{
-            console.log(data)
-            console.log('ena envoyer mtaa confirmer')
-            this.afficherNotif()
-          })
+          this.notifService.envoyer(data).subscribe((res) => {
+            console.log('ena envoyer mtaa confirmer');
+            this.afficherNotif();
+          });
         }
       }
-    })
+    });
 
     this.socketService.emit('confirmerNotif', notif._id);
   }
   supprimer(notif: any) {
-    this.notifService.supprimer(notif._id).subscribe(res=>{
-      if(res){
+    this.notifService.supprimer(notif._id).subscribe((res) => {
+      if (res) {
         if (res.contenu == 'invitation') {
           let data = {
             envoyeur: res.recepteur,
@@ -126,12 +153,12 @@ export class HeaderComponent implements OnInit {
             ticket: res.ticket,
             lue: false,
           };
-          this.notifService.envoyer(data).subscribe(res=>{
-            this.afficherNotif()
-          })
+          this.notifService.envoyer(data).subscribe((res) => {
+            this.afficherNotif();
+          });
         }
       }
-    })
+    });
   }
   marquer() {
     let notif = this.notifications.filter(function (el: any) {
@@ -143,17 +170,25 @@ export class HeaderComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
-    if(enteredData)
-    this.employeFilter = this.employes?.filter((item) => {
-      return item.nom.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
-    });
+    if (enteredData)
+      this.employeFilter = this.employes?.filter((item) => {
+        return item.nom.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
+      });
   }
 
-  select(employe:any){
+  select(employe: any) {
+    this.employeFilter = []
     this.formRech.reset();
+
     this.selectEmployeEvent.emit(employe);
-
   }
-
-
+  rand(array: any) {
+    let i = 0;
+    let colors = ['#f07167', '#FA8072', '#26978B', '#C70039', '#FFCE5F'];
+    while (i <= array.length) {
+      var item = colors[Math.floor(Math.random() * colors.length)];
+      this.colors.push(item);
+      i++;
+    }
+  }
 }

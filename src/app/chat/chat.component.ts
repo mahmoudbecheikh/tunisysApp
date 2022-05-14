@@ -26,8 +26,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   contenu: FormControl = new FormControl('', [Validators.required]);
   envoyeur: FormControl = new FormControl();
   recepteur: FormControl = new FormControl();
-  @Input() messages: any;
+  messages: any;
   @Input() employeSelected: any;
+  user : any
+  enLigne : any = []
 
   @ViewChild('scrollable') scrollable?: ElementRef;
 
@@ -58,17 +60,34 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (this.scrollable){
       this.scrollable.nativeElement.scrollTop =
       this.scrollable?.nativeElement.scrollHeight;
-      console.log(this.scrollable)
     }
     
   }
 
+  ngOnChanges() {
+    if(this.employeSelected) {
+      this.user  = this.employeSelected
+      this.chatService.afficherConversation(this.employe?._id,this.employeSelected._id).subscribe(res=>{
+        if(res)
+          this.messages = res.messages 
+        else this.messages= []
+      })
+    }
+
+    this.socketService.listen('updateMsg').subscribe(res=>{
+      this.chatService.afficherConversation(this.employe?._id,this.employeSelected._id).subscribe(res=>{
+        if(res)
+          this.messages = res.messages 
+        else this.messages= []
+      })
+    })
+
+  }
+
 
   ngOnInit(): void {
-    // if(this.employeSelected){
-    //   console.log(this.employeSelected)
 
-    // }
+    
     this.scrollToBottom();
 
 
@@ -80,18 +99,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if (msg)
       {
         this.numberOfMessagesChanged = true;
-        this.messages.push(msg)
+        this.messages?.push(msg) 
       } 
-      console.log(this.messages);
     });
+
+    this.socketService.listen('enLigne').subscribe(res=>{
+      for (const user of res) {
+        this.enLigne.push(user.id)
+      }
+      console.log(res)
+    })
 
     this.createForm();
   }
 
-  updateScroll() {
-    var element = document.getElementById('yourDivID');
-    if (element) element.scrollTop = element.scrollHeight;
-  }
+ 
   createForm() {
     this.myForm = new FormGroup({
       contenu: this.contenu,
@@ -110,7 +132,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  messageNonLue(){
+    let nonLue = []
+    for (var i =  this.messages.length - 1; i >= 0; i--) {
+      const msg =  this.messages[i]
+      if(msg.lue==true && msg.envoyeur!=this.employe?._id)
+      break
+      if(msg.envoyeur!=this.employe?._id)
+      nonLue.push(msg._id)
+  }
+
+    if(nonLue.length>0)
+    this.chatService.modifierMessages(this.employe?._id,this.employeSelected?._id,nonLue).subscribe(res=>{
+      if(res)
+      console.log(res)
+    })
+  }
+
   close() {
-    this.employeSelected = null;
+     this.user= null ;
   }
 }
