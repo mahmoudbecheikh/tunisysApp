@@ -5,8 +5,8 @@
     <input type="submit" class="btn btn-secondary" [disabled]="!change" (click)="check()"
         value="Enregistrer les modification" />
     <div class="row" cdkDropListGroup>
-        <div class="col-sm column" cdkDropList id="0" [cdkDropListData]="faire"
-            (cdkDropListDropped)="drop($event)">
+
+        <div class="col-sm column" cdkDropList id="0" [cdkDropListData]="faire" (cdkDropListDropped)="drop($event)">
             <h2 style="border-bottom:5px solid #FF5733">A faire</h2>
 
             <div>
@@ -19,10 +19,46 @@
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-
-                        <span class="badge badge-info" placement="bottom"
+                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
+                        {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
+                        <ng-template #collabEmp>
+                            <span class="badge badge-info" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
+                        </ng-template>
+                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content border-0">
+                                    <div class="modal-body p-0">
+                                        <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                            <div class="card-header pb-0 bg-white border-0 ">
+                                                <div class="row">
+                                                    <div class="col ml-auto"><button type="button" class="close"
+                                                            data-dismiss="modal" aria-label="Close"> <span
+                                                                aria-hidden="true">&times;</span> </button></div>
+                                                </div>
+                                                <p class="font-weight-bold mb-2"> Berasmi theb tkharej {{collab.nomEmp}} {{collab.prenomEmp}}
+                                                    ?</p>
+                                                <p class="text-muted "> This change will reflect in your portal
+                                                    after an hour.</p>
+                                            </div>
+                                            <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+                                                <div class="row justify-content-end no-gutters">
+                                                    <div class="col-auto"><button type="button"
+                                                            class="btn btn-light text-muted"
+                                                            data-dismiss="modal">Cancel</button></div>
+                                                    <div class="col-auto"><button type="button"
+                                                            (click)="quitter(item._id,collab._id)"
+                                                            class="btn btn-danger px-4"
+                                                            data-dismiss="modal">Delete</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </ng-container>
                     <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
 
@@ -45,10 +81,46 @@
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-
-                        <span class="badge badge-info" placement="bottom"
+                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
+                        {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
+                        <ng-template #collabEmp>
+                            <span class="badge badge-info" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
+                        </ng-template>
+                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content border-0">
+                                    <div class="modal-body p-0">
+                                        <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                            <div class="card-header pb-0 bg-white border-0 ">
+                                                <div class="row">
+                                                    <div class="col ml-auto"><button type="button" class="close"
+                                                            data-dismiss="modal" aria-label="Close"> <span
+                                                                aria-hidden="true">&times;</span> </button></div>
+                                                </div>
+                                                <p class="font-weight-bold mb-2"> Berasmi theb tkharej {{collab.nomEmp}} {{collab.prenomEmp}}
+                                                    ?</p>
+                                                <p class="text-muted "> This change will reflect in your portal
+                                                    after an hour.</p>
+                                            </div>
+                                            <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+                                                <div class="row justify-content-end no-gutters">
+                                                    <div class="col-auto"><button type="button"
+                                                            class="btn btn-light text-muted"
+                                                            data-dismiss="modal">Cancel</button></div>
+                                                    <div class="col-auto"><button type="button"
+                                                            (click)="quitter(item._id,collab._id)"
+                                                            class="btn btn-danger px-4"
+                                                            data-dismiss="modal">Delete</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </ng-container>
                     <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
                 </div>
@@ -70,10 +142,46 @@
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-
-                        <span class="badge badge-info" placement="bottom"
+                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
+                        {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
+                        <ng-template #collabEmp>
+                            <span class="badge badge-info" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
+                        </ng-template>
+                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content border-0">
+                                    <div class="modal-body p-0">
+                                        <div class="card border-0 p-sm-3 p-2 justify-content-center">
+                                            <div class="card-header pb-0 bg-white border-0 ">
+                                                <div class="row">
+                                                    <div class="col ml-auto"><button type="button" class="close"
+                                                            data-dismiss="modal" aria-label="Close"> <span
+                                                                aria-hidden="true">&times;</span> </button></div>
+                                                </div>
+                                                <p class="font-weight-bold mb-2"> Berasmi theb tkharej {{collab.nomEmp}} {{collab.prenomEmp}}
+                                                    ?</p>
+                                                <p class="text-muted "> This change will reflect in your portal
+                                                    after an hour.</p>
+                                            </div>
+                                            <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
+                                                <div class="row justify-content-end no-gutters">
+                                                    <div class="col-auto"><button type="button"
+                                                            class="btn btn-light text-muted"
+                                                            data-dismiss="modal">Cancel</button></div>
+                                                    <div class="col-auto"><button type="button"
+                                                            (click)="quitter(item._id,collab._id)"
+                                                            class="btn btn-danger px-4"
+                                                            data-dismiss="modal">Delete</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </ng-container>
 
 

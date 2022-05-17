@@ -153,6 +153,14 @@ export class TicketsComponent implements OnInit {
     this.router.navigate(link);
   }
 
+  quitter(idTicket : any,idEmp : any) {
+    this.ticketService
+      .quitter(idTicket, idEmp)
+      .subscribe((res) => {
+        this.getListTicket()
+      });
+  }
+
   check() {
     this.changement = [];
     for (let i = 0; i < this.tickets.length; i++) {
@@ -186,10 +194,10 @@ export class TicketsComponent implements OnInit {
     }
     if (this.changement.length > 0)
       this.ticketService.changerStatut(this.changement).subscribe((res) => {
-        this.changement = [];
-        this.faire = [];
-        this.cours = [];
-        this.resolu = [];
+        // this.changement = [];
+        // this.faire = [];
+        // this.cours = [];
+        // this.resolu = [];
         this.getListTicket();
         console.log('Hawka badaltk denya');
 

@@ -7,7 +7,7 @@
         <div class="message">
             <i class="bx bx-message-rounded" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"></i>
-            <span class="badge badge-danger">{{nonLue}}</span>
+            <span class="badge badge-danger">{{nonLueMsg}}</span>
             <div class="dropdown">
                 <div class="dropdown-menu" onclick="event.stopPropagation()" aria-labelledby="messageDropdown">
                     <h4 class="dropdown-header">Messages </h4>
@@ -35,15 +35,22 @@
                                     [ngClass]="msg.message.lue || employe?._id==msg.envoyeur._id ? 'nonLue' : 'lue'">
                                     <p>{{msg.membre.nomEmp}} {{msg.membre.prenomEmp}}</p>
                                     <p *ngIf="employe?._id!=msg.envoyeur._id;else vous"> {{msg.envoyeur.prenomEmp}} :
-                                        {{msg.message.contenu}}</p>
+                                        <span *ngIf="!msg.message.contenu && msg.message.fJoint.length>0 ;">  envoi pièce jointe</span>
+                                        <span  *ngIf="msg.message.contenu"> {{msg.message.contenu}}</span>
+
+                                       </p>
                                     <ng-template #vous>
-                                        <p>vous : {{msg.message.contenu}} <i *ngIf="msg.message.lue"
-                                            style="background-color: grey;color: black;font-size: 15px; border-radius:50% ;border:none"    class="bx bx-check-circle"></i>
+                                        <p>
+                                            vous  :
+                                        <span *ngIf="!msg.message.contenu && msg.message.fJoint.length>0 ;">  envoi pièce jointe</span>
+                                        <span  *ngIf="msg.message.contenu"> {{msg.message.contenu}}</span>
+                                             <i *ngIf="msg.message.lue"
+                                                style="background-color: grey;color: black;font-size: 15px; border-radius:50% ;border:none"
+                                                class="bx bx-check-circle"></i>
                                         </p>
 
                                     </ng-template>
-                                    <span style="color: grey;font-size: 12px;">{{msg.date | date: 'dd/MM/yyyy
-                                        HH:mm:ss'}}</span>
+                                    <span style="color: grey;font-size: 12px;">{{msg.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
                                     <br>
                                 </div>
                             </div>
@@ -59,27 +66,27 @@
             </div>
         </div>
         <div class="notif">
-            <i class="bx bx-bell" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true"
+            <i class="bx bx-bell" id="notificationDropdown" (click)="marquer()" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"></i>
-            <span class="badge badge-danger">{{notifications?.length}}</span>
+            <span class="badge badge-danger">{{nonLueNotif}}</span>
             <div class="dropdown">
-                <div class="dropdown-menu " aria-labelledby="notificationDropdown">
+                <div class="dropdown-menu"  onclick="event.stopPropagation()"  aria-labelledby="notificationDropdown">
                     <h4 class="dropdown-header">Notifications </h4>
-                    <p *ngIf="notifications?.length<=0;else exist" style="text-align: center;"> <i
+                    <p *ngIf="notifications?.length<=0;else NotifExist" style="text-align: center;"> <i
                             style="font-size: 15px;" class="bx bx-info-circle"></i>
                         Aucune notification</p>
-                    <ng-template #exist>
+                        
+                        <ng-template #NotifExist>
                         <ng-container *ngFor="let notif of notifications">
-                            <div class="dropdown-item">
+                            <div class="dropdown-item" (click)="redirect(notif)">
                                 <i class="bx bx-info-circle circle"></i>
-                                <div class="data">
+                                <div class="data" [ngClass]="notif.lue? 'nonLue' : 'lue'">
                                     <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
                                     <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
                                     <ng-template #not>
                                         <p>{{notif.contenu}}</p>
                                     </ng-template>
-                                    <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy
-                                        HH:mm:ss'}}</span>
+                                    <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy   HH:mm:ss'}}</span>
                                     <br>
                                     <div style=" display: flex; justify-content: left;"
                                         *ngIf="notif.contenu=='invitation'">

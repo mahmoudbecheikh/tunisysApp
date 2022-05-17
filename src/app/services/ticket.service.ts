@@ -58,6 +58,10 @@ export class TicketService {
     return this.http.post(this.baseURL + '/fichiers', data);
   }
 
+  rappelle():Observable<any>{
+    return this.http.get('http://localhost:3000/rappelle');
+  }
+
   downloadFile(file: String) {
     var body = { filename: file };
     return this.http.post('http://localhost:3000/download', body, {

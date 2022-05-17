@@ -85,3 +85,6 @@ i {
   outline: none;
   background: #d4d4d4;
 }
+.toast-top-center {
+  margin-top: 45px !important;
+}

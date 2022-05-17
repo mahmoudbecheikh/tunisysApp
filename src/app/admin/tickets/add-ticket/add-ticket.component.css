@@ -15,18 +15,24 @@ small {
 .upload {
   border: 2px dotted grey;
   text-align: center;
-  height: 250px;
+  height: 290px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 .calendar {
-  width: 275px ;
-  height: 250px;
-  margin: 0px auto;
-  margin-top: -35px;
+  width: 250px ;
+  height: 300px;
+  border: 1px solid #D0D3D4;
+  
 }
 
+
+
+.demo-inline-calendar-card {
+  width: 100px;
+  border: 1px solid #cc0033;
+}
 
 
 *::-webkit-scrollbar {

@@ -135,6 +135,8 @@ export class InboxComponent implements OnInit {
     });
   }
 
+
+
   select(mail: any) {
     console.log(mail);
     this.mailSelected = mail;

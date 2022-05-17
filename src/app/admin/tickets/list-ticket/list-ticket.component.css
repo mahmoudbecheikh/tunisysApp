@@ -9,6 +9,11 @@
 }
 
 
+
+i{
+    cursor: pointer;
+}
+
 .col-md-10{
     margin-right: -10px;
 }
@@ -26,7 +31,6 @@ td {
 table td {
     font-weight: 400;
     vertical-align: middle;
-
 
 }
 

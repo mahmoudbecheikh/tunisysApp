@@ -44,9 +44,10 @@ import { DefaultComponent } from './default/default.component';
 import { ListeComponent } from './assistant/ticket/liste/liste.component';
 import { ChartsModule } from 'ng2-charts';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatComponent } from './chat/chat.component';
+import { ToastrModule } from 'ngx-toastr';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
@@ -96,9 +97,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     MatChipsModule,
     NgxPaginationModule,
     MatDatepickerModule,
-    MatNativeDateModule ,
+    MatNativeDateModule,
     ChartsModule,
-    SocketIoModule.forRoot(config)
+    ToastrModule.forRoot({ positionClass: 'toast-top-center' }),
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     {

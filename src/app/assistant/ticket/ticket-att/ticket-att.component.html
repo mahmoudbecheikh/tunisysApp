@@ -1,26 +1,31 @@
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-8">
-        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box first">Les tickets en attente</div>
-                <div class="example-box" *ngFor="let ticket of tickets" cdkDrag>
-                    <div>
-                        <span class="sujet">{{ticket.sujet}}</span><br>
-                        <span class="nom">{{ticket.nomClient}}</span>
+                <ng-container *ngIf="tickets.length>0;else vide">
+                    <div class="example-box" *ngFor="let ticket of tickets" cdkDrag>
+                        <div>
+                            <span class="sujet">{{ticket.sujet}}</span><br>
+                            <span class="nom">{{ticket.nomClient}}</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary" (click)="confirmer(ticket._id)">Confirmer</button>
+                            <button class="btn btn-info" (click)="consulter(ticket._id)">Consulter</button>
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn btn-secondary" (click)="confirmer(ticket._id)">Confirmer</button>
-                        <button class="btn btn-info" (click)="consulter(ticket._id)">Consulter</button>
-                    </div>
-                </div>
-            </div>
+                </ng-container>
+                <ng-template #vide>
+                    <p class="vide"> Il n'y a pas de ticket.
+                    </p>
+                </ng-template>
 
+            </div>
 
 
         </div>
 
-        <div  class="col-sm-4">
+        <div class="col-sm-4">
             <h3 style="text-align: center;">Créer Ticket</h3>
             <form [formGroup]="myForm" (ngSubmit)="ajouter()">
                 <div class="form-group">
@@ -61,7 +66,7 @@
                         id="tel">
                     <small *ngIf=" telClient.invalid && telClient.touched && telClient.dirty">Tel incorrect</small>
                 </div>
-    
+
                 <div class="form-group">
                     <input type="text" formControlName="adresse" placeholder="adresse " class="form-control"
                         name="adresse" id="adresse" />
@@ -88,7 +93,7 @@
                         </label>
                         <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
                             style="visibility: hidden;display: none;">
-    
+
                         <div class="row files">
                             <div class="col-sm-2 file" *ngFor="let file of files">
                                 <img src="../../assets/images/file.png">
@@ -97,11 +102,11 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="text-center">
                     <input class="btn btn-primary" [disabled]="myForm.invalid" value="Créer" type="submit" />
                 </div>
-    
+
             </form>
         </div>
     </div>

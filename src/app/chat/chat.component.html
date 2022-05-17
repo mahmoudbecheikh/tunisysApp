@@ -5,7 +5,7 @@
             <div class="profile">
                 <div class="left">
                     <img src="../../assets/images/client.png" class="arrow">
-                    <h2>{{user.nomEmp}} {{user.prenomEmp}}  <i  *ngIf="enLigne.includes(user._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
+                    <h2>{{user.nomEmp}} {{user.prenomEmp}} <i *ngIf="enLigne.includes(user._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
                         " class="bx bx-circle"></i></h2>
                 </div>
                 <div class="right">
@@ -18,22 +18,45 @@
         <div id="chat-box" #scrollable class="chat-box">
             <ng-container *ngFor="let message of messages; let i = index">
 
-                <div class="chat-r" *ngIf="message.envoyeur == employe?._id;else rec">
-                    <div class="sp"></div>
-
-                    <div class="mess mess-r">
-                        <p>
-                            {{message.contenu}}
-                        </p>
-                        <div class="check">
-                            <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
-                            <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
-
+                <ng-container *ngIf="message.envoyeur == employe?._id;else rec">
+                    <div class="chat-r" *ngIf="message.contenu">
+                        <div class="sp"></div>
+    
+                        <div class="mess mess-r">
+                            <div>
+                                {{message.contenu}}
+                            </div>
+                            <div class="check">
+                                <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
+                                <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
+    
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="chat-r"  *ngFor="let file of message.fJoint" >
+                            <div class="sp"></div>
+    
+                            <div class="mess mess-r">
+                                <img  (click)="download(file.originalname)" *ngIf="file.mimetype.includes('image');else fichier" [src]="file.url" class="img_chat">
+                            <ng-template #fichier>
+                                <div class="file" (click)="download(file.originalname)"> <i class="bx bx-file"></i> {{file.originalname}}</div> 
+                            </ng-template>
+                            <div class="check">
+                                <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
+                                <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
+    
+                            </div>
+                            </div>
+                           
+                    </div>
+                </ng-container>
+
+
+ 
+
+
                 <ng-template #rec>
-                    <div class="chat-l">
+                    <div class="chat-l" *ngIf="message.contenu">
 
                         <div class="mess mess-l">
                             <p>
@@ -46,21 +69,50 @@
                         <div class="sp"></div>
 
                     </div>
+                    <div class="chat-l"  *ngFor="let file of message.fJoint" >
+
+                        <div class="mess mess-l">
+                            <img  (click)="download(file.originalname)" *ngIf="file.mimetype.includes('image');else fichier" [src]="file.url" class="img_chat">
+                        <ng-template #fichier>
+                            <span class="file" (click)="download(file.originalname)"> <i class="bx bx-file"></i> {{file.originalname}}</span> 
+                        </ng-template>
+
+                        </div>
+                        <div class="sp"></div>
+
+                </div>
                 </ng-template>
+ 
 
             </ng-container>
 
         </div>
+        <div class="row previous" *ngIf="previews.length>0">
+            <div class="col-sm-3"  *ngFor="let prv of previews">
+                <img   *ngIf="prv.type=='image';else fichier" [src]="prv.data" class="img_chat">
+                <ng-template #fichier>
+                    <span class="file"> <i class="bx bx-file"></i> {{prv.data}}</span> 
+                </ng-template>
+            </div>
+        </div>
+       
 
         <div class="chat-footer">
+            
             <form [formGroup]="myForm" (ngSubmit)="envoyer()" class="form-inline">
-                <textarea placeholder="Type a message" formControlName="contenu"></textarea>
+                
+                <textarea placeholder="Type a message" formControlName="contenu">
+                </textarea>
 
-                <button type="submit" [disabled]="myForm.invalid" style="border: none;"> <i class="bx bx-send"></i>
+                <input type="file" name="file" id="file" multiple (change)="uploadMultiple($event)"
+                    style="visibility: hidden;display: none;">
+
+                <label for="file"> <i class="bx bx-paperclip"></i></label>
+
+                <button type="submit" [disabled]="myForm.invalid && previews.length<0" style="border: none;"> <i class="bx bx-send"></i>
                 </button>
 
             </form>
-
 
         </div>
     </div>

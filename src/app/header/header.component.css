@@ -11,9 +11,6 @@
 
 
 .icons{
-  position: fixed;
-  top: 25px;
-  right: 15px;
   display: flex;
   float: right;
 }

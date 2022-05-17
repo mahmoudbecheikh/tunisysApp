@@ -8,11 +8,12 @@
             <div class="content-wrapper">
                 <div class="email-app card-margin">
 
-                    <div class="email-list-wrapper">
+                    <div class="email-list-wrapper" [ngStyle]="{'width': mailSelected ? '40%' : '100%' }"
+                    >
 
                         <div id="email-app-body" class="email-list-scroll-container ps ps--active-y">
 
-                            <ul class="email-list">
+                            <ul class="email-list" >
                                 <li *ngFor="let mail of mails" class="email-list-item"
                                     [ngClass]="{'active': mailSelected && mail.uid===mailSelected.uid}"
                                     (click)='select(mail)'>

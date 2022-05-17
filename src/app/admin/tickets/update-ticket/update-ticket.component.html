@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h3 style="text-align: center;margin-bottom: 50px;">Créer un ticket</h3>
+    <h3 style="text-align: center;margin-bottom: 50px;">Modifier un ticket</h3>
 
     <form [formGroup]="myForm" (ngSubmit)="modifier()">
         <div class="row">
@@ -8,8 +8,7 @@
                 <div class="form-group">
                     <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control"
                         name="nomClient" id="nomClient">
-                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> le champs nom ne
-                            doit contenir que des lettres
+                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> le champs nom ne doit contenir que des lettres
                         </span>
                     </small>
                 </div>
@@ -18,8 +17,8 @@
                     <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control"
                         name="emailClient" id="email">
                     <small> <span *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">
-                            Veuillez entrer une adresse
-                            e-mail valide
+                        Veuillez entrer une adresse
+                        e-mail valide
                         </span>
                     </small>
                 </div>
@@ -27,8 +26,7 @@
                 <div class="form-group">
                     <input type="text" formControlName="telClient" placeholder="Tel *" class="form-control" name="tel"
                         id="tel">
-                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Veuillez entrer un
-                            numero de telephone valide
+                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Veuillez entrer un numero de telephone valide
                         </span>
                     </small>
                 </div>
@@ -37,8 +35,7 @@
                     <input type="text" formControlName="siteWeb" placeholder="Site *" class="form-control"
                         name="siteWeb" id="siteWeb">
                     <small>
-                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> veuillez entrer un lien
-                            valide de votre site
+                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> veuillez entrer un lien valide de votre site 
                         </span>
                     </small>
                 </div>
@@ -49,20 +46,47 @@
                     <input type="text" formControlName="adresse" placeholder="Adresse*" class="form-control"
                         name="adresse" id="adresse">
                     <small>
-                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> veuillez entrer une adresse
-                            valide </span>
+                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Veuillez entrer une adresse valide </span>
                     </small>
+                </div>
+                <div class="form-group">
+                    <ng-container *ngFor="let dep of departements">
+
+                        <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id"
+                            formControlName="employe">
+                            <option value="" disabled hidden [selected]="true">Sélectionnez un employé</option>
+                            <option *ngFor="let emp of dep?.employes" 
+                                value="{{emp._id}}">  {{ticket?.employe?._id==emp._id}} {{emp.prenomEmp}} {{emp.nomEmp}}</option>
+                                <option value="auto">Automatique</option>
+                        </select>
+                    </ng-container>
                 </div>
 
 
-                <ng-container *ngFor="let dep of departements">
-                    <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id"
-                        formControlName="employe">
-                        <option *ngFor="let emp of dep?.employes" [selected]="ticket?.employe?.cin===emp.cin"
-                            value="{{emp._id}}">  {{ticket?.employe?.cin}} {{ticket?.employe?.cin===emp.cin}} {{emp.cin}} {{emp.nomEmp}}</option>
-                        <option value="auto">Automatique</option>
-                    </select>
-                </ng-container>
+
+                <div class="form-group"  >
+                    <div class="upload">
+                        <label for="file" style="text-align: center; cursor: pointer;">
+                            <p style="color: grey;margin-top: 15px;">
+                                Déposer des fichier
+                            </p>
+                            <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
+                        </label>
+                        <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                            style="visibility: hidden;display: none;">
+        
+                            <div class="row files">
+                                <div class="col-sm-2 file" *ngFor="let file of attachmentList;; let index = index;">
+                                    
+                                    
+                                    <img src="../../assets/images/file.png">
+                                    <i (click)="delete(index)" class="lni lni-close"></i>
+            
+                                    <p style="word-wrap: break-word">{{file.originalname}}</p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -70,15 +94,13 @@
 
 
                 <div class="form-group">
-                    <select class="form-control" formControlName="departement"
-                        [attr.disabled]="ticket?.statut=='en cours' || ticket?.statut=='a faire' ||ticket?.statut=='resolu' ? '' : null">
+                    <select class="form-control" formControlName="departement">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
-                        <option *ngFor="let dep of departements" [selected]="ticket?.departement?.nom==dep.nom"
-                            value="{{dep._id}}">{{dep.nom}}</option>
+                        <option *ngFor="let dep of departements" [selected]="dep._id==ticket?.departement?._id" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
                     <small>
-                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> Veuillez
-                            selectionner un département !
+                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty"> 
+                            Veuillez selectionner un département !
                         </span>
                     </small>
                 </div>
@@ -87,8 +109,7 @@
                     <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
                         name="sujet" id="sujet">
                     <small>
-                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty">Veuilez remplir soigneusement le
-                            champs sujet
+                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty"> Veuilez remplir soigneusement le champs sujet
                         </span>
                     </small>
                 </div>
@@ -98,50 +119,29 @@
                 <div class="form-group">
                     <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
                         name="description" id="description" rows="7"> </textarea>
-                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuilez
-                            remplir soigneusement le champs description
+                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller remplir soigneusemnt le champs description
                         </span></small>
                 </div>
 
                 <div class="form-group;">
-                    <input type="date" formControlName="dateLimite" name="dateLimite" class="form-control"
-                        min="{{dateNow | date:'yyyy-MM-dd'}}" id="dateLimite">
-                </div>
-
-
-
-            </div>
-        </div>
-
-
-
-
-        <div class="form-group" style="width: 75%; margin:10px auto;">
-            <div class="upload">
-                <label for="file" style="text-align: center; cursor: pointer;">
-                    <p style="color: grey;margin-top: 15px;">
-                        Déposer des fichier
-                    </p>
-                    <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
-                </label>
-                <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
-                    style="visibility: hidden;display: none;">
-
-                <div class="row files">
-                    <div class="col-sm-2 file" *ngFor="let file of attachmentList;; let index = index;">
-
-                        <img src="../../assets/images/file.png">
-                        <i (click)="delete(index)" class="lni lni-close"></i>
-
-                        <p style="word-wrap: break-word">{{file}}</p>
+                    <div class="calendar">
+                        <mat-calendar  [minDate]="minDate" [selected]="dateLimite.value" (selectedChange)="onSelect($event)">
+                        </mat-calendar>
                     </div>
+                     
                 </div>
+
+
+
             </div>
         </div>
+
+        
+
+
 
         <div class="text-center">
-            <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 25px auto; width: 20%;"
-                value="Modifier" type="submit" />
+            <input class="btn btn-primary" [disabled]="myForm.invalid" style="margin: 35px auto; width: 20%;" value="Modifier" type="submit" />
         </div>
     </form>
 </div>

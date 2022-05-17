@@ -16,7 +16,7 @@ export class NotificationService {
   confirmer(id: any) : Observable<any>{
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
-  afficherRecep(id: any) {
+  afficherRecep(id: any) : Observable<any> {
     return this.http.get(this.baseURL + `/recep/${id}`);
   }
   afficherEnv(id: any) {

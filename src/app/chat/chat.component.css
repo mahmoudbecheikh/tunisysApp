@@ -196,3 +196,19 @@
     height: 35px;
     margin-left: 5px;
 }
+
+.file i {
+	margin: 5px 10px;
+}
+
+.previous {
+	text-align: center;
+	height: 50px;
+	width: 100%;
+	overflow: auto;
+}
+
+.previous img{
+	height: 50px;
+	width: 75px;
+}

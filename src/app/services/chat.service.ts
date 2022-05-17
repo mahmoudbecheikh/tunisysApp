@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -23,6 +23,13 @@ export class ChatService {
     return this.http.get(this.baseURL+`/${recepteur}`)
   }
 
+  downloadFile(file: String) {
+    var body = { filename: file };
+    return this.http.post('http://localhost:3000/download', body, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json'),
+    });
+  }
   modifierMessages(env: any,rec : any ,data : any): Observable<any> {
     return this.http.put(this.baseURL+`/${env}/${rec}`, data);
   }

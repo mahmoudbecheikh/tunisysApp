@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-employee',
@@ -14,15 +15,20 @@ export class ListEmployeeComponent implements OnInit {
   employe?: Employe;
   colors: string[] = [];
   p: number = 1;
- 
+
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.afficherListe();
+    this.toastr.success('Success!', 'Jawek fesfes');
+    this.toastr.warning('Rodbelek!', 'Hany kolk');
+    this.toastr.error('Khliha', 'Rakah denytk');
+
   }
 
   afficherListe() {
@@ -41,11 +47,9 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   supprimer(id: any) {
-
     this.empService.supprimer(id).subscribe((res) => {
-      console.log(res)
+      console.log(res);
       this.afficherListe();
-
     });
     this.authService.getAuth().subscribe((emp) => {
       if (emp._id == id) {

@@ -1,6 +1,7 @@
 import { not } from '@angular/compiler/src/output/output_ast';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
@@ -17,7 +18,9 @@ import { TicketService } from '../services/ticket.service';
 export class HeaderComponent implements OnInit {
   notifications: any;
   messages: any;
-  nonLue: number = 0;
+  nonLueMsg: number = 0;
+  nonLueNotif: number = 0;
+
   employe?: Employe;
   employes?: any[] = [];
   employeFilter?: any[] = [];
@@ -36,7 +39,8 @@ export class HeaderComponent implements OnInit {
     private notifService: NotificationService,
     private socketService: SocketService,
     private employeService: EmployeeService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -103,21 +107,25 @@ export class HeaderComponent implements OnInit {
   }
 
   afficherMsg() {
-    this.nonLue=0
+    this.nonLueMsg=0
     this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
       if (res) {
         this.rand(res);
         this.messages = res;
         for (const msg of this.messages) {
-          if (!msg.message.lue && msg.envoyeur._id!=this.employe?._id) this.nonLue += 1;
+          if (!msg.message.lue && msg.envoyeur._id!=this.employe?._id) this.nonLueMsg += 1;
         }
       }
     });
   }
 
   afficherNotif() {
+    this.nonLueNotif = 0
     this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
       this.notifications = res;
+      for (const notif of res) {
+        if(notif.lue==false) this.nonLueNotif+=1
+      }
     });
   }
 
@@ -164,9 +172,36 @@ export class HeaderComponent implements OnInit {
     let notif = this.notifications.filter(function (el: any) {
       return el.lue == false;
     });
+    if(notif.length>0)
     this.notifService.marquer(notif).subscribe((res) => {
       this.afficherNotif();
     });
+    this.afficherNotif();
+
+  }
+
+  redirect(notif : any){
+    console.log('aaaaaaaaa')
+    let link : any;
+    if(notif.contenu=='invitation'){
+      switch (this.employe?.role) {
+        case 0:
+          link = ['admin/tickets/', notif.ticket._id];
+          break;
+        case 1:
+          link = ['assistant/tickets/', notif.ticket._id];
+          break;
+        case 2:
+          link = ['agent/tickets/', notif.ticket._id];
+          break;
+      
+      }  
+    }
+   
+    if(notif.contenu=="reclamation")
+    link = ['admin/reclamation'];
+    if(link)
+    this.router.navigate(link);
   }
 
   filterData(enteredData: any) {

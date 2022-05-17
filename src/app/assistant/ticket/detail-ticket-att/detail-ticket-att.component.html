@@ -133,9 +133,19 @@
             <h3>Pièce jointe</h3>
 
             <div style="margin: 10px;" class="row files" *ngIf="files && files.length>0;else vide">
-                <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file)'>
-                    <img src="../../../../assets/images/file.png">
-                    <p>{{file}}</p>
+
+                <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file.originalname)'>
+                    
+                    <ng-container *ngIf="file && file.mimetype.includes('image');else fichier" >
+                        <img [src]="file.url" style="width :50px ; height: 50px;">
+                        <p style="word-wrap: break-word">{{file.originalname}}</p>
+
+                    </ng-container>
+                    <ng-template #fichier>
+                        <img  src="../../assets/images/file.png">
+
+                        <p style="word-wrap: break-word">{{file.originalname}}</p>
+                    </ng-template>
                 </div>
             </div>
             <ng-template #vide>
@@ -194,8 +204,8 @@
                 <input type="file" name="file" id="file" multiple (change)="uploadMultiple($event)"
                     style="visibility: hidden;display: none;">
                 <input class="btn btn-primary" type="submit" [disabled]="myForm.invalid" />
-                <i class="lni lni-trash-can"></i>
-                <label for="file"> <i class="lni lni-paperclip"></i></label>
+                <i class="lni lni-trash-can" (click)="resetForm()" ></i>
+                <label for="file"> <i class="lni lni-paperclip"  ></i></label>
                 <i class="bx bx-message-alt-detail" data-toggle="modal" data-target="#exampleModal"></i>
 
 

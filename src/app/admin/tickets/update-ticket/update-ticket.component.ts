@@ -20,6 +20,9 @@ export class UpdateTicketComponent implements OnInit {
   attachmentList: any = [];
   formdata = new FormData();
   attachmentDeleted: any = [];
+  minDate = new Date()
+
+
 
   sujet: FormControl = new FormControl('', [
     Validators.required,
@@ -87,9 +90,15 @@ export class UpdateTicketComponent implements OnInit {
       this.siteWeb.setValue(this.ticket.siteWeb);
       this.statut.setValue(this.ticket.statut);
       this.attachmentList = this.ticket.fJoint;
+      if(this.ticket.dateLimite)
+      this.dateLimite.setValue(this.ticket.dateLimite)
     });
     this.dateNow = new Date();
 
+  }
+
+  onSelect(event:any){
+    this.dateLimite.setValue(event)
   }
 
   createForm() {
@@ -126,10 +135,7 @@ export class UpdateTicketComponent implements OnInit {
           if (res) {
             this.ticketService.confirmer(res._id).subscribe((response) => {
               this.formdata.append('id', res._id);
-
-              this.ticketService
-                .uploadFiles(this.formdata)
-                .subscribe((files) => {
+              this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
                   console.log(files);
                 });
 
@@ -142,6 +148,8 @@ export class UpdateTicketComponent implements OnInit {
         .modifier(this.ticket?._id, this.myForm.value)
         .subscribe((res) => {
           if (res) {
+            this.formdata.append('id', res._id);
+
             this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
               console.log(files);
             });
@@ -157,7 +165,9 @@ export class UpdateTicketComponent implements OnInit {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdata.append('files', element);
-      this.attachmentList.push(element.name);
+      this.attachmentList.push({
+        originalname :element.name
+      });
     }
   }
 

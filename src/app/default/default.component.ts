@@ -20,6 +20,7 @@ export class DefaultComponent implements OnInit {
   currentUrl?: string;
   messages : any
   employeSelected : any
+  show : any
   constructor(private authService: AuthService, private router: Router,private chatService : ChatService) {
    
   }
@@ -67,8 +68,7 @@ export class DefaultComponent implements OnInit {
 
   select(event:any){
     this.employeSelected = event
-    console.log(event)
-    
+    this.show = true
     
   }
 

@@ -13,6 +13,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { DepartementService } from 'src/app/services/departement.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 @Component({
   selector: 'app-detail-ticket-att',
   templateUrl: './detail-ticket-att.component.html',
@@ -23,7 +24,7 @@ export class DetailTicketAttComponent implements OnInit {
   ticket?: Ticket;
   collaborateurs: any;
   id: any;
-  files?: [];
+  files:any = [];
   attachements?: any = [];
   localUrl?: any;
   formdata = new FormData();
@@ -75,7 +76,7 @@ export class DetailTicketAttComponent implements OnInit {
   @ViewChild('tagInput') tagInput?: ElementRef<HTMLInputElement>;
   employes: any;
   employeCtrl: FormControl = new FormControl();
-
+  admin? : Employe
   constructor(
     private activatedRoute: ActivatedRoute,
     private ticketService: TicketService,
@@ -84,6 +85,7 @@ export class DetailTicketAttComponent implements OnInit {
     private authService: AuthService,
     private depService: DepartementService,
     private notifService: NotificationService,
+    private empService  : EmployeeService ,
     private socketService: SocketService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -114,6 +116,14 @@ export class DetailTicketAttComponent implements OnInit {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
     });
+
+    this.empService.afficherListe().subscribe(res=>{
+      for (const employe of res) {
+        if(employe.role==0)
+        this.admin = employe
+        break
+      }
+    })
 
     this.socketService.listen('confirmNotif').subscribe((res) => {
       if (res) {
@@ -216,6 +226,7 @@ export class DetailTicketAttComponent implements OnInit {
 
   download(fileName: string) {
     this.ticketService.downloadFile(fileName).subscribe((res) => {
+      console.log(res)
       saveAs(res, fileName);
     });
   }
@@ -225,7 +236,8 @@ export class DetailTicketAttComponent implements OnInit {
     this.formdata.append('email', this.emailClient.value);
     this.formdata.append('text', this.text.value);
     this.mailService.envoyerMail(this.formdata).subscribe((res) => {
-      this.myForm.reset();
+      this.sujet.setValue('')
+      this.text.setValue('')
       this.formdata = new FormData();
     });
   }
@@ -273,6 +285,12 @@ export class DetailTicketAttComponent implements OnInit {
       this.tags.splice(index, 1);
     }
   }
+
+
+  resetForm(){
+    this.sujet.setValue('')
+    this.text.setValue('')
+    }
 
   selected(event: any): void {
     this.tags.push(event);
@@ -333,14 +351,27 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
   reclamer() {
-    let data = {
+    let reclamation = {
       raison: this.raison.value,
       idEmp: this.ticket?.employe?._id,
       idTicket: this.ticket?._id,
       idDep: this.ticket?.departement?._id,
     };
-    this.ticketService.reclamer(data).subscribe((res) => {
-      this.raison.setValue('');
+    let notification = {
+      envoyeur: this.employe,
+      recepteur: this.admin?._id,
+      contenu: 'reclamation',
+      ticket: this.ticket,
+    };
+    this.ticketService.reclamer(reclamation).subscribe((res) => {
+      if(res){
+        
+        this.notifService.envoyer(notification).subscribe((res) => {
+          this.raison.setValue('');
+
+        });
+      }
+
     });
   }
 
