@@ -18,29 +18,31 @@ export class EmployeeService {
   afficherListe() :Observable<any> {
     return this.http.get(this.baseURL);
   }
-  afficherId(id: any): Observable<Employe> {
+  afficherId(id: any): Observable<any> {
     return this.http.get(this.baseURL + `/${id}`);
   }
 
-  afficherToken(token: any,tokenExpire:any): Observable<any> {
+  afficherTokenMdp(token: any,tokenExpire:any): Observable<any> {
     return this.http.get(this.baseURL + `/${token}/${tokenExpire}`);
   }
-  modifier(id: any, employee: Employe): Observable<any> {
+  modifier(id: any, employee: any): Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, employee);
   }
 
-  supprimer(_id: string) :Observable<Employe> {
+  supprimer(_id: string) :Observable<any> {
     return this.http.delete(this.baseURL + `/${_id}`);
   }
 
-  afficherCin(cin: number): Observable<Employe> {
+  afficherCin(cin: number): Observable<any> {
     console.log(cin)
     return this.http.get(this.baseURL + `/emp/${cin}`);
   }
 
-  afficherEmail(email: String): Observable<Employe> {
-    console.log(email)
-
+  afficherEmail(email: String): Observable<any> {
     return this.http.get(this.baseURL + `/employee/${email}`);
+  }
+
+  afficherToken(token: any): Observable<any> {
+    return this.http.get(this.baseURL + `/verification/${token}`);
   }
 }

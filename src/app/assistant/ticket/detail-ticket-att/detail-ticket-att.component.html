@@ -1,14 +1,47 @@
 <div class="container-fluid">
 
+    <app-search></app-search>
 
-    <div (click)="rapport()" *ngIf="verifyCollab(employe?._id) || employe?._id==ticket?.employe?._id;else export"
-        style="float: right;" class="btn btn-secondary">
-        <i class="bx bx-file"></i>
-        Rapport
-    </div>
+    <ng-container *ngIf="verifyCollab(employe?._id) || employe?._id==ticket?.employe?._id;else export">
+        <div (click)="rapport()" style="float: right;margin: 0px 10px;" class="btn btn-secondary">
+            <i class="bx bx-file"></i>
+            Rapport
+        </div>
+        <div style="float: right;" class="btn btn-secondary" data-toggle="modal" data-target="#recModal">
+            <i class="bx bx-info-circle"></i>
+            Réclamer
+        </div>
+        <div class="modal fade" id="recModal" tabindex="-1" role="dialog" aria-labelledby="recModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title w-100 text-center" id="recModalLabel">Passer une réclamation
+                        </h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control"
+                            name="raison" id="raison" rows="7"> </textarea>
 
-    <ng-template #export>
-        <div [routerLink]="['/pdf/'+id]" style="float: right;" class="btn btn-secondary">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" (click)="reclamer()" [disabled]="raison.invalid"
+                            *ngIf="employe?.role==2">Reclamer</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+
+
+    <ng-template #export >
+        <div  *ngIf="ticket?.statut=='resolu'" [routerLink]="['/pdf/'+id]" style="float: right;" class="btn btn-secondary">
             Export
         </div>
     </ng-template>
@@ -21,7 +54,7 @@
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-secondary" *ngIf="employe?.role==2 && employe?._id==ticket?.employe?._id"
         data-toggle="modal" data-target="#invModal">
-        <i class="lni lni-plus" style="font-weight: 800;" (click)="afficherNotifEnv()" ></i> inviter
+        <i class="lni lni-plus" style="font-weight: 800;" (click)="afficherNotifEnv()"></i> inviter
     </button>
     <!-- Modal -->
     <div class="modal fade" id="invModal" tabindex="-1" role="dialog" aria-labelledby="invModalLabel"
@@ -58,13 +91,19 @@
             </div>
         </div>
     </div>
+    <button class="btn btn-secondary" style="float: right;margin: 0px 10px;" *ngIf="employe?.role==1 " (click)="toUpdate()">
+        <i class="bx bx-pencil"></i> Modifier</button>
+
+    <button  class="btn btn-secondary" style="float: right;margin: 0px 10px;"  [disabled]='!ticket?.dateLimite' *ngIf="employe?.role==1 && ticket?.statut=='en attente'" (click)="confirmer()" ><i
+        class="bx bx-check-square"></i>Confirmer</button>
+
+
 
 
 
     <div class="row">
         <div class="col-sm">
-            <h1>{{ticket?.sujet}} <i *ngIf="employe?.role==0" [routerLink]="['/admin/tickets/update/'+ticket?._id]"
-                    class="lni lni-pencil"></i></h1>
+            <h1>{{ticket?.sujet}} </h1>
 
 
             <div class="row">
@@ -75,6 +114,12 @@
                     <p>Tel : <span>{{ticket?.telClient}}</span></p>
                     <p>Adresse : <span>{{ticket?.adresse}}</span></p>
                     <p>Site : <span>{{ticket?.siteWeb}}</span></p>
+                    <p>Date limite : 
+                        
+                        <span *ngIf="ticket?.dateLimite">{{ ticket?.dateLimite | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                        <span *ngIf="!ticket?.dateLimite">---</span>
+                        
+                        
 
                 </div>
                 <div class="info col-sm">
@@ -83,7 +128,11 @@
                             {{ticket?.employe?.prenomEmp}}</span>
                         <span *ngIf="!ticket?.employe">---</span>
                     </p>
-
+                    <p>Collaborateurs :
+                        <ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; " >---</ng-container>
+                        <ng-template #collab><span  > <ng-container class="badge bg-warning" *ngFor="let emp of ticket?.collaborateurs;let i =index">{{emp.nomEmp}} {{emp.prenomEmp}} ,   </ng-container> </span></ng-template>
+                        <!-- <span *ngIf="i+1!=ticket?.collaborateurs?.length"> / </span> -->
+                </p>
                     <p>Manuel : <span>{{ticket?.manuel}}</span> </p>
                     <p>Statut :
                         <span class="badge bg-secondary" *ngIf="ticket?.statut=='en attente'">{{ ticket?.statut}}</span>
@@ -93,7 +142,7 @@
                     </p>
                     <p>Date : <span> {{ ticket?.date | date: 'dd/MM/yyyy HH:mm:ss'}}</span></p>
                     <p>Modifié: <span> {{ ticket?.dateModif | date: 'dd/MM/yyyy HH:mm:ss'}}</span></p>
-
+                   
                 </div>
             </div>
 
@@ -108,7 +157,7 @@
         <br>
         <div>
             <i class="lni lni-star-filled" *ngFor="let item of [].constructor(5); let index = index;"
-                [ngStyle]="{'color':index<ticket?.feedBack?.note?'red':'' }" style="margin-top: 10px;"></i>
+                [ngStyle]="{'color':index <= ticket?.feedBack?.note ?'red':'' }" style="margin-top: 10px;"></i>
             <p>
                 {{ticket?.feedBack?.commentaire}}
             </p>
@@ -135,14 +184,14 @@
             <div style="margin: 10px;" class="row files" *ngIf="files && files.length>0;else vide">
 
                 <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file.originalname)'>
-                    
-                    <ng-container *ngIf="file && file.mimetype.includes('image');else fichier" >
+
+                    <ng-container *ngIf="file && file.mimetype.includes('image');else fichier">
                         <img [src]="file.url" style="width :50px ; height: 50px;">
                         <p style="word-wrap: break-word">{{file.originalname}}</p>
 
                     </ng-container>
                     <ng-template #fichier>
-                        <img  src="../../assets/images/file.png">
+                        <img src="../../assets/images/file.png">
 
                         <p style="word-wrap: break-word">{{file.originalname}}</p>
                     </ng-template>
@@ -155,7 +204,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row messages">
 
         <div class="col-sm">
             <h3>Messages</h3>
@@ -204,8 +253,8 @@
                 <input type="file" name="file" id="file" multiple (change)="uploadMultiple($event)"
                     style="visibility: hidden;display: none;">
                 <input class="btn btn-primary" type="submit" [disabled]="myForm.invalid" />
-                <i class="lni lni-trash-can" (click)="resetForm()" ></i>
-                <label for="file"> <i class="lni lni-paperclip"  ></i></label>
+                <i class="lni lni-trash-can" (click)="resetForm()"></i>
+                <label for="file"> <i class="lni lni-paperclip"></i></label>
                 <i class="bx bx-message-alt-detail" data-toggle="modal" data-target="#exampleModal"></i>
 
 
@@ -274,45 +323,60 @@
     </div>
 
 
-
-    <form [formGroup]="formTag" *ngIf="employe?.role==2" style="width: 50%;" (ngSubmit)="enregistrer()">
-
-        <span *ngFor="let fruit of filtredTags" class="badge badge-light" (click)="selected(fruit)">{{fruit}}</span>
-
-        <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Ajouter tag</mat-label>
-            <mat-chip-list #chipList aria-label="Fruit selection">
-                <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-                    {{tag}}
-                    <button matChipRemove>
-                        <i class="lni lni-close"></i>
-                    </button>
-                </mat-chip>
-                <input placeholder="Nouveau ..." #tagInput [formControl]="tagsCtrl" [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-
-        </mat-form-field>
-        <input class="btn btn-primary" [disabled]="formTag.invalid" value="Enregistrer" type="submit" />
-
-
-    </form>
-
     <div class="row">
-        <div class="col-sm-6">
-            <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control" name="raison"
-                id="raison" rows="7"> </textarea>
-            <input class="btn btn-primary" type="button" (click)="reclamer()" [disabled]="raison.invalid"
-                *ngIf="employe?.role==2" value="Reclamer" />
 
+        <div class="col-sm">
+
+            <form [formGroup]="formTag" *ngIf="employe?.role==2" (ngSubmit)="enregistrer()">
+
+                <span *ngFor="let fruit of filtredTags" class="badge badge-light"
+                    (click)="selected(fruit)">{{fruit}}</span>
+
+                <mat-form-field class="example-chip-list" appearance="fill">
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                            {{tag}}
+                            <button matChipRemove>
+                                <i class="lni lni-close"></i>
+                            </button>
+                        </mat-chip>
+                        <input placeholder="Nouveau ..." #tagInput [formControl]="tagsCtrl" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)">
+                    </mat-chip-list>
+
+                </mat-form-field>
+                <input class="btn btn-primary" [disabled]="formTag.invalid" value="Enregistrer" type="submit" />
+
+
+            </form>
+
+        </div>
+        <div class="col-sm">
+            <table class="table table-bordered" style="margin-top: 25px;">
+
+                <tbody>
+                    <tr *ngFor="let ticket of suggestions">
+                        <td>
+                            <a style="font-weight: 500 ; cursor: pointer;text-decoration: none;color:black ;"
+                                [routerLink]="['/agent/tickets/'+ticket?._id]">
+                                {{ticket.sujet}} </a>
+                            <br>
+                            <p style="color:grey ;"> Résolu par {{ticket.employe.nomEmp}} {{ticket.employe.prenomEmp}}
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
     </div>
 
 
-    <div>
-        <a [routerLink]="['/agent/tickets/'+ticket?._id]" *ngFor="let ticket of suggestions">
-            {{ticket?.sujet}}
-        </a>
-    </div>
+
+
+
+
 
 </div>

@@ -18,6 +18,11 @@ export class TicketService {
   afficherListe(): Observable<any> {
     return this.http.get(this.baseURL);
   }
+
+  afficherAttente(): Observable<any> {
+    return this.http.get(this.baseURL+ `/tickets/attente`);
+  }
+
   afficherId(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/${id}`);
   }
@@ -38,7 +43,7 @@ export class TicketService {
     return this.http.put(this.baseURL, tickets);
   }
 
-  confirmer(id: any): Observable<any> {
+  confirmer(id: any): Observable<Ticket> {
     return this.http.get(this.baseURL + `/confirmation/${id}`);
   }
 
@@ -59,7 +64,7 @@ export class TicketService {
   }
 
   rappelle():Observable<any>{
-    return this.http.get('http://localhost:3000/rappelle');
+    return this.http.get(this.baseURL + '/ticket/rappelle');
   }
 
   downloadFile(file: String) {

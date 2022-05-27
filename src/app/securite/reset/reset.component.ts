@@ -38,7 +38,7 @@ export class ResetComponent implements OnInit {
     this.tokenExpire = this.activateRouter.snapshot.params['tokenExpire'];
     this.token = this.activateRouter.snapshot.params['token'];
     if (!isNaN(this.tokenExpire)) {
-      this.employeService.afficherToken(this.token, this.tokenExpire)
+      this.employeService.afficherTokenMdp(this.token, this.tokenExpire)
         .subscribe((res) => {
           if (res) {
             console.log(res);

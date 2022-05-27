@@ -1,6 +1,6 @@
 <form [formGroup]="formRech" class="form-inline">
     <mat-form-field >
-        <input type="text" placeholder="Tapez" aria-label="Sujet" matInput
+        <input type="text" placeholder="Rechercher" aria-label="Sujet" matInput
             formControlName="sujet" [matAutocomplete]="auto" value="{{sujet.value}}">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let ticket of ticketFilter" (click)="find(ticket.sujet)"
@@ -14,9 +14,9 @@
 
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-outline-dark" data-toggle="modal"
+    <button type="button" class="btn btn-info" data-toggle="modal"
         data-target="#searchModal" (click)="findBtn(sujet.value)" [disabled]="sujet.value.trim()==''">
-        Recherche
+        <i  class="lni lni-search-alt"></i>
     </button>
 
     <div class="modal fade" id="searchModal" tabindex="-1" role="dialog"

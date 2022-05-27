@@ -13,6 +13,11 @@ body {
 }
 
 
+.lni-reply{
+    font-size: 20px;
+    float: right;
+}
+
 .upload {
     margin-top: 15px;
     border: 2px dotted grey;

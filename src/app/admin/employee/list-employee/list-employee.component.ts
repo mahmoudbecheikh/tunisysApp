@@ -4,6 +4,9 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Departement } from 'src/models/departement';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { DepartementService } from 'src/app/services/departement.service';
 
 @Component({
   selector: 'app-list-employee',
@@ -12,28 +15,87 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
+  employeesFilter: Employe[] = [];
+
   employe?: Employe;
   colors: string[] = [];
   p: number = 1;
+  departementsArray: Departement[] = [];
+  rolesArray: string[] = ['admin', 'assistant', 'agent'];
+  form: FormGroup = new FormGroup({});
 
+  departements: FormArray = new FormArray([]);
+  roles: FormArray = new FormArray([]);
+  nom : FormControl = new FormControl()
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,
+    private depService: DepartementService,
     private router: Router,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.afficherListe();
-    this.toastr.success('Success!', 'Jawek fesfes');
-    this.toastr.warning('Rodbelek!', 'Hany kolk');
-    this.toastr.error('Khliha', 'Rakah denytk');
+    this.listDepartement();
+    
+    this.form = new FormGroup({
+      departements: this.departements,
+      roles: this.roles,
+    });
+
+    this.nom.valueChanges.subscribe(res=>{
+      this.employeesFilter = this.employees?.filter((item) => {
+        if(item.nomEmp && item.prenomEmp)
+        return item.nomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1 || item.prenomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1;
+        else return
+      });
+    })
 
   }
 
+  onCheckboxChange(formArray: FormArray, e: any) {
+    if (e.target.checked) {
+      formArray.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      formArray.value.forEach((item: FormControl) => {
+        if (item == e.target.value) {
+          formArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+    console.log(this.form.value);
+    this.submit();
+  }
+
+  submit() {
+    let departements = this.departements.value;
+    let roles = this.roles.value;
+    if (this.roles.length == 0 && this.departements.length == 0) {
+      this.employeesFilter = this.employees;
+    } else {
+      this.employeesFilter = this.employees.filter(function (el) {
+        return (
+          (departements.includes(el.departement?.nom) ||
+            departements.length == 0) &&
+          (roles.includes(String(el.role)) || roles.length == 0)
+        );
+      });
+    }
+  }
+
+  listDepartement() {
+    this.depService.afficherListe().subscribe((res) => {
+      this.departementsArray = res as Departement[];
+    });
+  }
   afficherListe() {
     this.empService.afficherListe().subscribe((res) => {
       this.employees = res as Employe[];
+      this.employeesFilter = res
       this.rand(res);
     });
   }

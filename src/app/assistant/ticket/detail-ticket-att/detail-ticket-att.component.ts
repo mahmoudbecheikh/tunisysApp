@@ -159,10 +159,12 @@ export class DetailTicketAttComponent implements OnInit {
     });
 
     this.tagsCtrl.valueChanges.subscribe((res) => {
-      if (res == '') this.filtredTags = [];
-      else {
-        this.filterData(res);
-      }
+      // if (res == '') this.filtredTags = [];
+      // else {
+      //   this.filterData(res);
+      // }
+              this.filterData(res);
+
     });
   }
 
@@ -193,6 +195,7 @@ export class DetailTicketAttComponent implements OnInit {
   }
 
   afficherNotifEnv() {
+    if(this.employe?._id)
     this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
       this.notifEnv = res;
     });
@@ -204,15 +207,28 @@ export class DetailTicketAttComponent implements OnInit {
     });
   }
 
+
+  
+  confirmer() {
+    this.ticketService.confirmer(this.ticket?._id).subscribe((res) => {
+      this.router.navigate(['assistant/tickets'])
+    });
+  }
+
+
   afficherTags() {
     this.ticketService.afficherListe().subscribe((tickets) => {
       for (let i = 0; i < tickets.length; i++) {
         const ticket = tickets[i];
+        console.log(ticket.tags)
+
         if (ticket.departement.nom == this.ticket?.departement?.nom) {
+
           this.allTags = this.allTags.concat(ticket.tags);
         }
       }
       this.allTags = [...new Set(this.allTags)];
+      console.log(this.allTags)
     });
   }
 
@@ -286,6 +302,19 @@ export class DetailTicketAttComponent implements OnInit {
     }
   }
 
+  toUpdate(){
+    let link = ['admin/tickets/update/', this.id];
+    switch (this.employe?.role) {
+      case 0:
+        this.router.navigate(link);
+        break;
+      case 1:
+        link = ['assistant/tickets/update/', this.id];
+        this.router.navigate(link);
+        break;
+     
+    }
+  }
 
   resetForm(){
     this.sujet.setValue('')
@@ -305,6 +334,7 @@ export class DetailTicketAttComponent implements OnInit {
       .modifierTags(this.id, this.formTag.value)
       .subscribe((res) => {
         this.tagsCtrl.setValue('');
+        this.afficherTags()
       });
   }
 
@@ -353,9 +383,8 @@ export class DetailTicketAttComponent implements OnInit {
   reclamer() {
     let reclamation = {
       raison: this.raison.value,
-      idEmp: this.ticket?.employe?._id,
-      idTicket: this.ticket?._id,
-      idDep: this.ticket?.departement?._id,
+      idEmp: this.employe?._id,
+      idTicket: this.ticket?._id
     };
     let notification = {
       envoyeur: this.employe,

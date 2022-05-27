@@ -28,7 +28,7 @@ export class AuthService {
     return this.http.put('http://localhost:3000/change' + `/${id}`, data);
   }
 
-  getAuth(): Observable<Employe> {
+  getAuth(): Observable<any> {
     let token: any = localStorage.getItem('token');
     let decodeToken = this.helper.decodeToken(token);
     let id = decodeToken.id;

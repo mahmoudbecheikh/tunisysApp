@@ -75,18 +75,19 @@ export class TicketAttComponent implements OnInit {
   }
 
   afficherListe() {
-    this.ticketService.afficherListe().subscribe((res) => {
-      for (let i = 0; i < res.length; i++) {
-        const ticket = res[i];
-        if (ticket.statut == 'en attente') this.tickets.push(ticket);
-      }
-    });
+
+    this.ticketService.afficherAttente().subscribe(res=>{
+      
+      this.tickets = res
+    })
+
+    
   }
 
   ajouter() {
     this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
       if (res) {
-        this.formdata.append('id', res._id);
+        this.formdata.append('id',res._id );
         this.ticketService.confirmer(res._id).subscribe((response) => {
           this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
             console.log(files);
@@ -128,18 +129,16 @@ export class TicketAttComponent implements OnInit {
     moveItemInArray(this.tickets, event.previousIndex, event.currentIndex);
   }
 
-  confirmer(id: any) {
-    this.ticketService.confirmer(id).subscribe((res) => {
-      this.afficherListe();
-    });
-  }
-
   consulter(id: any) {
     const link = ['assistant/tickets', id];
     this.router.navigate(link);
   }
 
-  supprimer(id: any) {}
+  supprimer(id: any) {
+    this.ticketService.supprimer(id).subscribe((res) => {
+      this.afficherListe();
+    });
+  }
 
   uploadMultiple(event: any) {
     const files: FileList = event.target.files;

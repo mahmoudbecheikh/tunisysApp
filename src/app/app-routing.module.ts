@@ -75,6 +75,10 @@ const routes: Routes = [
             ],
           },
           {
+            path: 'inbox',
+            component: InboxComponent,
+          },
+          {
             path: 'tickets',
             children: [
               {
@@ -145,6 +149,10 @@ const routes: Routes = [
               {
                 path: ':id',
                 component: DetailTicketAttComponent,
+              },
+              {
+                path: 'update/:id',
+                component: UpdateTicketComponent,
               },
               {
                 path: 'rapport/:id',

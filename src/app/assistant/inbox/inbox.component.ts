@@ -60,10 +60,18 @@ export class InboxComponent implements OnInit {
   statut: FormControl = new FormControl('en attente');
   loading$ = this.spinnerService.loading$;
   dateLimite: FormControl = new FormControl();
-
   dateNow: any;
-
   formdata = new FormData();
+  formdataMail = new FormData();
+
+  formMail: FormGroup = new FormGroup({});
+  attachements?: any = [];
+  show = false
+  textMail: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(15),
+    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+  ]);
 
   constructor(
     private mailService: MailService,
@@ -110,6 +118,9 @@ export class InboxComponent implements OnInit {
       adresse: this.adresse,
       dateLimite: this.dateLimite,
     });
+    this.formMail = new FormGroup({
+      textMail: this.textMail,
+    });
   }
 
   afficherDepartements() {
@@ -140,6 +151,24 @@ export class InboxComponent implements OnInit {
   select(mail: any) {
     console.log(mail);
     this.mailSelected = mail;
+    this.show = false
+    this.formMail.reset()
+    this.formdata = new FormData()
+    this.attachements=[]
+  }
+
+  repondre(el: any){
+    el.scrollIntoView({behavior: 'smooth'});
+    this.show = true
+  }
+
+  uploadFilesMail(event: any) {
+    const files: FileList = event.target.files;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.formdataMail.append('files', element);
+      this.attachements.push(element.name);
+    }
   }
 
   uploadMultiple(event: any) {
@@ -179,5 +208,17 @@ export class InboxComponent implements OnInit {
       .subscribe((res) => {
         this.afficherListe();
       });
+  }
+
+  envoyer(mail : any) {
+    this.formdataMail.append('sujet', mail.subject);
+    this.formdataMail.append('email', mail.from);
+    this.formdataMail.append('text', this.textMail.value);
+    this.mailService.envoyerMail(this.formdataMail).subscribe((res) => {
+      this.sujet.setValue('')
+      this.textMail.setValue('')
+      this.formdataMail = new FormData();
+      this.attachements = []
+    });
   }
 }

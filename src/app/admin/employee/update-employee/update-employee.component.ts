@@ -7,6 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -58,10 +59,6 @@ export class UpdateEmployeeComponent implements OnInit {
     asyncValidators: [this.validatorEmail()],
     updateOn: 'blur',
   });
-  mdp: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/),
-  ]);
 
   tel: FormControl = new FormControl('', [
     Validators.required,
@@ -75,7 +72,8 @@ export class UpdateEmployeeComponent implements OnInit {
     private empService: EmployeeService,
     private depService: DepartementService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -109,25 +107,17 @@ export class UpdateEmployeeComponent implements OnInit {
       departement: this.departement,
       cin: this.cin,
       email: this.email,
-      mdp: this.mdp,
       tel: this.tel,
       role: this.role,
     });
   }
 
   modifier() {
+    this.toastr.success('employé modifié', 'Success!');
     this.empService
       .modifier(this.employe?._id, this.myForm.value)
       .subscribe((res) => {
-
-        console.log(res);
-        let token: any = localStorage.getItem('token');
-        let decodeToken = this.helper.decodeToken(token);
-        let id = decodeToken.id;
-        if (id == res?._id && res.role != 0) {
-          localStorage.removeItem('token');
-          this.router.navigate(['/login']);
-        } else this.router.navigate(['admin/employees']);
+        this.router.navigate(['admin/employees']);
       });
   }
 

@@ -6,6 +6,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { Departement } from 'src/models/departement';
 import { Ticket } from 'src/models/ticket';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
+import { Employe } from 'src/models/employe';
 
 @Component({
   selector: 'app-update-ticket',
@@ -66,19 +68,24 @@ export class UpdateTicketComponent implements OnInit {
   FjointDeleted: FormControl = new FormControl();
   dateLimite : FormControl = new FormControl();
   dateNow: any;
-
+  employeCnt? : Employe
   constructor(
     private depService: DepartementService,
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService : AuthService,
+
   ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.afficherListe();
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.ticketService.afficherId(this.id).subscribe((res) => {
+    this.authService.getAuth().subscribe((res) => {
+      this.employeCnt = res;
+    });
+        this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.sujet.setValue(this.ticket.sujet);
       this.departement.setValue(this.ticket.departement);
@@ -127,6 +134,11 @@ export class UpdateTicketComponent implements OnInit {
 
   modifier() {
     this.FjointDeleted.setValue(this.attachmentDeleted);
+    let link = ['admin/tickets'];
+    if(this.employeCnt?.role==1)
+        link = ['assistant/tickets/'+this.ticket?._id];
+     
+    
     if (this.employe.value == 'auto') {
       this.employe.setValue(null);
       this.ticketService
@@ -139,8 +151,8 @@ export class UpdateTicketComponent implements OnInit {
                   console.log(files);
                 });
 
-              this.router.navigate(['admin/tickets']);
-            });
+                this.router.navigate(link);
+              });
           }
         });
     } else {
@@ -154,7 +166,7 @@ export class UpdateTicketComponent implements OnInit {
               console.log(files);
             });
 
-            this.router.navigate(['admin/tickets']);
+            this.router.navigate(link);
           }
         });
     }

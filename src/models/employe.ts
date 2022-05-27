@@ -10,6 +10,10 @@ export class Employe {
     mdp?: string;
     adresse?: string;
     role?: number;
-    tel? : number
+    tel? : number;
+    token? : string;
+    mdpJeton? : string ;
+    mdpJetonExp? : string ; 
+    jetonUtilise? : string
 }
 

@@ -1,7 +1,8 @@
 <div class="container-fluid">
     <h1 class="text-center">Ticket</h1>
-    <app-search></app-search>
+
     <div class="btn btn-dark" (click)="toAdd()">Créer un ticket </div>
+    <input class="form-control search" type="search" [formControl]="sujet" placeholder="Recherche un ticket" aria-label="Search">
 
     <div class="row">
         <div class="col-md-10">
@@ -136,7 +137,7 @@
                         </div>
                     </div>
                     <div class="py-3">
-                        <h5 class="font-weight-bold">Rating</h5>
+                        <h5 class="font-weight-bold">FeedBack</h5><span style="font-size: 10px;">( statut résolu doit être coché )</span>
                         <div class="rating">
                             <div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span
                                         class="fas fa-star"></span> <span class="fas fa-star"></span> <span

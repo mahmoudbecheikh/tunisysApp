@@ -157,6 +157,7 @@ export class TicketsComponent implements OnInit {
     this.ticketService
       .quitter(idTicket, idEmp)
       .subscribe((res) => {
+        if(res)
         this.getListTicket()
       });
   }

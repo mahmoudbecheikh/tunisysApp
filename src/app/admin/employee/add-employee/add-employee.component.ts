@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { DepartementService } from 'src/app/services/departement.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Departement } from 'src/models/departement';
@@ -66,7 +67,8 @@ export class AddEmployeeComponent implements OnInit {
   constructor(
     private empService: EmployeeService,
     private depService: DepartementService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +95,7 @@ export class AddEmployeeComponent implements OnInit {
     if (this.role.value == 0 || this.role.value==1) {
       this.departement.setValue(null);
     }
-
+    this.toastr.success('employé ajouté', 'Success!');
     this.empService.ajouter(this.myForm.value).subscribe((res) => {
       this.router.navigate(['admin/employees']);
     });
@@ -108,9 +110,6 @@ export class AddEmployeeComponent implements OnInit {
     }
     this.departement.updateValueAndValidity();
   }
-
-
-
 
   validatorCin(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {

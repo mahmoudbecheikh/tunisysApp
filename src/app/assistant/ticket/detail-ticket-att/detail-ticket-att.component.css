@@ -2,10 +2,10 @@
     text-transform: uppercase;
 }
 
-input {
+/* input {
     border: none;
     border-radius: 1px;
-}
+} */
 
 .btn-secondary{
     background-color: #E5E8E8;
@@ -123,6 +123,16 @@ label {
     border-radius: 1px;
 }
 
+.messages thead, .messages tbody { display: block; }
+
+
+.messages tbody {
+    height: 350px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+
 .email textarea:focus,
 .email textarea.form-control:focus {
     box-shadow: inset 0 -1px 0 white;
@@ -157,7 +167,28 @@ td {
 .example-chip-list {
     margin-top: 25px;
     width: 100%;
+    border-radius: 5px;
 }
+
+
+
+mat-chip,mat-chip .lni-close{
+    background-color: #2874A6 !important;
+    color:white !important;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-align: center;
+
+  }
+
+  mat-chip-list{
+      background-color: #5DADE2 !important;
+  }
+
+  .example-chip-list {
+      height:100%;
+      background-color: #fafafa !important;
+  }
 
 
 form .badge {

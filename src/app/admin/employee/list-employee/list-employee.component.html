@@ -1,62 +1,96 @@
-
 <div class="container-fluid">
-    <h2 class="page-title">Employées</h2>
+    <h1 class="text-center">Employées</h1>
     <div class="btn btn-dark" (click)="toAdd()">Créer un employé </div>
-    <br><br>
+        <input class="form-control search" type="search" [formControl]="nom" placeholder="Recherche un employé" aria-label="Search">
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table table-bordered" *ngIf="employeesFilter.length>0;else vide">
+                <thead>
+                    <th scope="col">Nom complet</th>
+                    <th scope="col">CIN</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Departement</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Action</th>
+                </thead>
 
-    <table class="table table-bordered" *ngIf="employees.length>0;else vide">
-        <thead>
-            <th scope="col">Nom complet</th>
-            <th scope="col">CIN</th>
-            <th scope="col">Email</th>
-            <th scope="col">Téléphone</th>
-            <th scope="col">Departement</th>
-            <th scope="col">Role</th>
-            <th scope="col">Action</th>
-        </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employeesFilter | paginate: { 
+                    itemsPerPage: 5,
+                    currentPage :p,
+                    totalItems: employees.length} ; let i = index">
+                        <td scope="row">
+                            <div class="row">
+                                <div class="col-sm" [style.background]="colors[i]" style="margin-left:10px;"
+                                    class="circle">
+                                    {{employee.nomEmp?.substr(0,1)}}
+                                </div>
+                                <div style="margin-top: 5px;" class="col-sm">
+                                    {{employee.nomEmp}} {{employee.prenomEmp}}
+                                </div>
+                            </div>
 
-        <tbody>
-            <tr *ngFor="let employee of employees | paginate: { 
-            itemsPerPage: 5,
-            currentPage :p,
-            totalItems: employees.length} ; let i = index">
-                <td scope="row">
-                    <div class="row">
-                        <div class="col-sm" [style.background]="colors[i]" style="margin-left:10px;" class="circle">
-                            {{employee.nomEmp?.substr(0,1)}}
+
+                        </td>
+                        <td>{{employee.cin }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.tel }}</td>
+                        <td *ngIf="employee.departement==null">- - -</td>
+                        <td *ngIf="employee.departement"> {{ employee.departement?.nom }}</td>
+
+                        <td *ngIf="employee.role==0">Admin</td>
+                        <td *ngIf="employee.role==1">Assistant</td>
+                        <td *ngIf="employee.role==2">Agent</td>
+                        <td>
+                            <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i>
+                            <i class="lni lni-trash-can" (click)="supprimer(employee._id)"></i>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <pagination-controls class="paginator" previousLabel="Retour" nextLabel="Suivant" (pageChange)="p = $event">
+            </pagination-controls>
+
+            <ng-template #vide>
+                <h3 class="text-center">Il n'y a pas des employés.</h3>
+            </ng-template>
+
+        </div>
+        <div class="col-md-2">
+            <section id="sidebar">
+                <form [formGroup]="form">
+                    <div class="py-3">
+                        <h5 class="font-weight-bold">Départements</h5>
+                        <div class="brand">
+                            <div *ngFor="let dep of departementsArray"
+                                class="form-inline d-flex align-items-center py-1">
+                                <label class="tick">{{dep.nom}}<input type="checkbox" [value]="dep.nom"
+                                        (change)="onCheckboxChange(departements,$event)"> <span class="check"></span>
+                                </label>
+                            </div>
                         </div>
-                        <div style="margin-top: 5px;" class="col-sm">
-                            {{employee.nomEmp}} {{employee.prenomEmp}}
+                    </div>
+                    <div class="py-3">
+                        <h5 class="font-weight-bold">Roles</h5>
+                        <div class="brand">
+                            <div class="form-inline d-flex align-items-center py-1"
+                                *ngFor="let role of rolesArray ; let i = index">
+                                <label class="tick"> {{role}}<input type="checkbox" [value]="i"
+                                        (change)="onCheckboxChange(roles,$event)"> <span class="check"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
+                </form>
+            </section>
+        </div>
+    </div>
 
-                </td>
-                <td>{{employee.cin }}</td>
-                <td>{{ employee.email }}</td>
-                <td>{{ employee.tel }}</td>
-                <td *ngIf="employee.departement==null">- - -</td>
-                <td *ngIf="employee.departement"> {{ employee.departement?.nom }}</td>
-
-                <td *ngIf="employee.role==0">Admin</td>
-                <td *ngIf="employee.role==1">Assistant</td>
-                <td *ngIf="employee.role==2">Agent</td>
-                <td>
-                    <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i>
-                    <i class="lni lni-trash-can" (click)="supprimer(employee._id)"></i>
-                </td>
-            </tr>
-
-        </tbody>
-
-    </table>
-
-        <pagination-controls class="paginator" previousLabel="Retour" nextLabel="Suivant"
-            (pageChange)="p = $event"></pagination-controls>
-
-    <ng-template #vide>
-        <h3 class="text-center">Il n'y a pas des employés.</h3>
-    </ng-template>
 
 
 </div>

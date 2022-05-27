@@ -3,11 +3,16 @@
 }
 
 
-.container {
-    margin-left: 175px;
-    margin-top: 50px;
-}
-
+.search:focus {
+    box-shadow: none; 
+  }
+  
+  .search{
+    width: 30%;
+    margin: 10px 0px;
+    background-color: #f9f9f9;
+  } 
+  
 
 
 i{
@@ -30,6 +35,10 @@ td {
 
 table td {
     font-weight: 400;
+    max-height: 25px;
+
+    word-wrap: break-word;
+
     vertical-align: middle;
 
 }

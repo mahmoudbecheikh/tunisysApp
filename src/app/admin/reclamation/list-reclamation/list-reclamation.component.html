@@ -7,7 +7,6 @@
     <table *ngIf="(reclamations.length>0);else vide" class="table table-bordered">
         <thead>
             <tr class="home">
-                <th scope="col">Departement</th>
                 <th scope="col">Employé</th>
                 <th scope="col">Ticket</th>
                 <th scope="col">Raison</th>
@@ -20,7 +19,6 @@
 
         <tbody>
             <tr *ngFor="let rec of reclamations">
-                <td scope="row"> {{ rec.departement.nom }}</td>
                 <td>{{ rec.employe.nomEmp }} {{ rec.employe.prenomEmp }}</td>
                 <td> <a [routerLink]="['/admin/tickets/'+rec.ticket._id]">{{ rec.ticket.sujet }}</a> </td>
                 <td > <div class="raison">

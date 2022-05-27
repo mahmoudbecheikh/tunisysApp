@@ -69,6 +69,7 @@
                             <ng-template #vide>
                                 <div class="email-subject">(aucun objet)</div>
                             </ng-template>
+                            <i class="lni lni-reply" (click)="repondre(target)"> </i>
                             <p class="recipient"><span>From:</span>{{mailSelected.name}} &lt;{{mailSelected.from}}&gt;
                             </p>
                         </div>
@@ -95,6 +96,25 @@
 
                             </ul>
                         </div>
+                        <div  #target>
+                            <form [formGroup]="formMail"  (ngSubmit)="envoyer(mailSelected)" class="email" *ngIf="show">
+
+                                <div class="form-group">
+                                    <textarea class="form-control" formControlName="textMail" id="textMail"
+                                        placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
+                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of attachements">
+                                        <p style="color: #0066FF;">{{file}}</p>
+                                    </div>
+                                </div>
+                
+                                <input type="file" name="file" id="file" multiple (change)="uploadFilesMail($event)"
+                                    style="visibility: hidden;display: none;">
+                                <input class="btn btn-primary" type="submit" [disabled]="formMail.invalid" />
+                                <label for="file"> <i class="lni lni-paperclip"></i></label>
+                            
+                            </form>
+                        </div>
+
                     </div>
 
                 </div>

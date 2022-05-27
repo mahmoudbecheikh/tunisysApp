@@ -2,15 +2,44 @@
   text-transform: uppercase;
 }
 
-.container {
-  margin-left: 175px;
-  margin-top: 50px;
+
+.search:focus {
+  box-shadow: none; 
+}
+
+.search{
+  width: 30%;
+  margin: 10px 0px;
+  background-color: #f9f9f9;
+} 
+
+
+i{
+  cursor: pointer;
+}
+
+.col-md-10{
+  margin-right: -10px;
+}
+
+table{
+  margin-bottom: 25px;
 }
 
 table,
-td,
-th {
+th,
+td {
   text-align: center;
+}
+
+table td {
+  font-weight: 400;
+  vertical-align: middle;
+
+}
+
+.badge {
+  width: 75px;
 }
 
 
@@ -24,45 +53,33 @@ table tr:hover {
   background-color: #ddd;
 }
 
-td:first-child {
-  text-align: left;
-}
-
-.name::first-letter {
-  text-transform: uppercase;
-}
-
-
 i {
   margin: 5px;
   font-weight: bold;
+  font-size: 15px;
 
 }
 
 .lni-pencil {
-  color: #4bca81;
-  font-size: 20px;
+  color: #4BCA81;
 }
+
+.badge {
+  padding: 5px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 
 .lni-trash-can {
   color: #e71d34;
-  font-size: 20px;
 }
 
-.circle {
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  padding-top: 6px;
 
-  color: #ffff;
+
+.paginator {
   text-align: center;
-  font: 22px Arial, sans-serif;
-}
-
-.paginator{
-  position: fixed;
-  bottom: 50px;
   left: 40%;
   font-family: 'Lato', sans-serif;
   font-size: 15px;
@@ -75,16 +92,188 @@ i {
   padding-right: 9px;
 }
 
-.paginator /deep/ .ngx-pagination a:hover, .ngx-pagination button:hover {
+.paginator /deep/ .ngx-pagination a:hover,
+.ngx-pagination button:hover {
   background: #d4d4d4;
   border-radius: 3px;
- 
+
 }
 
-.paginator /deep/ .ngx-pagination a:focus, .ngx-pagination button:focus {
+.paginator /deep/ .ngx-pagination a:focus,
+.ngx-pagination button:focus {
   outline: none;
   background: #d4d4d4;
 }
-.toast-top-center {
-  margin-top: 45px !important;
+
+
+
+
+
+
+
+.radio,
+.checkbox {
+  padding: 6px 10px
+}
+
+.border {
+  border-radius: 12px
+}
+
+.options {
+  position: relative;
+  padding-left: 25px
+}
+
+.radio label,
+.checkbox label {
+  display: block;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0
+}
+
+.options input {
+  opacity: 0
+}
+
+
+
+
+label {
+  cursor: pointer
+}
+
+.tick {
+  display: block;
+  position: relative;
+  padding-left: 23px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin: 0
+}
+
+.tick input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0
+}
+
+.check {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 3px
+}
+
+.tick:hover input~.check {
+  background-color: #f3f3f3
+}
+
+.tick input:checked~.check {
+  background-color: #5DADE2
+}
+
+.check:after {
+  content: "";
+  position: absolute;
+  display: none
+}
+
+.tick input:checked~.check:after {
+  display: block;
+  transform: rotate(45deg) scale(1)
+}
+
+.tick .check:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(2)
+}
+
+
+
+
+
+div.text-muted {
+  font-size: 0.85rem
+}
+
+#sidebar {
+  width: 120%;
+  float: left;
+  padding: 10px;
+  border : 1px solid #dee2e6
+}
+
+.category {
+  font-size: 0.9rem;
+  cursor: pointer
+}
+
+.list-group-item {
+  border: none;
+  padding: 0.3rem 0.4rem 0.3rem 0rem
+}
+
+
+
+.brand .check {
+  background-color: #fff;
+  top: 3px;
+  border: 1px solid #666
+}
+
+.brand .tick {
+  font-size: 1rem;
+  padding-left: 25px
+}
+
+.rating .check {
+  background-color: #fff;
+  border: 1px solid #666;
+  top: 0
+}
+
+.rating .tick {
+  font-size: 0.9rem;
+  padding-left: 25px
+}
+
+.rating .fas.fa-star {
+  color: #45B39D;
+  padding: 0px 3px
+}
+
+.brand .tick:hover input~.check,
+.rating .tick:hover input~.check {
+  background-color: #f9f9f9
+}
+
+.brand .tick input:checked~.check,
+.rating .tick input:checked~.check {
+  background-color: #5DADE2
+}
+
+
+
+.circle {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  padding-top: 6px;
+
+  color: #ffff;
+  text-align: center;
+  font: 22px Arial, sans-serif;
 }

@@ -25,7 +25,7 @@ export class ListTicketComponent implements OnInit {
   statuts: FormArray = new FormArray([]);
   manuels: FormArray = new FormArray([]);
   notes: FormArray = new FormArray([]);
-
+  sujet : FormControl = new FormControl()
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,
@@ -42,6 +42,13 @@ export class ListTicketComponent implements OnInit {
       manuels: this.manuels,
       notes: this.notes,
     });
+    this.sujet.valueChanges.subscribe(res=>{
+      this.ticketsFilter = this.tickets?.filter((item) => {
+        if(item.sujet)
+        return item.sujet.toLowerCase().indexOf(res.toLowerCase()) > -1;
+        else return
+      });
+    })
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
