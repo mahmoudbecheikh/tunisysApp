@@ -1,9 +1,9 @@
 <div class="container-fluid">
-    <h1 >Ticket</h1>
+    <h1 >Activités récentes</h1>
 
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
 
 
             <table *ngIf="(tickets.length>0);else vide" class="table table-bordered">
@@ -21,7 +21,6 @@
 
 
                 <tbody>
-
                     <tr *ngFor="let ticket of tickets | paginate: { 
                         itemsPerPage: 5,
                         currentPage :p,
@@ -35,47 +34,11 @@
                             <span class="badge bg-warning" *ngIf="ticket.statut=='a faire'">{{ ticket.statut }}</span>
                             <span class="badge bg-primary" *ngIf="ticket.statut=='en cours'">{{ ticket.statut }}</span>
                             <span class="badge bg-success" *ngIf="ticket.statut=='resolu'">{{ ticket.statut }}</span>
-
                         </td>
                         <td> {{ ticket.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td> {{ ticket.manuel }}</td>
                         <td>
                             <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
-
-                            <i class="lni lni-trash-can" data-toggle="modal" data-target="#my-modal"></i>
-                            <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content border-0">
-                                        <div class="modal-body p-0">
-                                            <div class="card border-0 p-sm-3 p-2 justify-content-center">
-                                                <div class="card-header pb-0 bg-white border-0 ">
-                                                    <div class="row">
-                                                        <div class="col ml-auto"><button type="button" class="close"
-                                                                data-dismiss="modal" aria-label="Close"> <span
-                                                                    aria-hidden="true">&times;</span> </button></div>
-                                                    </div>
-                                                    <p class="font-weight-bold mb-2"> Are you sure you wanna delete this
-                                                        ?</p>
-                                                    <p class="text-muted "> This change will reflect in your portal
-                                                        after an hour.</p>
-                                                </div>
-                                                <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
-                                                    <div class="row justify-content-end no-gutters">
-                                                        <div class="col-auto"><button type="button"
-                                                                class="btn btn-light text-muted"
-                                                                data-dismiss="modal">Cancel</button></div>
-                                                        <div class="col-auto"><button type="button"
-                                                                (click)="supprimer(ticket._id)"
-                                                                class="btn btn-danger px-4"
-                                                                data-dismiss="modal">Delete</button></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </td>
                     </tr>
                 </tbody>

@@ -99,7 +99,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     MatDatepickerModule,
     MatNativeDateModule,
     ChartsModule,
-    ToastrModule.forRoot({ positionClass: 'toast-top-center' }),
+    ToastrModule.forRoot({ positionClass: 'toast-top-center', timeOut: 1500 }),
     SocketIoModule.forRoot(config),
   ],
   providers: [

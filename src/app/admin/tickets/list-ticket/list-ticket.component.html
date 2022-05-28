@@ -55,7 +55,7 @@
                             <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
                             <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square"
                                 (click)="confirmer(ticket._id)"></i>
-                            <i class="lni lni-trash-can" data-toggle="modal" data-target="#my-modal"></i>
+                            <i class="lni lni-trash-can" (click)="selectTicket(ticket)" data-toggle="modal" data-target="#my-modal"></i>
                             <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content border-0">
@@ -67,20 +67,18 @@
                                                                 data-dismiss="modal" aria-label="Close"> <span
                                                                     aria-hidden="true">&times;</span> </button></div>
                                                     </div>
-                                                    <p class="font-weight-bold mb-2"> Are you sure you wanna delete this
-                                                        ?</p>
-                                                    <p class="text-muted "> This change will reflect in your portal
-                                                        after an hour.</p>
+                                                    <p class="font-weight-bold mb-2"> Voulez-vous vraiment supprimer ce ticket</p>
+                                                    <p class="text-muted ">Attention ce changement est irréversible</p>
                                                 </div>
                                                 <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
                                                     <div class="row justify-content-end no-gutters">
                                                         <div class="col-auto"><button type="button"
                                                                 class="btn btn-light text-muted"
-                                                                data-dismiss="modal">Cancel</button></div>
+                                                                data-dismiss="modal">Annuler</button></div>
                                                         <div class="col-auto"><button type="button"
-                                                                (click)="supprimer(ticket._id)"
+                                                                (click)="supprimer(ticketSelected?._id)"
                                                                 class="btn btn-danger px-4"
-                                                                data-dismiss="modal">Delete</button></div>
+                                                                data-dismiss="modal">Supprimer</button></div>
                                                     </div>
                                                 </div>
                                             </div>

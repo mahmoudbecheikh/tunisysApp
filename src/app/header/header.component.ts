@@ -110,6 +110,7 @@ export class HeaderComponent implements OnInit {
     this.nonLueMsg=0
     this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
       if (res) {
+        console.log(res)
         this.rand(res);
         this.messages = res;
         for (const msg of this.messages) {

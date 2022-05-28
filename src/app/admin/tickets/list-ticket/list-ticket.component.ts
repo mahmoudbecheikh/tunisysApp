@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DepartementService } from 'src/app/services/departement.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Departement } from 'src/models/departement';
@@ -26,16 +27,20 @@ export class ListTicketComponent implements OnInit {
   manuels: FormArray = new FormArray([]);
   notes: FormArray = new FormArray([]);
   sujet : FormControl = new FormControl()
+  ticketSelected? : Ticket 
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.afficherList();
     this.listDepartement();
     this.trier();
+    this.toastr.success('', 'Ticket supprimé avec success!');
+
     this.form = new FormGroup({
       departements: this.departements,
       statuts: this.statuts,
@@ -172,8 +177,14 @@ export class ListTicketComponent implements OnInit {
 
   supprimer(id: any) {
     this.ticketService.supprimer(id).subscribe((res) => {
+      this.toastr.success('', 'Ticket supprimé avec succès!');
+      //if(this.t)
       this.afficherList();
     });
+  }
+
+  selectTicket(ticket:Ticket){
+    this.ticketSelected = ticket
   }
 
   confirmer(id: any) {

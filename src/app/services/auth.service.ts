@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Employe } from 'src/models/employe';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { Employe } from 'src/models/employe';
 export class AuthService {
   helper = new JwtHelperService();
   logged = false ;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router :Router) {}
 
   login(data: any): Observable<any> {
     return this.http.post('http://localhost:3000/login', data);
@@ -36,16 +37,30 @@ export class AuthService {
   }
 
   getRole(): number {
-    let token: any = localStorage.getItem('token');
-    let decodeToken = this.helper.decodeToken(token);
-    let role = decodeToken.role;
-    return role;
+    try {
+      let token: any = localStorage.getItem('token');
+      let decodeToken = this.helper.decodeToken(token);
+      let role = decodeToken.role;
+      return role;
+    } catch (error) {
+      return -1
+    }
+
   }
 
   LoggedIn() {
     let token: any = localStorage.getItem('token');
     if (!token) {
       return false;
+    }
+    if(token){
+      this.http.get('http://localhost:3000/token/' +token).subscribe(res=>{
+        if(!res){
+          localStorage.removeItem('token');
+          this.router.navigate(['/login']);
+        }
+      
+    })
     }
     if (this.helper.isTokenExpired(token)) {
       console.log('expired');

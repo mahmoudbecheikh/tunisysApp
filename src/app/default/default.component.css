@@ -31,15 +31,27 @@ body {
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
-  background: #3498DB;
-  
+  /* background: #136a8a;  
+  background: -webkit-linear-gradient(to top, #267871, #136a8a); 
+  background: linear-gradient(to top, #267871, #136a8a);  */
 
-}
+  /* background: #02AAB0;  
+  background: -webkit-linear-gradient(to top, #00CDAC, #02AAB0);  
+  background: linear-gradient(to top, #00CDAC, #02AAB0);  */
+
+  background: #314755;  
+  background: -webkit-linear-gradient(to top, #26a0da, #314755);  
+  background: linear-gradient(to top, #26a0da, #314755); 
+
+  
+}  
+
 
 .sidebar.active {
   width: 180px;
-  background: #3498DB;
-
+  background: #314755;  
+  background: -webkit-linear-gradient(to top, #26a0da, #314755);  
+  background: linear-gradient(to top, #26a0da, #314755); 
 }
 
 .sidebar .logo_content .logo {
@@ -69,7 +81,7 @@ body {
 
 .sidebar #btn {
   position: absolute;
-  color: white;
+  color: #fafafa;
   top: 6px;
   left: 40%;
   font-size: 22px;
@@ -176,7 +188,7 @@ body {
 }
 
 .sidebar ul li a {
-  color: white;
+  color: #fafafa;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -297,6 +309,7 @@ body {
 }
 
 .home_content {
+  /* background-color: #fafafa; */
   position: absolute;
   height: 100%;
   width: calc(100% - 78px);

@@ -95,9 +95,12 @@ export class AddEmployeeComponent implements OnInit {
     if (this.role.value == 0 || this.role.value==1) {
       this.departement.setValue(null);
     }
-    this.toastr.success('employé ajouté', 'Success!');
     this.empService.ajouter(this.myForm.value).subscribe((res) => {
-      this.router.navigate(['admin/employees']);
+      if(res){
+        this.toastr.success('', 'Employé ajouté avec succès!');
+        this.router.navigate(['admin/employees']);
+
+      }
     });
   }
 

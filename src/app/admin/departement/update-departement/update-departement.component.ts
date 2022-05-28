@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { DepartementService } from 'src/app/services/departement.service';
 import { Departement } from 'src/models/departement';
@@ -28,7 +29,8 @@ export class UpdateDepartementComponent implements OnInit {
   constructor(
     private depService: DepartementService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class UpdateDepartementComponent implements OnInit {
 
   modifier() {
     this.depService.modifier(this.departement?._id, this.myForm.value).subscribe((res) => {
-      
+        this.toastr.success('', 'Département modifié avec succès!');
         this.router.navigate(['admin/departements']);
       });
   }

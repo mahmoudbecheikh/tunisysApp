@@ -3,7 +3,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -30,7 +30,8 @@ export class TicketsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private empService: EmployeeService,
-    private socketService : SocketService
+    private socketService : SocketService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -181,7 +182,7 @@ export class TicketsComponent implements OnInit {
       if (statut != '') {
        
         if(this.tickets[i].statut=='en cours' && !ticket.rapport){
-          console.log('Lezmk tekteb rapport')
+          this.toastr.warning('Il est strictement impératif de remplir le rapport de résolution pour que ce ticket soit considéré résolu', 'Attention');
         }
         else {
           ticketModify = {
@@ -200,8 +201,8 @@ export class TicketsComponent implements OnInit {
         // this.cours = [];
         // this.resolu = [];
         this.getListTicket();
-        console.log('Hawka badaltk denya');
-
+        this.toastr.info('','Changement effectué avec succès');
+        this.change = false
       });
     else {
       this.changement = [];
@@ -209,7 +210,9 @@ export class TicketsComponent implements OnInit {
       this.cours = [];
       this.resolu = [];
       this.getListTicket();
-      console.log('famech jdid');
+      this.toastr.warning('','changement non autorisé');
+      this.change = false
+
     }
   }
 }

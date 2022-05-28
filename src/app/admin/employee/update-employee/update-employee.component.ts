@@ -113,10 +113,10 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   modifier() {
-    this.toastr.success('employé modifié', 'Success!');
     this.empService
       .modifier(this.employe?._id, this.myForm.value)
       .subscribe((res) => {
+        this.toastr.success('', 'Employé modifié avec succès!');
         this.router.navigate(['admin/employees']);
       });
   }

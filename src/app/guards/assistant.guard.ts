@@ -23,8 +23,8 @@ export class AssistantGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return new Promise(async (resolve, reject) => {
-      if (await this.authService.LoggedIn() == true) {
+    return new Promise( (resolve, reject) => {
+      if ( this.authService.LoggedIn() == true) {
         let role = this.authService.getRole();
         if (role !== 1) {
           resolve(false);

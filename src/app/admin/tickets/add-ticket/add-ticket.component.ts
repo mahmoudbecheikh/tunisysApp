@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DepartementService } from 'src/app/services/departement.service';
@@ -71,6 +72,7 @@ export class AddTicketComponent implements OnInit {
     private ticketService: TicketService,
     private depService: DepartementService,
     private router: Router,
+    private toastr: ToastrService
   ) {}
 
 
@@ -116,6 +118,7 @@ export class AddTicketComponent implements OnInit {
           this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
             console.log(files);
           });
+          this.toastr.success('', 'Ticket ajouté avec succès!');
           this.router.navigate(['admin/tickets']);
         })
       

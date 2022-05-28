@@ -91,3 +91,15 @@
     color: #83acf1 ; 
     text-decoration: none ;
   }
+  
+h2 {
+  font-weight: bold;
+  font-size: 38px;
+  color: #d6033f;
+  font-family: cursive;
+  text-align: center;
+  position: fixed;
+  top: 25px;
+  left: 40%;
+  right: 40%;
+}

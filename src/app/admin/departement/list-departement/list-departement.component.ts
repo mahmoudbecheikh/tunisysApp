@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { DepartementService } from 'src/app/services/departement.service';
 import { Departement } from 'src/models/departement';
@@ -26,7 +27,8 @@ export class ListDepartementComponent implements OnInit {
     asyncValidators: [this.validatornom()],
     updateOn: 'blur',
   });
-  constructor(private depService: DepartementService, private router: Router) {}
+  constructor(private depService: DepartementService, private router: Router,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
@@ -44,7 +46,7 @@ export class ListDepartementComponent implements OnInit {
   ajouter() {
     this.depService.ajouter(this.myForm.value).subscribe((res) => {
       this.getListDep();
-      this.nom.setValue('');
+      this.myForm.reset()
       console.log(res);
     });
   }
@@ -54,12 +56,13 @@ export class ListDepartementComponent implements OnInit {
       .modifier(this.departement?._id, this.myForm.value)
       .subscribe((res) => {
         this.getListDep();
-        this.myForm.reset();
       });
   }
 
   supprimer(id: any) {
+    
     this.depService.supprimer(id).subscribe((res) => {
+      this.toastr.success('', 'Département modifié avec succès!');
       this.getListDep();
     });
   }

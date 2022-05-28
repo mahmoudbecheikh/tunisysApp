@@ -26,7 +26,9 @@ export class ListEmployeeComponent implements OnInit {
 
   departements: FormArray = new FormArray([]);
   roles: FormArray = new FormArray([]);
-  nom : FormControl = new FormControl()
+  nom: FormControl = new FormControl();
+  show: boolean = false;
+  employeeSelected?: Employe;
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,
@@ -38,20 +40,22 @@ export class ListEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.afficherListe();
     this.listDepartement();
-    
+
     this.form = new FormGroup({
       departements: this.departements,
       roles: this.roles,
     });
 
-    this.nom.valueChanges.subscribe(res=>{
+    this.nom.valueChanges.subscribe((res) => {
       this.employeesFilter = this.employees?.filter((item) => {
-        if(item.nomEmp && item.prenomEmp)
-        return item.nomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1 || item.prenomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1;
-        else return
+        if (item.nomEmp && item.prenomEmp)
+          return (
+            item.nomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1 ||
+            item.prenomEmp.toLowerCase().indexOf(res.toLowerCase()) > -1
+          );
+        else return;
       });
-    })
-
+    });
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
@@ -95,7 +99,7 @@ export class ListEmployeeComponent implements OnInit {
   afficherListe() {
     this.empService.afficherListe().subscribe((res) => {
       this.employees = res as Employe[];
-      this.employeesFilter = res
+      this.employeesFilter = res;
       this.rand(res);
     });
   }
@@ -108,10 +112,18 @@ export class ListEmployeeComponent implements OnInit {
     this.router.navigate(link);
   }
 
+  selectEmp(employee : Employe) {
+    this.employeeSelected = employee
+  }
+
   supprimer(id: any) {
     this.empService.supprimer(id).subscribe((res) => {
-      console.log(res);
-      this.afficherListe();
+      if (res.errorDep) {
+        this.toastr.warning("L'employé a un ticket", 'Attention!');
+      } else {
+        this.afficherListe();
+        this.toastr.success('', 'Employé supprimé avec succès!');
+      }
     });
     this.authService.getAuth().subscribe((emp) => {
       if (emp._id == id) {

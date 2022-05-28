@@ -30,10 +30,10 @@
                     <ng-template #exist>
                         <ng-container *ngFor="let msg of messages; let i = index">
                             <div class="dropdown-item" (click)='select(msg.membre)'>
-                                <i class="circle" [style.background]="colors[i]">{{msg.membre.nomEmp.substr(0,1)}}</i>
+                                <i class="circle" [style.background]="colors[i]">{{msg?.membre?.nomEmp?.substr(0,1)}}</i>
                                 <div class="data"
                                     [ngClass]="msg.message.lue || employe?._id==msg.envoyeur._id ? 'nonLue' : 'lue'">
-                                    <p>{{msg.membre.nomEmp}} {{msg.membre.prenomEmp}}</p>
+                                    <p>{{msg?.membre?.nomEmp}} {{msg?.membre?.prenomEmp}}</p>
                                     <p *ngIf="employe?._id!=msg.envoyeur._id;else vous"> {{msg.envoyeur.prenomEmp}} :
                                         <span *ngIf="!msg.message.contenu && msg.message.fJoint.length>0 ;">  envoi pièce jointe</span>
                                         <span  *ngIf="msg.message.contenu"> {{msg.message.contenu}}</span>
