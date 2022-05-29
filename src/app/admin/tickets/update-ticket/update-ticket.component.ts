@@ -82,6 +82,7 @@ export class UpdateTicketComponent implements OnInit {
     this.afficherListe();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.authService.getAuth().subscribe((res) => {
+      if(res)
       this.employeCnt = res;
     });
     this.ticketService.afficherId(this.id).subscribe((res) => {

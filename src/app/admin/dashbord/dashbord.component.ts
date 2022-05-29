@@ -7,7 +7,6 @@ import {
   monkeyPatchChartJsTooltip,
   SingleDataSet,
 } from 'ng2-charts';
-import { SocketService } from 'src/app/services/socket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({

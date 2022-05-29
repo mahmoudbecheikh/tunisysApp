@@ -1,13 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ListDepartementComponent } from './list-departement.component';
-
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { DepartementService } from 'src/app/services/departement.service';
 describe('ListDepartementComponent', () => {
   let component: ListDepartementComponent;
   let fixture: ComponentFixture<ListDepartementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports : [HttpClientTestingModule,RouterTestingModule,ToastrModule.forRoot()],
+      providers : [DepartementService],
       declarations: [ ListDepartementComponent ]
     })
     .compileComponents();

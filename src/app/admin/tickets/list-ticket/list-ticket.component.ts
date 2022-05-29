@@ -39,7 +39,6 @@ export class ListTicketComponent implements OnInit {
     this.afficherList();
     this.listDepartement();
     this.trier();
-    this.toastr.success('', 'Ticket supprimé avec success!');
 
     this.form = new FormGroup({
       departements: this.departements,

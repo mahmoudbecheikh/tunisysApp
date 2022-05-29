@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ToastrModule } from 'ngx-toastr';
+import { TicketService } from 'src/app/services/ticket.service';
 
 import { DashbordComponent } from './dashbord.component';
 
@@ -8,6 +11,8 @@ describe('DashbordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports : [HttpClientTestingModule,ToastrModule.forRoot()],
+      providers : [TicketService],
       declarations: [ DashbordComponent ]
     })
     .compileComponents();

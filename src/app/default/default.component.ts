@@ -21,7 +21,7 @@ export class DefaultComponent implements OnInit {
   messages : any
   employeSelected : any
   show : any
-  constructor(private authService: AuthService, private router: Router,private chatService : ChatService) {
+  constructor(private authService: AuthService, private router: Router) {
    
   }
 

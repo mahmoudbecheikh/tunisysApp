@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
-import { AddDepartementComponent } from './admin/departement/add-departement/add-departement.component';
 import { ListDepartementComponent } from './admin/departement/list-departement/list-departement.component';
-import { UpdateDepartementComponent } from './admin/departement/update-departement/update-departement.component';
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
@@ -15,7 +13,6 @@ import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-tick
 import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
 import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
-import { DetailTicketAttComponent } from './assistant/ticket/detail-ticket-att/detail-ticket-att.component';
 import { ListeComponent } from './assistant/ticket/liste/liste.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
 import { DefaultComponent } from './default/default.component';
@@ -64,14 +61,6 @@ const routes: Routes = [
                 path: '',
                 component: ListDepartementComponent,
               },
-              {
-                path: 'add',
-                component: AddDepartementComponent,
-              },
-              {
-                path: 'update/:id',
-                component: UpdateDepartementComponent,
-              },
             ],
           },
           {
@@ -91,7 +80,7 @@ const routes: Routes = [
               },
               {
                 path: ':id',
-                component: DetailTicketAttComponent,
+                component: DetailTicketComponent,
               },
               {
                 path: 'update/:id',
@@ -124,7 +113,7 @@ const routes: Routes = [
               },
               {
                 path: ':id',
-                component: DetailTicketAttComponent,
+                component: DetailTicketComponent,
               },
               {
                 path: 'rapport/:id',
@@ -148,7 +137,7 @@ const routes: Routes = [
               },
               {
                 path: ':id',
-                component: DetailTicketAttComponent,
+                component: DetailTicketComponent,
               },
               {
                 path: 'update/:id',
@@ -159,11 +148,10 @@ const routes: Routes = [
                 component: AddRapportComponent,
               },
             ],
-            
           },
           {
-            path:'liste',
-            component : ListeComponent
+            path: 'liste',
+            component: ListeComponent,
           },
           {
             path: 'inbox',

@@ -1,4 +1,3 @@
-import { not } from '@angular/compiler/src/output/output_ast';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +7,6 @@ import { ChatService } from '../services/chat.service';
 import { EmployeeService } from '../services/employee.service';
 import { NotificationService } from '../services/notification.service';
 import { SocketService } from '../services/socket.service';
-import { TicketService } from '../services/ticket.service';
 
 @Component({
   selector: 'app-header',
@@ -47,7 +45,6 @@ export class HeaderComponent implements OnInit {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
       this.socketService.emit('joinRoom', { id: res?._id });
-
       this.afficherNotif();
       this.afficherMsg();
     });

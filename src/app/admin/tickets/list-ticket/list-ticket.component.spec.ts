@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TicketService } from 'src/app/services/ticket.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ListTicketComponent } from './list-ticket.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DepartementService } from 'src/app/services/departement.service';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('ListTicketComponent', () => {
   let component: ListTicketComponent;
@@ -8,6 +13,8 @@ describe('ListTicketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports : [HttpClientTestingModule ,RouterTestingModule ,ToastrModule.forRoot() ],
+      providers : [TicketService,DepartementService],
       declarations: [ ListTicketComponent ]
     })
     .compileComponents();

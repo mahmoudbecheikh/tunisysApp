@@ -10,8 +10,20 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   helper = new JwtHelperService();
-  logged = false ;
-  constructor(private http: HttpClient,private router :Router) {}
+  logged = false;
+  id: any;
+  role: any;
+
+  constructor(private http: HttpClient, private router: Router) {
+    try {
+      let token: any = localStorage.getItem('token');
+      let decodeToken = this.helper.decodeToken(token);
+      this.id = decodeToken.id;
+      this.role = decodeToken.role;
+    } catch (error) {
+      return;
+    }
+  }
 
   login(data: any): Observable<any> {
     return this.http.post('http://localhost:3000/login', data);
@@ -20,32 +32,22 @@ export class AuthService {
   forget(email: string) {
     return this.http.post('http://localhost:3000/forget', email);
   }
-  
+
   reset(data: any, token: any): Observable<any> {
     return this.http.post('http://localhost:3000/reset' + `/${token}`, data);
   }
 
-  change(data:any,id:any) : Observable<any>{
+  change(data: any, id: any): Observable<any> {
     return this.http.put('http://localhost:3000/change' + `/${id}`, data);
   }
 
   getAuth(): Observable<any> {
-    let token: any = localStorage.getItem('token');
-    let decodeToken = this.helper.decodeToken(token);
-    let id = decodeToken.id;
-    return this.http.get('http://localhost:3000/employes/' + id);
+    
+    return this.http.get('http://localhost:3000/employes/' + this.id);
   }
 
   getRole(): number {
-    try {
-      let token: any = localStorage.getItem('token');
-      let decodeToken = this.helper.decodeToken(token);
-      let role = decodeToken.role;
-      return role;
-    } catch (error) {
-      return -1
-    }
-
+    return this.role;
   }
 
   LoggedIn() {
@@ -53,14 +55,13 @@ export class AuthService {
     if (!token) {
       return false;
     }
-    if(token){
-      this.http.get('http://localhost:3000/token/' +token).subscribe(res=>{
-        if(!res){
+    if (token) {
+      this.http.get('http://localhost:3000/token/' + token).subscribe((res) => {
+        if (!res) {
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
-      
-    })
+      });
     }
     if (this.helper.isTokenExpired(token)) {
       console.log('expired');
