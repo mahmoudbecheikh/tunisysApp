@@ -42,7 +42,7 @@ export class AddRapportComponent implements OnInit {
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
     private authService : AuthService,
-    private router : Router
+    
   ) {}
 
   ngOnInit(): void {

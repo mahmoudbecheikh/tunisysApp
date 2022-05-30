@@ -34,7 +34,7 @@ export class DetailTicketComponent implements OnInit {
   tagsCtrl = new FormControl();
   filtredTags?: string[];
   tags: any = [];
-
+  x = 1
   allTags: string[] = [];
   suggestions: any;
   reponses: any;

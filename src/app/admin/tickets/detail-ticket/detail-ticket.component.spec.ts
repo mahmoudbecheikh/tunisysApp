@@ -14,11 +14,15 @@ describe('DetailTicketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule,ToastrModule.forRoot(), SocketIoModule.forRoot(config)],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ToastrModule.forRoot(),
+        SocketIoModule.forRoot(config),
+      ],
       providers: [TicketService],
-      declarations: [ DetailTicketComponent ]
-    })
-    .compileComponents();
+      declarations: [DetailTicketComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -30,7 +34,9 @@ describe('DetailTicketComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('lezem fama ticket', () => {
+  it(`lezem tkoun mawjoud '`, () => {
+    const fixture = TestBed.createComponent(DetailTicketComponent);
+    const component = fixture.componentInstance;
+    expect(component.x).toEqual(1);
   });
-
 });

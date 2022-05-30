@@ -14,9 +14,9 @@ import { HeaderComponent } from './header/header.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
 import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
-import { ListDepartementComponent } from './admin/departement/list-departement/list-departement.component';
+import { ListDepartementComponent } from './admin/list-departement/list-departement.component';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
-import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
+import { TicketsComponent } from './agent/tickets/tickets.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -29,21 +29,21 @@ import { ChangeComponent } from './securite/change/change.component';
 import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
+import { AddRapportComponent } from './agent/add-rapport/add-rapport.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MatChipsModule } from '@angular/material/chips';
 import { SearchComponent } from './search/search.component';
 import { PreviewPdfComponent } from './preview-pdf/preview-pdf.component';
-import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
+import { ListReclamationComponent } from './admin/list-reclamation/list-reclamation.component';
 import { DefaultComponent } from './default/default.component';
-import { ListeComponent } from './assistant/ticket/liste/liste.component';
 import { ChartsModule } from 'ng2-charts';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatComponent } from './chat/chat.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ActiviteRecenteComponent } from './assistant/ticket/activite-recente/activite-recente.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
@@ -72,8 +72,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     PreviewPdfComponent,
     ListReclamationComponent,
     DefaultComponent,
-    ListeComponent,
     ChatComponent,
+    ActiviteRecenteComponent,
   ],
   imports: [
     BrowserModule,

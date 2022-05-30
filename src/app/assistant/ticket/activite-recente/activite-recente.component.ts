@@ -4,11 +4,12 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { Ticket } from 'src/models/ticket';
 
 @Component({
-  selector: 'app-liste',
-  templateUrl: './liste.component.html',
-  styleUrls: ['./liste.component.css'],
+  selector: 'app-activite-recente',
+  templateUrl: './activite-recente.component.html',
+  styleUrls: ['./activite-recente.component.css']
 })
-export class ListeComponent implements OnInit {
+export class ActiviteRecenteComponent implements OnInit {
+
   tickets: Ticket[] = [];
   p: number = 1;
 

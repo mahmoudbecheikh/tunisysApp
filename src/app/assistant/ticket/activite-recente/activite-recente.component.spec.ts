@@ -4,23 +4,23 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule } from 'ngx-toastr';
 import { TicketService } from 'src/app/services/ticket.service';
 
-import { ListeComponent } from './liste.component';
+import { ActiviteRecenteComponent } from './activite-recente.component';
 
-describe('ListeComponent', () => {
-  let component: ListeComponent;
-  let fixture: ComponentFixture<ListeComponent>;
-
+describe('ActiviteRecenteComponent', () => {
+  let component: ActiviteRecenteComponent;
+  let fixture: ComponentFixture<ActiviteRecenteComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule,RouterTestingModule,ToastrModule.forRoot()],
       providers: [TicketService],
-      declarations: [ ListeComponent ]
+      declarations: [ ActiviteRecenteComponent ]
     })
     .compileComponents();
   });
 
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListeComponent);
+    fixture = TestBed.createComponent(ActiviteRecenteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

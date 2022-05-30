@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { AfterViewChecked, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Employe } from 'src/models/employe';
@@ -15,14 +15,8 @@ export class AuthService {
   role: any;
 
   constructor(private http: HttpClient, private router: Router) {
-    try {
-      let token: any = localStorage.getItem('token');
-      let decodeToken = this.helper.decodeToken(token);
-      this.id = decodeToken.id;
-      this.role = decodeToken.role;
-    } catch (error) {
-      return;
-    }
+    console.log(this.role);
+    console.log(this.id);
   }
 
   login(data: any): Observable<any> {
@@ -42,12 +36,29 @@ export class AuthService {
   }
 
   getAuth(): Observable<any> {
-    
-    return this.http.get('http://localhost:3000/employes/' + this.id);
+    try {
+      let token: any = localStorage.getItem('token');
+      let decodeToken = this.helper.decodeToken(token);
+      this.id = decodeToken.id;
+      this.role = decodeToken.role;
+      return this.http.get('http://localhost:3000/employes/' + this.id);
+
+    } catch (error) {
+      return new Observable()
+    }
+ 
   }
 
   getRole(): number {
-    return this.role;
+    try {
+      let token: any = localStorage.getItem('token');
+      let decodeToken = this.helper.decodeToken(token);
+      this.id = decodeToken.id;
+      this.role = decodeToken.role;
+      return this.role
+    } catch (error) {
+      return -1;
+    }
   }
 
   LoggedIn() {

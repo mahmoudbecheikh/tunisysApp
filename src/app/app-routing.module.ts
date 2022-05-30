@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashbordComponent } from './admin/dashbord/dashbord.component';
-import { ListDepartementComponent } from './admin/departement/list-departement/list-departement.component';
+import { ListDepartementComponent } from './admin/list-departement/list-departement.component';
 import { AddEmployeeComponent } from './admin/employee/add-employee/add-employee.component';
 import { ListEmployeeComponent } from './admin/employee/list-employee/list-employee.component';
 import { UpdateEmployeeComponent } from './admin/employee/update-employee/update-employee.component';
-import { ListReclamationComponent } from './admin/reclamation/list-reclamation/list-reclamation.component';
+import { ListReclamationComponent } from './admin/list-reclamation/list-reclamation.component';
 import { AddTicketComponent } from './admin/tickets/add-ticket/add-ticket.component';
 import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.component';
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
-import { TicketsComponent } from './agent/tickets/tickets/tickets.component';
+import { TicketsComponent } from './agent/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
-import { AddRapportComponent } from './assistant/ticket/add-rapport/add-rapport.component';
-import { ListeComponent } from './assistant/ticket/liste/liste.component';
+import { AddRapportComponent } from './agent/add-rapport/add-rapport.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
 import { DefaultComponent } from './default/default.component';
 import { ErrorComponent } from './error/error.component';
@@ -26,6 +25,7 @@ import { ChangeComponent } from './securite/change/change.component';
 import { ForgetComponent } from './securite/forget/forget.component';
 import { LoginComponent } from './securite/login/login.component';
 import { ResetComponent } from './securite/reset/reset.component';
+import { ActiviteRecenteComponent } from './assistant/ticket/activite-recente/activite-recente.component';
 
 const routes: Routes = [
   {
@@ -150,8 +150,8 @@ const routes: Routes = [
             ],
           },
           {
-            path: 'liste',
-            component: ListeComponent,
+            path: 'activite',
+            component: ActiviteRecenteComponent,
           },
           {
             path: 'inbox',
