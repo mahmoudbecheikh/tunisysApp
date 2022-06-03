@@ -11,7 +11,7 @@ export class TicketService {
 
   readonly baseURL = 'http://localhost:3000/tickets';
 
-  ajouter(ticket: Ticket): Observable<any> {
+  ajouter(ticket: any): Observable<any> {
     return this.http.post(this.baseURL, ticket);
   }
 

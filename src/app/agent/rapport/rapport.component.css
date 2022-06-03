@@ -1,7 +1,18 @@
 form {
-    margin: 10px auto;
     width: 90%;
+    margin: 10px auto;
 }
+
+h1 {
+    color: black;
+    font-family: 'Trocchi', serif;
+    font-size: 45px;
+    font-weight: normal;
+    line-height: 48px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
 
 .file {
     padding: 5px;
@@ -26,9 +37,6 @@ form {
     font-size: 15px;
 }
 
-form {
-    margin-top: 50px;
-}
 
 *::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -70,5 +78,5 @@ span {
     font-size: 13px;
     font-weight: 500;
     text-transform: capitalize;
-    background-color: grey;
+    margin: 0px 5px ;
 }

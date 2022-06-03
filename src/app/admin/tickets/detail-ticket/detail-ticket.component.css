@@ -63,6 +63,11 @@ h3 {
     color: black;
     font-size: 12px;
 }
+.info small{
+    color: black;
+    margin: 0px 1px;
+    font-size: 12px;
+}
 
 
 
@@ -85,7 +90,7 @@ i {
     cursor: pointer;
 }
 
-.info .badge {
+.statut .badge {
     width: 75px;
     color: white;
     font-weight: 500;

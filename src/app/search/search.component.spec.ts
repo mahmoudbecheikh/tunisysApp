@@ -4,6 +4,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { TicketService } from '../services/ticket.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchComponent } from './search.component';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -12,7 +13,7 @@ describe('SearchComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
 
-      imports: [HttpClientTestingModule,ToastrModule.forRoot() ,MatAutocompleteModule ],
+      imports: [HttpClientTestingModule,ToastrModule.forRoot() ,MatAutocompleteModule , MatFormFieldModule ,MatFormFieldControl ],
       providers: [TicketService],
       declarations: [ SearchComponent ]
     })

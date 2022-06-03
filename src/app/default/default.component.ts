@@ -68,8 +68,18 @@ export class DefaultComponent implements OnInit {
 
   select(event:any){
     this.employeSelected = event
+    console.log(this.employeSelected)
     this.show = true
     
   }
+
+
+  deselect(event:any){
+    if(event)
+    this.employeSelected = undefined
+
+    
+  }
+
 
 }

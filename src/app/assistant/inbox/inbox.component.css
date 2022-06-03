@@ -27,7 +27,11 @@ body {
     overflow-x: hidden;
   }
   
-
+  .lni-close{
+    font-size: 10px;
+    color: #cc0033;
+    font-weight: bold;
+  }
 *::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;

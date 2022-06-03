@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartementService } from 'src/app/services/departement.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-inbox',
@@ -18,8 +19,9 @@ export class InboxComponent implements OnInit {
   mailSelected: any;
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
-  attachmentList: any = [];
-  files: any = [];
+  formMail: FormGroup = new FormGroup({});
+
+  ticketFiles: any = [];
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
@@ -56,16 +58,13 @@ export class InboxComponent implements OnInit {
   ]);
   departement: FormControl = new FormControl('', Validators.required);
 
-  manuel: FormControl = new FormControl('assistant');
-  statut: FormControl = new FormControl('en attente');
   loading$ = this.spinnerService.loading$;
   dateLimite: FormControl = new FormControl();
   dateNow: any;
   formdata = new FormData();
   formdataMail = new FormData();
 
-  formMail: FormGroup = new FormGroup({});
-  attachements?: any = [];
+  mailFiles?: any = [];
   show = false
   textMail: FormControl = new FormControl('', [
     Validators.required,
@@ -77,7 +76,9 @@ export class InboxComponent implements OnInit {
     private mailService: MailService,
     private depService: DepartementService,
     private ticketService: TicketService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private toastr: ToastrService
+
   ) {}
 
   ngOnInit(): void {
@@ -88,20 +89,33 @@ export class InboxComponent implements OnInit {
   }
 
   ajouter() {
-    this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
+
+    this.formdata.append('sujet', this.sujet.value);
+    this.formdata.append('departement', this.departement.value);
+    this.formdata.append('emailClient', this.emailClient.value);
+    this.formdata.append('nomClient', this.nomClient.value);
+    this.formdata.append('telClient', this.telClient.value);
+    this.formdata.append('description', this.description.value);
+    this.formdata.append('siteWeb', this.siteWeb.value);
+    this.formdata.append('adresse', this.adresse.value);
+    this.formdata.append('dateLimite', this.dateLimite.value);
+    this.formdata.append('statut', 'en attente');
+    this.formdata.append('manuel', 'assistant');
+    for (const file of this.ticketFiles) {
+      this.formdata.append('files', file);
+
+    }
+    this.ticketService.ajouter(this.formdata).subscribe((res) => {
       if (res) {
         this.vu(this.mailSelected.uid);
-        this.formdata.append('id', res._id);
         this.ticketService.confirmer(res._id).subscribe((response) => {
-          this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
-            console.log(files);
-          });
-          this.formdata.delete('files');
-          this.myForm.reset();
-          this.files = [];
+          this.toastr.success('', 'Ticket ajouté avec succès!');
         });
       }
     });
+    this.formdata  = new FormData()
+    this.myForm.reset();
+    this.ticketFiles = [];
   }
 
   createForm() {
@@ -112,8 +126,6 @@ export class InboxComponent implements OnInit {
       nomClient: this.nomClient,
       telClient: this.telClient,
       description: this.description,
-      manuel: this.manuel,
-      statut: this.statut,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
       dateLimite: this.dateLimite,
@@ -137,7 +149,6 @@ export class InboxComponent implements OnInit {
     this.mailService.afficherListe(data).subscribe((res) => {
       console.log(res);
       if (res.length > 0) {
-        console.log(res);
         // let inboxSorted = res.sort((a: any, b: any) =>
         //   a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
         // );
@@ -154,7 +165,7 @@ export class InboxComponent implements OnInit {
     this.show = false
     this.formMail.reset()
     this.formdata = new FormData()
-    this.attachements=[]
+    this.mailFiles=[]
   }
 
   repondre(el: any){
@@ -167,16 +178,15 @@ export class InboxComponent implements OnInit {
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       this.formdataMail.append('files', element);
-      this.attachements.push(element.name);
+      this.mailFiles.push(element.name);
     }
   }
 
-  uploadMultiple(event: any) {
+  uploadFiles(event: any) {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdata.append('files', element);
-      this.files.push(element.name);
+      this.ticketFiles.push(element);
     }
   }
 
@@ -199,14 +209,23 @@ export class InboxComponent implements OnInit {
       uid: uid,
     };
     this.mailService.modifier(data).subscribe((res) => {
-      this.afficherListe();
+      if(res.seen){
+        // this.toastr.success('', 'Email supprimé avec succès!');
+        this.afficherListe();
+        if(this.mailSelected.uid== uid) this.mailSelected = null
+      }
     });
   }
   supprimer(uid: any) {
     this.mailService
       .supprimer('tunisys.mb.sj@gmail.com', uid)
       .subscribe((res) => {
-        this.afficherListe();
+        if(res.deleted){
+          this.toastr.success('', 'Email supprimé avec succès!');
+          this.afficherListe();
+          if(this.mailSelected.uid== uid) this.mailSelected = null
+        }
+
       });
   }
 
@@ -215,10 +234,21 @@ export class InboxComponent implements OnInit {
     this.formdataMail.append('email', mail.from);
     this.formdataMail.append('text', this.textMail.value);
     this.mailService.envoyerMail(this.formdataMail).subscribe((res) => {
+      if(res.send){
+        this.toastr.success('', 'Email envoyé avec succés');
+      }
+      else{
+        this.toastr.error('', 'Email envoyé avec succés');
+      }
       this.sujet.setValue('')
       this.textMail.setValue('')
       this.formdataMail = new FormData();
-      this.attachements = []
+      this.mailFiles = []
     });
   }
+
+  deleteFile(i: any) {
+    this.ticketFiles.splice(i, 1);
+  }
+
 }

@@ -10,7 +10,11 @@ small {
   margin-top: 50px;
 }
 
-
+.lni-close{
+  font-size: 10px;
+  color: #cc0033;
+  font-weight: bold;
+}
 
 .upload {
   border: 2px dotted grey;

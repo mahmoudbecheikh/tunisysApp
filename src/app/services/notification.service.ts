@@ -19,8 +19,13 @@ export class NotificationService {
   afficherRecep(id: any) : Observable<any> {
     return this.http.get(this.baseURL + `/recep/${id}`);
   }
-  afficherEnv(id: any) {
+  afficherEnv(id: any) : Observable<any> {
     return this.http.get(this.baseURL + `/env/${id}`);
+  }
+
+  listInvitation(data : any ) :Observable<any>{
+    return this.http.get(this.baseURL + `/invitation`,{params : data});
+
   }
   supprimer(_id: string) :Observable<any> {
     return this.http.delete(this.baseURL + `/${_id}`);

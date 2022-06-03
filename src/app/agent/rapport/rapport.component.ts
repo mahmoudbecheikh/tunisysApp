@@ -8,13 +8,14 @@ import { saveAs } from 'file-saver';
 import { Ticket } from 'src/models/ticket';
 import { AuthService } from 'src/app/services/auth.service';
 import { Employe } from 'src/models/employe';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-add-rapport',
-  templateUrl: './add-rapport.component.html',
-  styleUrls: ['./add-rapport.component.css'],
+  selector: 'app-rapport',
+  templateUrl: './rapport.component.html',
+  styleUrls: ['./rapport.component.css']
 })
-export class AddRapportComponent implements OnInit {
+export class RapportComponent implements OnInit {
+
   formdata = new FormData();
   attachmentList: any = [];
   attachmentDeleted: any = [];
@@ -22,7 +23,7 @@ export class AddRapportComponent implements OnInit {
   update = false;
   id?: any;
   rapport?: Rapport;
-  employe?  :Employe
+  employe?: Employe;
   myForm: FormGroup = new FormGroup({});
   recapSujet: FormControl = new FormControl('', [
     Validators.required,
@@ -36,26 +37,29 @@ export class AddRapportComponent implements OnInit {
   collaborateur: FormControl = new FormControl();
   FjointDeleted: FormControl = new FormControl();
   ticket: FormControl = new FormControl();
-  ticketSelected? : Ticket ; 
+  ticketSelected?: Ticket;
   constructor(
     private rapportService: RapportService,
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
-    private authService : AuthService,
-    
+    private authService: AuthService,
+    private toastr: ToastrService
+
   ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticket.setValue(this.id);
+    this.formdata.append('ticket', this.id);
     this.ticketService.afficherId(this.id).subscribe((ticket) => {
       if (ticket.rapport) {
-        this.ticketSelected = ticket
+        this.ticketSelected = ticket;
         this.rapport = ticket.rapport;
         this.recapSujet.setValue(this.rapport?.recapSujet);
         this.description.setValue(this.rapport?.description);
         this.attachmentList = this.rapport?.fJoint;
+        console.log(this.attachmentList)
       }
     });
     this.authService.getAuth().subscribe((res) => {
@@ -73,19 +77,28 @@ export class AddRapportComponent implements OnInit {
     });
   }
 
+  uploadMultiple(event: any) {
+    const files: FileList = event.target.files;
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.attachmentList.push(element);
+    }
+  }
+
   ajouter() {
-    this.rapportService.ajouter(this.myForm.value).subscribe((res) => {
+    this.formdata.append('recapSujet', this.recapSujet.value);
+    this.formdata.append('description', this.description.value);
+    for (const file of this.attachmentList) {
+      if (!file.url) this.formdata.append('files', file);
+    }
+    this.rapportService.ajouter(this.formdata).subscribe((res) => {
       if (res) {
-        this.formdata.append('id', res._id);
-        this.rapportService.uploadFiles(this.formdata).subscribe((files) => {
-         console.log(files)
-        });
         this.myForm.reset();
         this.formdata = new FormData();
-        this.rapport = res ;
+        this.rapport = res;
+        this.toastr.success('', 'Rapport ajouté avec succès!');
         this.recapSujet.setValue(this.rapport?.recapSujet);
         this.description.setValue(this.rapport?.description);
-
       }
     });
   }
@@ -96,35 +109,29 @@ export class AddRapportComponent implements OnInit {
     });
   }
 
-  uploadMultiple(event: any) {
-    const files: FileList = event.target.files;
-    for (let index = 0; index < files.length; index++) {
-      const element = files[index];
-      console.log(element);
-      this.formdata.append('files', element);
-      this.attachmentList.push(element.name);
-    }
-  }
-
   modifier() {
     this.FjointDeleted.setValue(this.attachmentDeleted);
-
-    this.rapportService
-      .modifier(this.rapport?._id, this.myForm.value)
-      .subscribe((res) => {
-        this.rapport = res;
+    this.formdata.append('recapSujet', this.recapSujet.value);
+    this.formdata.append('description', this.description.value);
+    for (const file of this.attachmentList) {
+      if (!file.url) this.formdata.append('files', file);
+    }
+    this.rapportService.modifier(this.rapport?._id, this.formdata).subscribe((res) => {
         if (res) {
-          this.formdata.append('id', res._id);
-          this.rapportService.uploadFiles(this.formdata).subscribe((res) => {
-            this.formdata = new FormData();
-          });
+          this.myForm.reset();
+          this.formdata = new FormData();
+          this.rapport = res;
+          this.toastr.success('', 'Rapport modifié avec succès!');
+
+          this.recapSujet.setValue(this.rapport?.recapSujet);
+          this.description.setValue(this.rapport?.description);
         }
       });
   }
 
-  delete(index: any) {
-    this.attachmentDeleted.push(this.attachmentList[index]);
-    this.attachmentList.splice(index, 1);
+  deleteFile(i: any) {
+    if (this.attachmentList[i].url)
+      this.formdata.append('FjointDeleted', this.attachmentList[i].filename);
+    this.attachmentList.splice(i, 1);
   }
-
 }

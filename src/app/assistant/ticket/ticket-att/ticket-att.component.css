@@ -42,6 +42,12 @@
   overflow-x: hidden;
 }
 
+  
+.lni-close{
+  font-size: 10px;
+  color: #cc0033;
+  font-weight: bold;
+}
 
 .file {
   cursor: pointer;

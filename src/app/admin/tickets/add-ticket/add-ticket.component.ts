@@ -54,8 +54,6 @@ export class AddTicketComponent implements OnInit {
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
-  manuel: FormControl = new FormControl('admin');
-  statut: FormControl = new FormControl('en attente');
   departement: FormControl = new FormControl('', [Validators.required]);
   dateLimite : FormControl = new FormControl();
 
@@ -92,10 +90,8 @@ export class AddTicketComponent implements OnInit {
       nomClient: this.nomClient,
       telClient: this.telClient,
       description: this.description,
-      manuel: this.manuel,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
-      statut: this.statut,
       dateLimite : this.dateLimite
     });
   }
@@ -110,14 +106,30 @@ export class AddTicketComponent implements OnInit {
     this.router.navigate(['admin/tickets']);
   }
   ajouter() {
-    this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
+   
+    this.formdata.append('sujet', this.sujet.value);
+    this.formdata.append('departement', this.departement.value);
+    this.formdata.append('emailClient', this.emailClient.value);
+    this.formdata.append('nomClient', this.nomClient.value);
+    this.formdata.append('telClient', this.telClient.value);
+    this.formdata.append('description', this.description.value);
+    this.formdata.append('siteWeb', this.siteWeb.value);
+    this.formdata.append('adresse', this.adresse.value);
+    this.formdata.append('dateLimite', this.dateLimite.value);
+    this.formdata.append('statut', 'en attente');
+    this.formdata.append('manuel', 'admin');
+
+    for (const file of this.attachmentList) {
+      this.formdata.append('files', file);
+
+    }
+
+    this.ticketService.ajouter(this.formdata).subscribe((res) => {
+      console.log(res)
       if (res) {
         console.log(res)
         this.ticketService.confirmer(res._id).subscribe(response=>{
-          this.formdata.append('id', res._id);
-          this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
-            console.log(files);
-          });
+
           this.toastr.success('', 'Ticket ajouté avec succès!');
           this.router.navigate(['admin/tickets']);
         })
@@ -130,8 +142,12 @@ export class AddTicketComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdata.append('files', element);
-      this.attachmentList.push(element.name)
+      this.attachmentList.push(element)
     }
   }
+
+  deleteFile(i: any) {
+    this.attachmentList.splice(i, 1);
+  }
+
 }

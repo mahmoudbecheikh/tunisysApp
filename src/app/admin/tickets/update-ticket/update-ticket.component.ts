@@ -59,12 +59,11 @@ export class UpdateTicketComponent implements OnInit {
     Validators.maxLength(8),
     Validators.pattern('^[234579][0-9]*$'),
   ]);
-  manuel: FormControl = new FormControl('admin');
-  statut: FormControl = new FormControl('en attente');
   employe: FormControl = new FormControl();
 
   departement: FormControl = new FormControl('', [Validators.required]);
   FjointDeleted: FormControl = new FormControl();
+  fJoint: any = [];
   dateLimite: FormControl = new FormControl();
   dateNow: any;
   employeCnt?: Employe;
@@ -82,21 +81,21 @@ export class UpdateTicketComponent implements OnInit {
     this.afficherListe();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.authService.getAuth().subscribe((res) => {
-      if(res)
-      this.employeCnt = res;
+      if (res) this.employeCnt = res;
     });
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.sujet.setValue(this.ticket.sujet);
-      this.departement.setValue(this.ticket.departement);
+      this.departement.setValue(this.ticket.departement?._id);
       this.description.setValue(this.ticket.description);
       this.emailClient.setValue(this.ticket.emailClient);
       this.nomClient.setValue(this.ticket.nomClient);
       this.telClient.setValue(this.ticket.telClient);
       this.adresse.setValue(this.ticket.adresse);
       this.siteWeb.setValue(this.ticket.siteWeb);
-      this.statut.setValue(this.ticket.statut);
       this.attachmentList = this.ticket.fJoint;
+      this.fJoint = this.ticket.fJoint;
+
       if (this.ticket.dateLimite)
         this.dateLimite.setValue(this.ticket.dateLimite);
     });
@@ -115,11 +114,8 @@ export class UpdateTicketComponent implements OnInit {
       nomClient: this.nomClient,
       telClient: this.telClient,
       description: this.description,
-      manuel: this.manuel,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
-      statut: this.statut,
-      FjointDeleted: this.FjointDeleted,
       employe: this.employe,
       dateLimite: this.dateLimite,
     });
@@ -131,7 +127,21 @@ export class UpdateTicketComponent implements OnInit {
   }
 
   modifier() {
-    this.FjointDeleted.setValue(this.attachmentDeleted);
+    console.log(this.departement.value);
+    this.formdata.append('sujet', this.sujet.value);
+    this.formdata.append('departement', this.departement.value);
+    this.formdata.append('emailClient', this.emailClient.value);
+    this.formdata.append('nomClient', this.nomClient.value);
+    this.formdata.append('telClient', this.telClient.value);
+    this.formdata.append('description', this.description.value);
+    this.formdata.append('siteWeb', this.siteWeb.value);
+    this.formdata.append('adresse', this.adresse.value);
+    this.formdata.append('dateLimite', this.dateLimite.value);
+
+    for (const file of this.attachmentList) {
+      if (!file.url) this.formdata.append('files', file);
+    }
+
     let link = ['admin/tickets'];
     if (this.employeCnt?.role == 1)
       link = ['assistant/tickets/' + this.ticket?._id];
@@ -140,34 +150,21 @@ export class UpdateTicketComponent implements OnInit {
       this.employe.setValue(null);
 
       this.ticketService
-        .modifier(this.ticket?._id, this.myForm.value)
+        .modifier(this.ticket?._id, this.formdata)
         .subscribe((res) => {
           if (res) {
             this.ticketService.confirmer(res._id).subscribe((response) => {
-              this.formdata.append('id', res._id);
-              this.ticketService
-                .uploadFiles(this.formdata)
-                .subscribe((files) => {
-                  console.log(files);
-                });
-
+              this.toastr.success('', 'Ticket modifié avec succès!');
               this.router.navigate(link);
             });
           }
         });
     } else {
       this.ticketService
-        .modifier(this.ticket?._id, this.myForm.value)
+        .modifier(this.ticket?._id, this.formdata)
         .subscribe((res) => {
           if (res) {
-            this.formdata.append('id', res._id);
-
-            this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
-              console.log(files);
-            });
-
             this.router.navigate(link);
-
             this.toastr.success('', 'Ticket modifié avec succès!');
           }
         });
@@ -178,15 +175,15 @@ export class UpdateTicketComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdata.append('files', element);
-      this.attachmentList.push({
-        originalname: element.name,
-      });
+      this.attachmentList.push(element);
     }
   }
 
-  delete(index: any) {
-    this.attachmentDeleted.push(this.attachmentList[index]);
-    this.attachmentList.splice(index, 1);
+  deleteFile(i: any) {
+    if (this.attachmentList[i].url)
+      this.formdata.append('FjointDeleted', this.attachmentList[i].filename);
+
+    this.attachmentList.splice(i, 1);
+ 
   }
 }

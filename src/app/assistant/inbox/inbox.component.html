@@ -102,7 +102,7 @@
                                 <div class="form-group">
                                     <textarea class="form-control" formControlName="textMail" id="textMail"
                                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
-                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of attachements">
+                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of mailFiles">
                                         <p style="color: #0066FF;">{{file}}</p>
                                     </div>
                                 </div>
@@ -189,13 +189,14 @@
                             </p>
                             <i style="font-size:50px;" class="lni lni-cloud-upload"></i>
                         </label>
-                        <input type="file" name="file" multiple id="file" (change)="uploadMultiple($event)"
+                        <input type="file" name="file" multiple id="file" (change)="uploadFiles($event)"
                             style="visibility: hidden;display: none;">
 
                         <div class="row files">
-                            <div class="col-sm-2 file" *ngFor="let file of files">
+                            <div class="col-sm-2 file" *ngFor="let file of ticketFiles;let index = index">
                                 <img  src="../../assets/images/file.png">
-                                <p style="word-wrap: break-word">{{file}}</p>
+                                <i (click)="deleteFile(index)" class="lni lni-close"></i>
+                                <p style="word-wrap: break-word">{{file.name}}</p>
                             </div>
                         </div>
                     </div>

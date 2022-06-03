@@ -3,20 +3,19 @@
 }
 
 .upper-bar {
-  background-color:  #fafafa;
-
+  background: #cfdeea78;
   padding: 20px;
   width: 100%;
   height: 65px;
 }
 
 
-.icons{
+.icons {
   display: flex;
   float: right;
 }
 
-.icons > div{
+.icons>div {
   margin: 0px 15px;
 }
 
@@ -33,7 +32,7 @@
   color: #154360;
   font-size: 12px;
   text-transform: capitalize;
-  
+
 }
 
 .upper-bar .circle {
@@ -59,6 +58,7 @@
 .bx-info-circle {
   left: 15px;
   text-align: center;
+  margin-top: 5px;
 }
 
 
@@ -72,7 +72,8 @@
 
 
 
-.bx-bell,.bx-message-rounded {
+.bx-bell,
+.bx-message-rounded {
   position: relative;
   cursor: pointer;
 }
@@ -110,7 +111,7 @@
   font-weight: 400;
 }
 
-.dropdown-item p {
+.dropdown-item p , a {
   font-weight: 400;
 }
 
@@ -190,21 +191,21 @@ a {
   margin-top: -10px;
 } */
 
-form{
+form {
   margin: 25px;
 }
 
-input{
+input {
   border: 1px solid grey;
   margin-bottom: 0px;
   height: 35px;
   color: #21618C;
-  border-radius: 5px;  
+  border-radius: 5px;
 }
 
 
 
-mat-form-field{
+mat-form-field {
   width: 350px;
   margin-top: -25px;
 }
@@ -216,17 +217,21 @@ mat-form-field{
 ::ng-deep .mat-form-field .mat-input-element {
   color: black;
 }
+
 ::ng-deep .mat-form-field .mat-form-field-label {
   margin-top: 10px;
   margin-left: 5px;
   color: grey;
 }
+
 ::ng-deep .mat-form-field .mat-form-field-underline {
   background-color: transparent;
 }
+
 ::ng-deep .mat-form-field .mat-form-field-ripple {
   background-color: transparent;
 }
+
 ::ng-deep .mat-form-field .mat-form-field-required-marker {
   color: transparent;
 }
@@ -234,20 +239,23 @@ mat-form-field{
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
   color: transparent;
 }
+
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: transparent;
 }
+
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
   color: transparent;
 }
+
 ::ng-deep .mat-form-field.mat-focused .mat-input-element {
   color: black;
 }
 
-.lue{
+.lue {
   color: black;
 }
 
-.nonLue{
+.nonLue {
   color: grey;
 }

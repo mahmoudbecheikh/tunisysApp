@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,8 +13,12 @@ export class ForgetComponent implements OnInit {
   email: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.email],
   });
+  error: String = '';
 
-  constructor(private authService :AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
@@ -21,10 +26,19 @@ export class ForgetComponent implements OnInit {
     });
   }
 
-  envoyer(){
-    this.authService.forget(this.myForm.value).subscribe(res=>{
-      console.log(res)
-    })
+  envoyer() {
+    this.authService.forget(this.myForm.value).subscribe((res) => {
+      if (res == null) {
+        this.error = "Adresse email invalide";
+      }
+      if (res.send == true) {
+        this.toastr.success('', 'Email envoyé avec succés');
+        this.error = ''
+        this.myForm.reset();
+      } else {
+        this.error = "Une erreur s'est produite lors de l'envoi";
+        this.myForm.reset();
+      }
+    });
   }
-
 }

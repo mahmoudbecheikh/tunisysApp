@@ -1,95 +1,103 @@
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
+<div class="text-center">
+	<h2>Aperçu</h2>
+	<i class="lni lni-download" (click)="openPDF()"></i>
+</div>
 
-	<body>
-		<h3>Appercu</h3>
-		<i class="lni lni-download" (click)="openPDF()"></i>
-		<br/><br /><br />
+<div class="rap-box">
+	<table id="table">
+		<tr class="top">
+			<td colspan="2">
+				<table>
+					<tr>
+						<td class="title">
+							<img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png"
+								alt="Tunisys logo" style="width:100%; max-width: 170px ; height: 70px;"  />
+						</td>
 
-		<div class="rap-box">
-			<table id="table">
-				<tr class="top">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td class="title">
-									<img src="../../assets/images/partenaire_logo_unisys-removebg-preview.png" alt="Tunisys logo" style="width:100%; max-width: 150px" />
-								</td>
+						<td>
+							Réference : <span style="font-weight:normal;">{{ticket?.ref}}</span> <br />
+							Créé : <span style="font-weight:normal;"> {{ ticket?.date | date:
+								'dd/MM/yyyy'}}</span><br />
+							Modifié : <span style="font-weight:normal;"> {{ ticket?.dateModif | date:
+								'dd/MM/yyyy'}}</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 
-								<td>
-									Réference: <span style="font-weight:normal;">{{ticket?.ref}}</span> <br />
-									<span style="font-weight:normal;">
-									Créé: <span> {{ ticket?.date | date: 'dd/MM/yyyy'}}</span><br />
-									Modifié: <span> {{ ticket?.dateModif | date: 'dd/MM/yyyy'}}</span>
-									</span>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
+		<tr class="heading">
+			<td>Agent(s) responsable(s)</td>
 
-				<tr class="heading">
-					<td>Agent(s) responsable(s)</td>
+			<td>Département</td>
+		</tr>
 
-					<td>Département</td>
-				</tr>
+		<tr class="details">
+			<td>
+				<address>
+					<p><strong>Employé : </strong>
+						<span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}
+							{{ticket?.employe?.prenomEmp}}</span>
+						<span *ngIf="!ticket?.employe">---</span><br>
+					</p>
 
-				<tr class="details">
-					<td>
-                        <address>
-                        <p><strong>Employé:</strong>
-                        <span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}
-                            {{ticket?.employe?.prenomEmp}}</span>
-                        <span *ngIf="!ticket?.employe">---</span><br></p>
-                        <p><strong>Collaborateur(s) :</strong><span *ngFor="let collab of ticket?.collaborateurs">
-                            {{collab.nomEmp}}</span>
-                        </p>
-                        </address>
-                    </td>
+					<p><strong>Collaborateur(s) : </strong>
+						<ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; " >---</ng-container>
+                        <ng-template #collab>
 
-					<td> <span style="font-weight:normal;">{{ticket?.departement?.nom}}</span></td>
-				</tr>
+                            <span> 
+                            <ng-container  *ngFor="let emp of ticket?.collaborateurs; let last = last;"><span>{{emp.nomEmp}} {{emp.prenomEmp}}</span>       
+                                <span style="margin: 0px 5px ;" *ngIf="!last">-</span>
+                            </ng-container> 
+                        
+                        </span>
+                        
+                        </ng-template>
+					</p>
+				</address>
+			</td>
 
-                <tr class="heading">
-					<td>Client</td>
-                    <td></td>
-				</tr>
+			<td> <span style="font-weight:normal;">{{ticket?.departement?.nom}}</span></td>
+		</tr>
 
-                <tr class="details">
-					<td>
-                        <p><span>{{ticket?.nomClient}}</span></p>
-					</td>
-					<td>
-						<address style="font-weight:normal;">
-                        	<p><span>{{ticket?.emailClient}}</span></p>
-							<p><span>Tel: {{ticket?.telClient}}</span></p>
-    					</address>
-					</td>
-                   
-                </tr>
+		<tr class="heading">
+			<td>Client</td>
+			<td></td>
+		</tr>
 
-                <tr class="heading">
-					<td>Récapitulation du sujet de ticket</td>
-                    <td></td>
-				</tr>
+		<tr class="details">
+			<td>
+				<p><span><strong>Nom </strong> : {{ticket?.nomClient}}</span></p>
 
-				<tr class="details">
-					<p>{{ticket?.rapport?.recapSujet}}</p>
-				</tr>
+				<p><span><strong>Email </strong> : {{ticket?.emailClient}}</span></p>
+				<p><span><strong>Téléphone </strong> : {{ticket?.telClient}}</span></p>
+			</td>
 
-				<tr class="heading">
-					<td>description de la démarche de résolution de ticket</td>
-                    <td></td>
-				</tr>
 
-				<tr class="details">
-					<p>{{ticket?.rapport?.description}}</p>
-				</tr>
+		</tr>
 
-			</table> 
-		</div>
-	</body>
-</html>
+		<tr class="heading">
+			<td>Récapitulation du sujet de ticket</td>
+			<td></td>
+		</tr>
+
+		<tr class="details">
+			<td>
+				<p><span>{{ticket?.rapport?.recapSujet}}</span></p>
+			</td>
+		</tr>
+
+		<tr class="heading">
+			<td>description de la démarche de résolution de ticket</td>
+			<td></td>
+		</tr>
+
+		<tr class="details">
+			<td colspan="2" style="width: 100%">
+				<p><span>{{ticket?.rapport?.description}}</span></p>
+			</td>
+
+		</tr>
+
+	</table>
+</div>

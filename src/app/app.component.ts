@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketService.rappelle().subscribe(res=>{
-      console.log(res)
     })
     // let btn = document.querySelector('#btn');
     // let sidebar = document.querySelector('.sidebar');

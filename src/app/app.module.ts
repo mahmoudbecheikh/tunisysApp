@@ -29,7 +29,6 @@ import { ChangeComponent } from './securite/change/change.component';
 import { DetailTicketComponent } from './admin/tickets/detail-ticket/detail-ticket.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AddRapportComponent } from './agent/add-rapport/add-rapport.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MatChipsModule } from '@angular/material/chips';
@@ -44,6 +43,8 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ChatComponent } from './chat/chat.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ActiviteRecenteComponent } from './assistant/ticket/activite-recente/activite-recente.component';
+import { RapportComponent } from './agent/rapport/rapport.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
@@ -67,13 +68,13 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ForgetComponent,
     ChangeComponent,
     DetailTicketComponent,
-    AddRapportComponent,
     SearchComponent,
     PreviewPdfComponent,
     ListReclamationComponent,
     DefaultComponent,
     ChatComponent,
     ActiviteRecenteComponent,
+    RapportComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +91,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgxPaginationModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatFormFieldModule,
     ChartsModule,
     ToastrModule.forRoot({ positionClass: 'toast-top-center', timeOut: 1500 }),
     SocketIoModule.forRoot(config),

@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ToastrModule } from 'ngx-toastr';
+import { SearchComponent } from 'src/app/search/search.component';
 import { TicketService } from 'src/app/services/ticket.service';
 
 import { DetailTicketComponent } from './detail-ticket.component';
@@ -17,11 +20,13 @@ describe('DetailTicketComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
+        ReactiveFormsModule,
         ToastrModule.forRoot(),
+        MatAutocomplete,
         SocketIoModule.forRoot(config),
       ],
       providers: [TicketService],
-      declarations: [DetailTicketComponent],
+      declarations: [DetailTicketComponent , SearchComponent],
     }).compileComponents();
   });
 
@@ -34,9 +39,9 @@ describe('DetailTicketComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it(`lezem tkoun mawjoud '`, () => {
-    const fixture = TestBed.createComponent(DetailTicketComponent);
-    const component = fixture.componentInstance;
-    expect(component.x).toEqual(1);
-  });
+  // it(`lezem tkoun mawjoud '`, () => {
+  //   const fixture = TestBed.createComponent(DetailTicketComponent);
+  //   const component = fixture.componentInstance;
+  //   expect(component.x).toEqual(1);
+  // });
 });

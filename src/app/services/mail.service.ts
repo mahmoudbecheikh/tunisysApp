@@ -21,7 +21,7 @@ export class MailService {
   afficherReponses() :Observable<any>{
     return this.http.get(this.baseURL+'/brouillon');
   }
-  supprimerReponse(id: any) {
+  supprimerReponse(id: any) : Observable<any>{
     return this.http.delete(this.baseURL + `/${id}`);
   }
 
@@ -33,11 +33,11 @@ export class MailService {
     return this.http.post(this.baseURL + '/email', data);
   }
 
-  supprimer(email: any, uid: any) {
+  supprimer(email: any, uid: any) : Observable<any> {
     return this.http.delete(this.baseURL + `/${email}/${uid}`);
   }
 
-  modifier(data: any) {
+  modifier(data: any) : Observable<any>{
     return this.http.put(this.baseURL + `/${data.email}/${data.uid}`, data);
   }
 }

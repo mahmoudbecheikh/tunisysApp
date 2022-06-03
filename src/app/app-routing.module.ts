@@ -12,7 +12,6 @@ import { ListTicketComponent } from './admin/tickets/list-ticket/list-ticket.com
 import { UpdateTicketComponent } from './admin/tickets/update-ticket/update-ticket.component';
 import { TicketsComponent } from './agent/tickets/tickets.component';
 import { InboxComponent } from './assistant/inbox/inbox.component';
-import { AddRapportComponent } from './agent/add-rapport/add-rapport.component';
 import { TicketAttComponent } from './assistant/ticket/ticket-att/ticket-att.component';
 import { DefaultComponent } from './default/default.component';
 import { ErrorComponent } from './error/error.component';
@@ -26,6 +25,7 @@ import { ForgetComponent } from './securite/forget/forget.component';
 import { LoginComponent } from './securite/login/login.component';
 import { ResetComponent } from './securite/reset/reset.component';
 import { ActiviteRecenteComponent } from './assistant/ticket/activite-recente/activite-recente.component';
+import { RapportComponent } from './agent/rapport/rapport.component';
 
 const routes: Routes = [
   {
@@ -88,7 +88,7 @@ const routes: Routes = [
               },
               {
                 path: 'rapport/:id',
-                component: AddRapportComponent,
+                component: RapportComponent,
               },
             ],
           },
@@ -117,7 +117,7 @@ const routes: Routes = [
               },
               {
                 path: 'rapport/:id',
-                component: AddRapportComponent,
+                component: RapportComponent,
               },
             ],
           },
@@ -145,7 +145,7 @@ const routes: Routes = [
               },
               {
                 path: 'rapport/:id',
-                component: AddRapportComponent,
+                component: RapportComponent,
               },
             ],
           },

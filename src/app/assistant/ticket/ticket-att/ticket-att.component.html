@@ -95,9 +95,11 @@
                             style="visibility: hidden;display: none;">
 
                         <div class="row files">
-                            <div class="col-sm-2 file" *ngFor="let file of files">
+                            <div class="col-sm-2 file" *ngFor="let file of ticketFiles ; let index = index">
                                 <img src="../../assets/images/file.png">
-                                <p style="word-wrap: break-word">{{file}}</p>
+                                <i (click)="deleteFile(index)" class="lni lni-close"></i>
+
+                                <p style="word-wrap: break-word">{{file.name}}</p>
                             </div>
                         </div>
                     </div>

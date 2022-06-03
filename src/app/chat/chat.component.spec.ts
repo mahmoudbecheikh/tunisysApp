@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AuthService } from '../services/auth.service';
@@ -17,7 +18,7 @@ describe('ChatComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
 
-      imports: [HttpClientTestingModule , RouterTestingModule, SocketIoModule.forRoot(config)],
+      imports: [HttpClientTestingModule , RouterTestingModule,ReactiveFormsModule ,SocketIoModule.forRoot(config)],
       providers : [AuthService,ChatService,SocketService],
       declarations: [ ChatComponent ]
     })

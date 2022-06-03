@@ -337,7 +337,7 @@ body {
 
 
 .main{
-  margin-top: 125px;
+  margin-top: 60px;
 }
 
 /* ******************** */
@@ -354,5 +354,6 @@ app-header{
   left: 0;
   margin-left: 0px;
   right: 0;
-  width: 100%
+  width: 100%;
+  margin-bottom: 0px;
 }

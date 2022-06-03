@@ -26,11 +26,10 @@ export class HeaderComponent implements OnInit {
   show: boolean = false;
   colors: string[] = [];
 
-
   formRech: FormGroup = new FormGroup({});
   nom: FormControl = new FormControl('', []);
   @Output() selectEmployeEvent = new EventEmitter<any>();
-   sound = new Audio( '../../assets/sounds/notification.mp3');    
+  sound = new Audio('../../assets/sounds/notification.mp3');
 
   constructor(
     private authService: AuthService,
@@ -38,7 +37,7 @@ export class HeaderComponent implements OnInit {
     private socketService: SocketService,
     private employeService: EmployeeService,
     private chatService: ChatService,
-    private router : Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -54,25 +53,26 @@ export class HeaderComponent implements OnInit {
 
     this.socketService.listen('newMsg').subscribe((msg) => {
       if (msg) {
-        console.log('aaa')
         this.afficherMsg();
-        this.sound.play()
-
+        this.sound.play();
       }
     });
 
     this.socketService.listen('updateMsg').subscribe((res) => {
-      if(res){
-        console.log('aaa')
+      if (res) {
         this.afficherMsg();
-
       }
     });
     this.employeService.afficherListe().subscribe((res) => {
       if (res) {
         for (const employe of res) {
           let nom = employe.nomEmp + ' ' + employe.prenomEmp;
-          this.employes?.push({ _id: employe._id, nom: nom , nomEmp : employe.nomEmp , prenomEmp : employe.prenomEmp });
+          this.employes?.push({
+            _id: employe._id,
+            nom: nom,
+            nomEmp: employe.nomEmp,
+            prenomEmp: employe.prenomEmp,
+          });
         }
       }
     });
@@ -98,33 +98,34 @@ export class HeaderComponent implements OnInit {
 
     this.socketService.listen('newNotif').subscribe((res) => {
       this.afficherNotif();
-      this.sound.play()
-
+      this.sound.play();
     });
   }
 
   afficherMsg() {
-    this.nonLueMsg=0
+    this.nonLueMsg = 0;
     this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
       if (res) {
-        console.log(res)
         this.rand(res);
         this.messages = res;
         for (const msg of this.messages) {
-          if (!msg.message.lue && msg.envoyeur._id!=this.employe?._id) this.nonLueMsg += 1;
+          if (!msg.message.lue && msg.envoyeur._id != this.employe?._id)
+            this.nonLueMsg += 1;
         }
       }
     });
   }
 
   afficherNotif() {
-    this.nonLueNotif = 0
-    this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
-      this.notifications = res;
-      for (const notif of res) {
-        if(notif.lue==false) this.nonLueNotif+=1
-      }
-    });
+    this.nonLueNotif = 0;
+    if (this.employe) {
+      this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
+        this.notifications = res;
+        for (const notif of res) {
+          if (notif.lue == false) this.nonLueNotif += 1;
+        }
+      });
+    }
   }
 
   confirmer(notif: any) {
@@ -170,35 +171,17 @@ export class HeaderComponent implements OnInit {
     let notif = this.notifications.filter(function (el: any) {
       return el.lue == false;
     });
-    if(notif.length>0)
-    this.notifService.marquer(notif).subscribe((res) => {
-      this.afficherNotif();
-    });
+    if (notif.length > 0)
+      this.notifService.marquer(notif).subscribe((res) => {
+        this.afficherNotif();
+      });
     this.afficherNotif();
-
   }
 
-  redirect(notif : any){
-    console.log('aaaaaaaaa')
-    let link : any;
-    if(notif.contenu=='invitation'){
-      switch (this.employe?.role) {
-        case 0:
-          link = ['admin/tickets/', notif.ticket._id];
-          break;
-        case 1:
-          link = ['assistant/tickets/', notif.ticket._id];
-          break;
-        case 2:
-          link = ['agent/tickets/', notif.ticket._id];
-          break;
-      
-      }  
-    }
-   
-    if(notif.contenu=="reclamation")
-    link = ['admin/reclamation'];
-    if(link)
+  redirect(notif: any) {
+
+    let link = ['agent/tickets/', notif.ticket._id];
+    if (notif.contenu == 'reclamation') link = ['admin/reclamation'];
     this.router.navigate(link);
   }
 
@@ -210,7 +193,7 @@ export class HeaderComponent implements OnInit {
   }
 
   select(employe: any) {
-    this.employeFilter = []
+    this.employeFilter = [];
     this.formRech.reset();
 
     this.selectEmployeEvent.emit(employe);

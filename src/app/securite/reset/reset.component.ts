@@ -41,7 +41,6 @@ export class ResetComponent implements OnInit {
       this.employeService.afficherTokenMdp(this.token, this.tokenExpire)
         .subscribe((res) => {
           if (res) {
-            console.log(res);
             if (res?.jetonUtilise) this.valid = false;
           } else {
             this.valid = false;
@@ -60,7 +59,6 @@ export class ResetComponent implements OnInit {
           mdp: this.password.value,
         };
         this.authService.login(data).subscribe((res) => {
-          console.log(res);
           if (res.token) {
             localStorage.setItem('token', res.token);
             let role = this.authService.getRole();

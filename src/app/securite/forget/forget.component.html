@@ -12,11 +12,11 @@
 
             <button [disabled]="myForm.invalid" type="submit">Envoyer un lien de réinitialisation</button>
 
-            <!-- <a [routerLink]="['/login']">Revenir à l'écran de connexion</a> -->
+            <a [routerLink]="['/login']">Revenir à l'écran de connexion</a>
         </form>
-        <!-- <small *ngIf="error==true">Aucun utilisateur trouvé
+        <small *ngIf="error!=''">Aucun utilisateur trouvé
 
-        </small> -->
+        </small>
 
     </div>
 </div>

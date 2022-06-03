@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Departement } from 'src/models/departement';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartementService } from 'src/app/services/departement.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ticket-att',
@@ -16,8 +17,7 @@ export class TicketAttComponent implements OnInit {
   tickets: Ticket[] = [];
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
-  attachmentList: any = [];
-  files: any = [];
+  ticketFiles: any = [];
   dateLimite: FormControl = new FormControl();
   dateNow: any;
 
@@ -47,7 +47,7 @@ export class TicketAttComponent implements OnInit {
   siteWeb: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern('(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')
+    Validators.pattern('(www)\\.([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'),
   ]);
   telClient: FormControl = new FormControl('', [
     Validators.required,
@@ -57,14 +57,12 @@ export class TicketAttComponent implements OnInit {
   ]);
   departement: FormControl = new FormControl('', Validators.required);
 
-  manuel: FormControl = new FormControl('assistant');
-  statut: FormControl = new FormControl('en attente');
-
   formdata = new FormData();
   constructor(
     private ticketService: TicketService,
     private router: Router,
-    private depService: DepartementService
+    private depService: DepartementService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -72,34 +70,6 @@ export class TicketAttComponent implements OnInit {
     this.createForm();
     this.afficherDepartements();
     this.dateNow = new Date();
-  }
-
-  afficherListe() {
-
-    this.ticketService.afficherAttente().subscribe(res=>{
-      
-      this.tickets = res
-    })
-
-    
-  }
-
-  ajouter() {
-    this.ticketService.ajouter(this.myForm.value).subscribe((res) => {
-      if (res) {
-        this.formdata.append('id',res._id );
-        this.ticketService.confirmer(res._id).subscribe((response) => {
-          this.ticketService.uploadFiles(this.formdata).subscribe((files) => {
-            console.log(files);
-          });
-          this.formdata.delete('files');
-          this.myForm.reset();
-          this.statut.setValue('en attente');
-          this.manuel.setValue('assistant');
-          this.files = [];
-        });
-      }
-    });
   }
 
   createForm() {
@@ -110,11 +80,15 @@ export class TicketAttComponent implements OnInit {
       nomClient: this.nomClient,
       telClient: this.telClient,
       description: this.description,
-      manuel: this.manuel,
-      statut: this.statut,
       siteWeb: this.siteWeb,
       adresse: this.adresse,
       dateLimite: this.dateLimite,
+    });
+  }
+
+  afficherListe() {
+    this.ticketService.afficherAttente().subscribe((res) => {
+      this.tickets = res;
     });
   }
 
@@ -123,6 +97,33 @@ export class TicketAttComponent implements OnInit {
       console.log(res);
       this.departements = res;
     });
+  }
+
+  ajouter() {
+    this.formdata.append('sujet', this.sujet.value);
+    this.formdata.append('departement', this.departement.value);
+    this.formdata.append('emailClient', this.emailClient.value);
+    this.formdata.append('nomClient', this.nomClient.value);
+    this.formdata.append('telClient', this.telClient.value);
+    this.formdata.append('description', this.description.value);
+    this.formdata.append('siteWeb', this.siteWeb.value);
+    this.formdata.append('adresse', this.adresse.value);
+    this.formdata.append('dateLimite', this.dateLimite.value);
+    this.formdata.append('statut', 'en attente');
+    this.formdata.append('manuel', 'assistant');
+    for (const file of this.ticketFiles) {
+      this.formdata.append('files', file);
+    }
+    this.ticketService.ajouter(this.formdata).subscribe((res) => {
+      if (res) {
+        this.ticketService.confirmer(res._id).subscribe((response) => {
+          this.toastr.success('', 'Ticket ajouté avec succès!');
+        });
+      }
+    });
+    this.formdata = new FormData();
+    this.myForm.reset();
+    this.ticketFiles = [];
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -144,8 +145,11 @@ export class TicketAttComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdata.append('files', element);
-      this.files.push(element.name);
+      this.ticketFiles.push(element);
     }
+  }
+  
+  deleteFile(i: any) {
+    this.ticketFiles.splice(i, 1);
   }
 }

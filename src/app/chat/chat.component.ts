@@ -4,8 +4,10 @@ import {
   Component,
   DoCheck,
   ElementRef,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -30,12 +32,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   files: FormControl = new FormControl();
   messages: any;
   @Input() employeSelected: any;
-  user: any;
   enLigne: any = [];
-  attachements : any = []
-  previews : any = []
+  attachements: any = [];
+  previews: any = [];
   @ViewChild('scrollable') scrollable?: ElementRef;
-  @Input() show : any
+  @Input() show: any;
+  @Output() deselectEmployeEvent  = new EventEmitter<any>();
+
   shouldScrollDown?: boolean;
   iterableDiffer?: any;
   numberOfMessagesChanged: boolean = true;
@@ -46,10 +49,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngAfterViewChecked(): void {
-    
-
-  
-
     const isScrolledDown =
       Math.abs(
         this.scrollable?.nativeElement.scrollHeight -
@@ -61,6 +60,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
       this.numberOfMessagesChanged = false;
     }
+
+
   }
 
   scrollToBottom() {
@@ -71,16 +72,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnChanges() {
-
+    console.log('aaaa')
     if (this.employeSelected) {
-      this.user = this.employeSelected;
-      this.chatService
+      this.authService.getAuth().subscribe((employe) => {
+        this.employe = employe;
+        this.chatService
         .afficherConversation(this.employe?._id, this.employeSelected._id)
         .subscribe((res) => {
-          console.log(res)
           if (res) this.messages = res.messages;
           else this.messages = [];
         });
+      });
+
     }
 
     this.socketService.listen('updateMsg').subscribe((res) => {
@@ -96,10 +99,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.scrollToBottom();
 
-
-    if(this.employeSelected)
-    this.user = this.employeSelected
-
+    console.log(this.employeSelected)
     this.authService.getAuth().subscribe((employe) => {
       this.employe = employe;
     });
@@ -115,7 +115,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       for (const user of res) {
         this.enLigne.push(user.id);
       }
-      console.log(res);
     });
 
     this.createForm();
@@ -132,59 +131,47 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   download(fileName: string) {
     this.chatService.downloadFile(fileName).subscribe((res) => {
-      console.log(res)
       saveAs(res, fileName);
     });
   }
-
 
   uploadMultiple(event: any) {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
       const reader = new FileReader();
-      console.log(element)
-      if(element.type.includes('image')){
+      if (element.type.includes('image')) {
         reader.onload = () => {
-          this.previews.push({type : 'image' , data :  reader.result as string })
-        }
+          this.previews.push({ type: 'image', data: reader.result as string });
+        };
+      } else {
+        this.previews.push({ type: 'file', data: element.name });
       }
-      else{
-        this.previews.push({type : 'file' , data : element.name })
 
-      }
-       
-        reader.readAsDataURL(element)
-        this.formdata.append('files', element);
+      reader.readAsDataURL(element);
+      this.attachements.push(element);
     }
   }
 
 
-  preview (file : any){
-    let filePreview : any
-    const reader = new FileReader();
-    reader.onload = () => {
-      filePreview =  reader.result as string 
-    }
-    return reader.readAsDataURL(file)
-  }
 
   envoyer() {
     this.envoyeur.setValue(this.employe?._id);
     this.recepteur.setValue(this.employeSelected._id);
-    this.formdata.append('envoyeur',this.envoyeur.value)
-    this.formdata.append('recepteur',this.recepteur.value)
-    this.formdata.append('contenu',this.contenu.value)
-    // this.myForm.patchValue({
-    //   files: this.attachements
-    // });
-    // this.myForm.get('files')?.updateValueAndValidity()
+    this.formdata.append('envoyeur', this.envoyeur.value);
+    this.formdata.append('recepteur', this.recepteur.value);
+    this.formdata.append('contenu', this.contenu.value);
+
+    for (const file of this.attachements) {
+       this.formdata.append('files', file);
+    }
+
     this.chatService.ajouterMessage(this.formdata).subscribe((res) => {
       this.messages.push(res);
       this.contenu.setValue('');
       this.numberOfMessagesChanged = true;
-      this.formdata = new FormData()
-      this.previews = []
+      this.formdata = new FormData();
+      this.previews = [];
     });
   }
 
@@ -205,6 +192,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   close() {
-    this.user = null
+    this.deselectEmployeEvent.emit(true);
+
+  }
+  
+
+  deleteFile(i: any) {
+    this.previews.splice(i, 1);
+    this.attachements.splice(i, 1);
+
   }
 }

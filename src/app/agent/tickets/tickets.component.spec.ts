@@ -1,5 +1,7 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -16,7 +18,7 @@ describe('TicketsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule,ToastrModule.forRoot(),ToastrModule.forRoot(),SocketIoModule.forRoot(config)],
+      imports: [HttpClientTestingModule,RouterTestingModule,ReactiveFormsModule,DragDropModule,ToastrModule.forRoot(),SocketIoModule.forRoot(config)],
       providers: [EmployeeService,AuthService,SocketService,ToastrService],
       declarations: [ TicketsComponent ]
     })

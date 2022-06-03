@@ -33,6 +33,11 @@ td {
     text-align: center;
 }
 
+table{
+    table-layout: fixed;
+    width: 100%
+}
+
 table td {
     font-weight: 400;
     max-height: 25px;

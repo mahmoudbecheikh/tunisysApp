@@ -1,11 +1,12 @@
-<div class="container" *ngIf="user">
+<div class="container" >
 
     <div class="chat" (click)="messageNonLue()">
         <div class="chat-header">
             <div class="profile">
                 <div class="left">
                     <img src="../../assets/images/client.png" class="arrow">
-                    <h2>{{user.nomEmp}} {{user.prenomEmp}} <i *ngIf="enLigne.includes(user._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
+                    <h2>{{employeSelected?.nomEmp}} {{employeSelected?.prenomEmp}} <i
+                            *ngIf="enLigne.includes(employeSelected?._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
                         " class="bx bx-circle"></i></h2>
                 </div>
                 <div class="right">
@@ -21,7 +22,7 @@
                 <ng-container *ngIf="message.envoyeur == employe?._id;else rec">
                     <div class="chat-r" *ngIf="message.contenu">
                         <div class="sp"></div>
-    
+
                         <div class="mess mess-r">
                             <div>
                                 {{message.contenu}}
@@ -29,30 +30,32 @@
                             <div class="check">
                                 <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
                                 <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
-    
+
                             </div>
                         </div>
                     </div>
-                    <div class="chat-r"  *ngFor="let file of message.fJoint" >
-                            <div class="sp"></div>
-    
-                            <div class="mess mess-r">
-                                <img  (click)="download(file.originalname)" *ngIf="file.mimetype.includes('image');else fichier" [src]="file.url" class="img_chat">
+                    <div class="chat-r" *ngFor="let file of message.fJoint">
+                        <div class="sp"></div>
+
+                        <div class="mess mess-r">
+                            <img (click)="download(file.filename)" *ngIf="file.mimetype.includes('image');else fichier"
+                                [src]="file.url" class="img_chat">
                             <ng-template #fichier>
-                                <div class="file" (click)="download(file.originalname)"> <i class="bx bx-file"></i> {{file.originalname}}</div> 
+                                <div class="file" (click)="download(file.filename)"> <i class="bx bx-file"></i>
+                                    {{file.name}}</div>
                             </ng-template>
                             <div class="check">
                                 <span> {{message.date | date: 'dd/MM HH:mm'}}</span>
                                 <i *ngIf="message.lue " style="font-size: 12px;" class="bx bx-check-double"></i>
-    
+
                             </div>
-                            </div>
-                           
+                        </div>
+
                     </div>
                 </ng-container>
 
 
- 
+
 
 
                 <ng-template #rec>
@@ -69,38 +72,48 @@
                         <div class="sp"></div>
 
                     </div>
-                    <div class="chat-l"  *ngFor="let file of message.fJoint" >
+                    <div class="chat-l" *ngFor="let file of message.fJoint">
 
                         <div class="mess mess-l">
-                            <img  (click)="download(file.originalname)" *ngIf="file.mimetype.includes('image');else fichier" [src]="file.url" class="img_chat">
-                        <ng-template #fichier>
-                            <span class="file" (click)="download(file.originalname)"> <i class="bx bx-file"></i> {{file.originalname}}</span> 
-                        </ng-template>
+                            <img (click)="download(file.filename)" *ngIf="file.mimetype.includes('image');else fichier"
+                                [src]="file.url" class="img_chat">
+                            <ng-template #fichier>
+                                <span class="file" (click)="download(file.filename)"> <i class="bx bx-file"></i>
+                                    {{file.name}}</span>
+                            </ng-template>
 
                         </div>
                         <div class="sp"></div>
 
-                </div>
+                    </div>
                 </ng-template>
- 
+
 
             </ng-container>
 
         </div>
         <div class="row previous" *ngIf="previews.length>0">
-            <div class="col-sm-3"  *ngFor="let prv of previews">
-                <img   *ngIf="prv.type=='image';else fichier" [src]="prv.data" class="img_chat">
-                <ng-template #fichier>
-                    <span class="file"> <i class="bx bx-file"></i> {{prv.data}}</span> 
-                </ng-template>
+            <div *ngFor="let prv of previews ; let index = index" class="col-sm-3 previou">
+                <small (click)="deleteFile(index)">X</small>
+                <div>
+                    <img *ngIf="prv.type=='image';else fichier" [src]="prv.data" class="img_chat">
+
+                    <ng-template #fichier>
+                        <span class="file"> <i class="bx bx-file"></i> {{prv.data}}</span>
+                    </ng-template>
+
+                </div>
+
+
             </div>
+
         </div>
-       
+
 
         <div class="chat-footer">
-            
+
             <form [formGroup]="myForm" (ngSubmit)="envoyer()" class="form-inline">
-                
+
                 <textarea placeholder="Type a message" formControlName="contenu">
                 </textarea>
 
@@ -109,7 +122,8 @@
 
                 <label for="file"> <i class="bx bx-paperclip"></i></label>
 
-                <button type="submit" [disabled]="myForm.invalid && previews.length<0" style="border: none;"> <i class="bx bx-send"></i>
+                <button type="submit" [disabled]="myForm.invalid && previews.length<0" style="border: none;"> <i
+                        class="bx bx-send"></i>
                 </button>
 
             </form>

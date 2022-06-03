@@ -30,7 +30,7 @@
                     <ng-template #exist>
                         <ng-container *ngFor="let msg of messages; let i = index">
                             <div class="dropdown-item" (click)='select(msg.membre)'>
-                                <i class="circle" [style.background]="colors[i]">{{msg?.membre?.nomEmp?.substr(0,1)}}</i>
+                                <p class="circle" [style.background]="colors[i]">{{msg?.membre?.nomEmp?.substr(0,1)}}</p>
                                 <div class="data"
                                     [ngClass]="msg.message.lue || employe?._id==msg.envoyeur._id ? 'nonLue' : 'lue'">
                                     <p>{{msg?.membre?.nomEmp}} {{msg?.membre?.prenomEmp}}</p>
@@ -78,16 +78,18 @@
                         
                         <ng-template #NotifExist>
                         <ng-container *ngFor="let notif of notifications">
-                            <div class="dropdown-item" (click)="redirect(notif)">
-                                <i class="bx bx-info-circle circle"></i>
+                            <div class="dropdown-item" >
+                                <i class="bx bx-info-circle "></i>
                                 <div class="data" [ngClass]="notif.lue? 'nonLue' : 'lue'">
+                                    <div (click)="redirect(notif)">
                                     <span>{{notif.envoyeur.nomEmp}} {{notif.envoyeur.prenomEmp}}</span>
-                                    <p *ngIf="notif.contenu=='invitation';else not">{{notif.ticket.sujet}}</p>
+                                    <p *ngIf="notif.contenu=='invitation';else not" >{{notif.ticket.sujet}}</p>
                                     <ng-template #not>
                                         <p>{{notif.contenu}}</p>
                                     </ng-template>
                                     <span style="color: grey;font-size: 12px;">{{notif.date | date: 'dd/MM/yyyy   HH:mm:ss'}}</span>
                                     <br>
+                                </div>
                                     <div style=" display: flex; justify-content: left;"
                                         *ngIf="notif.contenu=='invitation'">
                                         <div class="btn-sm btn-primary" (click)="confirmer(notif)">Confirmer</div>

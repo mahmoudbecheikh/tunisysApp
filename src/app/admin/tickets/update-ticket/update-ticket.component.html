@@ -76,13 +76,13 @@
                             style="visibility: hidden;display: none;">
         
                             <div class="row files">
-                                <div class="col-sm-2 file" *ngFor="let file of attachmentList;; let index = index;">
+                                <div class="col-sm-2 file" *ngFor="let file of attachmentList; let index = index;">
                                     
                                     
                                     <img src="../../assets/images/file.png">
-                                    <i (click)="delete(index)" class="lni lni-close"></i>
+                                    <i (click)="deleteFile(index)" class="lni lni-close"></i>
             
-                                    <p style="word-wrap: break-word">{{file.originalname}}</p>
+                                    <p style="word-wrap: break-word">{{file.name}}</p>
                                 </div>
                             </div>
                     </div>

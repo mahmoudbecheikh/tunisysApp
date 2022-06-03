@@ -11,7 +11,7 @@ export class RapportService {
 
   constructor(private http: HttpClient) {}
 
-  ajouter(rapport: Rapport): Observable<any> {
+  ajouter(rapport: any): Observable<any> {
     return this.http.post(this.baseURL, rapport);
   }
 
@@ -23,7 +23,7 @@ export class RapportService {
     return this.http.get(this.baseURL + `/${id}`);
   }
 
-  modifier(id: any, rapport: Rapport): Observable<any> {
+  modifier(id: any, rapport: any): Observable<any> {
     return this.http.put(this.baseURL + `/${id}`, rapport);
   }
 

@@ -77,7 +77,7 @@
                                 <span> {{emp.nomEmp}} {{emp.prenomEmp}}
                                 </span>
                                 <span class="badge badge-primary" *ngIf="!verify(emp?._id);else annuler"
-                                    (click)="envoyerNotif(emp._id)">Envoyer</span>
+                                    (click)="envoyerNotif(emp._id)">Envoyer </span>
                                 <ng-template #annuler>
                                     <div class="badge badge-primary" (click)="supprimer(emp._id)">Annuler</div>
                                 </ng-template>
@@ -130,8 +130,16 @@
                     </p>
                     <p>Collaborateurs :
                         <ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; " >---</ng-container>
-                        <ng-template #collab><span  > <ng-container class="badge bg-warning" *ngFor="let emp of ticket?.collaborateurs;let i =index">{{emp.nomEmp}} {{emp.prenomEmp}} ,   </ng-container> </span></ng-template>
-                        <!-- <span *ngIf="i+1!=ticket?.collaborateurs?.length"> / </span> -->
+                        <ng-template #collab>
+
+                            <span> 
+                            <ng-container  *ngFor="let emp of ticket?.collaborateurs; let last = last;"><small>{{emp.nomEmp}} {{emp.prenomEmp}}</small>       
+                                <small *ngIf="!last">-</small>
+                            </ng-container> 
+                        
+                        </span>
+                        
+                        </ng-template>
                 </p>
                     <p>Manuel : <span>{{ticket?.manuel}}</span> </p>
                     <p>Statut :
@@ -183,17 +191,17 @@
 
             <div style="margin: 10px;" class="row files" *ngIf="files && files.length>0;else vide">
 
-                <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file.originalname)'>
+                <div class="col-sm-2 file" *ngFor="let file of files" (click)='download(file.filename)'>
 
                     <ng-container *ngIf="file && file.mimetype.includes('image');else fichier">
                         <img [src]="file.url" style="width :50px ; height: 50px;">
-                        <p style="word-wrap: break-word">{{file.originalname}}</p>
+                        <p style="word-wrap: break-word">{{file.name}}</p>
 
                     </ng-container>
                     <ng-template #fichier>
                         <img src="../../assets/images/file.png">
 
-                        <p style="word-wrap: break-word">{{file.originalname}}</p>
+                        <p style="word-wrap: break-word">{{file.name}}</p>
                     </ng-template>
                 </div>
             </div>

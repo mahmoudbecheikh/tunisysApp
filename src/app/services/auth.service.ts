@@ -15,15 +15,14 @@ export class AuthService {
   role: any;
 
   constructor(private http: HttpClient, private router: Router) {
-    console.log(this.role);
-    console.log(this.id);
+
   }
 
   login(data: any): Observable<any> {
     return this.http.post('http://localhost:3000/login', data);
   }
 
-  forget(email: string) {
+  forget(email: string) : Observable<any>{
     return this.http.post('http://localhost:3000/forget', email);
   }
 
@@ -75,7 +74,6 @@ export class AuthService {
       });
     }
     if (this.helper.isTokenExpired(token)) {
-      console.log('expired');
       return false;
     }
     return true;
