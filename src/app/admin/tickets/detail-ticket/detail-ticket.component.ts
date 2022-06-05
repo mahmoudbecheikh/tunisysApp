@@ -21,6 +21,7 @@ import { DepartementService } from 'src/app/services/departement.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-detail-ticket-att',
   templateUrl: './detail-ticket.component.html',
@@ -93,7 +94,8 @@ export class DetailTicketComponent implements OnInit {
     private depService: DepartementService,
     private notifService: NotificationService,
     private empService: EmployeeService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private toastr: ToastrService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -145,6 +147,18 @@ export class DetailTicketComponent implements OnInit {
       }
     });
 
+    this.afficherTicket();
+
+    this.tagsCtrl.valueChanges.subscribe((res) => {
+      // if (res == '') this.filtredTags = [];
+      // else {
+      //   this.filterData(res);
+      // }
+      this.filterData(res);
+    });
+  }
+
+  afficherTicket() {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       if (res) {
         this.ticket = res;
@@ -158,25 +172,9 @@ export class DetailTicketComponent implements OnInit {
         this.afficherEmploye();
         this.authService.getAuth().subscribe((res) => {
           this.employe = res;
-          // let data = {
-          //   departement: res.departement?._id,
-          //   ticket: this.id,
-          //   employe: this.employe?._id,
-          // };
-          // this.notifService.listInvitation(data).subscribe((res) => {
-          //   console.log(res);
-          // });
           this.afficherNotifEnv();
         });
       }
-    });
-
-    this.tagsCtrl.valueChanges.subscribe((res) => {
-      // if (res == '') this.filtredTags = [];
-      // else {
-      //   this.filterData(res);
-      // }
-      this.filterData(res);
     });
   }
 
@@ -199,7 +197,6 @@ export class DetailTicketComponent implements OnInit {
   employeCnt() {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
-      console.log(this.employe);
     });
   }
 
@@ -227,7 +224,10 @@ export class DetailTicketComponent implements OnInit {
 
   confirmer() {
     this.ticketService.confirmer(this.ticket?._id).subscribe((res) => {
-      this.router.navigate(['assistant/tickets']);
+      if (res) {
+        this.toastr.success('', 'Ticket confirmé avec succès!');
+        this.router.navigate(['assistant/tickets']);
+      }
     });
   }
 
@@ -235,7 +235,6 @@ export class DetailTicketComponent implements OnInit {
     this.ticketService.afficherListe().subscribe((tickets) => {
       for (let i = 0; i < tickets.length; i++) {
         const ticket = tickets[i];
-
         if (ticket.departement.nom == this.ticket?.departement?.nom) {
           this.allTags = this.allTags.concat(ticket.tags);
         }
@@ -245,6 +244,7 @@ export class DetailTicketComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
+
     if (enteredData) {
       this.filtredTags = this.allTags?.filter((item) => {
         return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
@@ -292,6 +292,7 @@ export class DetailTicketComponent implements OnInit {
         link = ['agent/tickets/rapport/', this.id];
         this.router.navigate(link);
         break;
+   
     }
   }
 
@@ -305,8 +306,9 @@ export class DetailTicketComponent implements OnInit {
     this.tagsCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.tags.indexOf(fruit);
+  remove(tag: string): void {
+   
+    const index = this.tags.indexOf(tag);
 
     if (index >= 0) {
       this.tags.splice(index, 1);

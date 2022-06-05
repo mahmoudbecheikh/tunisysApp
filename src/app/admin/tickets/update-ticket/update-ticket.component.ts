@@ -127,7 +127,6 @@ export class UpdateTicketComponent implements OnInit {
   }
 
   modifier() {
-    console.log(this.departement.value);
     this.formdata.append('sujet', this.sujet.value);
     this.formdata.append('departement', this.departement.value);
     this.formdata.append('emailClient', this.emailClient.value);

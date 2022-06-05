@@ -24,7 +24,6 @@ export class PreviewPdfComponent implements OnInit {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       if (res) {
         this.ticket = res ;
-        console.log(res);
       }
     });
   }

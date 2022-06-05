@@ -9,7 +9,16 @@ import { DashbordComponent } from './dashbord.component';
 describe('DashbordComponent', () => {
   let component: DashbordComponent;
   let fixture: ComponentFixture<DashbordComponent>;
-
+  let ticketParMois =  [
+    {
+        "_id": "04",
+        "number": 4
+    },
+    {
+        "_id": "05",
+        "number": 9
+    }
+]
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports : [HttpClientTestingModule,ToastrModule.forRoot(),ChartsModule],
@@ -28,4 +37,12 @@ describe('DashbordComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('verifier methode', () => {
+    let result = component.verify(ticketParMois , 4)
+    expect(result).toEqual(4)
+  });
+
+  
 });

@@ -90,7 +90,12 @@ i {
     cursor: pointer;
 }
 
-.statut .badge {
+.buttons .btn{
+    margin: 5px;
+    width: 125px;
+}
+
+.info .badge {
     width: 75px;
     color: white;
     font-weight: 500;

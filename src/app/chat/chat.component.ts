@@ -72,7 +72,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnChanges() {
-    console.log('aaaa')
     if (this.employeSelected) {
       this.authService.getAuth().subscribe((employe) => {
         this.employe = employe;
@@ -99,7 +98,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.scrollToBottom();
 
-    console.log(this.employeSelected)
     this.authService.getAuth().subscribe((employe) => {
       this.employe = employe;
     });

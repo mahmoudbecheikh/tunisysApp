@@ -94,7 +94,6 @@ export class TicketAttComponent implements OnInit {
 
   afficherDepartements() {
     this.depService.afficherListe().subscribe((res) => {
-      console.log(res);
       this.departements = res;
     });
   }

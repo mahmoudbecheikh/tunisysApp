@@ -68,7 +68,6 @@ export class ListTicketComponent implements OnInit {
         i++;
       });
     }
-    console.log(this.form.value);
     this.submit();
   }
 
@@ -85,7 +84,6 @@ export class ListTicketComponent implements OnInit {
       this.ticketsFilter = this.tickets;
     } else {
       this.ticketsFilter = this.tickets.filter(function (el) {
-        console.log(notes.includes(String(el.feedBack?.note)))
         return (
           (departements.includes(el.departement?.nom) ||
             departements.length == 0) &&
@@ -119,7 +117,6 @@ export class ListTicketComponent implements OnInit {
           this.ticketsFilter = this.ticketsFilter.sort((a: any, b: any) =>
             a.statut.toLowerCase() > b.statut.toLowerCase() ? 1 : -1
           );
-          console.log(this.ticketsFilter);
           this.ticketsFilter.unshift(
             this.ticketsFilter.splice(
               this.ticketsFilter.findIndex(
@@ -188,8 +185,7 @@ export class ListTicketComponent implements OnInit {
 
   confirmer(id: any) {
     this.ticketService.confirmer(id).subscribe((res) => {
-      console.log(res);
-      console.log();
+
       this.afficherList();
     });
   }

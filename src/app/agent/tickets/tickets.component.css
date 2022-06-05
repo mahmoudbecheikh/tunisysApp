@@ -3,6 +3,16 @@
   margin-top: 50px;
 }
 
+h1 {
+  color: black;
+  font-family: 'Trocchi', serif;
+  font-size: 35px;
+  font-weight: normal;
+  line-height: 48px;
+  margin: 0;
+  text-align: center;
+}
+
 .column {
   width: 300px;
   max-width: 100%;

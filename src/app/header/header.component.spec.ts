@@ -10,6 +10,9 @@ import { SocketService } from '../services/socket.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HeaderComponent } from './header.component';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,7 +21,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule,  SocketIoModule.forRoot(config) ,MatAutocompleteModule ,MatFormFieldModule , MatFormFieldControl    ],
+      imports: [HttpClientTestingModule, RouterTestingModule,MatAutocompleteModule,SocketIoModule.forRoot(config),MatFormFieldModule , MatInputModule , BrowserAnimationsModule , ReactiveFormsModule   ],
       providers: [
         AuthService,
         NotificationService,

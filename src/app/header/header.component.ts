@@ -140,7 +140,6 @@ export class HeaderComponent implements OnInit {
             lue: false,
           };
           this.notifService.envoyer(data).subscribe((res) => {
-            console.log('ena envoyer mtaa confirmer');
             this.afficherNotif();
           });
         }

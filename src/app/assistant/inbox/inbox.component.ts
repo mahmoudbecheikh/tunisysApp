@@ -58,12 +58,11 @@ export class InboxComponent implements OnInit {
   ]);
   departement: FormControl = new FormControl('', Validators.required);
 
-  loading$ = this.spinnerService.loading$;
   dateLimite: FormControl = new FormControl();
   dateNow: any;
   formdata = new FormData();
   formdataMail = new FormData();
-
+  loading? : any
   mailFiles?: any = [];
   show = false
   textMail: FormControl = new FormControl('', [
@@ -79,7 +78,10 @@ export class InboxComponent implements OnInit {
     private spinnerService: SpinnerService,
     private toastr: ToastrService
 
-  ) {}
+  ) {
+    this.loading = this.spinnerService.loading$;
+
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -137,7 +139,6 @@ export class InboxComponent implements OnInit {
 
   afficherDepartements() {
     this.depService.afficherListe().subscribe((res) => {
-      console.log(res);
       this.departements = res;
     });
   }
@@ -147,7 +148,6 @@ export class InboxComponent implements OnInit {
       option: 'UNSEEN',
     };
     this.mailService.afficherListe(data).subscribe((res) => {
-      console.log(res);
       if (res.length > 0) {
         // let inboxSorted = res.sort((a: any, b: any) =>
         //   a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
@@ -160,7 +160,6 @@ export class InboxComponent implements OnInit {
 
 
   select(mail: any) {
-    console.log(mail);
     this.mailSelected = mail;
     this.show = false
     this.formMail.reset()
@@ -199,7 +198,6 @@ export class InboxComponent implements OnInit {
       int8Array[i] = encoded.charCodeAt(i);
     }
     const blob = new Blob([int8Array], { type: mail.contentType });
-    console.log(blob);
     saveAs(blob, mail.filename);
   }
 

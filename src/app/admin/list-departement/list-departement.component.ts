@@ -47,7 +47,6 @@ export class ListDepartementComponent implements OnInit {
     this.depService.ajouter(this.myForm.value).subscribe((res) => {
       this.getListDep();
       this.myForm.reset()
-      console.log(res);
     });
   }
 
@@ -62,15 +61,19 @@ export class ListDepartementComponent implements OnInit {
   supprimer(id: any) {
     
     this.depService.supprimer(id).subscribe((res) => {
-      this.toastr.success('', 'Département modifié avec succès!');
-      this.getListDep();
+      if(res){
+        this.toastr.success('', 'Département modifié avec succès!');
+        this.getListDep();
+      }
     });
   }
 
   selectDepartement(id: any) {
     this.depService.afficherId(id).subscribe((res) => {
-      this.nom.setValue(res.nom);
-      this.departement = res;
+      if(res){
+        this.nom.setValue(res.nom);
+        this.departement = res;
+      }
     });
   }
 

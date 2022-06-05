@@ -105,7 +105,6 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   changeValue() {
-    console.log(this.role.value);
     if (this.role.value == 0 || this.role.value==1) {
       this.departement.clearValidators();
     } else {
@@ -118,8 +117,6 @@ export class AddEmployeeComponent implements OnInit {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherCin(control.value).pipe(
         map((res) => {
-          console.log('a')
-          console.log(res)
           if (!res) return null;
           return res ? { cinExist: true } : null;
         })
@@ -131,7 +128,6 @@ export class AddEmployeeComponent implements OnInit {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
-          console.log('a')
 
           if (!res) return null;
           return res ? { emailExist: true } : null;

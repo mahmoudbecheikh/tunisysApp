@@ -17,14 +17,12 @@ export class ListReclamationComponent implements OnInit {
   afficherListe() {
     this.ticketService.afficherReclamation().subscribe((res) => {
       this.reclamations = res;
-      console.log(this.reclamations);
     });
   }
 
   supprimer(id: any) {
     this.ticketService.supprimerReclamation(id).subscribe((res) => {
       this.afficherListe();
-      console.log(res);
     });
   }
 }

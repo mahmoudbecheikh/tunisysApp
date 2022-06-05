@@ -20,7 +20,7 @@ export class ChangeComponent implements OnInit {
     validators: [Validators.required, Validators.minLength(6)],
   });
 
-  error?: Boolean = false;
+  error: boolean = false ;
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -34,15 +34,25 @@ export class ChangeComponent implements OnInit {
 
   changer() {
     this.authService.getAuth().subscribe((res) => {
-      console.log(res);
-      this.authService
-        .change(this.myForm.value, res._id)
-        .subscribe((response) => {
-          console.log(response.error);
-          if (response.error == true) this.error = true;
-          else this.router.navigate(['/admin']);
+      this.authService.change(this.myForm.value, res._id).subscribe((response) => {
+          if (response == false) this.error = true;
+          else {
+            let link = ['admin'];
+            switch (res?.role) {
+              case 0:
+                this.router.navigate(link);
+                break;
+              case 1:
+                link = ['assistant'];
+                this.router.navigate(link);
+                break;
+              case 2:
+                link = ['agent'];
+                this.router.navigate(link);
+                break;
+            }
+          }
         });
     });
-    console.log(this.myForm.value);
   }
 }

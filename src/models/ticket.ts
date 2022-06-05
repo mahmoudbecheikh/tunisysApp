@@ -13,7 +13,7 @@ export class Ticket {
   manuel?: string;
   statut?: string;
   emailClient?: string;
-  nomClient?: number;
+  nomClient?: string;
   telClient?: number;
   rapport?: Rapport;
   adresse?: string;

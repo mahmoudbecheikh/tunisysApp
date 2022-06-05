@@ -83,7 +83,6 @@ export class TicketsComponent implements OnInit {
         event.currentIndex
       );
 
-      console.log(event.container.data);
     } else {
       transferArrayItem(
         event.previousContainer.data,

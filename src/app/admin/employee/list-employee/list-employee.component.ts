@@ -71,7 +71,6 @@ export class ListEmployeeComponent implements OnInit {
         i++;
       });
     }
-    console.log(this.form.value);
     this.submit();
   }
 

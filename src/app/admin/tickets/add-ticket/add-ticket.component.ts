@@ -125,9 +125,7 @@ export class AddTicketComponent implements OnInit {
     }
 
     this.ticketService.ajouter(this.formdata).subscribe((res) => {
-      console.log(res)
       if (res) {
-        console.log(res)
         this.ticketService.confirmer(res._id).subscribe(response=>{
 
           this.toastr.success('', 'Ticket ajouté avec succès!');
