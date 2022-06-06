@@ -60,10 +60,7 @@ export class AddTicketComponent implements OnInit {
   selectedDate: any;
   minDate = new Date()
 
-  onSelect(event:any){
-    this.selectedDate= event;
-    this.dateLimite.setValue(event)
-  }
+ 
 
 
   constructor(
@@ -77,9 +74,12 @@ export class AddTicketComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.afficherListe();
-
   }
 
+  onSelect(event:any){
+    this.selectedDate= event;
+    this.dateLimite.setValue(event)
+  }
   
 
   createForm() {

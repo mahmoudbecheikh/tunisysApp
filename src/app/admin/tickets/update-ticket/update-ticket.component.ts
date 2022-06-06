@@ -79,10 +79,20 @@ export class UpdateTicketComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.afficherListe();
+    this.afficherTicket()
     this.id = this.activatedRoute.snapshot.params['id'];
     this.authService.getAuth().subscribe((res) => {
       if (res) this.employeCnt = res;
     });
+ 
+    this.dateNow = new Date();
+  }
+
+  onSelect(event: any) {
+    this.dateLimite.setValue(event);
+  }
+
+  afficherTicket(){
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.sujet.setValue(this.ticket.sujet);
@@ -99,11 +109,6 @@ export class UpdateTicketComponent implements OnInit {
       if (this.ticket.dateLimite)
         this.dateLimite.setValue(this.ticket.dateLimite);
     });
-    this.dateNow = new Date();
-  }
-
-  onSelect(event: any) {
-    this.dateLimite.setValue(event);
   }
 
   createForm() {

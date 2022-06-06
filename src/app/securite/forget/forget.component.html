@@ -14,9 +14,7 @@
 
             <a [routerLink]="['/login']">Revenir à l'écran de connexion</a>
         </form>
-        <small *ngIf="error!=''">Aucun utilisateur trouvé
-
-        </small>
+        <small id="error" *ngIf="error!=''">{{error}}</small>
 
     </div>
 </div>

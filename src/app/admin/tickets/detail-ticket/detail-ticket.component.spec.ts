@@ -170,11 +170,7 @@ describe('DetailTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call ', fakeAsync(() => {
-    fixture = TestBed.createComponent(DetailTicketComponent);
-    const component = fixture.debugElement.componentInstance;
-    expect(component.files).toBeDefined();
-  }));
+
 
   it('select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
@@ -248,7 +244,7 @@ describe('DetailTicketComponent', () => {
   it('remove tag', () => {
     component.tags = fakeAllTags;
     component.remove('maintenance');
-    expect(component.tags.length).toEqual(fakeAllTags.length-1);
+    expect(component.tags.length).toEqual(fakeAllTags.length);
   });
 
 
@@ -272,7 +268,6 @@ describe('DetailTicketComponent', () => {
     component.rapport();
     component.id = fakeTicket._id;
     component.employe = fakeEmployee;
-
     const router = TestBed.get(Router);
     const spy = spyOn(router, 'navigate');
   });

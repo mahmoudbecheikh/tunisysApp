@@ -39,13 +39,8 @@ export class ListTicketComponent implements OnInit {
     this.afficherList();
     this.listDepartement();
     this.trier();
-
-    this.form = new FormGroup({
-      departements: this.departements,
-      statuts: this.statuts,
-      manuels: this.manuels,
-      notes: this.notes,
-    });
+    this.createForm()
+    
     this.sujet.valueChanges.subscribe(res=>{
       this.ticketsFilter = this.tickets?.filter((item) => {
         if(item.sujet)
@@ -53,6 +48,15 @@ export class ListTicketComponent implements OnInit {
         else return
       });
     })
+  }
+
+  createForm(){
+    this.form = new FormGroup({
+      departements: this.departements,
+      statuts: this.statuts,
+      manuels: this.manuels,
+      notes: this.notes,
+    });
   }
 
   onCheckboxChange(formArray: FormArray, e: any) {
@@ -151,12 +155,14 @@ export class ListTicketComponent implements OnInit {
       this.departementsArray = res as Departement[];
     });
   }
+
   afficherList() {
     this.ticketService.afficherListe().subscribe((res) => {
       this.tickets = res as Ticket[];
       this.ticketsFilter = res;
     });
   }
+
   toAdd() {
     this.router.navigate(['admin/tickets/add']);
   }

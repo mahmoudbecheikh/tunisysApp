@@ -31,14 +31,17 @@ export class ForgetComponent implements OnInit {
       if (res == null) {
         this.error = "Adresse email invalide";
       }
-      if (res.send == true) {
-        this.toastr.success('', 'Email envoyé avec succés');
-        this.error = ''
-        this.myForm.reset();
-      } else {
-        this.error = "Une erreur s'est produite lors de l'envoi";
-        this.myForm.reset();
+      else{
+        if (res.send == true) {
+          this.toastr.success('', 'Email envoyé avec succés');
+          this.error = ''
+          this.myForm.reset();
+        } else {
+          this.error = "Une erreur s'est produite lors de l'envoi";
+          this.myForm.reset();
+        }
       }
+     
     });
   }
 }

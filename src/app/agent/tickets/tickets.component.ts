@@ -30,24 +30,18 @@ export class TicketsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private empService: EmployeeService,
-    private socketService : SocketService,
+    private socketService: SocketService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getListTicket();
-    this.getAuth();
-    this.socketService.listen('confirmNotif').subscribe(res=>{
-      if(res)
-      this.getListTicket()
-    })
-  }
-
-  getAuth() {
-    this.authService.getAuth().subscribe((res) => {
-      this.employe = res;
+    this.socketService.listen('confirmNotif').subscribe((res) => {
+      if (res) this.getListTicket();
     });
   }
+
+
 
   getListTicket() {
     this.changement = [];
@@ -55,6 +49,7 @@ export class TicketsComponent implements OnInit {
     this.cours = [];
     this.resolu = [];
     this.authService.getAuth().subscribe((res) => {
+      this.employe = res 
       this.ticketService.afficherEmploye(res._id).subscribe((res) => {
         this.tickets = res;
         for (let i = 0; i < res.length; i++) {
@@ -82,7 +77,6 @@ export class TicketsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -90,76 +84,21 @@ export class TicketsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.change = true
-
-      // if (Number(event.container.id) > Number(event.previousContainer.id)) {
-      //   transferArrayItem(
-      //     event.previousContainer.data,
-      //     event.container.data,
-      //     event.previousIndex,
-      //     event.currentIndex
-      //   );
-      // } else {
-      //   console.log('Tnajemch twakher');
-      // }
-      // switch (event.container.id) {
-      //   case 'faireListe':
-      //     if (event.previousContainer.data )
-      //       this.change = false;
-      //     else this.change = true;
-
-      //     break;
-      //   case 'coursListe':
-      //     console.log(event.container.data)
-      //     console.log(this.cours)
-      //     if (this.arraysAreEqual(event.container.data, this.cours))
-      //     this.change = false;
-      //     else this.change = true;
-
-      //     break;
-      //   case 'resoluListe':
-      //     if (this.arraysAreEqual(event.container.data, this.resolu))
-      //     this.change = false;
-      //     else this.change = true;
-      //     break;
-      // }
-      // console.log(this.change);
+      this.change = true;
     }
   }
 
-  arraysAreEqual(ary1: any, ary2: any) {
-    return ary1.join('') == ary2.join('');
-  }
 
-  toMore(id: any) {
-    const link = ['agent/tickets', id];
-    this.router.navigate(link);
-  }
-
-  onDelete(id: any) {
-    this.ticketService.supprimer(id).subscribe((res) => {
-      this.getListTicket();
-    });
-  }
-
-  onConfirm(id: any) {
-    this.ticketService.confirmer(id).subscribe((res) => {
-      this.getListTicket();
-    });
-  }
-
+ 
   detail(id: any) {
     const link = ['agent/tickets/', id];
     this.router.navigate(link);
   }
 
-  quitter(idTicket : any,idEmp : any) {
-    this.ticketService
-      .quitter(idTicket, idEmp)
-      .subscribe((res) => {
-        if(res)
-        this.getListTicket()
-      });
+  quitter(idTicket: any, idEmp: any) {
+    this.ticketService.quitter(idTicket, idEmp).subscribe((res) => {
+      if (res) this.getListTicket();
+    });
   }
 
   check() {
@@ -179,18 +118,18 @@ export class TicketsComponent implements OnInit {
       }
 
       if (statut != '') {
-       
-        if(this.tickets[i].statut=='en cours' && !ticket.rapport){
-          this.toastr.warning('Il est strictement impératif de remplir le rapport de résolution pour que ce ticket soit considéré résolu', 'Attention');
-        }
-        else {
+        if (this.tickets[i].statut == 'en cours' && !ticket.rapport) {
+          this.toastr.warning(
+            'Il est strictement impératif de remplir le rapport de résolution pour que ce ticket soit considéré résolu',
+            'Attention'
+          );
+        } else {
           ticketModify = {
             data: this.tickets[i],
             statut: statut,
           };
           this.changement.push(ticketModify);
-
-        } 
+        }
       }
     }
     if (this.changement.length > 0)
@@ -200,8 +139,8 @@ export class TicketsComponent implements OnInit {
         // this.cours = [];
         // this.resolu = [];
         this.getListTicket();
-        this.toastr.info('','Changement effectué avec succès');
-        this.change = false
+        this.toastr.info('', 'Changement effectué avec succès');
+        this.change = false;
       });
     else {
       this.changement = [];
@@ -209,9 +148,8 @@ export class TicketsComponent implements OnInit {
       this.cours = [];
       this.resolu = [];
       this.getListTicket();
-      this.toastr.warning('','changement non autorisé');
-      this.change = false
-
+      this.toastr.warning('', 'changement non autorisé');
+      this.change = false;
     }
   }
 }

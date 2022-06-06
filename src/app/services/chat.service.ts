@@ -30,6 +30,7 @@ export class ChatService {
       headers: new HttpHeaders().append('Content-Type', 'application/json'),
     });
   }
+  
   modifierMessages(env: any,rec : any ,data : any): Observable<any> {
     return this.http.put(this.baseURL+`/${env}/${rec}`, data);
   }

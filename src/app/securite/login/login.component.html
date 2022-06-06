@@ -16,11 +16,11 @@
                 <i (click)="change()" [ngClass]="(show==true)?'bx bx-low-vision':'lni lni-eye'"></i>
 
             </span>
-            <button [disabled]="myForm.invalid" type="submit">Se connecter</button>
+            <button [disabled]="myForm.invalid" id="btn" type="submit">Se connecter</button>
 
             <a [routerLink]="['/oublie']">Mot de passe oublié</a>
         </form>
-        <small *ngIf="error==true">Votre email ou votre mot de passe est incorrect </small>
+        <small id="errorLog" *ngIf="error==true">Votre email ou votre mot de passe est incorrect </small>
 
     </div>
 </div>
