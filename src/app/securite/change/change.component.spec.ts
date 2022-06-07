@@ -6,6 +6,9 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { DashbordComponent } from 'src/app/admin/dashbord/dashbord.component';
+import { TicketsComponent } from 'src/app/agent/tickets/tickets.component';
+import { TicketAttComponent } from 'src/app/assistant/ticket/ticket-att/ticket-att.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Employe } from 'src/models/employe';
 
@@ -33,7 +36,11 @@ describe('ChangeComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'admin', component: DashbordComponent },
+          { path: 'agent', component: TicketsComponent },
+          { path: 'assistant', component: TicketAttComponent },
+        ])
       ],
       providers: [AuthService],
       declarations: [ChangeComponent],
@@ -60,5 +67,4 @@ describe('ChangeComponent', () => {
     component.changer();
     expect(spy).toHaveBeenCalled();
   });
- 
 });

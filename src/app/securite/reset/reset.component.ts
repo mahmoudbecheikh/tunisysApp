@@ -70,7 +70,7 @@ export class ResetComponent implements OnInit {
                 this.router.navigate(['/assistant']);
                 break;
               case 2:
-                this.router.navigate(['/assistant']);
+                this.router.navigate(['/agent']);
                 break;
             }
           }

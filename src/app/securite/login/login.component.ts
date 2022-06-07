@@ -39,12 +39,10 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.authService.login(this.myForm.value).subscribe((res) => {
       if (res.token) {
-
-        this.authService.logged = true
-
+        this.authService.logged = true;
         localStorage.setItem('token', res.token);
         let role = this.authService.getRole();
-        this.cd.detectChanges()
+        this.cd.detectChanges();
         switch (role) {
           case 0:
             this.router.navigate(['/admin']);
@@ -55,7 +53,8 @@ export class LoginComponent implements OnInit {
           case 2:
             this.router.navigate(['/agent']);
             break;
-        
+          default:
+            this.router.navigate(['/']);
         }
       } else {
         this.mdp.setValue('');
@@ -64,11 +63,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  change()
-  {
-      this.show = !this.show;
-      
+  change() {
+    this.show = !this.show;
   }
-
-
 }

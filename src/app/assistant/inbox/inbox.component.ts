@@ -202,22 +202,24 @@ export class InboxComponent implements OnInit {
   }
 
   vu(uid: any) {
-    let data = {
-      email: 'tunisys.mb.sj@gmail.com',
-      uid: uid,
-    };
-    this.mailService.modifier(data).subscribe((res) => {
-      if(res.seen){
-        // this.toastr.success('', 'Email supprimé avec succès!');
-        this.afficherListe();
-        if(this.mailSelected.uid== uid) this.mailSelected = null
-      }
-    });
+    if(this.mailSelected){
+      let data = {
+        email: 'tunisys.mb.sj@gmail.com',
+        uid: uid,
+      };
+      this.mailService.modifier(data).subscribe((res) => {
+        if(res.seen){
+          // this.toastr.success('', 'Email supprimé avec succès!');
+          this.afficherListe();
+          if(this.mailSelected && this.mailSelected.uid== uid) this.mailSelected = null
+        }
+      });
+    }
+
   }
   supprimer(uid: any) {
-    this.mailService
-      .supprimer('tunisys.mb.sj@gmail.com', uid)
-      .subscribe((res) => {
+    if(this.mailSelected){
+      this.mailService.supprimer('tunisys.mb.sj@gmail.com', uid).subscribe((res) => {
         if(res.deleted){
           this.toastr.success('', 'Email supprimé avec succès!');
           this.afficherListe();
@@ -225,6 +227,8 @@ export class InboxComponent implements OnInit {
         }
 
       });
+    }
+  
   }
 
   envoyer(mail : any) {

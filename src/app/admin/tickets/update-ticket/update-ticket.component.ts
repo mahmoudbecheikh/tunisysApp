@@ -77,10 +77,10 @@ export class UpdateTicketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.id = this.activatedRoute.snapshot.params['id'];
     this.createForm();
     this.afficherListe();
     this.afficherTicket()
-    this.id = this.activatedRoute.snapshot.params['id'];
     this.authService.getAuth().subscribe((res) => {
       if (res) this.employeCnt = res;
     });
@@ -93,6 +93,7 @@ export class UpdateTicketComponent implements OnInit {
   }
 
   afficherTicket(){
+
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
       this.sujet.setValue(this.ticket.sujet);

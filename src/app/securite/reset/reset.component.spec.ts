@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -24,6 +25,8 @@ describe('ResetComponent', () => {
     role: 0,
     tel: 20789456,
   };
+  let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWUxMmE0NWZiYjVlYmI3OTA5NTNmYSIsInJvbGUiOjIsImlhdCI6MTY1NDM4NzIwNn0.JKSdY-NZQfi4ZuXbnkDOKMbYc1gc9Q52WiFBzhUtaBs'
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ReactiveFormsModule, RouterTestingModule],
@@ -42,14 +45,27 @@ describe('ResetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
-    const service = fixture.debugElement.injector.get(EmployeeService);
-    const spy = spyOn(service, 'afficherTokenMdp').and.returnValue(of(fakeEmployee));
-    component.tokenExpire = 1652825461622
-    component.token = '5607b023b988f8f48330a6f6ada5368fe3ffe2591c2ae8b947bcf3e0bb6d40bb'
-    component.ngOnInit()
-
-    expect(spy).toHaveBeenCalledWith(component.token,component.tokenExpire)
-    expect(component.valid).toBeTruthy()
+  it('changer lezem tekhdem ', () => {
+    const authService = fixture.debugElement.injector.get(AuthService);
+    spyOn(authService, 'reset').and.returnValue(of({employe : fakeEmployee }));
+    const spy = spyOn(authService, 'login').and.returnValue(of({token : token}));
+    component.changer();
+    expect(spy).toHaveBeenCalled();
+    expect(localStorage.getItem("token")).toBeDefined()
   });
+
+  
+  it('invalid token ', () => {
+    const authService = fixture.debugElement.injector.get(AuthService);
+    spyOn(authService, 'reset').and.returnValue(of({invalid : true }));
+    component.changer();
+    expect(component.valid).toBeTruthy()
+    const errorElement: HTMLInputElement = fixture.debugElement.query(
+      By.css('h3')
+    ).nativeElement;
+    expect(errorElement.textContent).toEqual('Le lien que vous avez suivi a expiré ou invalide')
+  });
+
+    
+
 });

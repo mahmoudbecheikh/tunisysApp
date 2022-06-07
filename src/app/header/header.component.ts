@@ -76,6 +76,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     });
+    
     this.nom.valueChanges.subscribe((response) => {
       if (response && response.trim() == '') this.employeFilter = [];
       else {
@@ -105,10 +106,12 @@ export class HeaderComponent implements OnInit {
   afficherMsg() {
     this.nonLueMsg = 0;
     this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
+      console.log(res)
       if (res) {
         this.rand(res);
         this.messages = res;
         for (const msg of this.messages) {
+          console.log(msg)
           if (!msg.message.lue && msg.envoyeur._id != this.employe?._id)
             this.nonLueMsg += 1;
         }
@@ -200,7 +203,7 @@ export class HeaderComponent implements OnInit {
   rand(array: any) {
     let i = 0;
     let colors = ['#f07167', '#FA8072', '#26978B', '#C70039', '#FFCE5F'];
-    while (i <= array.length) {
+    while (i < array.length) {
       var item = colors[Math.floor(Math.random() * colors.length)];
       this.colors.push(item);
       i++;

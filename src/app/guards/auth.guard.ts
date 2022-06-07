@@ -26,29 +26,29 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return new Promise((resolve, reject) => {
-      if (this.authService.LoggedIn() == false) {
-        resolve(true);
-      } else {
-        let token: any = localStorage.getItem('token');
-        let role = this.authService.getRole()
-        if (token) {
-          switch (role) {
-            case 0:
-              this.router.navigate(['/admin']);
-              break;
-            case 1:
-              this.router.navigate(['/assistant']);
-              break;
-            case 2:
-              this.router.navigate(['/agent']);
-              break;
-            default:
-              this.router.navigate(['/login']);
-          }
-        }
-        resolve(false);
+    return this.checkLogin()
+  }
+  checkLogin(): boolean {
+    if (!this.authService.LoggedIn()) {
+      return true;
+    }
+    let token: any = localStorage.getItem('token');
+    let role = this.authService.getRole()
+    if (token) {
+      switch (role) {
+        case 0:
+          this.router.navigate(['/admin']);
+          break;
+        case 1:
+          this.router.navigate(['/assistant']);
+          break;
+        case 2:
+          this.router.navigate(['/agent']);
+          break;
+        default:
+          this.router.navigate(['/login']);
       }
-    });
+    }
+    return false;
   }
 }

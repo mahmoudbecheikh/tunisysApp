@@ -1,6 +1,11 @@
+import { Employe } from "./employe";
+import { Message } from "./message";
+
 export class Conversation {
     _id?: string;
-    messages?: string [];
-    commentaire?: string [];
+    messages?: Message [];
+    membres?: Employe [];
     date? : string
+
+    
 }

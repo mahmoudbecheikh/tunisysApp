@@ -16,6 +16,7 @@ import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
 import { SocketService } from '../services/socket.service';
 import { saveAs } from 'file-saver';
+import { Message } from 'src/models/message';
 
 @Component({
   selector: 'app-chat',
@@ -30,7 +31,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   envoyeur: FormControl = new FormControl();
   recepteur: FormControl = new FormControl();
   files: FormControl = new FormControl();
-  messages: any;
+  messages: Message [] = [];
   @Input() employeSelected: any;
   enLigne: any = [];
   attachements: any = [];
@@ -97,11 +98,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.scrollToBottom();
-
-    this.authService.getAuth().subscribe((employe) => {
-      this.employe = employe;
-    });
-
+    this.afficherEmploye()
     this.socketService.listen('newMsg').subscribe((msg) => {
       if (msg) {
         this.numberOfMessagesChanged = true;
@@ -127,6 +124,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  afficherEmploye(){
+    
+    this.authService.getAuth().subscribe((employe) => {
+      this.employe = employe;
+    });
+
+  }
+
   download(fileName: string) {
     this.chatService.downloadFile(fileName).subscribe((res) => {
       saveAs(res, fileName);
@@ -150,8 +155,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.attachements.push(element);
     }
   }
-
-
 
   envoyer() {
     this.envoyeur.setValue(this.employe?._id);
@@ -191,7 +194,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   close() {
     this.deselectEmployeEvent.emit(true);
-
   }
   
 

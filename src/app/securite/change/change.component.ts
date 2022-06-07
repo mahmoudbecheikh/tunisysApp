@@ -50,6 +50,7 @@ export class ChangeComponent implements OnInit {
                 link = ['agent'];
                 this.router.navigate(link);
                 break;
+              
             }
           }
         });

@@ -23,18 +23,20 @@ export class AssistantGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return new Promise( (resolve, reject) => {
-      if ( this.authService.LoggedIn() == true) {
-        let role = this.authService.getRole();
-        if (role !== 1) {
-          resolve(false);
-        }
-        resolve(true);
-      } else {
-        this.router.navigate(['/login']);
-        localStorage.removeItem('token');
-        resolve(false);
+    return this.checkLogin();
+  }
+
+  checkLogin(): boolean {
+    console.log(this.authService.LoggedIn());
+    if (this.authService.LoggedIn()) {
+      let role = this.authService.getRole();
+      if (role !== 1) {
+        return false;
       }
-    });
+      return true;
+    }
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+    return false;
   }
 }

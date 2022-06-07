@@ -27,9 +27,8 @@ export class SearchComponent implements OnInit {
       sujet: this.sujet,
     });
     
-    this.ticketService.afficherListe().subscribe((res) => {
-      this.tickets = res;
-    });
+    this.afficherListe()
+
     this.sujet.valueChanges.subscribe((response) => {
       if (response.trim()=='') this.ticketFilter = [];
       else {
@@ -39,6 +38,11 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  afficherListe(){
+    this.ticketService.afficherListe().subscribe((res) => {
+      this.tickets = res;
+    });
+  }
 
   filterData(enteredData: any) {
     this.ticketFilter = this.tickets?.filter((item) => {

@@ -73,9 +73,7 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.depService.afficherListe().subscribe((res) => {
-      this.departements = res;
-    });
+    this.afficherListe()
   }
 
   createForm() {
@@ -88,6 +86,13 @@ export class AddEmployeeComponent implements OnInit {
       mdp: this.mdp,
       tel: this.tel,
       role: this.role,
+    });
+  }
+
+
+  afficherListe() {
+    this.depService.afficherListe().subscribe((res) => {
+      this.departements = res as Departement[];
     });
   }
 

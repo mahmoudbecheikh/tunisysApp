@@ -12,6 +12,7 @@ import { DepartementService } from 'src/app/services/departement.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Departement } from 'src/models/departement';
+import { Employe } from 'src/models/employe';
 import { Ticket } from 'src/models/ticket';
 
 import { UpdateTicketComponent } from './update-ticket.component';
@@ -55,6 +56,19 @@ describe('UpdateTicketComponent', () => {
 
     date: '2022-04-30T22:24:39.778+00:00',
     dateModif: '2022-04-30T22:24:39.778+00:00',
+  };
+
+  let fakeEmployee: Employe = {
+    _id: '1',
+    nomEmp: 'Ben salah',
+    prenomEmp: 'Ali',
+    departement: undefined,
+    cin: 15011136,
+    email: 'string',
+    mdp: 'Azerty',
+    adresse: 'string',
+    role: 0,
+    tel: 20789456,
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -122,6 +136,7 @@ describe('UpdateTicketComponent', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'modifier').and.returnValue(of(fakeTicket));
     component.ticket = fakeTicket
+    component.employeCnt = fakeEmployee
     expect(component.myForm.valid).toBeFalsy();
     component.sujet.setValue('Lorem ipsum');
     component.description.setValue('Lorem ipsum dolor sit amet');
