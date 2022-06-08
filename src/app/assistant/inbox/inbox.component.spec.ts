@@ -195,14 +195,25 @@ describe('InboxComponent', () => {
 
   it('supprimer', () => {
     const service = fixture.debugElement.injector.get(MailService);
-
     const spy = spyOn(service, 'supprimer').and.returnValue(new Observable());
+    component.mailSelected = {
+      uid : '1'
+    }
     const uid = '1';
-    component.mailSelected = {}
     component.supprimer(uid);
     expect(spy).toHaveBeenCalled();
+    expect(component.mailSelected).toBeNull()
   });
 
+  
+  it('supprimer w famech mail seledcte', () => {
+    const service = fixture.debugElement.injector.get(MailService);
+    const spy = spyOn(service, 'supprimer').and.returnValue(new Observable());
+    const uid = '1';
+    component.supprimer(uid);
+    expect(spy).toHaveBeenCalled();
+    expect(component.mailSelected).toBeNull()
+  });
 
   it('submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);

@@ -79,6 +79,10 @@ export class TicketService {
     return this.http.post('http://localhost:3000/reclamation', data);
   }
 
+  afficherReclamationsTicket(id: any): Observable<any> {
+    return this.http.get('http://localhost:3000/reclamation' + `/${id}`);
+  }
+
   supprimerReclamation(id: any): Observable<any> {
     return this.http.delete('http://localhost:3000/reclamation' + `/${id}`);
   }

@@ -210,7 +210,6 @@ describe('DetailTicketComponent', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherListe').and.returnValue(of(ticketsFake));
     component.ticket = fakeTicket;
-    console.log(component.ticket);
     component.afficherTags();
     expect(component.allTags).toEqual(['windows', 'installation']);
   });

@@ -62,7 +62,6 @@ describe('ForgetComponent', () => {
     const errorElement: HTMLInputElement = fixture.debugElement.query(
       By.css('#error')
     ).nativeElement;
-    console.log(errorElement)
     expect(errorElement.textContent).toContain("Adresse email invalide")
   });
 

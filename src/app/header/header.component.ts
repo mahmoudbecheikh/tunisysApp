@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Employe } from 'src/models/employe';
@@ -29,6 +29,9 @@ export class HeaderComponent implements OnInit {
   formRech: FormGroup = new FormGroup({});
   nom: FormControl = new FormControl('', []);
   @Output() selectEmployeEvent = new EventEmitter<any>();
+  @ViewChild('audioOption')
+  audioPlayerRef!: ElementRef;
+
   sound = new Audio('../../assets/sounds/notification.mp3');
 
   constructor(
@@ -54,7 +57,7 @@ export class HeaderComponent implements OnInit {
     this.socketService.listen('newMsg').subscribe((msg) => {
       if (msg) {
         this.afficherMsg();
-        this.sound.play();
+        this.audioPlayerRef.nativeElement.play();
       }
     });
 
@@ -99,19 +102,17 @@ export class HeaderComponent implements OnInit {
 
     this.socketService.listen('newNotif').subscribe((res) => {
       this.afficherNotif();
-      this.sound.play();
+      this.audioPlayerRef.nativeElement.play();
     });
   }
 
   afficherMsg() {
     this.nonLueMsg = 0;
     this.chatService.afficherNonLue(this.employe?._id).subscribe((res) => {
-      console.log(res)
       if (res) {
         this.rand(res);
         this.messages = res;
         for (const msg of this.messages) {
-          console.log(msg)
           if (!msg.message.lue && msg.envoyeur._id != this.employe?._id)
             this.nonLueMsg += 1;
         }

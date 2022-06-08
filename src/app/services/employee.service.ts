@@ -34,7 +34,6 @@ export class EmployeeService {
   }
 
   afficherCin(cin: number): Observable<any> {
-    console.log(cin)
     return this.http.get(this.baseURL + `/emp/${cin}`);
   }
 

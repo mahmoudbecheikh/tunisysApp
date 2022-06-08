@@ -14,6 +14,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { Departement } from 'src/models/departement';
 import { Employe } from 'src/models/employe';
 import { Ticket } from 'src/models/ticket';
+import { DetailTicketComponent } from '../detail-ticket/detail-ticket.component';
+import { ListTicketComponent } from '../list-ticket/list-ticket.component';
 
 import { UpdateTicketComponent } from './update-ticket.component';
 
@@ -74,11 +76,15 @@ describe('UpdateTicketComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
         ReactiveFormsModule,
         MatNativeDateModule,
         MatDatepickerModule,
         ToastrModule.forRoot(),
+        RouterTestingModule.withRoutes([
+          { path: 'admin/tickets', component:ListTicketComponent },
+          { path: 'assistant/tickets/:id', component:DetailTicketComponent },
+
+        ]),
       ],
       providers: [
         EmployeeService,
@@ -121,7 +127,6 @@ describe('UpdateTicketComponent', () => {
       By.css('#sujet')
     ).nativeElement;
     expect(sujetElement.value).toContain('Lorem ipsum')
-    console.log(sujetElement)
   });
 
   it('list departement ', () => {

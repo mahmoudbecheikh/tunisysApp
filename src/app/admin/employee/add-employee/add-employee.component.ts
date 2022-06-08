@@ -73,7 +73,7 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.afficherListe()
+    this.afficherListe();
   }
 
   createForm() {
@@ -89,7 +89,6 @@ export class AddEmployeeComponent implements OnInit {
     });
   }
 
-
   afficherListe() {
     this.depService.afficherListe().subscribe((res) => {
       this.departements = res as Departement[];
@@ -97,20 +96,19 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   ajouter() {
-    if (this.role.value == 0 || this.role.value==1) {
+    if (this.role.value == 0 || this.role.value == 1) {
       this.departement.setValue(null);
     }
     this.empService.ajouter(this.myForm.value).subscribe((res) => {
-      if(res){
+      if (res) {
         this.toastr.success('', 'Employé ajouté avec succès!');
         this.router.navigate(['admin/employees']);
-
       }
     });
   }
 
   changeValue() {
-    if (this.role.value == 0 || this.role.value==1) {
+    if (this.role.value == 0 || this.role.value == 1) {
       this.departement.clearValidators();
     } else {
       this.departement.setValidators([Validators.required]);
@@ -133,7 +131,6 @@ export class AddEmployeeComponent implements OnInit {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
-
           if (!res) return null;
           return res ? { emailExist: true } : null;
         })

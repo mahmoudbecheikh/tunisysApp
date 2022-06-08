@@ -22,6 +22,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ToastrService } from 'ngx-toastr';
+import { Reclamation } from 'src/models/reclamation';
 @Component({
   selector: 'app-detail-ticket-att',
   templateUrl: './detail-ticket.component.html',
@@ -45,6 +46,7 @@ export class DetailTicketComponent implements OnInit {
   x = 1;
   allTags: string[] = [];
   suggestions: any;
+  reclamation? : Reclamation 
   reponses: any;
   formReponse: FormGroup = new FormGroup({});
   formTag: FormGroup = new FormGroup({});
@@ -55,14 +57,10 @@ export class DetailTicketComponent implements OnInit {
     Validators.email,
   ]);
   sujet: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
     Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
   text: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
 
   raison: FormControl = new FormControl('', [
@@ -72,12 +70,12 @@ export class DetailTicketComponent implements OnInit {
 
   titreReponse: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
+    Validators.minLength(3),
   ]);
 
   textReponse: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
+    Validators.minLength(6),
   ]);
 
   file: FormControl = new FormControl('');
@@ -166,8 +164,9 @@ export class DetailTicketComponent implements OnInit {
         this.tags = res.tags;
         this.emailClient.setValue(this.ticket.emailClient);
         this.files = res.fJoint;
-        this.afficherSuggestion();
         this.afficherMails(res?.emailClient, res.date);
+        this.afficherSuggestion();
+        this.afficherReclamation()
         this.afficherTags();
         this.afficherEmploye();
         this.authService.getAuth().subscribe((res) => {
@@ -198,6 +197,15 @@ export class DetailTicketComponent implements OnInit {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
     });
+  }
+
+
+  afficherReclamation(){
+    this.ticketService.afficherReclamationsTicket(this.id).subscribe(res=>{
+      console.log(res)
+      this.reclamation = res
+      this.raison.setValue(this.reclamation?.raison)
+    })
   }
 
   afficherEmploye() {
@@ -262,10 +270,15 @@ export class DetailTicketComponent implements OnInit {
     this.formdata.append('sujet', this.sujet.value);
     this.formdata.append('email', this.emailClient.value);
     this.formdata.append('text', this.text.value);
+    for (const file of this.attachements) {
+      this.formdata.append('files', file);
+
+    }
     this.mailService.envoyerMail(this.formdata).subscribe((res) => {
       this.sujet.setValue('');
       this.text.setValue('');
       this.formdata = new FormData();
+      this.attachements = []
     });
   }
 
@@ -273,9 +286,11 @@ export class DetailTicketComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdata.append('files', element);
-      this.attachements.push(element.name);
+      this.attachements.push(element);
     }
+  }
+  deleteFile(i: any) {
+    this.attachements.splice(i, 1);
   }
 
   rapport() {
@@ -375,6 +390,7 @@ export class DetailTicketComponent implements OnInit {
     }
     return false;
   }
+  
   supprimer(id: any) {
     let ticketId = this.ticket?._id;
     let notif = this.notifEnv.filter(function (el: any) {
@@ -412,8 +428,9 @@ export class DetailTicketComponent implements OnInit {
     };
     this.ticketService.reclamer(reclamation).subscribe((res) => {
       if (res) {
+        this.afficherReclamation()
         this.notifService.envoyer(notification).subscribe((res) => {
-          this.raison.setValue('');
+        this.raison.setValue('');
         });
       }
     });

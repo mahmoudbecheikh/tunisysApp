@@ -46,6 +46,8 @@ export class ListDepartementComponent implements OnInit {
   ajouter() {
     this.depService.ajouter(this.myForm.value).subscribe((res) => {
       this.getListDep();
+      this.toastr.success('', 'Département ajouté avec succès!');
+
       this.myForm.reset()
     });
   }
@@ -54,6 +56,7 @@ export class ListDepartementComponent implements OnInit {
     this.depService
       .modifier(this.departement?._id, this.myForm.value)
       .subscribe((res) => {
+         this.toastr.success('', 'Département modifié avec succès!');
         this.getListDep();
       });
   }
@@ -62,19 +65,15 @@ export class ListDepartementComponent implements OnInit {
     
     this.depService.supprimer(id).subscribe((res) => {
       if(res){
-        this.toastr.success('', 'Département modifié avec succès!');
+        this.toastr.success('', 'Département supprimé avec succès!');
         this.getListDep();
       }
     });
   }
 
-  selectDepartement(id: any) {
-    this.depService.afficherId(id).subscribe((res) => {
-      if(res){
-        this.nom.setValue(res.nom);
-        this.departement = res;
-      }
-    });
+  selectDepartement(departement: Departement) {
+    this.nom.setValue(departement.nom);
+    this.departement = departement;
   }
 
   reset() {

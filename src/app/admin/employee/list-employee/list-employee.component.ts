@@ -97,10 +97,13 @@ export class ListEmployeeComponent implements OnInit {
   }
   afficherListe() {
     this.empService.afficherListe().subscribe((res) => {
-      this.employees = res as Employe[];
-      this.employeesFilter = res;
-      this.rand(res);
+      if(Array.isArray(res) && res.length>0 ){
+        this.employees = res as Employe[];
+        this.employeesFilter = res;
+        this.rand(res);
+      }
     });
+    
   }
   toAdd() {
     this.router.navigate(['admin/employees/add']);
@@ -118,6 +121,7 @@ export class ListEmployeeComponent implements OnInit {
   supprimer(id: any) {
     this.empService.supprimer(id).subscribe((res) => {
       if (res.errorDep) {
+        console.log('aaaa')
         this.toastr.warning("L'employé a un ticket", 'Attention!');
       } else {
         this.afficherListe();

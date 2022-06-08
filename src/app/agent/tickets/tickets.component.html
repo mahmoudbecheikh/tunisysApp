@@ -11,7 +11,8 @@
 
             <div>
                 <div class="item" *ngFor="let item of faire" cdkDrag>
-                    {{item.sujet}}
+                    {{item.sujet}} <i *ngIf="verify(item._id)&& item.statut!='resolu'" style="color: red;"
+                    class="bx bx-info-circle"></i>
                     <br>
                     <span class="badge badge-danger" placement="bottom"
                         ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
@@ -74,6 +75,8 @@
             <div>
                 <div class="item" *ngFor="let item of cours" cdkDrag>
                     {{item.sujet}}
+                    <i *ngIf="verify(item._id)&& item.statut!='resolu'" style="color: red;"
+                    class="bx bx-info-circle"></i>
                     <br>
                     <span class="badge badge-danger" placement="bottom"
                         ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>

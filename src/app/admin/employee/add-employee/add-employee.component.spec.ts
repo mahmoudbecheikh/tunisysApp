@@ -8,6 +8,7 @@ import { DepartementService } from 'src/app/services/departement.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Departement } from 'src/models/departement';
 import { Employe } from 'src/models/employe';
+import { ListEmployeeComponent } from '../list-employee/list-employee.component';
 
 import { AddEmployeeComponent } from './add-employee.component';
 
@@ -43,11 +44,17 @@ describe('AddEmployeeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule,ReactiveFormsModule,ToastrModule.forRoot()],
-      providers: [EmployeeService,DepartementService],
-      declarations: [ AddEmployeeComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        RouterTestingModule.withRoutes([
+          { path: 'admin/employees', component: ListEmployeeComponent },
+        ]),
+      ],
+      providers: [EmployeeService, DepartementService],
+      declarations: [AddEmployeeComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -59,6 +66,7 @@ describe('AddEmployeeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
   it('submitting a form emits an employe', () => {
     const service = fixture.debugElement.injector.get(EmployeeService);
     const spy = spyOn(service, 'ajouter').and.returnValue(of(fakeEmployee));
@@ -66,30 +74,32 @@ describe('AddEmployeeComponent', () => {
     component.prenom.setValue('Lorem');
     component.nom.setValue('Ipsum');
     component.cin.setValue('15510046');
-    component.departement.setValue('')
+    component.departement.setValue('');
     component.email.setValue('tunisys@gmail.com');
     component.mdp.setValue('Azerty33');
     component.tel.setValue('21789456');
     component.role.setValue('0');
-    // expect(component.myForm.valid).toBeTruthy();
     component.ajouter();
     expect(spy).toHaveBeenCalledWith(component.myForm.value);
   });
 
-  it('validator departement create', () => {
-    component.role.setValue(0)
-    component.changeValue()
-    expect(component.departement.validator).toBeNull()
-  });
-  
 
 
-  it('list departement ', () => {
-    const service = fixture.debugElement.injector.get(DepartementService);
-    spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
-    component.afficherListe()
-    expect(component.departements).toEqual(fakeDepartements);
+
+  it('validator departement famech', () => {
+    component.role.setValue(0);
+    component.changeValue();
+    expect(component.departement.validator).toBeNull();
   });
+
+  it('validator departement fama', () => {
+    component.role.setValue(2);
+    component.changeValue();
+    expect(component.departement.validator).not.toBeNull();
+  });
+
+
+
 
 
 });

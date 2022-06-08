@@ -67,9 +67,21 @@ export class InboxComponent implements OnInit {
   show = false
   textMail: FormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(15),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
+
+  formReponse: FormGroup = new FormGroup({});
+
+  titreReponse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]);
+
+  textReponse: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  reponses: any;
+
 
   constructor(
     private mailService: MailService,
@@ -87,6 +99,7 @@ export class InboxComponent implements OnInit {
     this.createForm();
     this.afficherDepartements();
     this.afficherListe();
+    this.afficherReponse();
     this.dateNow = new Date();
   }
 
@@ -135,6 +148,10 @@ export class InboxComponent implements OnInit {
     this.formMail = new FormGroup({
       textMail: this.textMail,
     });
+    this.formReponse = new FormGroup({
+      titreReponse: this.titreReponse,
+      textReponse: this.textReponse,
+    });
   }
 
   afficherDepartements() {
@@ -148,6 +165,7 @@ export class InboxComponent implements OnInit {
       option: 'UNSEEN',
     };
     this.mailService.afficherListe(data).subscribe((res) => {
+      console.log(res)
       if (res.length > 0) {
         // let inboxSorted = res.sort((a: any, b: any) =>
         //   a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
@@ -176,9 +194,11 @@ export class InboxComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let index = 0; index < files.length; index++) {
       const element = files[index];
-      this.formdataMail.append('files', element);
-      this.mailFiles.push(element.name);
+      this.mailFiles.push(element);
     }
+  }
+  deleteFileMail(i: any) {
+    this.mailFiles.splice(i, 1);
   }
 
   uploadFiles(event: any) {
@@ -202,7 +222,7 @@ export class InboxComponent implements OnInit {
   }
 
   vu(uid: any) {
-    if(this.mailSelected){
+    if(this.mailSelected && uid){
       let data = {
         email: 'tunisys.mb.sj@gmail.com',
         uid: uid,
@@ -211,14 +231,14 @@ export class InboxComponent implements OnInit {
         if(res.seen){
           // this.toastr.success('', 'Email supprimé avec succès!');
           this.afficherListe();
-          if(this.mailSelected && this.mailSelected.uid== uid) this.mailSelected = null
+          if(this.mailSelected.uid== uid) this.mailSelected = null
         }
       });
     }
 
   }
   supprimer(uid: any) {
-    if(this.mailSelected){
+    if(this.mailSelected && uid){
       this.mailService.supprimer('tunisys.mb.sj@gmail.com', uid).subscribe((res) => {
         if(res.deleted){
           this.toastr.success('', 'Email supprimé avec succès!');
@@ -235,6 +255,10 @@ export class InboxComponent implements OnInit {
     this.formdataMail.append('sujet', mail.subject);
     this.formdataMail.append('email', mail.from);
     this.formdataMail.append('text', this.textMail.value);
+    for (const file of this.mailFiles) {
+      this.formdataMail.append('files', file);
+    }
+
     this.mailService.envoyerMail(this.formdataMail).subscribe((res) => {
       if(res.send){
         this.toastr.success('', 'Email envoyé avec succés');
@@ -253,4 +277,28 @@ export class InboxComponent implements OnInit {
     this.ticketFiles.splice(i, 1);
   }
 
+  afficherReponse() {
+    this.mailService.afficherReponses().subscribe((res) => {
+      this.reponses = res;
+    });
+  }
+
+  ajouterReponse() {
+    this.mailService
+      .ajouterReponse(this.formReponse.value)
+      .subscribe((reponse) => {
+        this.formReponse.reset();
+        this.afficherReponse();
+      });
+  }
+
+  supprimerReponse(id: any) {
+    this.mailService.supprimerReponse(id).subscribe((res) => {
+      this.afficherReponse();
+    });
+  }
+
+  inserer(text: any) {
+    this.textMail.setValue(text);
+  }
 }

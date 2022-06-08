@@ -1,28 +1,106 @@
 *::first-letter {
-    text-transform: uppercase;
-  }
-  
-  .container {
-    margin-left: 175px;
-    margin-top: 50px;
-  }
-  
-  table,
-  td,
-  th {
-    text-align: center;
-    vertical-align: middle;
-  }
+  text-transform: uppercase;
+}
 
-  table td {
-    height: 50px;
-  }
-  
-  table th {
-    font-weight: 500;
-    background-color: #1a5276;
-    color: white;
-  }
+h1 {
+  color: black;
+  font-family: 'Trocchi', serif;
+  font-size: 45px;
+  font-weight: normal;
+  line-height: 48px;
+  margin: 35px 0px;
+
+}
+
+
+
+
+i {
+  cursor: pointer;
+}
+
+
+table td {
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+
+
+
+
+table th {
+  font-weight: 500;
+  background-color: #4389A2;
+  /* background-color: #02AAB0 ; */
+  background-color: #2193b0;
+
+  color: white;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table,
+td,
+th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table td {
+  height: 50px;
+}
+
+
+i {
+  margin: 5px;
+  font-weight: bold;
+  font-size: 15px
+}
+
+
+
+
+
+.lni-trash-can {
+  color: #e71d34;
+}
+
+
+
+.paginator {
+  text-align: center;
+  left: 40%;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+}
+
+.paginator /deep/ .ngx-pagination .current {
+  background: #1a5276;
+  border-radius: 4px;
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+.paginator /deep/ .ngx-pagination a:hover,
+.ngx-pagination button:hover {
+  background: #d4d4d4;
+  border-radius: 3px;
+
+}
+
+.paginator /deep/ .ngx-pagination a:focus,
+.ngx-pagination button:focus {
+  outline: none;
+  background: #d4d4d4;
+}
+
+
+
+
+
   
   table tr:hover {
     background-color: #ddd;
@@ -37,21 +115,10 @@
   }
   
   
-  i {
-    margin: 5px;
-    font-weight: bold;
+ 
+
   
-  }
-  
-  .lni-pencil {
-    color: #4bca81;
-    font-size: 20px;
-  }
-  
-  .lni-trash-can {
-    color: #e71d34;
-    font-size: 20px;
-  }
+ 
   
 a{
     color: black;

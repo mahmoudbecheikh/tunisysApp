@@ -34,7 +34,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   messages: Message [] = [];
   @Input() employeSelected: any;
   enLigne: any = [];
-  attachements: any = [];
   previews: any = [];
   @ViewChild('scrollable') scrollable?: ElementRef;
   @Input() show: any;
@@ -79,6 +78,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chatService
         .afficherConversation(this.employe?._id, this.employeSelected._id)
         .subscribe((res) => {
+          console.log(res)
           if (res) this.messages = res.messages;
           else this.messages = [];
         });
@@ -145,14 +145,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       const reader = new FileReader();
       if (element.type.includes('image')) {
         reader.onload = () => {
-          this.previews.push({ type: 'image', data: reader.result as string });
+          this.previews.push({ type: 'image', data: reader.result as string , file : element});
         };
       } else {
-        this.previews.push({ type: 'file', data: element.name });
+        this.previews.push({ type: 'file', data: element.name , file : element });
       }
 
       reader.readAsDataURL(element);
-      this.attachements.push(element);
     }
   }
 
@@ -163,8 +162,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.formdata.append('recepteur', this.recepteur.value);
     this.formdata.append('contenu', this.contenu.value);
 
-    for (const file of this.attachements) {
-       this.formdata.append('files', file);
+    for (const prev of this.previews) {
+       this.formdata.append('files', prev.file);
     }
 
     this.chatService.ajouterMessage(this.formdata).subscribe((res) => {
@@ -198,8 +197,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   
 
   deleteFile(i: any) {
+
     this.previews.splice(i, 1);
-    this.attachements.splice(i, 1);
+    console.log(this.previews)
 
   }
 }

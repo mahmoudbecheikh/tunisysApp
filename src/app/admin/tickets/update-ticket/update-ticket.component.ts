@@ -19,10 +19,11 @@ export class UpdateTicketComponent implements OnInit {
   ticket?: Ticket;
   id?: number;
   myForm: FormGroup = new FormGroup({});
-  departements: Departement[] = [];
+  departementSelected?: Departement;
   attachmentList: any = [];
   formdata = new FormData();
   attachmentDeleted: any = [];
+  departements : Departement [] = []
   minDate = new Date();
 
   sujet: FormControl = new FormControl('', [
@@ -96,8 +97,14 @@ export class UpdateTicketComponent implements OnInit {
 
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
+      this.depService.afficherId(this.ticket?.departement?._id).subscribe((res) => {
+        this.departementSelected = res ;
+      });
       this.sujet.setValue(this.ticket.sujet);
       this.departement.setValue(this.ticket.departement?._id);
+      if(this.ticket.employe)
+      this.employe.setValue(this.ticket.employe?._id);
+
       this.description.setValue(this.ticket.description);
       this.emailClient.setValue(this.ticket.emailClient);
       this.nomClient.setValue(this.ticket.nomClient);
@@ -142,6 +149,12 @@ export class UpdateTicketComponent implements OnInit {
     this.formdata.append('siteWeb', this.siteWeb.value);
     this.formdata.append('adresse', this.adresse.value);
     this.formdata.append('dateLimite', this.dateLimite.value);
+    if(this.employe.value != 'auto')
+    {
+      this.formdata.append('employe', this.employe.value);
+      
+    }
+   
 
     for (const file of this.attachmentList) {
       if (!file.url) this.formdata.append('files', file);
@@ -152,7 +165,6 @@ export class UpdateTicketComponent implements OnInit {
       link = ['assistant/tickets/' + this.ticket?._id];
 
     if (this.employe.value == 'auto') {
-      this.employe.setValue(null);
 
       this.ticketService
         .modifier(this.ticket?._id, this.formdata)

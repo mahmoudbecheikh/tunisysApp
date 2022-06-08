@@ -27,7 +27,6 @@ export class AssistantGuard implements CanActivate {
   }
 
   checkLogin(): boolean {
-    console.log(this.authService.LoggedIn());
     if (this.authService.LoggedIn()) {
       let role = this.authService.getRole();
       if (role !== 1) {

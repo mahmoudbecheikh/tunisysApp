@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TicketAttComponent } from '../assistant/ticket/ticket-att/ticket-att.component';
 import { AuthService } from '../services/auth.service';
 
 import { AuthGuard } from './auth.guard';
@@ -18,8 +19,13 @@ describe('AuthGuard', () => {
   }
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
-      providers : [AuthService]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'assistant', component: TicketAttComponent },
+        ]),
+      ],
+      providers: [AuthService],
     });
     guard = TestBed.inject(AuthGuard);
     service = TestBed.inject(AuthService);
@@ -30,7 +36,6 @@ describe('AuthGuard', () => {
   it('should be created', () => {
     expect(guard).toBeTruthy();
   });
-
 
   mockUrls.forEach((mockUrl) => {
     describe('and navigates to a guarded route configuration', () => {

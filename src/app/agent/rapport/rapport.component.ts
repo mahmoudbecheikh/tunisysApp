@@ -59,7 +59,6 @@ export class RapportComponent implements OnInit {
         this.recapSujet.setValue(this.rapport?.recapSujet);
         this.description.setValue(this.rapport?.description);
         this.attachmentList = this.rapport?.fJoint;
-        console.log(this.attachmentList)
       }
     });
     this.authService.getAuth().subscribe((res) => {

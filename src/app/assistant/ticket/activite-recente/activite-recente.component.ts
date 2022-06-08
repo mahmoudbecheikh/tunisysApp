@@ -35,9 +35,5 @@ export class ActiviteRecenteComponent implements OnInit {
 
 
 
-  supprimer(id: any) {
-    this.ticketService.supprimer(id).subscribe((res) => {
-      this.afficherListe();
-    });
-  }
+  
 }

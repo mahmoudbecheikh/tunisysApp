@@ -35,7 +35,7 @@
                     <tr *ngFor="let ticket of ticketsFilter | paginate: { 
                         itemsPerPage: 5,
                         currentPage :p,
-                        totalItems: tickets.length}">
+                        totalItems: ticketsFilter.length}">
                         <td scope="row"> <i *ngIf="verify(ticket._id)&& ticket.statut!='resolu'" style="color: red;"
                                 class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
                         <td> {{ ticket.departement?.nom }}</td>
@@ -54,8 +54,8 @@
                             <i class="lni lni-more-alt" (click)="detail(ticket._id)"></i>
                             <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square"
                                 (click)="confirmer(ticket._id)"></i>
-                            <i class="lni lni-trash-can" (click)="selectTicket(ticket)" data-toggle="modal" data-target="#my-modal"></i>
-                            <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                            <i class="lni lni-trash-can" (click)="selectTicket(ticket)" data-toggle="modal" data-target="#modalDelete"></i>
+                            <div id="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content border-0">
                                         <div class="modal-body p-0">

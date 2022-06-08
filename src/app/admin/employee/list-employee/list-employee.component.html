@@ -20,7 +20,7 @@
                     <tr *ngFor="let employee of employeesFilter | paginate: { 
                     itemsPerPage: 5,
                     currentPage :p,
-                    totalItems: employees.length} ; let i = index">
+                    totalItems: employeesFilter.length} ; let i = index">
                         <td scope="row">
                             <div class="row">
                                 <div class="col-sm" [style.background]="colors[i]" style="margin-left:10px;"

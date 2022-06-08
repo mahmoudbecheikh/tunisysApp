@@ -49,17 +49,13 @@
                         <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Veuillez entrer une adresse valide </span>
                     </small>
                 </div>
-                <div class="form-group">
-                    <ng-container *ngFor="let dep of departements">
+                <div class="form-group"  *ngIf="ticket?.employe">
 
-                        <select class="form-control" *ngIf="ticket?.employe && dep._id==ticket?.departement?._id"
-                            formControlName="employe">
-                            <option value="" disabled hidden [selected]="true">Sélectionnez un employé</option>
-                            <option *ngFor="let emp of dep?.employes" 
-                                value="{{emp._id}}">  {{ticket?.employe?._id==emp._id}} {{emp.prenomEmp}} {{emp.nomEmp}}</option>
-                                <option value="auto">Automatique</option>
+                        <select class="form-control" formControlName="employe">
+                            <option value="auto">Automatiquement</option>
+                            <option *ngFor="let emp of departementSelected?.employes" 
+                                value="{{emp._id}}" [selected]="ticket?.employe?._id==emp._id">  {{emp.prenomEmp}} {{emp.nomEmp}}</option>
                         </select>
-                    </ng-container>
                 </div>
 
 
@@ -94,7 +90,7 @@
 
 
                 <div class="form-group">
-                    <select class="form-control" formControlName="departement">
+                    <select class="form-control" formControlName="departement"  [attr.disabled]="ticket?.statut!='en attente'? '' : null">
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" [selected]="dep._id==ticket?.departement?._id" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>

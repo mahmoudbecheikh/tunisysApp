@@ -101,6 +101,21 @@ export class TicketsComponent implements OnInit {
     });
   }
 
+  verify(id: any) {
+    for (let i = 0; i < this.tickets.length; i++) {
+      let ticket = this.tickets[i];
+      if (ticket._id == id) {
+        if (
+          ticket.dateLimite &&
+          new Date(ticket?.dateLimite).getTime() < Date.now()
+        )
+          return true;
+        else return false;
+      }
+    }
+    return true;
+  }
+
   check() {
     this.changement = [];
     for (let i = 0; i < this.tickets.length; i++) {

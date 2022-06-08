@@ -1,21 +1,20 @@
 <ng-container *ngIf="loading | async">
     <div class="overlay"></div>
-    <mat-progress-spinner [mode]="'indeterminate'" ></mat-progress-spinner>
-  </ng-container>
+    <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+</ng-container>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9">
             <div class="content-wrapper">
                 <div class="email-app card-margin">
 
-                    <div class="email-list-wrapper" [ngStyle]="{'width': mailSelected ? '40%' : '100%' }"
-                    >
+                    <div class="email-list-wrapper" [ngStyle]="{'width': mailSelected ? '40%' : '100%' }">
 
                         <div id="email-app-body" class="email-list-scroll-container ps ps--active-y">
 
-                            <ul class="email-list" >
+                            <ul class="email-list">
                                 <li *ngFor="let mail of mails" class="email-list-item"
-                                    [ngClass]="{'active': mailSelected && mail.uid===mailSelected.uid}"
+                                    [ngClass]="{'active': mailSelected && mail.uid===mailSelected?.uid}"
                                     (click)='select(mail)'>
                                     <div class="recipient">
                                         <img src="../../../assets/images/client.png" alt="Profile Picture" />
@@ -43,18 +42,7 @@
                                         <span class="email-time">{{mail.date | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
                                     </div>
                                 </li>
-                                <!-- <li class="email-list-item active">
-                                    <div class="recipient">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="Profile Picture" />
-                                        <a href="#" class="recipient-name">Poul Smith</a>
-                                    </div>
-                                    <a href="#" class="email-subject">Prepare Mockup as per the spec document and Submit by
-                                        Monday!!!<i class="unread">&nbsp;</i></a>
-                                    <div class="email-footer">
-        
-                                        <span class="email-time">11:50 AM</span>
-                                    </div>
-                                </li> -->
+
 
                             </ul>
                         </div>
@@ -96,22 +84,89 @@
 
                             </ul>
                         </div>
-                        <div  #target>
-                            <form [formGroup]="formMail"  (ngSubmit)="envoyer(mailSelected)" class="email" *ngIf="show">
+                        <div #target>
+                            <form [formGroup]="formMail" (ngSubmit)="envoyer(mailSelected)" class="email" *ngIf="show">
 
                                 <div class="form-group">
                                     <textarea class="form-control" formControlName="textMail" id="textMail"
                                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
-                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of mailFiles">
-                                        <p style="color: #0066FF;">{{file}}</p>
+                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of mailFiles;let index=index">
+                                        <p style="color: #0066FF;">{{file.name}}
+                                            <i (click)="deleteFileMail(index)" style="font-weight: bold; color: #cc0033;" class="lni lni-close"></i>
+                                        </p>
                                     </div>
                                 </div>
-                
+
                                 <input type="file" name="file" id="file" multiple (change)="uploadFilesMail($event)"
                                     style="visibility: hidden;display: none;">
                                 <input class="btn btn-primary" type="submit" [disabled]="formMail.invalid" />
                                 <label for="file"> <i class="lni lni-paperclip"></i></label>
-                            
+                                <i class="bx bx-message-alt-detail" data-toggle="modal" data-target="#exampleModal"></i>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title w-100 text-center" id="exampleModalLabel">Réponse
+                                                    prédéfinies
+                                                </h2>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="row">
+                                                    <div class="new col-sm-4">
+                                                        <p>+ Créér nouveau</p>
+                                                        <form [formGroup]="formReponse" (ngSubmit)="ajouterReponse()">
+                                                            <input type="text" class="form-control" name="titreReponse"
+                                                                id="titreReponse" formControlName="titreReponse"
+                                                                placeholder="Titre">
+                                                            <textarea class="form-control" formControlName="textReponse"
+                                                                id="textReponse" placeholder="Text" rows="5"></textarea>
+                                                            <input type="submit" class="btn btn-secondary"
+                                                                value="Ajouter" [disabled]="formReponse.invalid"
+                                                                style="margin-top: 15px; margin-left: 75px;" />
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-sm-8">
+
+
+                                                        <div class="card" *ngFor="let reponse of reponses"
+                                                            style="width: 200px; height: 90px;  display: inline-block;">
+                                                            <i class="lni lni-trash-can" style="cursor: pointer;float: right;"
+                                                                (click)="supprimerReponse(reponse._id)"></i>
+
+                                                            <div class="card-body">
+                                                                <h4 class="card-title text-left"
+                                                                    style="font-weight: 500;">
+                                                                    {{reponse.titre}}
+                                                                </h4>
+                                                                <div id="reponseBtn" class="btn-sm "
+                                                                    style="margin-left: -22px; width: 200px;text-align: center;cursor:pointer ;"
+                                                                    data-dismiss="modal"
+                                                                    (click)="inserer(reponse.text)">+
+                                                                    Insérer
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
 
@@ -194,7 +249,7 @@
 
                         <div class="row files">
                             <div class="col-sm-2 file" *ngFor="let file of ticketFiles;let index = index">
-                                <img  src="../../assets/images/file.png">
+                                <img src="../../assets/images/file.png">
                                 <i (click)="deleteFile(index)" class="lni lni-close"></i>
                                 <p style="word-wrap: break-word">{{file.name}}</p>
                             </div>

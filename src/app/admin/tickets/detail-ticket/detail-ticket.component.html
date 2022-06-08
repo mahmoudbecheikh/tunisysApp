@@ -60,14 +60,15 @@
 
         <div class="col-sm">
             <ng-container *ngIf="verifyCollab(employe?._id) || employe?._id==ticket?.employe?._id;else export">
-                <div (click)="rapport()" class="btn btn-secondary">
-                    <i class="bx bx-file"></i>
-                    Rapport
-                </div>
                 <div class="btn btn-secondary" data-toggle="modal" data-target="#recModal">
                     <i class="bx bx-info-circle"></i>
                     Réclamer
                 </div>
+                <div (click)="rapport()" class="btn btn-secondary">
+                    <i class="bx bx-file"></i>
+                    Rapport
+                </div>
+
                 <div class="modal fade" id="recModal" tabindex="-1" role="dialog" aria-labelledby="recModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -80,13 +81,22 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <textarea type="text" [formControl]="raison" placeholder="Raison *" class="form-control"
-                                    name="raison" id="raison" rows="7"> </textarea>
+                                <div *ngIf="reclamation || ticket?.statut=='resolu'" style="height:175px;">
+                                    <p>
+                                        {{reclamation?.raison}}
+                                    </p>
+
+                                </div>
+
+                                <textarea type="text" [formControl]="raison"
+                                    *ngIf="!reclamation && ticket?.statut!='resolu'" placeholder="Raison *"
+                                    class="form-control" name="raison" id="raison" rows="7"> </textarea>
 
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-primary" type="button" (click)="reclamer()"
-                                    [disabled]="raison.invalid" *ngIf="employe?.role==2">Reclamer</button>
+                                    [disabled]="raison.invalid"
+                                    *ngIf="employe?.role==2 && ticket?.statut!='resolu' && !reclamation">Reclamer</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                             </div>
                         </div>
@@ -124,10 +134,10 @@
 
             <div class="row">
                 <div class="info col-sm">
-                    <p >Référence : <span  id="reference">{{ticket?.ref}}</span></p>
+                    <p>Référence : <span id="reference">{{ticket?.ref}}</span></p>
                     <p id="nomClient">Nom : <span>{{ticket?.nomClient}}</span></p>
-                    <p >Email : <span id="emailClient">{{ticket?.emailClient}}</span></p>
-                    <p >Tel : <span id="telClient">{{ticket?.telClient}}</span></p>
+                    <p>Email : <span id="emailClient">{{ticket?.emailClient}}</span></p>
+                    <p>Tel : <span id="telClient">{{ticket?.telClient}}</span></p>
                     <p id="adresse">Adresse : <span>{{ticket?.adresse}}</span></p>
                     <p id="siteWeb">Site : <span>{{ticket?.siteWeb}}</span></p>
                     <p>Date limite :
@@ -275,8 +285,11 @@
                 <div class="form-group">
                     <textarea class="form-control" formControlName="text" id="desc"
                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
-                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of attachements">
-                        <p style="color: #0066FF;">{{file}}</p>
+                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of attachements;let index = index">
+                        <p style="color: #0066FF;">{{file.name}}
+
+                            <i (click)="deleteFile(index)" style="font-weight: bold; color: #cc0033;" class="lni lni-close"></i>
+                        </p>
                     </div>
                 </div>
 
@@ -305,7 +318,7 @@
                                     <div class="new col-sm-4">
                                         <p>+ Créér nouveau</p>
                                         <form [formGroup]="formReponse" (ngSubmit)="ajouterReponse()">
-                                            <input type="text" class="form-control" name="titreReponse"
+                                            <input type="text" class="form-control" name="titreReponse" 
                                                 id="titreReponse" formControlName="titreReponse" placeholder="Titre">
                                             <textarea class="form-control" formControlName="textReponse"
                                                 id="textReponse" placeholder="Text" rows="5"></textarea>
@@ -327,7 +340,7 @@
                                                     {{reponse.titre}}
                                                 </h4>
                                                 <div id="reponseBtn" class="btn-sm "
-                                                    style="margin-left: -20px; width: 198px;text-align: center;"
+                                                    style="margin-left: -20px; width: 198px;text-align: center;cursor:pointer"
                                                     data-dismiss="modal" (click)="inserer(reponse.text)">+
                                                     Insérer
                                                 </div>
@@ -359,8 +372,7 @@
 
             <form [formGroup]="formTag" *ngIf="employe?.role==2" (ngSubmit)="enregistrer()">
 
-                <span *ngFor="let tag of filtredTags"  class="badge badge-light"
-                    (click)="selected(tag)">{{tag}}</span>
+                <span *ngFor="let tag of filtredTags" class="badge badge-light" (click)="selected(tag)">{{tag}}</span>
 
                 <mat-form-field class="example-chip-list" appearance="fill">
                     <mat-chip-list #chipList aria-label="Fruit selection">

@@ -122,7 +122,6 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   changeValue() {
-    console.log(this.role.value);
     if (this.role.value == 0 || this.role.value==1) {
       this.departement.clearValidators();
     } else {
