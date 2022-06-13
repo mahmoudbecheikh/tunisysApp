@@ -82,7 +82,6 @@ describe('AddTicketComponent', () => {
   it('ngOnInit', () => {
     spyOn(component, 'createForm').and.callThrough();
     spyOn(component, 'afficherListe').and.callThrough();
-
     component.ngOnInit();
     expect(component.createForm).toHaveBeenCalled();
     expect(component.afficherListe).toHaveBeenCalled();
@@ -90,7 +89,6 @@ describe('AddTicketComponent', () => {
 
   it('list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
-
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
     component.afficherListe();
     expect(component.departements).toEqual(fakeDepartements);

@@ -1,21 +1,39 @@
-body {
-    background: #DCDCDC;
-    margin-top: 20px;
-}
-
 .email-app {
     display: flex;
 }
 
-.container {
-    margin-left: 175px;
-    margin-top: 50px;
+h3 {
+    font-family: 'Helvetica Neue', sans-serif;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 1px
 }
 
+small {
+    color: #cc0033;
+    display: inline-block;
+    font-size: 12px;
+    ;
+}
 
-.lni-reply{
+.lni-reply {
     font-size: 20px;
     float: right;
+    color: #0FA983;
+    margin-top: -5px;
+}
+
+i {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 3px;
+}
+
+.modal i {
+    color: #cc0033;
+
 }
 
 .upload {
@@ -25,29 +43,43 @@ body {
     height: 150px;
     overflow-y: scroll;
     overflow-x: hidden;
-  }
-  
-  .lni-close{
+}
+
+
+
+.email i,
+.email label {
+    font-size: 22px;
+    font-weight: 500;
+    float: right;
+    color: #1B4F72;
+}
+
+.lni-close {
     font-size: 10px;
     color: #cc0033;
     font-weight: bold;
-  }
+    float: right;
+}
 *::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
-  }
-  
-  *::-webkit-scrollbar-thumb {
+}
+
+*::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: lightgray;
-  }
-
-  
-i {
-    font-size: 15px;
-    font-weight: 500;
-    margin: 3px;
 }
+
+.btn-primary {
+    background: #2471A3;
+    border: none;
+    color: white;
+    margin-bottom: 25px;
+}
+
+
+
 
 .file {
     cursor: pointer;
@@ -228,7 +260,8 @@ i {
     font-size: 13px;
     margin-bottom: 1rem;
     line-height: 2;
-    word-wrap: break-word;}
+    word-wrap: break-word;
+}
 
 .email-app .email-desc-wrapper .email-attachment {
     margin-bottom: 2rem;
@@ -290,13 +323,13 @@ i {
 
 
 /* ***************** */
-mat-progress-spinner {
+ mat-progress-spinner {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-}
+} 
 
 .overlay {
     top: 0;
@@ -321,27 +354,31 @@ button {
 }
 
 
-.card{
+.card {
     border: 2px solid grey;
     margin: 5px 10px;
 }
 
-.card .btn-sm{
+.card .btn-sm {
     background-color: grey;
     color: white;
 }
 
-.card .btn-sm:hover{
+.card .btn-sm:hover {
     background-color: #21618C;
     color: white;
 
 }
 
-.card:hover{
+.card:hover {
     border: 2px solid #21618C;
 }
 
-.new{
-    height: 250px;
+.new {
+    height: 275px;
     border-right: 1px solid #BDC3C7
+}
+
+.new input{
+    margin-bottom: 10px;
 }

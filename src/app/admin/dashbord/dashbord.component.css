@@ -14,39 +14,57 @@
     padding: 10px;
 }
 
-.employe{
-    background-color: #8BC6EC;
-    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
-}
-.departement{
-   
-    background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+.employe {
+    background: #ff9966;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ff5e62, #ff9966);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ff5e62, #ff9966);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-.ticket{
-    background-color: #D9AFD9;
-    background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
-   
-    
+
+.departement {
+    background: #02AAB0;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #00CDAC, #02AAB0);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #00CDAC, #02AAB0);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.card h3,.card p {
+.ticket {
+    background: #B24592;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F15F79, #B24592);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F15F79, #B24592);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.card h3,
+.card p {
     margin-top: 10px;
     margin-left: 25px;
-    font-size: 18px;
+    font-size: 20px;
     color: white;
-
-    font-weight: 500;
-
+    font-weight: bold;
+    font-family: 'Droid serif';
+    font-style: italic;
+    word-spacing: 1px;
 }
 
 
-h2 {
-    color: grey;
-}
-
-
+h1 {
+    color: black;
+    font-family: 'Trocchi', serif;
+    font-size: 45px;
+    font-weight: normal;
+    line-height: 48px;
+    margin: 25px 0px ;
+    text-align: center;
+  }
 
 .chart {
     margin-top: 25px;
@@ -92,7 +110,7 @@ span {
 
 .bx-time {
     color: white;
-    background-image: linear-gradient( 135deg, #FDEB71 10%, #F8D800 100%);
+    background-image: linear-gradient(135deg, #FDEB71 10%, #F8D800 100%);
 }
 
 .lni-speechless {
@@ -109,12 +127,12 @@ span {
 
 .bx-loader-circle {
     color: white;
-    background-image: linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%);
+    background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
 }
 
 .bx-task {
-    background-image: linear-gradient( 135deg, #81FBB8 10%, #28C76F 100%);
-        color: white;
+    background-image: linear-gradient(135deg, #81FBB8 10%, #28C76F 100%);
+    color: white;
 }
 
 table {

@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <h1 class="text-center">Employés</h1>
-    <div class="btn btn-dark" (click)="toAdd()">Créer un employé </div>
+    <h1>Employés</h1>
+    <div class="btn btn-success"[routerLink]="['/admin/employees/add']">Créer un employé </div>
     <input class="form-control search"  type="search" [formControl]="nom" placeholder="Recherche un employé"
         aria-label="Search">
     <div class="row">
@@ -44,7 +44,7 @@
                         <td *ngIf="employee.role==1">Assistant</td>
                         <td *ngIf="employee.role==2">Agent</td>
                         <td>
-                            <i class="lni lni-pencil" (click)="goToUpdate(employee._id)"></i>
+                            <i class="lni lni-pencil" [routerLink]="['update/'+employee._id]"></i>
                             <i class="lni lni-trash-can" (click)="selectEmp(employee)" data-toggle="modal" data-target="#my-modal"></i>
                             <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">

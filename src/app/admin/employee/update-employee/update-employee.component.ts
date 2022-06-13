@@ -84,17 +84,17 @@ export class UpdateEmployeeComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.empService.afficherId(this.id).subscribe((emp) => {
       this.employe = emp;
-      this.prenomEmp = emp.prenomEmp
-      this.nomEmp = emp.nomEmp
+      this.prenomEmp = emp.prenomEmp;
+      this.nomEmp = emp.nomEmp;
       this.prenom.setValue(this.prenomEmp);
-      this.departement.setValue(this.employe?.departement?._id)
+      this.departement.setValue(this.employe?.departement?._id);
       this.nom.setValue(this.nomEmp);
       this.cin.setValue(this.employe?.cin);
       this.email.setValue(this.employe?.email);
       this.role.setValue(this.employe?.role);
       this.tel.setValue(this.employe?.tel);
     });
-    if (this.role.value == 0 || this.role.value==1) {
+    if (this.role.value == 0 || this.role.value == 1) {
       this.departement.clearValidators();
       this.departement.updateValueAndValidity();
     }
@@ -116,13 +116,15 @@ export class UpdateEmployeeComponent implements OnInit {
     this.empService
       .modifier(this.employe?._id, this.myForm.value)
       .subscribe((res) => {
-        this.toastr.success('', 'Employé modifié avec succès!');
-        this.router.navigate(['admin/employees']);
+        if (res) {
+          this.toastr.success('', 'Employé modifié avec succès!');
+          this.router.navigate(['admin/employees']);
+        }
       });
   }
 
   changeValue() {
-    if (this.role.value == 0 || this.role.value==1) {
+    if (this.role.value == 0 || this.role.value == 1) {
       this.departement.clearValidators();
     } else {
       this.departement.setValidators([Validators.required]);
@@ -145,7 +147,6 @@ export class UpdateEmployeeComponent implements OnInit {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return this.empService.afficherEmail(control.value).pipe(
         map((res) => {
-
           if (!res) return null;
           return res && this.employe?.email != control.value
             ? { emailExist: true }

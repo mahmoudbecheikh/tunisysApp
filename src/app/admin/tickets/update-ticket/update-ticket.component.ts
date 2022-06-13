@@ -23,7 +23,7 @@ export class UpdateTicketComponent implements OnInit {
   attachmentList: any = [];
   formdata = new FormData();
   attachmentDeleted: any = [];
-  departements : Departement [] = []
+  departements: Departement[] = [];
   minDate = new Date();
 
   sujet: FormControl = new FormControl('', [
@@ -81,11 +81,11 @@ export class UpdateTicketComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.createForm();
     this.afficherListe();
-    this.afficherTicket()
+    this.afficherTicket();
     this.authService.getAuth().subscribe((res) => {
       if (res) this.employeCnt = res;
     });
- 
+
     this.dateNow = new Date();
   }
 
@@ -93,17 +93,17 @@ export class UpdateTicketComponent implements OnInit {
     this.dateLimite.setValue(event);
   }
 
-  afficherTicket(){
-
+  afficherTicket() {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
-      this.depService.afficherId(this.ticket?.departement?._id).subscribe((res) => {
-        this.departementSelected = res ;
-      });
+      this.depService
+        .afficherId(this.ticket?.departement?._id)
+        .subscribe((res) => {
+          this.departementSelected = res;
+        });
       this.sujet.setValue(this.ticket.sujet);
       this.departement.setValue(this.ticket.departement?._id);
-      if(this.ticket.employe)
-      this.employe.setValue(this.ticket.employe?._id);
+      if (this.ticket.employe) this.employe.setValue(this.ticket.employe?._id);
 
       this.description.setValue(this.ticket.description);
       this.emailClient.setValue(this.ticket.emailClient);
@@ -149,12 +149,9 @@ export class UpdateTicketComponent implements OnInit {
     this.formdata.append('siteWeb', this.siteWeb.value);
     this.formdata.append('adresse', this.adresse.value);
     this.formdata.append('dateLimite', this.dateLimite.value);
-    if(this.employe.value != 'auto')
-    {
+    if (this.employe.value != 'auto') {
       this.formdata.append('employe', this.employe.value);
-      
     }
-   
 
     for (const file of this.attachmentList) {
       if (!file.url) this.formdata.append('files', file);
@@ -165,7 +162,6 @@ export class UpdateTicketComponent implements OnInit {
       link = ['assistant/tickets/' + this.ticket?._id];
 
     if (this.employe.value == 'auto') {
-
       this.ticketService
         .modifier(this.ticket?._id, this.formdata)
         .subscribe((res) => {
@@ -176,6 +172,7 @@ export class UpdateTicketComponent implements OnInit {
             });
           }
         });
+      this.formdata = new FormData();
     } else {
       this.ticketService
         .modifier(this.ticket?._id, this.formdata)
@@ -185,6 +182,7 @@ export class UpdateTicketComponent implements OnInit {
             this.toastr.success('', 'Ticket modifié avec succès!');
           }
         });
+      this.formdata = new FormData();
     }
   }
 
@@ -201,6 +199,5 @@ export class UpdateTicketComponent implements OnInit {
       this.formdata.append('FjointDeleted', this.attachmentList[i].filename);
 
     this.attachmentList.splice(i, 1);
- 
   }
 }

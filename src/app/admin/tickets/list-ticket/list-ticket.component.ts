@@ -163,19 +163,9 @@ export class ListTicketComponent implements OnInit {
     });
   }
 
-  toAdd() {
-    this.router.navigate(['admin/tickets/add']);
-  }
 
-  detail(id: any) {
-    const link = ['admin/tickets/', id];
-    this.router.navigate(link);
-  }
 
-  goToUpdate(id: any) {
-    const link = ['admin/tickets/update/', id];
-    this.router.navigate(link);
-  }
+  
 
   supprimer(id: any) {
     this.ticketService.supprimer(id).subscribe((res) => {

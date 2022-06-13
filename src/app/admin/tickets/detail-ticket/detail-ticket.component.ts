@@ -184,12 +184,7 @@ export class DetailTicketComponent implements OnInit {
       option: 'ALL',
     };
     this.mailService.afficherDiscussion(data).subscribe((mails) => {
-      if (mails) {
         this.mails = mails;
-        // this.mails = this.mails.sort((a: any, b: any) =>
-        //   a.date > b.date ? 1 : -1
-        // );
-      }
     });
   }
 
@@ -232,10 +227,8 @@ export class DetailTicketComponent implements OnInit {
 
   confirmer() {
     this.ticketService.confirmer(this.ticket?._id).subscribe((res) => {
-      if (res) {
         this.toastr.success('', 'Ticket confirmé avec succès!');
         this.router.navigate(['assistant/tickets']);
-      }
     });
   }
 
@@ -277,9 +270,10 @@ export class DetailTicketComponent implements OnInit {
     this.mailService.envoyerMail(this.formdata).subscribe((res) => {
       this.sujet.setValue('');
       this.text.setValue('');
-      this.formdata = new FormData();
       this.attachements = []
     });
+    this.formdata = new FormData();
+
   }
 
   uploadMultiple(event: any) {
@@ -289,6 +283,7 @@ export class DetailTicketComponent implements OnInit {
       this.attachements.push(element);
     }
   }
+
   deleteFile(i: any) {
     this.attachements.splice(i, 1);
   }
@@ -365,7 +360,7 @@ export class DetailTicketComponent implements OnInit {
       });
   }
 
-  envoyerNotif(employe: any) {
+  envoyerInvitation(employe: any) {
     let data = {
       envoyeur: this.employe,
       recepteur: employe,
@@ -380,7 +375,6 @@ export class DetailTicketComponent implements OnInit {
   }
 
   verify(id: any) {
-    // if(!this.notifEnv) this.afficherNotifEnv()
 
     if (this.notifEnv) {
       for (const notif of this.notifEnv) {

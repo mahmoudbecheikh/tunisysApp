@@ -40,7 +40,11 @@ export class SearchComponent implements OnInit {
 
   afficherListe(){
     this.ticketService.afficherListe().subscribe((res) => {
-      this.tickets = res;
+      for (const ticket of res) {
+        if(ticket.statut=='resolu'){
+          this.tickets?.push(ticket)
+        }
+      }
     });
   }
 

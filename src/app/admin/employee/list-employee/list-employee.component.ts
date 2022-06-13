@@ -105,14 +105,7 @@ export class ListEmployeeComponent implements OnInit {
     });
     
   }
-  toAdd() {
-    this.router.navigate(['admin/employees/add']);
-  }
 
-  goToUpdate(id: any) {
-    const link = ['admin/employees/update/', id];
-    this.router.navigate(link);
-  }
 
   selectEmp(employee : Employe) {
     this.employeeSelected = employee

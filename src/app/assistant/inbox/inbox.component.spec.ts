@@ -200,9 +200,8 @@ describe('InboxComponent', () => {
       uid : '1'
     }
     const uid = '1';
-    component.supprimer(uid);
+    component.supprimer(uid,0);
     expect(spy).toHaveBeenCalled();
-    expect(component.mailSelected).toBeNull()
   });
 
   
@@ -210,7 +209,7 @@ describe('InboxComponent', () => {
     const service = fixture.debugElement.injector.get(MailService);
     const spy = spyOn(service, 'supprimer').and.returnValue(new Observable());
     const uid = '1';
-    component.supprimer(uid);
+    component.supprimer(uid,0);
     expect(spy).toHaveBeenCalled();
     expect(component.mailSelected).toBeNull()
   });

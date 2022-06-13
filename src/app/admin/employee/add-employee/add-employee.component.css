@@ -1,13 +1,33 @@
-
-
 small {
     color: #cc0033;
     display: inline-block;
     font-size: 12px;
-    ;}
-  
+    ;
+}
+
 
 .container {
     margin-left: 175px;
     margin-top: 50px;
-  }
+}
+
+h1 {
+    color: black;
+    font-family: 'Trocchi', serif;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 48px;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+
+.btn {
+    background: #2471A3;
+    border: none;
+    color: white;
+    width: 15%;
+}
+

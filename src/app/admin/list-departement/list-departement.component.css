@@ -1,6 +1,3 @@
-.btn {
-  margin-bottom: 25px;
-}
 .card {
   padding: 15px;
   border-radius: 10px;
@@ -8,9 +5,33 @@
   margin-bottom: 25px;
 }
 
-h1{
-    text-align: center;
-    margin-top: 25px;
+.btn-success {
+  background: #0FA983;
+  border: none;
+  color: white;
+  width: 16.5%;
+  margin-bottom: 25px;
+}
+
+
+h1 {
+  color: black;
+  font-family: 'Trocchi', serif;
+  font-size: 45px;
+  font-weight: normal;
+  line-height: 48px;
+  margin: 25px 0px;
+  text-align: center;
+}
+
+.modal-title {
+  color: black;
+  font-family: 'Trocchi', serif;
+  font-size: 25px;
+  font-weight: normal;
+  line-height:25px;
+
+
 }
 
 h2 {
@@ -42,16 +63,6 @@ h2 {
   font-size: 15px;
 }
 
-small{
+small {
   color: #e71d34;
-}
-
-.home_content {
-  position: absolute;
-  height: 100%;
-  width: calc(100% - 78px);
-  left: 175px;
-  background: var(--sky-color);
-  padding: 20px;
-  transition: all 0.5s ease;
 }

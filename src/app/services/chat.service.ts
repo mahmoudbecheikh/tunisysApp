@@ -16,7 +16,7 @@ export class ChatService {
   }
 
   ajouterMessage(data : any): Observable<any> {
-    return this.http.post(this.baseURL+'/message', data);
+    return this.http.post(this.baseURL, data);
   }
 
   afficherNonLue(recepteur : any) {

@@ -1,5 +1,5 @@
 <ng-container *ngIf="loading | async">
-    <div class="overlay"></div>
+    <!-- <div class="overlay"></div> -->
     <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
 </ng-container>
 <div class="container-fluid">
@@ -13,26 +13,25 @@
                         <div id="email-app-body" class="email-list-scroll-container ps ps--active-y">
 
                             <ul class="email-list">
-                                <li *ngFor="let mail of mails" class="email-list-item"
+                                <li *ngFor="let mail of mails;let index = index" class="email-list-item"
                                     [ngClass]="{'active': mailSelected && mail.uid===mailSelected?.uid}"
                                     (click)='select(mail)'>
                                     <div class="recipient">
                                         <img src="../../../assets/images/client.png" alt="Profile Picture" />
                                         <p class="recipient-name">{{mail.name}}</p>
                                     </div>
-                                    <p class="email-subject" *ngIf="mail.subject;else vide">{{mail.subject}} <i
-                                            class="unread"></i></p>
+                                    <p class="email-subject" *ngIf="mail.subject;else vide">{{mail.subject}}</p>
                                     <ng-template #vide>
-                                        <p class="email-subject">(aucun objet)<i class="unread"></i></p>
+                                        <p class="email-subject">(aucun objet)</p>
 
                                     </ng-template>
                                     <div class="email-footer">
 
                                         <div class="email-action">
 
-                                            <i (click)="vu(mail.uid)" class="lni lni-checkmark"></i>
+                                            <i (click)="vu(mail.uid,index)" class="lni lni-checkmark"></i>
 
-                                            <i (click)="supprimer(mail.uid)" class="lni lni-trash-can"></i>
+                                            <i (click)="supprimer(mail.uid,index)" class="lni lni-trash-can"></i>
 
 
 
@@ -90,18 +89,17 @@
                                 <div class="form-group">
                                     <textarea class="form-control" formControlName="textMail" id="textMail"
                                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
-                                    <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of mailFiles;let index=index">
+                                    <div style="margin: 5px; background: #f5f5f5"
+                                        *ngFor="let file of mailFiles;let index=index">
                                         <p style="color: #0066FF;">{{file.name}}
-                                            <i (click)="deleteFileMail(index)" style="font-weight: bold; color: #cc0033;" class="lni lni-close"></i>
+                                            <i (click)="deleteFileMail(index)" style="font-size: 10px;color: #cc0033;
+                                                " class="lni lni-close"></i>
                                         </p>
                                     </div>
                                 </div>
 
-                                <input type="file" name="file" id="file" multiple (change)="uploadFilesMail($event)"
-                                    style="visibility: hidden;display: none;">
                                 <input class="btn btn-primary" type="submit" [disabled]="formMail.invalid" />
-                                <label for="file"> <i class="lni lni-paperclip"></i></label>
-                                <i class="bx bx-message-alt-detail" data-toggle="modal" data-target="#exampleModal"></i>
+                                <i class="lni lni-comments-reply" data-toggle="modal" data-target="#exampleModal"></i>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
@@ -136,7 +134,8 @@
 
                                                         <div class="card" *ngFor="let reponse of reponses"
                                                             style="width: 200px; height: 90px;  display: inline-block;">
-                                                            <i class="lni lni-trash-can" style="cursor: pointer;float: right;"
+                                                            <i class="lni lni-trash-can"
+                                                                style="cursor: pointer;float: right;"
                                                                 (click)="supprimerReponse(reponse._id)"></i>
 
                                                             <div class="card-body">
@@ -162,11 +161,16 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
+                                                    data-dismiss="modal">Fermer</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <input type="file" name="file" id="file" multiple (change)="uploadFilesMail($event)"
+                                    style="visibility: hidden;display: none;">
+                                <label for="file"> <i class="lni lni-paperclip"></i></label>
+
                             </form>
                         </div>
 
@@ -179,7 +183,7 @@
         </div>
 
         <div *ngIf="mailSelected" class="col-sm-3">
-            <h3 style="text-align: center;">Créer Ticket</h3>
+            <h3>Créer un ticket</h3>
             <form [formGroup]="myForm" (ngSubmit)="ajouter()">
                 <div class="form-group">
                     <select class="form-control" formControlName="departement">
@@ -187,50 +191,70 @@
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>
-                    <small *ngIf=" departement.invalid && departement.touched && departement.dirty">Rôle
-                        incorrect</small>
+                    <small>
+                        <span *ngIf=" departement.invalid && departement.touched && departement.dirty">
+                            Veuillez selectionner un département !
+                        </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="sujet" placeholder="sujet *" class="col-md form-control"
                         name="sujet" id="sujet">
-                    <small *ngIf=" sujet.invalid && sujet.touched && sujet.dirty">sujet incorrect</small>
+                    <small>
+                        <span *ngIf=" sujet.invalid && sujet.touched && sujet.dirty"> Veuilez remplir soigneusement le
+                            champs sujet
+                        </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="nomClient" placeholder="Nom complet *" class="form-control"
                         name="nomClient" id="nomClient">
-                    <small *ngIf=" nomClient.invalid && nomClient.touched && nomClient.dirty">Nom
-                        complet
-                        incorrect</small>
+                    <small><span *ngIf="nomClient.invalid && nomClient.touched && nomClient.dirty"> le champs nom ne
+                            doit contenir que des lettres
+                        </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="siteWeb" placeholder="siteWeb *" class="form-control"
                         name="siteWeb" id="siteWeb" />
-                    <small *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty">Site Web
-                        incorrect</small>
+                    <small>
+                        <span *ngIf=" siteWeb.invalid && siteWeb.touched && siteWeb.dirty"> veuillez entrer un lien
+                            valide de votre site
+                        </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <input type="email" formControlName="emailClient" placeholder="Email *" class="form-control"
                         name="emailClient" id="email">
-                    <small *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">Email
-                        incorrect</small>
+                    <small> <span *ngIf=" emailClient.invalid && emailClient.touched && emailClient.dirty">
+                            Veuillez entrer une adresse
+                            e-mail valide
+                        </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <input type="text" formControlName="telClient" placeholder="Tel *" class="form-control" name="tel"
                         id="tel">
-                    <small *ngIf=" telClient.invalid && telClient.touched && telClient.dirty">Tel incorrect</small>
+                    <small> <span *ngIf=" telClient.invalid && telClient.touched && telClient.dirty"> Veuillez entrer un
+                            numero de telephone valide
+                        </span>
+                    </small>
                 </div>
 
                 <div class="form-group">
                     <input type="text" formControlName="adresse" placeholder="adresse " class="form-control"
                         name="adresse" id="adresse" />
-                    <small *ngIf=" adresse.invalid && adresse.touched && adresse.dirty">Adresse
-                        incorrect</small>
+                    <small>
+                        <span *ngIf=" adresse.invalid && adresse.touched && adresse.dirty"> Veuillez entrer une adresse
+                            valide </span>
+                    </small>
                 </div>
                 <div class="form-group">
                     <textarea type="text" formControlName="description" placeholder="description *" class="form-control"
                         name="description" id="description"> </textarea>
-                    <small *ngIf=" description.invalid && description.touched && description.dirty">Description
-                        incorrect</small>
+                    <small> <span *ngIf=" description.invalid && description.touched && description.dirty"> Veuiller
+                            remplir soigneusemnt le champs description
+                        </span></small>
                 </div>
                 <div class="form-group;">
                     <input type="date" formControlName="dateLimite" name="dateLimite" class="form-control"

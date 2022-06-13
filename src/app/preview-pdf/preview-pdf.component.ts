@@ -22,14 +22,12 @@ export class PreviewPdfComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticketService.afficherId(this.id).subscribe((res) => {
-      if (res) {
         this.ticket = res ;
-      }
     });
   }
 
   
-  public openPDF(): void {
+  public openPDF() {
     let DATA: any = document.getElementById('table');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 205;
@@ -39,6 +37,7 @@ export class PreviewPdfComponent implements OnInit {
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
       PDF.save('ticket_'+this.ticket?.ref);
+      return true
     });
   }
 

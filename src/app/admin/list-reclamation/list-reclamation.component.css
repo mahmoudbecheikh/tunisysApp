@@ -31,9 +31,7 @@ table td {
 
 table th {
   font-weight: 500;
-  background-color: #4389A2;
-  /* background-color: #02AAB0 ; */
-  background-color: #2193b0;
+  background-color: #1E8697;
 
   color: white;
 }
@@ -97,10 +95,6 @@ i {
   background: #d4d4d4;
 }
 
-
-
-
-
   
   table tr:hover {
     background-color: #ddd;
@@ -114,11 +108,7 @@ i {
     text-transform: uppercase;
   }
   
-  
- 
 
-  
- 
   
 a{
     color: black;
@@ -138,4 +128,15 @@ a{
 *::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background-color: lightgray;
+}
+
+i {
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  font-size: 15px;
+
+}
+.lni-trash-can {
+  color: #e71d34;
 }

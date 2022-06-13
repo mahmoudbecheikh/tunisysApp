@@ -29,7 +29,11 @@ h2 {
   margin-top: 25px;
   font-weight: 500;
   margin: 5px;
+  text-transform: uppercase;
 }
+
+
+
 
 .list {
   min-height: 60px;
@@ -73,9 +77,15 @@ h2 {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.btn {
+
+.btn-success {
+  background: #0FA983;
+  border: none;
+  color: white;
   margin: 25px 0px;
 }
+
+
 
 i {
   float: right;
@@ -99,4 +109,14 @@ i {
 
 ::ng-deep .tooltip-inner {
   background-color: grey;
+}
+
+.badge-info{
+  background-color: #34495E;
+  color: white;
+}
+
+.badge-warning{
+  background-color: #F4D03F;
+  color: white;
 }

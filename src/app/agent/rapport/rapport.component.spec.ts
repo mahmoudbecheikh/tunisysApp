@@ -52,6 +52,10 @@ describe('RapportComponent', () => {
     fJoint: [],
     dateModification: '2022-04-30T22:24:39.778+00:00',
   };
+  let fakeAttachmentList : any [] = [{
+    url : "http://localhost:3000/uploads/1654204982012 employe.txt",
+    name : "employe.txt"
+  }]
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule,RouterTestingModule,ReactiveFormsModule,ToastrModule.forRoot()],
@@ -108,5 +112,12 @@ describe('RapportComponent', () => {
     component.ticketSelected = fakeTicket
     component.modifier();
     expect(spy).toHaveBeenCalledWith(component.rapport._id,component.formdata);
+  });
+
+  it('delete files', () => {
+    component.attachmentList = fakeAttachmentList
+   component.deleteFile(0)
+    expect(component.attachmentList).toEqual([])
+    expect(component.formdata.get('FjointDeleted')).toBeTruthy()
   });
 });

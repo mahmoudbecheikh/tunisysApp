@@ -129,10 +129,7 @@ export class TicketAttComponent implements OnInit {
     moveItemInArray(this.tickets, event.previousIndex, event.currentIndex);
   }
 
-  consulter(id: any) {
-    const link = ['assistant/tickets', id];
-    this.router.navigate(link);
-  }
+
 
   supprimer(id: any) {
     this.ticketService.supprimer(id).subscribe((res) => {

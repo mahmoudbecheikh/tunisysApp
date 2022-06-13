@@ -18,24 +18,27 @@ describe('ListReclamationComponent', () => {
       raison: '',
       employe: undefined,
       ticket: undefined,
-      date: ''
-
+      date: '',
     },
     {
       _id: '1',
       raison: '',
       employe: undefined,
       ticket: undefined,
-      date: ''
+      date: '',
     },
   ];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule,ReactiveFormsModule,ToastrModule.forRoot()],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+      ],
       providers: [TicketService],
-      declarations: [ ListReclamationComponent ]
-    })
-    .compileComponents();
+      declarations: [ListReclamationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -56,12 +59,19 @@ describe('ListReclamationComponent', () => {
     expect(component.reclamations).toEqual(fakeReclamation);
   });
 
-  it('supprimer', () => {
+  it('supprimer et confirmer', () => {
     const service = fixture.debugElement.injector.get(TicketService);
-
-    const spy = spyOn(service, 'supprimerReclamation').and.returnValue(of(fakeReclamation[0]));
+    const spy = spyOn(service, 'supprimerReclamation').and.returnValue(
+      of(fakeReclamation[0])
+    );
     const _id = '1';
     component.supprimer(_id);
+    component.confirmer(fakeReclamation[0])
     expect(spy).toHaveBeenCalledWith(_id);
+  });
+
+  it('select', () => {
+    component.select(fakeReclamation[0]);
+    expect(component.reclamationSelected).toEqual(fakeReclamation[0]);
   });
 });

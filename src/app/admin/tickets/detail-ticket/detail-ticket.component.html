@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="ticket">
 
     <app-search></app-search>
 
@@ -39,7 +39,7 @@
                                         <span> {{emp.nomEmp}} {{emp.prenomEmp}}
                                         </span>
                                         <span class="badge badge-primary" *ngIf="!verify(emp?._id);else annuler"
-                                            (click)="envoyerNotif(emp._id)">Envoyer </span>
+                                            (click)="envoyerInvitation(emp._id)">Envoyer </span>
                                         <ng-template #annuler>
                                             <div class="badge badge-primary" (click)="supprimer(emp._id)">Annuler</div>
                                         </ng-template>
@@ -155,7 +155,7 @@
                         <span *ngIf="!ticket?.employe">---</span>
                     </p>
                     <p>Collaborateurs :
-                        <ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; ">---</ng-container>
+                        <ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; "> --- </ng-container>
                         <ng-template #collab>
 
                             <span>

@@ -23,12 +23,25 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { MailService } from 'src/app/services/mail.service';
 import { Reponse } from 'src/models/reponse';
+import { NotificationService } from 'src/app/services/notification.service';
 
 describe('DetailTicketComponent', () => {
   let component: DetailTicketComponent;
   let fixture: ComponentFixture<DetailTicketComponent>;
   const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
+  let fakeEmployee: Employe = {
+    _id: '1',
+    nomEmp: 'Ben salah',
+    prenomEmp: 'Ali',
+    departement: undefined,
+    cin: 15011136,
+    email: 'string',
+    mdp: 'Azerty',
+    adresse: 'string',
+    role: 0,
+    tel: 20789456,
+  };
   let fakeTicket: Ticket = {
     _id: '1',
     ref: 100056,
@@ -51,7 +64,7 @@ describe('DetailTicketComponent', () => {
     siteWeb: 'www.amen.tn',
     fJoint: [],
     tags: [],
-    collaborateurs: [],
+    collaborateurs: [fakeEmployee],
     date: '2022-04-30T22:24:39.778+00:00',
     dateModif: '2022-04-30T22:24:39.778+00:00',
   };
@@ -111,21 +124,7 @@ describe('DetailTicketComponent', () => {
     },
   ];
 
-
   let fakeAllTags = ['windows', 'windows10', 'maintenance', 'installation'];
-
-  let fakeEmployee: Employe = {
-    _id: '1',
-    nomEmp: 'Ben salah',
-    prenomEmp: 'Ali',
-    departement: undefined,
-    cin: 15011136,
-    email: 'string',
-    mdp: 'Azerty',
-    adresse: 'string',
-    role: 0,
-    tel: 20789456,
-  };
 
   let fakeDepartement: Departement = {
     _id: '1',
@@ -134,13 +133,13 @@ describe('DetailTicketComponent', () => {
     tickets: [],
   };
 
-  let fakeReponses  : Reponse []= [
+  let fakeReponses: Reponse[] = [
     {
-      _id : '1',
-      titre : 'Lorem' ,
-      text : 'Lorem ipsum dolor sit amet'
-    }
-  ]
+      _id: '1',
+      titre: 'Lorem',
+      text: 'Lorem ipsum dolor sit amet',
+    },
+  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -170,13 +169,12 @@ describe('DetailTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-
   it('select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.afficherTicket();
     fixture.detectChanges();
+
     expect(component.ticket).toEqual(fakeTicket);
     const refElement: HTMLInputElement = fixture.debugElement.query(
       By.css('#reference')
@@ -222,18 +220,6 @@ describe('DetailTicketComponent', () => {
     expect(component.reponses).toEqual(fakeReponses);
   });
 
-
-  // it('shyh', () => {
-  //   const router = TestBed.get(Router);
-  //   const spy = spyOn(router, 'navigate');
-
-  //   // const service = fixture.debugElement.injector.get(TicketService);
-  //   // spyOn(service, 'confirmer').and.returnValue(of(true));
-  //   component.confirmer();
-  //   expect(spy).toHaveBeenCalledWith(['assistant/tickets']);
-
-  // });
-
   it('filterData', () => {
     component.allTags = fakeAllTags;
     component.filterData('windows');
@@ -246,18 +232,14 @@ describe('DetailTicketComponent', () => {
     expect(component.tags.length).toEqual(fakeAllTags.length);
   });
 
-
   it('selected tag', () => {
     component.tags = fakeAllTags;
     component.selected('xp');
-    expect(component.filtredTags).toEqual([])
-    expect(component.tagsCtrl.value).toBeNull()
-
+    expect(component.filtredTags).toEqual([]);
+    expect(component.tagsCtrl.value).toBeNull();
   });
 
-  
-
-  it('envoyerMail', () => {
+  it('filter data', () => {
     component.allTags = fakeAllTags;
     component.filterData('windows');
     expect(component.filtredTags).toEqual(['windows', 'windows10']);
@@ -269,6 +251,7 @@ describe('DetailTicketComponent', () => {
     component.employe = fakeEmployee;
     const router = TestBed.get(Router);
     const spy = spyOn(router, 'navigate');
+    expect(spy).toHaveBeenCalled()
   });
 
   it('reset form', () => {
@@ -286,6 +269,26 @@ describe('DetailTicketComponent', () => {
     expect(textElement.value).toContain('test');
   });
 
- 
+  it('verifier collab', () => {
+    const service = fixture.debugElement.injector.get(TicketService);
+    const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
+    component.afficherTicket();
+    let responseTrue = component.verifyCollab('1');
+    expect(responseTrue).toBeTruthy();
+    let responseFalse = component.verifyCollab('0');
+    expect(responseFalse).toBeFalsy();
+  });
+
+  it('get notif', () => {
+    const service = fixture.debugElement.injector.get(NotificationService);
+    const spy = spyOn(service, 'afficherEnv').and.returnValue(of([]));
+    component.employe=fakeEmployee
+    component.afficherNotifEnv();
+    expect(spy).toHaveBeenCalled()
+    // component.employe = undefined
+    // component.afficherNotifEnv();
+    // expect(spy).not.toHaveBeenCalled()
+
+  });
 
 });

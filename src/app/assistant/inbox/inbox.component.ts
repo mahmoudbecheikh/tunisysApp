@@ -62,12 +62,10 @@ export class InboxComponent implements OnInit {
   dateNow: any;
   formdata = new FormData();
   formdataMail = new FormData();
-  loading? : any
+  loading?: any;
   mailFiles?: any = [];
-  show = false
-  textMail: FormControl = new FormControl('', [
-    Validators.required,
-  ]);
+  show = false;
+  textMail: FormControl = new FormControl('', [Validators.required]);
 
   formReponse: FormGroup = new FormGroup({});
 
@@ -82,14 +80,12 @@ export class InboxComponent implements OnInit {
   ]);
   reponses: any;
 
-
   constructor(
     private mailService: MailService,
     private depService: DepartementService,
     private ticketService: TicketService,
     private spinnerService: SpinnerService,
     private toastr: ToastrService
-
   ) {
     this.loading = this.spinnerService.loading$;
 
@@ -104,7 +100,6 @@ export class InboxComponent implements OnInit {
   }
 
   ajouter() {
-
     this.formdata.append('sujet', this.sujet.value);
     this.formdata.append('departement', this.departement.value);
     this.formdata.append('emailClient', this.emailClient.value);
@@ -118,17 +113,23 @@ export class InboxComponent implements OnInit {
     this.formdata.append('manuel', 'assistant');
     for (const file of this.ticketFiles) {
       this.formdata.append('files', file);
-
     }
     this.ticketService.ajouter(this.formdata).subscribe((res) => {
       if (res) {
-        this.vu(this.mailSelected.uid);
+        this.toastr.success('', 'Ticket ajouté avec succès!');
+        for (let i = 0; i < this.mails.length; i++) {
+          const mail = this.mails[i];
+          if(mail.uid==this.mailSelected.uid)
+          this.vu(this.mailSelected.uid,i)
+          break ;
+
+        }
+
         this.ticketService.confirmer(res._id).subscribe((response) => {
-          this.toastr.success('', 'Ticket ajouté avec succès!');
         });
       }
     });
-    this.formdata  = new FormData()
+    this.formdata = new FormData();
     this.myForm.reset();
     this.ticketFiles = [];
   }
@@ -165,29 +166,24 @@ export class InboxComponent implements OnInit {
       option: 'UNSEEN',
     };
     this.mailService.afficherListe(data).subscribe((res) => {
-      console.log(res)
+      console.log(res);
       if (res.length > 0) {
-        // let inboxSorted = res.sort((a: any, b: any) =>
-        //   a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-        // );
         this.mails = res.reverse();
       }
     });
   }
 
-
-
   select(mail: any) {
     this.mailSelected = mail;
-    this.show = false
-    this.formMail.reset()
-    this.formdata = new FormData()
-    this.mailFiles=[]
+    this.show = false;
+    this.formMail.reset();
+    this.formdata = new FormData();
+    this.mailFiles = [];
   }
 
-  repondre(el: any){
-    el.scrollIntoView({behavior: 'smooth'});
-    this.show = true
+  repondre(el: any) {
+    el.scrollIntoView({ behavior: 'smooth' });
+    this.show = true;
   }
 
   uploadFilesMail(event: any) {
@@ -221,37 +217,31 @@ export class InboxComponent implements OnInit {
     saveAs(blob, mail.filename);
   }
 
-  vu(uid: any) {
-    if(this.mailSelected && uid){
-      let data = {
-        email: 'tunisys.mb.sj@gmail.com',
-        uid: uid,
-      };
-      this.mailService.modifier(data).subscribe((res) => {
-        if(res.seen){
+  vu(uid: any,index : number) {
+    if (this.mailSelected && uid) {
+      this.mailService.marquerLue(uid).subscribe((res) => {
+        if (res.seen) {
           // this.toastr.success('', 'Email supprimé avec succès!');
-          this.afficherListe();
-          if(this.mailSelected.uid== uid) this.mailSelected = null
+          this.mails.splice(index, 1);
+
+          if (this.mailSelected.uid == uid) this.mailSelected = null;
         }
       });
     }
-
   }
-  supprimer(uid: any) {
-    if(this.mailSelected && uid){
-      this.mailService.supprimer('tunisys.mb.sj@gmail.com', uid).subscribe((res) => {
-        if(res.deleted){
+  supprimer(uid: any,index : number) {
+    if (this.mailSelected && uid) {
+      this.mailService.supprimer(uid).subscribe((res) => {
+        if (res.deleted) {
           this.toastr.success('', 'Email supprimé avec succès!');
-          this.afficherListe();
-          if(this.mailSelected.uid== uid) this.mailSelected = null
+          this.mails.splice(index, 1);
+          if (this.mailSelected.uid == uid) this.mailSelected = null;
         }
-
       });
     }
-  
   }
 
-  envoyer(mail : any) {
+  envoyer(mail: any) {
     this.formdataMail.append('sujet', mail.subject);
     this.formdataMail.append('email', mail.from);
     this.formdataMail.append('text', this.textMail.value);
@@ -260,16 +250,15 @@ export class InboxComponent implements OnInit {
     }
 
     this.mailService.envoyerMail(this.formdataMail).subscribe((res) => {
-      if(res.send){
+      if (res.send) {
         this.toastr.success('', 'Email envoyé avec succés');
-      }
-      else{
+      } else {
         this.toastr.error('', 'Email envoyé avec succés');
       }
-      this.sujet.setValue('')
-      this.textMail.setValue('')
+      this.sujet.setValue('');
+      this.textMail.setValue('');
       this.formdataMail = new FormData();
-      this.mailFiles = []
+      this.mailFiles = [];
     });
   }
 

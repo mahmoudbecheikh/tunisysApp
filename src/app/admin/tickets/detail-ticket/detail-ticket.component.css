@@ -7,26 +7,38 @@
     border-radius: 1px;
 } */
 
-.btn-secondary{
+.btn-secondary {
     background-color: #E5E8E8;
-    border:none ; 
+    border: none;
     color: black;
     font-weight: normal;
     font-size: 15px;
 }
 
 
-  
+
+h1 {
+    color: black;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 26px;
+    font-weight: 100;
+    line-height: 50px;
+    letter-spacing: 1px;
+    border-bottom: double #555;
+    
+}
+
+
 
 *::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
-  }
-  
-  *::-webkit-scrollbar-thumb {
+}
+
+*::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: lightgray;
-  }
+}
 
 h1,
 h3 {
@@ -66,7 +78,8 @@ h3 {
     color: black;
     font-size: 12px;
 }
-.info small{
+
+.info small {
     color: black;
     margin: 0px 1px;
     font-size: 12px;
@@ -88,12 +101,12 @@ i {
     margin: 5px;
 }
 
-.lni-pencil{
+.lni-pencil {
     font-weight: 500;
     cursor: pointer;
 }
 
-.buttons .btn{
+.buttons .btn {
     margin: 5px;
     width: 125px;
 }
@@ -136,13 +149,19 @@ label {
     border-radius: 1px;
 }
 
-.messages thead, .messages tbody { display: block; }
+.messages thead,
+.messages tbody {
+    display: block;
+}
 
 
 .messages tbody {
-    height: 350px;       /* Just for the demo          */
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+    height: 350px;
+    /* Just for the demo          */
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+    /* Hide the horizontal scroll */
 }
 
 
@@ -185,23 +204,24 @@ td {
 
 
 
-mat-chip,mat-chip .lni-close{
+mat-chip,
+mat-chip .lni-close {
     background-color: #2874A6 !important;
-    color:white !important;
+    color: white !important;
     font-weight: 400;
     text-transform: capitalize;
     text-align: center;
 
-  }
+}
 
-  mat-chip-list{
-      background-color: #5DADE2 !important;
-  }
+mat-chip-list {
+    background-color: #5DADE2 !important;
+}
 
-  .example-chip-list {
-      height:100%;
-      background-color: #fafafa !important;
-  }
+.example-chip-list {
+    height: 100%;
+    background-color: #fafafa !important;
+}
 
 
 form .badge {
@@ -252,7 +272,7 @@ form .badge:hover {
     color: black;
 }
 
-li .badge{
+li .badge {
     float: right;
     margin-right: 80px;
     background-color: #17a2b8;
@@ -262,7 +282,7 @@ li .badge{
     padding: 5px 20px;
 }
 
-li{
+li {
     margin: 10px 2px;
     list-style-type: none;
     text-transform: capitalize;
@@ -270,37 +290,37 @@ li{
 
 }
 
-.modal-title h2{
+.modal-title h2 {
     text-align: center !important;
 }
 
-.lni-user{
+.lni-user {
     font-weight: bold;
     font-size: 14px;
 }
 
 
-.card{
+.card {
     border: 2px solid grey;
     margin: 5px 10px;
 }
 
-.card .btn-sm{
+.card .btn-sm {
     background-color: grey;
     color: white;
 }
 
-.card .btn-sm:hover{
+.card .btn-sm:hover {
     background-color: #21618C;
     color: white;
 
 }
 
-.card:hover{
+.card:hover {
     border: 2px solid #21618C;
 }
 
-.new{
+.new {
     height: 250px;
     border-right: 1px solid #BDC3C7
 }

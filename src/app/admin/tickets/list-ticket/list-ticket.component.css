@@ -4,27 +4,43 @@
 
 
 .search:focus {
-    box-shadow: none; 
-  }
-  
-  .search{
+    box-shadow: none;
+}
+
+.search {
     width: 30%;
     margin: 10px 0px;
     background-color: #f9f9f9;
-  } 
-  
-
-
-i{
-    cursor: pointer;
 }
 
-.col-md-10{
+h1 {
+    color: black;
+    font-family: 'Trocchi', serif;
+    font-size: 45px;
+    font-weight: normal;
+    line-height: 48px;
+    text-align: center;
+}
+
+.btn-success {
+    background: #0FA983;
+    border: none;
+    color: white;
+    width: 14%;
+}
+
+
+
+
+
+.col-md-10 {
     margin-right: -10px;
 }
 
-table{
+table {
     margin-bottom: 25px;
+    table-layout: fixed;
+    width: 100%
 }
 
 table,
@@ -33,20 +49,24 @@ td {
     text-align: center;
 }
 
-table{
-    table-layout: fixed;
-    width: 100%
-}
 
 table td {
     font-weight: 400;
     max-height: 25px;
-
     word-wrap: break-word;
-
     vertical-align: middle;
-
 }
+
+table th {
+    font-weight: 500;
+    background-color: #1E8697;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
 
 .badge {
     width: 75px;
@@ -60,17 +80,9 @@ table td {
     background-color: #F5B041 !important;
 }
 
-table th {
-    font-weight: 500;
-    background-color: #1a5276;
-    color: white;
-}
-
-table tr:hover {
-    background-color: #ddd;
-}
 
 i {
+    cursor: pointer;
     margin: 5px;
     font-weight: bold;
     font-size: 15px;
@@ -230,7 +242,7 @@ div.text-muted {
     width: 120%;
     float: left;
     padding: 10px;
-    border : 1px solid #dee2e6
+    border: 1px solid #dee2e6
 }
 
 .category {
@@ -289,8 +301,8 @@ div.text-muted {
 /* ******************* */
 
 
-select{
-    background-color: #2E86C1;
+select {
+    background-color: #1E8697;
     width: 175px;
     color: #fff;
     padding-left: 5px;
@@ -299,7 +311,7 @@ select{
     font-weight: 500;
 }
 
-select option{
+select option {
     background-color: white;
     color: black;
     border: none;
@@ -307,8 +319,13 @@ select option{
     margin: 40px;
 }
 
+.tri{
+    margin-right:15px ;
+    font-weight: 500;
+    font-size: 14px;
+}
 
-select:focus{
+select:focus {
     outline: none !important;
 }
 

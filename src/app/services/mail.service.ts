@@ -14,30 +14,32 @@ export class MailService {
     return this.http.get(this.baseURL, { params: data });
   }
 
-  ajouterReponse(data : any): Observable<any> {
-    return this.http.post(this.baseURL+'/brouillon', data);
-  }
 
-  afficherReponses() :Observable<any>{
-    return this.http.get(this.baseURL+'/brouillon');
-  }
-  supprimerReponse(id: any) : Observable<any>{
-    return this.http.delete(this.baseURL + `/${id}`);
-  }
 
   afficherDiscussion(data: any): Observable<any> {
     return this.http.get(this.baseURL+'/discussion', { params: data });
   }
 
   envoyerMail(data: any): Observable<any> {
-    return this.http.post(this.baseURL + '/email', data);
+    return this.http.post(this.baseURL, data);
   }
 
-  supprimer(email: any, uid: any) : Observable<any> {
-    return this.http.delete(this.baseURL + `/${email}/${uid}`);
+  supprimer( uid: any) : Observable<any> {
+    return this.http.delete(this.baseURL + `/${uid}`);
   }
 
-  modifier(data: any) : Observable<any>{
-    return this.http.put(this.baseURL + `/${data.email}/${data.uid}`, data);
+  marquerLue(uid: any) : Observable<any>{
+    return this.http.get(this.baseURL + `/email/${uid}`);
+  }
+
+  ajouterReponse(data : any): Observable<any> {
+    return this.http.post(this.baseURL+'/reponses', data);
+  }
+
+  afficherReponses() :Observable<any>{
+    return this.http.get(this.baseURL+'/reponses');
+  }
+  supprimerReponse(id: any) : Observable<any>{
+    return this.http.delete(this.baseURL + `/reponses/${id}`);
   }
 }

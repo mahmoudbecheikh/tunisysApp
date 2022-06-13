@@ -9,6 +9,7 @@ h1 {
   font-weight: normal;
   line-height: 48px;
   margin: 0;
+  text-align: center;
 }
 
 .search:focus {
@@ -21,15 +22,11 @@ h1 {
   background-color: #f9f9f9;
 }
 
-.btn {
-
-  background: #45B39D;
-
+.btn-success {
+  background: #0FA983;
   border: none;
-}
-
-i {
-  cursor: pointer;
+  color: white;
+  width: 16.5%;
 }
 
 .col-md-10 {
@@ -52,17 +49,9 @@ table td {
 
 }
 
-.badge {
-  width: 75px;
-}
-
-
 table th {
   font-weight: 500;
-  background-color: #4389A2;
-  /* background-color: #02AAB0 ; */
-  background-color: #2193b0;
-
+  background-color: #1E8697;
   color: white;
 }
 
@@ -74,25 +63,38 @@ i {
   margin: 5px;
   font-weight: bold;
   font-size: 15px;
-
+  cursor: pointer;
 }
 
 .lni-pencil {
   color: #4BCA81;
 }
 
+.lni-trash-can {
+  color: #e71d34;
+}
+
+
+
 .badge {
   padding: 5px;
   color: white;
   font-size: 12px;
   font-weight: 500;
+  width: 75px;
 }
 
 
-.lni-trash-can {
-  color: #e71d34;
-}
+.circle {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  padding-top: 6px;
 
+  color: #ffff;
+  text-align: center;
+  font: 22px Arial, sans-serif;
+}
 
 
 .paginator {
@@ -284,13 +286,3 @@ div.text-muted {
 
 
 
-.circle {
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  padding-top: 6px;
-
-  color: #ffff;
-  text-align: center;
-  font: 22px Arial, sans-serif;
-}

@@ -80,14 +80,14 @@ export class TicketService {
   }
 
   afficherReclamationsTicket(id: any): Observable<any> {
-    return this.http.get('http://localhost:3000/reclamation' + `/${id}`);
+    return this.http.get('http://localhost:3000/reclamations' + `/${id}`);
   }
 
   supprimerReclamation(id: any): Observable<any> {
-    return this.http.delete('http://localhost:3000/reclamation' + `/${id}`);
+    return this.http.delete('http://localhost:3000/reclamations' + `/${id}`);
   }
   afficherReclamation(): Observable<any> {
-    return this.http.get('http://localhost:3000/reclamation');
+    return this.http.get('http://localhost:3000/reclamations');
   }
 
   afficherStat() : Observable<any>{

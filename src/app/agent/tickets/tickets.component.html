@@ -2,7 +2,7 @@
 
 
     <h1 >Mes tickets attribués</h1>
-    <input type="submit" class="btn btn-secondary" [disabled]="!change" (click)="check()"
+    <input type="submit" class="btn btn-success" [disabled]="!change" (click)="check()"
         value="Enregistrer les modification" />
     <div class="row" cdkDropListGroup>
 
@@ -14,17 +14,17 @@
                     {{item.sujet}} <i *ngIf="verify(item._id)&& item.statut!='resolu'" style="color: red;"
                     class="bx bx-info-circle"></i>
                     <br>
-                    <span class="badge badge-danger" placement="bottom"
+                    <span class="badge badge-info" placement="bottom"
                         ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
                         {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
-                            <span class="badge badge-info" placement="bottom"
+                            <span class="badge badge-warning" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>
@@ -78,17 +78,17 @@
                     <i *ngIf="verify(item._id)&& item.statut!='resolu'" style="color: red;"
                     class="bx bx-info-circle"></i>
                     <br>
-                    <span class="badge badge-danger" placement="bottom"
+                    <span class="badge badge-info" placement="bottom"
                         ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
                         {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
-                            <span class="badge badge-info" placement="bottom"
+                            <span class="badge badge-warning" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>
@@ -139,17 +139,17 @@
 
                     <br>
 
-                    <span class="badge badge-danger" placement="bottom"
+                    <span class="badge badge-info" placement="bottom"
                         ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
                         {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-info" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
-                            <span class="badge badge-info" placement="bottom"
+                            <span class="badge badge-warning" placement="bottom"
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>

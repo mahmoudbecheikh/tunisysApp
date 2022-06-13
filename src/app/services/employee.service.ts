@@ -34,7 +34,7 @@ export class EmployeeService {
   }
 
   afficherCin(cin: number): Observable<any> {
-    return this.http.get(this.baseURL + `/emp/${cin}`);
+    return this.http.get(this.baseURL + `/employe/${cin}`);
   }
 
   afficherEmail(email: String): Observable<any> {
