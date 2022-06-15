@@ -13,25 +13,27 @@ export class AuthService {
   logged = false;
   id: any;
   role: any;
+  readonly baseURL = 'http://localhost:3000/';
+
 
   constructor(private http: HttpClient, private router: Router) {
 
   }
 
   login(data: any): Observable<any> {
-    return this.http.post('http://localhost:3000/login', data);
+    return this.http.post(this.baseURL+'login', data);
   }
 
   forget(email: string) : Observable<any>{
-    return this.http.post('http://localhost:3000/forget', email);
+    return this.http.post(this.baseURL+'forget', email);
   }
 
   reset(data: any, token: any): Observable<any> {
-    return this.http.post('http://localhost:3000/reset' + `/${token}`, data);
+    return this.http.post(this.baseURL+`reset/${token}`, data);
   }
 
-  change(data: any, id: any): Observable<any> {
-    return this.http.put('http://localhost:3000/change' + `/${id}`, data);
+  change(data: any, id: string): Observable<any> {
+    return this.http.put(this.baseURL+`change/${id}`, data);
   }
 
   getAuth(): Observable<any> {
@@ -40,7 +42,7 @@ export class AuthService {
       let decodeToken = this.helper.decodeToken(token);
       this.id = decodeToken.id;
       this.role = decodeToken.role;
-      return this.http.get('http://localhost:3000/employes/' + this.id);
+      return this.http.get(this.baseURL+`employes/${this.id}`);
 
     } catch (error) {
       return new Observable()
@@ -66,16 +68,14 @@ export class AuthService {
       return false;
     }
     if (token) {
-      this.http.get('http://localhost:3000/token/' + token).subscribe((res) => {
+      this.http.get( this.baseURL+`token/${token}`).subscribe((res) => {
         if (!res) {
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
       });
     }
-    if (this.helper.isTokenExpired(token)) {
-      return false;
-    }
+
     return true;
   }
 }

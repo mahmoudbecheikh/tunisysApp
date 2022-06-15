@@ -16,30 +16,21 @@
 
 .employe {
     background: #ff9966;
-    /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #ff5e62, #ff9966);
-    /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #ff5e62, #ff9966);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
 .departement {
     background: #02AAB0;
-    /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom, #00CDAC, #02AAB0);
-    /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom, #00CDAC, #02AAB0);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .ticket {
     background: #B24592;
-    /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #F15F79, #B24592);
-    /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #F15F79, #B24592);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
@@ -114,7 +105,7 @@ span {
 }
 
 .lni-speechless {
-    color: #F5B041;
+    color: #E67E22;
 }
 
 .lni-smile {
@@ -122,7 +113,7 @@ span {
 }
 
 .lni-sad {
-    color: yellow;
+    color:#F1C40F;
 }
 
 .bx-loader-circle {
@@ -139,4 +130,9 @@ table {
     text-align: left;
     vertical-align: middle;
     text-transform: uppercase;
+}
+.feedBack p{
+    margin-top: 10px;
+    font-size: 23px;
+    font-weight: 500;
 }

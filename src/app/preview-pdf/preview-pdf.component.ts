@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas';
 })
 export class PreviewPdfComponent implements OnInit {
   ticket?: Ticket;
-  id: any;
+  id?: string;
   @ViewChild('htmlData') htmlData!: ElementRef;
 
   constructor(

@@ -57,7 +57,7 @@ describe('ResetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('changer lezem tekhdem ', () => {
+  it('should change ', () => {
     const authService = fixture.debugElement.injector.get(AuthService);
     spyOn(authService, 'reset').and.returnValue(of({ employe: fakeEmployee }));
     const spy = spyOn(authService, 'login').and.returnValue(
@@ -68,7 +68,7 @@ describe('ResetComponent', () => {
     expect(localStorage.getItem('token')).toBeDefined();
   });
 
-  it('invalid token ', () => {
+  it('should invalid token ', () => {
     const authService = fixture.debugElement.injector.get(AuthService);
     spyOn(authService, 'reset').and.returnValue(of({ invalid: true }));
     component.changer();

@@ -40,3 +40,9 @@ form {
     border: none;
     color: white;
 }
+
+img {
+    width: 175px;
+    height: 175px;
+    margin-left: 600px;
+  }

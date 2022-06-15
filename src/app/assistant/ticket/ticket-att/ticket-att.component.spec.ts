@@ -132,7 +132,7 @@ describe('TicketAttComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     spyOn(component, 'createForm').and.callThrough();
     spyOn(component, 'afficherListe').and.callThrough();
     spyOn(component, 'afficherDepartements').and.callThrough();
@@ -144,21 +144,21 @@ describe('TicketAttComponent', () => {
 
   });
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
     component.afficherDepartements();
     expect(component.departements).toEqual(fakeDepartements);
   });
 
- it('list tickets ', () => {
+ it('should list tickets ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherAttente').and.returnValue(of(fakeTickets));
     component.afficherListe();
     expect(component.tickets).toEqual(fakeTickets);
   });
 
-  it('submitting a form emits a ticket', () => {
+  it('should submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'ajouter').and.returnValue(of(fakeTicket));
     expect(component.myForm.valid).toBeFalsy();

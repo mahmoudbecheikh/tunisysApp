@@ -27,7 +27,7 @@ export class ListDepartementComponent implements OnInit {
     asyncValidators: [this.validatornom()],
     updateOn: 'blur',
   });
-  constructor(private depService: DepartementService, private router: Router,
+  constructor(private depService: DepartementService,
     private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -47,16 +47,13 @@ export class ListDepartementComponent implements OnInit {
     this.depService.ajouter(this.myForm.value).subscribe((res) => {
       this.getListDep();
       this.toastr.success('', 'Département ajouté avec succès!');
-
       this.myForm.reset()
     });
   }
 
   modifier() {
-    this.depService
-      .modifier(this.departement?._id, this.myForm.value)
-      .subscribe((res) => {
-         this.toastr.success('', 'Département modifié avec succès!');
+    this.depService.modifier(this.departement?._id, this.myForm.value).subscribe((res) => {
+        this.toastr.success('', 'Département modifié avec succès!');
         this.getListDep();
       });
   }

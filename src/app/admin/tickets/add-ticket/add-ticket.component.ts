@@ -16,9 +16,10 @@ import { Departement } from 'src/models/departement';
 export class AddTicketComponent implements OnInit {
   departements: Departement[] = [];
   attachmentList:any = [];
-
+  selectedDate: any;
+  minDate = new Date()
+  
   formdata = new FormData();
-
   myForm: FormGroup = new FormGroup({});
   sujet: FormControl = new FormControl('', [
     Validators.required,
@@ -57,12 +58,6 @@ export class AddTicketComponent implements OnInit {
   departement: FormControl = new FormControl('', [Validators.required]);
   dateLimite : FormControl = new FormControl();
 
-  selectedDate: any;
-  minDate = new Date()
-
- 
-
-
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,
@@ -98,15 +93,12 @@ export class AddTicketComponent implements OnInit {
 
   afficherListe() {
     this.depService.afficherListe().subscribe((res) => {
-      this.departements = res as Departement[];
+      this.departements = res;
     });
   }
 
-  returnToList() {
-    this.router.navigate(['admin/tickets']);
-  }
+ 
   ajouter() {
-   
     this.formdata.append('sujet', this.sujet.value);
     this.formdata.append('departement', this.departement.value);
     this.formdata.append('emailClient', this.emailClient.value);
@@ -127,11 +119,9 @@ export class AddTicketComponent implements OnInit {
     this.ticketService.ajouter(this.formdata).subscribe((res) => {
       if (res) {
         this.ticketService.confirmer(res._id).subscribe(response=>{
-
           this.toastr.success('', 'Ticket ajouté avec succès!');
           this.router.navigate(['admin/tickets']);
         })
-      
       }
     });
   }

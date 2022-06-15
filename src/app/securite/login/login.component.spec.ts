@@ -44,7 +44,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('loggedIn', () => {
+  it('should loggedIn', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'login').and.returnValue(of({ token: token }));
     component.onLogin();
@@ -52,7 +52,7 @@ describe('LoginComponent', () => {
     expect(localStorage.getItem('token')).toBeDefined();
   });
 
-  it('error', () => {
+  it('should error', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'login').and.returnValue(of({ error: true }));
     component.onLogin();
@@ -67,7 +67,7 @@ describe('LoginComponent', () => {
     expect(component.mdp.value).toEqual('');
   });
 
-  it('show icon', () => {
+  it('should show icon', () => {
     let show = component.show;
     component.change();
     expect(component.show).toEqual(!show);

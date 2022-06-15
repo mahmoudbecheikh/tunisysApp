@@ -17,15 +17,17 @@ import { Employe } from 'src/models/employe';
 })
 export class UpdateTicketComponent implements OnInit {
   ticket?: Ticket;
-  id?: number;
-  myForm: FormGroup = new FormGroup({});
+  id?: string;
   departementSelected?: Departement;
-  attachmentList: any = [];
-  formdata = new FormData();
-  attachmentDeleted: any = [];
   departements: Departement[] = [];
-  minDate = new Date();
+  attachmentList: any = [];
+  attachmentDeleted: any = [];
 
+  minDate = new Date();
+  dateLimite: FormControl = new FormControl();
+
+  formdata = new FormData();
+  myForm: FormGroup = new FormGroup({});
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
@@ -61,12 +63,9 @@ export class UpdateTicketComponent implements OnInit {
     Validators.pattern('^[234579][0-9]*$'),
   ]);
   employe: FormControl = new FormControl();
-
   departement: FormControl = new FormControl('', [Validators.required]);
   FjointDeleted: FormControl = new FormControl();
-  fJoint: any = [];
-  dateLimite: FormControl = new FormControl();
-  dateNow: any;
+
   employeCnt?: Employe;
   constructor(
     private depService: DepartementService,
@@ -85,8 +84,6 @@ export class UpdateTicketComponent implements OnInit {
     this.authService.getAuth().subscribe((res) => {
       if (res) this.employeCnt = res;
     });
-
-    this.dateNow = new Date();
   }
 
   onSelect(event: any) {
@@ -96,15 +93,9 @@ export class UpdateTicketComponent implements OnInit {
   afficherTicket() {
     this.ticketService.afficherId(this.id).subscribe((res) => {
       this.ticket = res;
-      this.depService
-        .afficherId(this.ticket?.departement?._id)
-        .subscribe((res) => {
-          this.departementSelected = res;
-        });
       this.sujet.setValue(this.ticket.sujet);
       this.departement.setValue(this.ticket.departement?._id);
       if (this.ticket.employe) this.employe.setValue(this.ticket.employe?._id);
-
       this.description.setValue(this.ticket.description);
       this.emailClient.setValue(this.ticket.emailClient);
       this.nomClient.setValue(this.ticket.nomClient);
@@ -112,8 +103,6 @@ export class UpdateTicketComponent implements OnInit {
       this.adresse.setValue(this.ticket.adresse);
       this.siteWeb.setValue(this.ticket.siteWeb);
       this.attachmentList = this.ticket.fJoint;
-      this.fJoint = this.ticket.fJoint;
-
       if (this.ticket.dateLimite)
         this.dateLimite.setValue(this.ticket.dateLimite);
     });
@@ -135,7 +124,7 @@ export class UpdateTicketComponent implements OnInit {
   }
   afficherListe() {
     this.depService.afficherListe().subscribe((res) => {
-      this.departements = res as Departement[];
+      this.departements = res;
     });
   }
 
@@ -194,7 +183,7 @@ export class UpdateTicketComponent implements OnInit {
     }
   }
 
-  deleteFile(i: any) {
+  deleteFile(i: number) {
     if (this.attachmentList[i].url)
       this.formdata.append('FjointDeleted', this.attachmentList[i].filename);
 

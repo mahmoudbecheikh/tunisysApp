@@ -8,6 +8,7 @@ import { DepartementService } from 'src/app/services/departement.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { ToastrService } from 'ngx-toastr';
+import { Reponse } from 'src/models/reponse';
 
 @Component({
   selector: 'app-inbox',
@@ -16,11 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class InboxComponent implements OnInit {
   mails: any = [];
+  reponses?: Reponse[];
   mailSelected: any;
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
   formMail: FormGroup = new FormGroup({});
+  loading?: any;
 
+  formdata = new FormData();
   ticketFiles: any = [];
   sujet: FormControl = new FormControl('', [
     Validators.required,
@@ -59,26 +63,23 @@ export class InboxComponent implements OnInit {
   departement: FormControl = new FormControl('', Validators.required);
 
   dateLimite: FormControl = new FormControl();
-  dateNow: any;
-  formdata = new FormData();
-  formdataMail = new FormData();
-  loading?: any;
-  mailFiles?: any = [];
+  dateNow= new Date();
   show = false;
+
+  formdataMail = new FormData();
   textMail: FormControl = new FormControl('', [Validators.required]);
+  mailFiles?: any = [];
 
   formReponse: FormGroup = new FormGroup({});
-
   titreReponse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);
-
   textReponse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
-  reponses: any;
+
 
   constructor(
     private mailService: MailService,
@@ -87,7 +88,7 @@ export class InboxComponent implements OnInit {
     private spinnerService: SpinnerService,
     private toastr: ToastrService
   ) {
-    this.loading = this.spinnerService.loading$;
+    this.loading = this.spinnerService.loading;
 
   }
 
@@ -96,7 +97,6 @@ export class InboxComponent implements OnInit {
     this.afficherDepartements();
     this.afficherListe();
     this.afficherReponse();
-    this.dateNow = new Date();
   }
 
   ajouter() {
@@ -166,7 +166,6 @@ export class InboxComponent implements OnInit {
       option: 'UNSEEN',
     };
     this.mailService.afficherListe(data).subscribe((res) => {
-      console.log(res);
       if (res.length > 0) {
         this.mails = res.reverse();
       }
@@ -221,7 +220,6 @@ export class InboxComponent implements OnInit {
     if (this.mailSelected && uid) {
       this.mailService.marquerLue(uid).subscribe((res) => {
         if (res.seen) {
-          // this.toastr.success('', 'Email supprimé avec succès!');
           this.mails.splice(index, 1);
 
           if (this.mailSelected.uid == uid) this.mailSelected = null;
@@ -233,7 +231,6 @@ export class InboxComponent implements OnInit {
     if (this.mailSelected && uid) {
       this.mailService.supprimer(uid).subscribe((res) => {
         if (res.deleted) {
-          this.toastr.success('', 'Email supprimé avec succès!');
           this.mails.splice(index, 1);
           if (this.mailSelected.uid == uid) this.mailSelected = null;
         }

@@ -17,6 +17,8 @@
     background-color: rgba(0, 0, 0, 0.5);
     text-align: center;
     padding-right: 5px;
+    margin-top: 25px;
+
   }
   
   .loginbox h3 {
@@ -102,4 +104,10 @@ h2 {
   top: 25px;
   left: 40%;
   right: 40%;
+}
+
+img {
+  width: 175px;
+  height: 175px;
+  margin-left: 600px;
 }

@@ -16,18 +16,18 @@ export class ListTicketComponent implements OnInit {
   tickets: Ticket[] = [];
   ticketsFilter: Ticket[] = [];
   departementsArray: Departement[] = [];
-  option: FormControl = new FormControl();
-  p: number = 1;
-
   statutsArray: string[] = ['en attente', 'a faire', 'en cours', 'resolu'];
   manuelsArray: string[] = ['admin', 'assistant', 'client'];
   form: FormGroup = new FormGroup({});
+  option: FormControl = new FormControl();
   departements: FormArray = new FormArray([]);
   statuts: FormArray = new FormArray([]);
   manuels: FormArray = new FormArray([]);
   notes: FormArray = new FormArray([]);
   sujet : FormControl = new FormControl()
   ticketSelected? : Ticket 
+  p: number = 1;
+
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,

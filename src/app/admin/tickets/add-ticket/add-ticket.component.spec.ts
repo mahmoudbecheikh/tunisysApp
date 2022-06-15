@@ -79,7 +79,7 @@ describe('AddTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     spyOn(component, 'createForm').and.callThrough();
     spyOn(component, 'afficherListe').and.callThrough();
     component.ngOnInit();
@@ -87,14 +87,14 @@ describe('AddTicketComponent', () => {
     expect(component.afficherListe).toHaveBeenCalled();
   });
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
     component.afficherListe();
     expect(component.departements).toEqual(fakeDepartements);
   });
 
-  it('submitting a form emits a ticket', () => {
+  it('should submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'ajouter').and.returnValue(of(fakeTicket));
     expect(component.myForm.valid).toBeFalsy();
@@ -113,14 +113,14 @@ describe('AddTicketComponent', () => {
     expect(spy).toHaveBeenCalledWith(component.formdata);
   });
 
-  it('select date', () => {
+  it('should select date', () => {
 
     component.onSelect('2022-05-27T12:14:08.073+00:00')
     expect(component.dateLimite.value).toEqual('2022-05-27T12:14:08.073+00:00')
   });
 
 
-  it('seturn to list', () => {
+  it('should return to list', () => {
     const router = TestBed.get(Router);
     const spy = spyOn(router, 'navigate');
     component.returnToList()

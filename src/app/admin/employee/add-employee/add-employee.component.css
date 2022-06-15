@@ -2,9 +2,7 @@ small {
     color: #cc0033;
     display: inline-block;
     font-size: 12px;
-    ;
 }
-
 
 .container {
     margin-left: 175px;
@@ -21,7 +19,6 @@ h1 {
     text-align: center;
     margin-bottom: 25px;
 }
-
 
 
 .btn {

@@ -4,6 +4,7 @@ import { Employe } from 'src/models/employe';
 import { AuthService } from '../services/auth.service';
 import { filter, pairwise } from 'rxjs/operators';
 import { ChatService } from '../services/chat.service';
+import { TicketService } from '../services/ticket.service';
 
 @Component({
   selector: 'app-default',
@@ -14,15 +15,9 @@ export class DefaultComponent implements OnInit {
   employe?: Employe;
   isLoggedIn = false;
   nomEmp?: string;
-
   role?: any;
-  previousUrl?: string;
-  currentUrl?: string;
-  messages : any
   employeSelected : any
-  show : any
-  constructor(private authService: AuthService, private router: Router) {
-   
+  constructor(private ticketService :TicketService , private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -32,20 +27,20 @@ export class DefaultComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
-   
-
+    let date  = new Date()
+    if(date.getHours()==0){
+      this.ticketService.rappelle().subscribe(res=>{
+      })
+    }
   }
-
   open() {
     let sidebar = document.querySelector('.sidebar');
     sidebar?.classList.toggle('active');
   }
-
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
-
   getAuth() {
     this.authService.getAuth().subscribe((res) => {
       this.employe = res;
@@ -60,18 +55,13 @@ export class DefaultComponent implements OnInit {
         case 2:
           this.role = 'Agent';
           break;
-        default:
-          break;
       }
     });
   }
-
   select(event:any){
     this.employeSelected = event
-    this.show = true
     
   }
-
 
   deselect(event:any){
     if(event)

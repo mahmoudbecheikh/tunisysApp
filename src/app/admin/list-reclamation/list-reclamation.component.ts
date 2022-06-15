@@ -11,7 +11,7 @@ import { Reclamation } from 'src/models/reclamation';
   styleUrls: ['./list-reclamation.component.css'],
 })
 export class ListReclamationComponent implements OnInit {
-  reclamations: any[] = [];
+  reclamations: Reclamation[] = [];
   p: number = 1;
   reclamationSelected?: Reclamation;
   employe?: Employe;
@@ -40,7 +40,7 @@ export class ListReclamationComponent implements OnInit {
       let notification = {
         envoyeur: this.employe,
         recepteur: res.employe,
-        contenu: 'Reclamation supprimé',
+        contenu: 'Votre reclamation est rejetée',
         ticket: res.ticket,
       };
       this.notifService.envoyer(notification).subscribe((res) => {
@@ -48,13 +48,13 @@ export class ListReclamationComponent implements OnInit {
     });
   }
 
-  confirmer(reclamation : any){
+  confirmer(reclamation : Reclamation){
     this.ticketService.supprimerReclamation(reclamation._id).subscribe((res) => {
       this.afficherListe();
       let notification = {
         envoyeur: this.employe,
         recepteur: res.employe,
-        contenu: 'Demande de prise en charge',
+        contenu: 'Votre relcamation est considerée',
         ticket: res.ticket,
       };
       this.notifService.envoyer(notification).subscribe((res) => {
@@ -64,7 +64,7 @@ export class ListReclamationComponent implements OnInit {
   }
   
 
-  select(reclamation: any) {
+  select(reclamation: Reclamation) {
     this.reclamationSelected = reclamation;
   }
 }

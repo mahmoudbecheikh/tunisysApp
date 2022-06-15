@@ -110,7 +110,7 @@
                 </div>
             </ng-template>
 
-            <button class="btn btn-secondary" *ngIf="employe?.role==1 " (click)="toUpdate()">
+            <button class="btn btn-secondary" *ngIf="employe?.role==1"  [routerLink]="['/assistant/tickets/update/'+ticket?._id]">
                 <i class="bx bx-pencil"></i> Modifier</button>
 
             <button class="btn btn-secondary" [disabled]='!ticket?.dateLimite'
@@ -333,7 +333,7 @@
                                         <div class="card" *ngFor="let reponse of reponses"
                                             style="width: 200px; height: 90px;  display: inline-block;">
                                             <i class="lni lni-trash-can" style="cursor: pointer;"
-                                                (click)="supprimerReponse(reponse._id)"></i>
+                                                (click)="supprimerReponse(reponse?._id)"></i>
 
                                             <div class="card-body">
                                                 <h4 class="card-title text-left" style="font-weight: 500;">
@@ -341,7 +341,7 @@
                                                 </h4>
                                                 <div id="reponseBtn" class="btn-sm "
                                                     style="margin-left: -20px; width: 198px;text-align: center;cursor:pointer"
-                                                    data-dismiss="modal" (click)="inserer(reponse.text)">+
+                                                    data-dismiss="modal" (click)="inserer(reponse?.text)">+
                                                     Insérer
                                                 </div>
                                             </div>
@@ -403,7 +403,7 @@
                                 [routerLink]="['/agent/tickets/'+ticket?._id]">
                                 {{ticket.sujet}} </a>
                             <br>
-                            <p style="color:grey ;"> Résolu par {{ticket.employe.nomEmp}} {{ticket.employe.prenomEmp}}
+                            <p style="color:grey ;"> Résolu par {{ticket.employe?.nomEmp}} {{ticket.employe?.prenomEmp}}
                             </p>
 
                         </td>

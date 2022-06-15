@@ -16,19 +16,19 @@ import { DepartementService } from 'src/app/services/departement.service';
 export class ListEmployeeComponent implements OnInit {
   employees: Employe[] = [];
   employeesFilter: Employe[] = [];
-
-  employe?: Employe;
   colors: string[] = [];
-  p: number = 1;
   departementsArray: Departement[] = [];
   rolesArray: string[] = ['admin', 'assistant', 'agent'];
-  form: FormGroup = new FormGroup({});
 
+  form: FormGroup = new FormGroup({});
   departements: FormArray = new FormArray([]);
   roles: FormArray = new FormArray([]);
   nom: FormControl = new FormControl();
+
+  p: number = 1;
   show: boolean = false;
   employeeSelected?: Employe;
+
   constructor(
     private empService: EmployeeService,
     private authService: AuthService,
@@ -114,7 +114,6 @@ export class ListEmployeeComponent implements OnInit {
   supprimer(id: any) {
     this.empService.supprimer(id).subscribe((res) => {
       if (res.errorDep) {
-        console.log('aaaa')
         this.toastr.warning("L'employé a un ticket", 'Attention!');
       } else {
         this.afficherListe();

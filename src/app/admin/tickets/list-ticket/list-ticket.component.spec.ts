@@ -132,7 +132,7 @@ describe('ListTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     spyOn(component, 'afficherList').and.callThrough();
     spyOn(component, 'listDepartement').and.callThrough();
     spyOn(component, 'trier').and.callThrough();
@@ -146,7 +146,7 @@ describe('ListTicketComponent', () => {
   });
 
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
 
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
@@ -154,14 +154,14 @@ describe('ListTicketComponent', () => {
     expect(component.departementsArray).toEqual(fakeDepartements);
   });
 
-  it('list tickets ', () => {
+  it('should list tickets ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeTickets));
     component.afficherList();
     expect(component.tickets).toEqual(fakeTickets);
   });
 
-  it('select ticket ', () => {
+  it('should select ticket ', () => {
    
     component.selectTicket(fakeTicket);
     expect(component.ticketSelected).toEqual(fakeTicket);

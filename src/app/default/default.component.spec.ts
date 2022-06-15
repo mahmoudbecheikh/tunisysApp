@@ -64,7 +64,7 @@ describe('DefaultComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('employe connecte', () => {
+  it('should employe connecte', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'getAuth').and.returnValue(of(fakeEmployee));
     component.getAuth();
@@ -78,7 +78,7 @@ describe('DefaultComponent', () => {
     expect(roleElement.textContent).toContain('Admin');
   });
 
-  it('logout', () => {
+  it('should logout', () => {
     component.logout();
     expect(localStorage.getItem('token')).toBeNull();
   });

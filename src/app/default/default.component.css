@@ -1,20 +1,9 @@
-/* Google Font CDN Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-}
-
-
-
-body {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
 }
 
 ::selection {
@@ -31,14 +20,6 @@ body {
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
-  /* background: #136a8a;  
-  background: -webkit-linear-gradient(to top, #267871, #136a8a); 
-  background: linear-gradient(to top, #267871, #136a8a);  */
-
-  /* background: #02AAB0;  
-  background: -webkit-linear-gradient(to top, #00CDAC, #02AAB0);  
-  background: linear-gradient(to top, #00CDAC, #02AAB0);  */
-
   background: #314755;  
   background: -webkit-linear-gradient(to top, #26a0da, #314755);  
   background: linear-gradient(to top, #26a0da, #314755); 
@@ -309,7 +290,6 @@ body {
 }
 
 .home_content {
-  /* background-color: #fafafa; */
   position: absolute;
   height: 100%;
   width: calc(100% - 78px);

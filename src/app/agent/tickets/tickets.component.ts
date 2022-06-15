@@ -11,6 +11,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Employe } from 'src/models/employe';
+import { Ticket } from 'src/models/ticket';
 
 @Component({
   selector: 'app-tickets',
@@ -18,10 +19,10 @@ import { Employe } from 'src/models/employe';
   styleUrls: ['./tickets.component.css'],
 })
 export class TicketsComponent implements OnInit {
-  tickets: any[] = [];
-  faire: any[] = [];
-  cours: any[] = [];
-  resolu: any[] = [];
+  tickets: Ticket[] = [];
+  faire: Ticket[] = [];
+  cours: Ticket[] = [];
+  resolu: Ticket[] = [];
   changement: any[] = [];
   employe?: Employe;
   change = false;
@@ -29,7 +30,6 @@ export class TicketsComponent implements OnInit {
     private ticketService: TicketService,
     private authService: AuthService,
     private router: Router,
-    private empService: EmployeeService,
     private socketService: SocketService,
     private toastr: ToastrService
   ) {}
@@ -40,7 +40,6 @@ export class TicketsComponent implements OnInit {
       if (res) this.getListTicket();
     });
   }
-
 
 
   getListTicket() {
@@ -88,8 +87,6 @@ export class TicketsComponent implements OnInit {
     }
   }
 
-
- 
   detail(id: any) {
     const link = ['agent/tickets/', id];
     this.router.navigate(link);
@@ -148,11 +145,7 @@ export class TicketsComponent implements OnInit {
       }
     }
     if (this.changement.length > 0)
-      this.ticketService.changerStatut(this.changement).subscribe((res) => {
-        // this.changement = [];
-        // this.faire = [];
-        // this.cours = [];
-        // this.resolu = [];
+      this.ticketService.changerStatut({tickets :this.changement}).subscribe((res) => {
         this.getListTicket();
         this.toastr.info('', 'Changement effectué avec succès');
         this.change = false;

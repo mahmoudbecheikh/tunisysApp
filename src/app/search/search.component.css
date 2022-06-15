@@ -1,49 +1,97 @@
-input{
-    border: 1px solid grey;
-    background-color: #fafafa;
-    margin-bottom: 0px;
-    height: 34.5px;
-    color: #21618C;
-  }
-  
-  .btn {
-    margin-left: 2px;
-    border-left: none;
-    margin-top: -5px;
-    border-radius: 0;
-  }
-  
-  mat-form-field{
-    width: 250px;
-  }
+input {
+  border: 1px solid grey;
+  background-color: #fafafa;
+  margin-bottom: 0px;
+  height: 34.5px;
+  color: #21618C;
+}
 
-  
-  ::ng-deep .mat-form-field .mat-input-element {
-    color: black;
-  }
-  ::ng-deep .mat-form-field .mat-form-field-label {
-    color: grey;
-  }
-  ::ng-deep .mat-form-field .mat-form-field-underline {
-    background-color: transparent;
-  }
-  ::ng-deep .mat-form-field .mat-form-field-ripple {
-    background-color: transparent;
-  }
-  ::ng-deep .mat-form-field .mat-form-field-required-marker {
-    color: transparent;
-  }
-  
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-    color: transparent;
-  }
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: transparent;
-  }
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
-    color: transparent;
-  }
-  ::ng-deep .mat-form-field.mat-focused .mat-input-element {
-    color: black;
-  }
-  
+.btn {
+  margin-left: 2px;
+  border-left: none;
+  margin-top: -5px;
+  border-radius: 0;
+}
+
+mat-form-field {
+  width: 250px;
+}
+
+
+::ng-deep .mat-form-field .mat-input-element {
+  color: black;
+}
+
+::ng-deep .mat-form-field .mat-form-field-label {
+  color: grey;
+}
+
+::ng-deep .mat-form-field .mat-form-field-underline {
+  background-color: transparent;
+}
+
+::ng-deep .mat-form-field .mat-form-field-ripple {
+  background-color: transparent;
+}
+
+::ng-deep .mat-form-field .mat-form-field-required-marker {
+  color: transparent;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: transparent;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: transparent;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
+  color: transparent;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-input-element {
+  color: black;
+}
+
+
+ul {
+  list-style-type: none
+}
+
+li p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-right: 15px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  margin-bottom: 2px;
+
+
+}
+
+a::first-letter,
+p::first-letter {
+  text-transform: uppercase;
+}
+
+li {
+  margin: 25px 0px;
+}
+
+.res,
+.modal-title {
+  margin-left: 40px;
+}
+
+a {
+  color: #21618C;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-bottom: 3px
+}
+

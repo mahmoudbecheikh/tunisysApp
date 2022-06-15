@@ -10,7 +10,7 @@ export class TicketService {
   constructor(private http: HttpClient) {}
 
   readonly baseURL = 'http://localhost:3000/tickets';
-
+  readonly baseUrlReclamation = 'http://localhost:3000/reclamations'
   ajouter(ticket: any): Observable<any> {
     return this.http.post(this.baseURL, ticket);
   }
@@ -76,18 +76,18 @@ export class TicketService {
   }
 
   reclamer(data: any): Observable<any> {
-    return this.http.post('http://localhost:3000/reclamation', data);
+    return this.http.post(this.baseUrlReclamation, data);
   }
 
   afficherReclamationsTicket(id: any): Observable<any> {
-    return this.http.get('http://localhost:3000/reclamations' + `/${id}`);
+    return this.http.get(this.baseUrlReclamation+ `/${id}`);
   }
 
   supprimerReclamation(id: any): Observable<any> {
-    return this.http.delete('http://localhost:3000/reclamations' + `/${id}`);
+    return this.http.delete(this.baseUrlReclamation + `/${id}`);
   }
   afficherReclamation(): Observable<any> {
-    return this.http.get('http://localhost:3000/reclamations');
+    return this.http.get(this.baseUrlReclamation);
   }
 
   afficherStat() : Observable<any>{

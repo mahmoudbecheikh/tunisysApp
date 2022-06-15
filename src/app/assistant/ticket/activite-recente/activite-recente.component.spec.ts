@@ -93,7 +93,7 @@ describe('ActiviteRecenteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list tickets ', () => {
+  it('should list tickets ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeTickets));
     component.afficherListe();

@@ -170,14 +170,14 @@ describe('InboxComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list inbox ', () => {
+  it('should list inbox ', () => {
     const service = fixture.debugElement.injector.get(MailService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeInbox));
     component.afficherListe();
     expect(component.mails).toEqual(fakeInbox);
   });
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
 
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
@@ -185,7 +185,7 @@ describe('InboxComponent', () => {
     expect(component.departements).toEqual(fakeDepartements);
   });
 
-  it('select mail', () => {
+  it('should select mail', () => {
     component.select(fakeMail);
     expect(component.mailSelected).toEqual(fakeMail);
     expect(component.show).toEqual(false);
@@ -193,7 +193,7 @@ describe('InboxComponent', () => {
   });
 
 
-  it('supprimer', () => {
+  it('should supprimer', () => {
     const service = fixture.debugElement.injector.get(MailService);
     const spy = spyOn(service, 'supprimer').and.returnValue(new Observable());
     component.mailSelected = {
@@ -205,7 +205,7 @@ describe('InboxComponent', () => {
   });
 
   
-  it('supprimer w famech mail seledcte', () => {
+  it('should supprimer w famech mail seledcte', () => {
     const service = fixture.debugElement.injector.get(MailService);
     const spy = spyOn(service, 'supprimer').and.returnValue(new Observable());
     const uid = '1';
@@ -214,7 +214,7 @@ describe('InboxComponent', () => {
     expect(component.mailSelected).toBeNull()
   });
 
-  it('submitting a form emits a ticket', () => {
+  it('should submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'ajouter').and.returnValue(of(fakeTicket));
     expect(component.myForm.valid).toBeFalsy();

@@ -19,9 +19,7 @@ export class ChangeComponent implements OnInit {
   confirmPassword: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.minLength(6)],
   });
-
   error: boolean = false ;
-
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {

@@ -169,7 +169,7 @@ describe('DetailTicketComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('select', () => {
+  it('should select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.afficherTicket();
@@ -183,28 +183,28 @@ describe('DetailTicketComponent', () => {
       expect(refElement.innerText).toContain(String(fakeTicket.ref));
   });
 
-  it('list employe ', () => {
+  it('should list employe ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
     spyOn(service, 'afficherId').and.returnValue(of(fakeDepartement));
     component.afficherEmploye();
     expect(component.employes).toEqual(fakeDepartement.employes);
   });
 
-  it('employe connecte', () => {
+  it('should employe connecte', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'getAuth').and.returnValue(of(fakeEmployee));
     component.employeCnt();
     expect(component.employe).toEqual(fakeEmployee);
   });
 
-  it('list suggestion ', () => {
+  it('should list suggestion ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'suggestion').and.returnValue(of(fakeTicket));
     component.afficherSuggestion();
     expect(component.suggestions).toEqual(fakeTicket);
   });
 
-  it('list tags ', () => {
+  it('should list tags ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherListe').and.returnValue(of(ticketsFake));
     component.ticket = fakeTicket;
@@ -212,7 +212,7 @@ describe('DetailTicketComponent', () => {
     expect(component.allTags).toEqual(['windows', 'installation']);
   });
 
-  it('list response ', () => {
+  it('should list response ', () => {
     const service = fixture.debugElement.injector.get(MailService);
     spyOn(service, 'afficherReponses').and.returnValue(of(fakeReponses));
     component.reponses = fakeReponses;
@@ -220,32 +220,32 @@ describe('DetailTicketComponent', () => {
     expect(component.reponses).toEqual(fakeReponses);
   });
 
-  it('filterData', () => {
+  it('should filterData', () => {
     component.allTags = fakeAllTags;
     component.filterData('windows');
     expect(component.filtredTags).toEqual(['windows', 'windows10']);
   });
 
-  it('remove tag', () => {
+  it('should remove tag', () => {
     component.tags = fakeAllTags;
     component.remove('maintenance');
     expect(component.tags.length).toEqual(fakeAllTags.length);
   });
 
-  it('selected tag', () => {
+  it('should selected tag', () => {
     component.tags = fakeAllTags;
     component.selected('xp');
     expect(component.filtredTags).toEqual([]);
     expect(component.tagsCtrl.value).toBeNull();
   });
 
-  it('filter data', () => {
+  it('should filter data', () => {
     component.allTags = fakeAllTags;
     component.filterData('windows');
     expect(component.filtredTags).toEqual(['windows', 'windows10']);
   });
 
-  it('rapport redirecte', () => {
+  it('should rapport redirecte', () => {
     component.rapport();
     component.id = fakeTicket._id;
     component.employe = fakeEmployee;
@@ -254,13 +254,13 @@ describe('DetailTicketComponent', () => {
     expect(spy).toHaveBeenCalled()
   });
 
-  it('reset form', () => {
+  it('should reset form', () => {
     component.resetForm();
     expect(component.sujet.value).toEqual('');
     expect(component.text.value).toEqual('');
   });
 
-  it('inserer reponse predefinie', () => {
+  it('should inserer reponse predefinie', () => {
     component.inserer('test');
     expect(component.text.value).toEqual('test');
     const textElement: HTMLInputElement = fixture.debugElement.query(
@@ -269,7 +269,7 @@ describe('DetailTicketComponent', () => {
     expect(textElement.value).toContain('test');
   });
 
-  it('verifier collab', () => {
+  it('should verifier collab', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.afficherTicket();
@@ -279,7 +279,7 @@ describe('DetailTicketComponent', () => {
     expect(responseFalse).toBeFalsy();
   });
 
-  it('get notif', () => {
+  it('should get notif', () => {
     const service = fixture.debugElement.injector.get(NotificationService);
     const spy = spyOn(service, 'afficherEnv').and.returnValue(of([]));
     component.employe=fakeEmployee

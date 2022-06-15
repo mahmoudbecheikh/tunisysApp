@@ -11,7 +11,7 @@ export class DepartementService {
 
   constructor(private http: HttpClient) {}
 
-  ajouter(departement: Departement): Observable<any> {
+  ajouter(departement: Departement): Observable<Departement> {
     return this.http.post(this.baseURL, departement);
   }
 

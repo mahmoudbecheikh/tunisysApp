@@ -36,7 +36,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   enLigne: any = [];
   previews: any = [];
   @ViewChild('scrollable') scrollable?: ElementRef;
-  @Input() show: any;
   @Output() deselectEmployeEvent  = new EventEmitter<any>();
 
   shouldScrollDown?: boolean;
@@ -78,7 +77,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         this.chatService
         .afficherConversation(this.employe?._id, this.employeSelected._id)
         .subscribe((res) => {
-          console.log(res)
           if (res) this.messages = res.messages;
           else this.messages = [];
         });
@@ -107,6 +105,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     this.socketService.listen('enLigne').subscribe((res) => {
+      this.enLigne = []
       for (const user of res) {
         this.enLigne.push(user.id);
       }
@@ -187,7 +186,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.chatService
         .modifierMessages(this.employe?._id, this.employeSelected?._id, nonLue)
         .subscribe((res) => {
-          if (res) console.log(res);
         });
   }
 
@@ -196,10 +194,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
   
 
-  deleteFile(i: any) {
-
+  deleteFile(i: number) {
     this.previews.splice(i, 1);
-    console.log(this.previews)
 
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Ticket } from 'src/models/ticket';
 import { TicketService } from '../services/ticket.service';
 
 
@@ -12,7 +13,7 @@ export class SearchComponent implements OnInit {
 
   tickets?: any[] = [];
   ticketFilter?: any[] = [];
-  results?: any[] = [];
+  results?: Ticket[] = [];
   show: boolean = false;
 
   formRech: FormGroup = new FormGroup({});

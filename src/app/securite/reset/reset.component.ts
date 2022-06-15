@@ -14,11 +14,9 @@ export class ResetComponent implements OnInit {
   password: FormControl = new FormControl('', {
     validators: [Validators.required],
   });
-
   confirmPassword: FormControl = new FormControl('', {
     validators: [Validators.required],
   });
-
   error?: Boolean = false;
   valid?: Boolean = true;
   tokenExpire: any;

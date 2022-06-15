@@ -106,36 +106,4 @@ describe('TicketService', () => {
     expect(service).toBeTruthy();
   });
 
-  // it('afficherListe() should return data', () => {
-  //   service.afficherListe().subscribe((res) => {
-  //     expect(res).toEqual(fakeTickets);
-  //   });
-  //   const req = httpMock.expectOne('http://localhost:3000/tickets');
-  //   expect(req.request.method).toBe('GET');
-  //   req.flush(fakeTickets);
-  // });
-
-  // it('Create an ticket on Service method', () => {
-  //   let ticketServiceMock = spyOn(service, 'ajouter').withArgs({})
-  //     .and.returnValue(of(fakeTicket))
-
-  //   service.ajouter({}).subscribe((data) => {
-  //     console.log("called")
-  //     console.log(data)
-  //     expect(data).toEqual(of(ticketServiceMock));
-  //   }); 
-  //   expect(service.ajouter).toHaveBeenCalled();
-  
-  // });
-
-  // it('afficherId should return trasnformed data', () => {
-  //   service.afficherId('1').subscribe((res) => {
-  //     expect(res).toEqual(of(fakeTicket)); 
-  //   });
-
-  //   const req = httpMock.expectOne('http://localhost:3000/tickets/1');
-  //   expect(req.request.method).toBe('GET');
-  //   console.log(req)
-  //   req.flush(fakeTicket); 
-  // });
 });

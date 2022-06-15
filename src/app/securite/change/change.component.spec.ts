@@ -57,7 +57,7 @@ describe('ChangeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shyh', () => {
+  it('should correct', () => {
     const router = TestBed.get(Router);
     const spy = spyOn(router, 'navigate');
 

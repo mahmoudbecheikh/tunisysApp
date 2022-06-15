@@ -199,7 +199,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     const socketService = fixture.debugElement.injector.get(SocketService);
     const authService = fixture.debugElement.injector.get(AuthService);
 
@@ -222,7 +222,7 @@ describe('HeaderComponent', () => {
     expect(spyNewMsg).toHaveBeenCalledWith('newMsg');
   });
 
-  it('list notification ', () => {
+  it('should list notification ', () => {
     const service = fixture.debugElement.injector.get(NotificationService);
     spyOn(service, 'afficherRecep').and.returnValue(of(fakeNotifs));
     component.employe = fakeEmployee;
@@ -236,7 +236,7 @@ describe('HeaderComponent', () => {
     expect(notifElement.textContent).toContain('2');
   });
 
-  it('list messages ', () => {
+  it('should list messages ', () => {
     const service = fixture.debugElement.injector.get(ChatService);
     spyOn(service, 'afficherNonLue').and.returnValue(of(fakeMsgs));
     component.employe = fakeEmployee;
@@ -258,13 +258,13 @@ describe('HeaderComponent', () => {
     );
   });
 
-  it('rand color', () => {
+  it('should rand color', () => {
     let array = [1, 2, 3, 4];
     component.rand(array);
     expect(component.colors.length).toEqual(array.length);
   });
 
-  it('filter data', () => {
+  it('should filter data', () => {
     component.employes = fakeEmployees;
     component.filterData('mahmoud');
     expect(component.employeFilter?.length).toEqual(2);

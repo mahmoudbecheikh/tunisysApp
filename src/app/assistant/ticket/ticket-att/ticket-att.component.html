@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-8">
-            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box first">Les tickets en attente</div>
+            <div cdkDropList class="list" (cdkDropListDropped)="drop($event)">
+                <div class="box first">Les tickets en attente</div>
                 <ng-container *ngIf="tickets.length>0;else vide">
-                    <div class="example-box" *ngFor="let ticket of tickets" cdkDrag>
+                    <div class="box" *ngFor="let ticket of tickets" cdkDrag>
                         <div>
                             <span class="sujet">{{ticket.sujet}}</span><br>
                             <span class="nom">{{ticket.nomClient}}</span>

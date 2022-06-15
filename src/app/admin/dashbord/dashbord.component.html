@@ -69,7 +69,7 @@
             <td>
               <span style="font-weight: 500 ; word-spacing:1cm;"> {{iyem.moyenne}} </span>
              <br>
-               <p style="color:grey ;"> Délai moyenne pour une ticket {{iyem.statut}} <i class="bx bx-info-circle" style="font-size:15px ;"></i></p></td>
+               <p style="color:#2471A3 ;"> Délai moyenne pour une ticket {{iyem.statut}} <i class="bx bx-info-circle" style="font-size:15px ;"></i></p></td>
 
           </tr>
 
@@ -87,8 +87,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      <div class="row feedBack">
+      <div class="row feedBack" style="margin-left: 250px;">
         <div class="col-sm"  *ngFor="let item of feedBacks"> 
             <i class="lni"
               [ngClass]="{'lni-smile': item.feedBack=== 'positif', 'lni-speechless' : item.feedBack=== 'neutre' , 'lni-sad': item.feedBack=='negatif' }"></i>
@@ -97,9 +96,6 @@
         </div>
 
 
-      </div>
     </div>
-    <div class="col-sm">
 
-    </div>
   </div>

@@ -75,7 +75,7 @@ describe('RapportComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('afficher ticket', () => {
+  it('should afficher ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.ngOnInit()
@@ -94,7 +94,7 @@ describe('RapportComponent', () => {
   });
 
   
-  it('submitting a form emits a rapport', () => {
+  it('should submitting a form emits a rapport', () => {
     const repportService = fixture.debugElement.injector.get(RapportService);
     const spy = spyOn(repportService, 'ajouter').and.returnValue(of(fakeRapport));
     expect(component.myForm.valid).toBeFalsy();
@@ -105,7 +105,7 @@ describe('RapportComponent', () => {
     expect(spy).toHaveBeenCalledWith(component.formdata);
   });
 
-  it('submitting a form emits a rapport', () => {
+  it('should submitting a form emits a rapport', () => {
     const service = fixture.debugElement.injector.get(RapportService);
     const spy = spyOn(service, 'modifier').and.returnValue(of(fakeRapport));
     component.rapport = fakeRapport
@@ -114,7 +114,7 @@ describe('RapportComponent', () => {
     expect(spy).toHaveBeenCalledWith(component.rapport._id,component.formdata);
   });
 
-  it('delete files', () => {
+  it('should delete files', () => {
     component.attachmentList = fakeAttachmentList
    component.deleteFile(0)
     expect(component.attachmentList).toEqual([])

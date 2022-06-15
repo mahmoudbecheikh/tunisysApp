@@ -39,7 +39,7 @@ describe('DashbordComponent', () => {
   });
 
 
-  it('verifier methode', () => {
+  it('should verifier methode', () => {
     let result = component.verify(ticketParMois , 4)
     expect(result).toEqual(4)
   });

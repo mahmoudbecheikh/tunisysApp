@@ -106,7 +106,7 @@ describe('UpdateTicketComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     spyOn(component, 'createForm').and.callThrough();
     spyOn(component, 'afficherListe').and.callThrough();
 
@@ -116,7 +116,7 @@ describe('UpdateTicketComponent', () => {
   });
 
 
-  it('afficher ticket', () => {
+  it('should afficher ticket', () => {
  
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
@@ -129,7 +129,7 @@ describe('UpdateTicketComponent', () => {
     expect(sujetElement.value).toContain('Lorem ipsum')
   });
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
 
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
@@ -137,7 +137,7 @@ describe('UpdateTicketComponent', () => {
     expect(component.departements).toEqual(fakeDepartements);
   });
 
-  it('submitting a form emits a ticket', () => {
+  it('should submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'modifier').and.returnValue(of(fakeTicket));
     component.ticket = fakeTicket

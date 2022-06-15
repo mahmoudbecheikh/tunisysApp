@@ -23,6 +23,7 @@ import { SocketService } from 'src/app/services/socket.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ToastrService } from 'ngx-toastr';
 import { Reclamation } from 'src/models/reclamation';
+import { Reponse } from 'src/models/reponse';
 @Component({
   selector: 'app-detail-ticket-att',
   templateUrl: './detail-ticket.component.html',
@@ -31,27 +32,34 @@ import { Reclamation } from 'src/models/reclamation';
 export class DetailTicketComponent implements OnInit {
   employe?: Employe;
   ticket?: Ticket;
-  collaborateurs: any;
-  id: any;
+  collaborateurs?: Employe[];
+  suggestions?: Ticket[];
+  reponses?: Reponse[];
   files: any = [];
   attachements?: any = [];
-  localUrl?: any;
-  formdata = new FormData();
+  id?: string;
   mails: any = [];
-  separatorKeysCodes: number[] = [ENTER, COMMA];
   notifEnv: any;
-  tagsCtrl = new FormControl();
+  reclamation? : Reclamation 
+
+
+  separatorKeysCodes: number[] = [ENTER, COMMA];
   filtredTags?: string[];
   tags: any = [];
-  x = 1;
   allTags: string[] = [];
-  suggestions: any;
-  reclamation? : Reclamation 
-  reponses: any;
-  formReponse: FormGroup = new FormGroup({});
+  @ViewChild('tagInput') tagInput?: ElementRef<HTMLInputElement>;
   formTag: FormGroup = new FormGroup({});
-  myForm: FormGroup = new FormGroup({});
+  tagsCtrl = new FormControl();
+  
 
+
+  raison: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(15),
+  ]);
+
+  formdata = new FormData();
+  myForm: FormGroup = new FormGroup({});
   emailClient: FormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -63,23 +71,19 @@ export class DetailTicketComponent implements OnInit {
     Validators.required,
   ]);
 
-  raison: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(15),
-  ]);
+ 
 
+  formReponse: FormGroup = new FormGroup({});
   titreReponse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);
-
   textReponse: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);
 
   file: FormControl = new FormControl('');
-  @ViewChild('tagInput') tagInput?: ElementRef<HTMLInputElement>;
   employes: any;
   employeCtrl: FormControl = new FormControl();
   admin?: Employe;
@@ -115,11 +119,8 @@ export class DetailTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
-
     this.createForm();
-
     this.afficherReponse();
-
     this.empService.afficherListe().subscribe((res) => {
       for (const employe of res) {
         if (employe.role == 0) this.admin = employe;
@@ -194,7 +195,6 @@ export class DetailTicketComponent implements OnInit {
     });
   }
 
-
   afficherReclamation(){
     this.ticketService.afficherReclamationsTicket(this.id).subscribe(res=>{
       console.log(res)
@@ -244,8 +244,7 @@ export class DetailTicketComponent implements OnInit {
     });
   }
 
-  filterData(enteredData: any) {
-
+  filterData(enteredData: string) {
     if (enteredData) {
       this.filtredTags = this.allTags?.filter((item) => {
         return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1;
@@ -284,7 +283,7 @@ export class DetailTicketComponent implements OnInit {
     }
   }
 
-  deleteFile(i: any) {
+  deleteFile(i: number) {
     this.attachements.splice(i, 1);
   }
 
@@ -317,24 +316,9 @@ export class DetailTicketComponent implements OnInit {
   }
 
   remove(tag: string): void {
-   
     const index = this.tags.indexOf(tag);
-
     if (index >= 0) {
       this.tags.splice(index, 1);
-    }
-  }
-
-  toUpdate() {
-    let link = ['admin/tickets/update/', this.id];
-    switch (this.employe?.role) {
-      case 0:
-        this.router.navigate(link);
-        break;
-      case 1:
-        link = ['assistant/tickets/update/', this.id];
-        this.router.navigate(link);
-        break;
     }
   }
 
@@ -360,7 +344,7 @@ export class DetailTicketComponent implements OnInit {
       });
   }
 
-  envoyerInvitation(employe: any) {
+  envoyerInvitation(employe: Employe) {
     let data = {
       envoyeur: this.employe,
       recepteur: employe,
@@ -385,7 +369,7 @@ export class DetailTicketComponent implements OnInit {
     return false;
   }
   
-  supprimer(id: any) {
+  supprimer(id: string) {
     let ticketId = this.ticket?._id;
     let notif = this.notifEnv.filter(function (el: any) {
       return el.recepteur._id == id && el.ticket._id == ticketId;

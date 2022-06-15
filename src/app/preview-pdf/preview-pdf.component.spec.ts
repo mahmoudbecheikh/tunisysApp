@@ -57,7 +57,7 @@ describe('PreviewPdfComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('select', () => {
+  it('should select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.ngOnInit();
@@ -70,7 +70,7 @@ describe('PreviewPdfComponent', () => {
       expect(refElement.innerText).toContain(String(fakeTicket.ref));
   });
 
-  it('not select', () => {
+  it('should not select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'afficherId').and.returnValue(of({}));
     component.ngOnInit();
@@ -84,7 +84,7 @@ describe('PreviewPdfComponent', () => {
   });
 
 
-  it('preview save', () => {
+  it('should preview save', () => {
   
     component.ticket = fakeTicket
     let response = component.openPDF()

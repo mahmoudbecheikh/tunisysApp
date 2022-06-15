@@ -76,21 +76,13 @@ export class DashbordComponent implements OnInit {
     {
       data: this.employesResData,
       label: 'Tickets',
-      // backgroundColor: ['#ff0000', '#8e5ea2', '#3cba9f', '#454545', '#c45850'],
-      // hoverBackgroundColor: [
-      //   '#ff0000',
-      //   '#8e5ea2',
-      //   '#3cba9f',
-      //   '#454545',
-      //   '#c45850',
-      // ],
     },
   ];
   lineChartLabels: Label[] = this.employesResLabel;
   lineChartColor: Color[] = [
     {
       borderColor: '',
-      backgroundColor: '#21618C',
+      backgroundColor: '#0D836C',
     },
   ];
   lineChartOptions = {
@@ -122,7 +114,7 @@ export class DashbordComponent implements OnInit {
   };
   pieChartColor: Color[] = [
     {
-      backgroundColor: ['#003f5c', '#ffa600', '#ff6361      '],
+      backgroundColor: ['#2980B9', '#ffa600', '#ff6361      '],
     },
   ];
   pieChartLabels: Label[] = [['Admin'], ['Assistant'], 'Client'];
@@ -153,7 +145,7 @@ export class DashbordComponent implements OnInit {
   barChartColor: Color[] = [
     {
       borderColor: '',
-      backgroundColor: '#3498DB',
+      backgroundColor: '#0D836C',
     },
   ];
   barChartPlugins = [];

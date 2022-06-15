@@ -16,14 +16,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RapportComponent implements OnInit {
 
-  formdata = new FormData();
   attachmentList: any = [];
   attachmentDeleted: any = [];
-  files: any = [];
-  update = false;
-  id?: any;
+  id?: string;
   rapport?: Rapport;
   employe?: Employe;
+  ticketSelected?: Ticket;
+
+  formdata = new FormData();
   myForm: FormGroup = new FormGroup({});
   recapSujet: FormControl = new FormControl('', [
     Validators.required,
@@ -34,10 +34,9 @@ export class RapportComponent implements OnInit {
     Validators.required,
     Validators.minLength(10),
   ]);
-  collaborateur: FormControl = new FormControl();
   FjointDeleted: FormControl = new FormControl();
   ticket: FormControl = new FormControl();
-  ticketSelected?: Ticket;
+
   constructor(
     private rapportService: RapportService,
     private ticketService: TicketService,
@@ -51,7 +50,7 @@ export class RapportComponent implements OnInit {
     this.createForm();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticket.setValue(this.id);
-    this.formdata.append('ticket', this.id);
+    this.formdata.append('ticket', this.ticket.value);
     this.ticketService.afficherId(this.id).subscribe((ticket) => {
       if (ticket.rapport) {
         this.ticketSelected = ticket;
@@ -71,7 +70,6 @@ export class RapportComponent implements OnInit {
       ticket: this.ticket,
       recapSujet: this.recapSujet,
       description: this.description,
-      collaborateur: this.collaborateur,
       FjointDeleted: this.FjointDeleted,
     });
   }
@@ -128,7 +126,7 @@ export class RapportComponent implements OnInit {
       });
   }
 
-  deleteFile(i: any) {
+  deleteFile(i: number) {
     if (this.attachmentList[i].url)
       this.formdata.append('FjointDeleted', this.attachmentList[i].filename);
     this.attachmentList.splice(i, 1);

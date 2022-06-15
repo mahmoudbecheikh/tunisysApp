@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Ticket } from 'src/models/ticket';
-import { Router } from '@angular/router';
 import { Departement } from 'src/models/departement';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartementService } from 'src/app/services/departement.service';
@@ -60,7 +59,6 @@ export class TicketAttComponent implements OnInit {
   formdata = new FormData();
   constructor(
     private ticketService: TicketService,
-    private router: Router,
     private depService: DepartementService,
     private toastr: ToastrService
   ) {}
@@ -130,7 +128,6 @@ export class TicketAttComponent implements OnInit {
   }
 
 
-
   supprimer(id: any) {
     this.ticketService.supprimer(id).subscribe((res) => {
       this.afficherListe();
@@ -145,7 +142,7 @@ export class TicketAttComponent implements OnInit {
     }
   }
   
-  deleteFile(i: any) {
+  deleteFile(i: number) {
     this.ticketFiles.splice(i, 1);
   }
 }

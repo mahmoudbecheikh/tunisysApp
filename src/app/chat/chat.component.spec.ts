@@ -133,7 +133,7 @@ describe('ChatComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('ngOnInit', () => {
+  it('should ngOnInit call', () => {
     const socketService = fixture.debugElement.injector.get(SocketService);
     spyOn(component, 'createForm').and.callThrough();
     spyOn(component, 'afficherEmploye').and.callThrough();
@@ -144,7 +144,7 @@ describe('ChatComponent', () => {
     expect(spyNewMsg).toHaveBeenCalledWith('newMsg');
   });
 
-  it('ngOnChanges', () => {
+  it('should ngOnChanges call', () => {
     component.employeSelected = fakeEmployee
     const service = fixture.debugElement.injector.get(AuthService);
     const chatService = fixture.debugElement.injector.get(ChatService);
@@ -157,7 +157,7 @@ describe('ChatComponent', () => {
 
   });
 
-  it('employe connecte', () => {
+  it('should employe connecte', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'getAuth').and.returnValue(of(fakeEmployee));
     component.afficherEmploye();
@@ -165,7 +165,7 @@ describe('ChatComponent', () => {
   });
 
 
-  it('submitting a form for send message', () => {
+  it('should submitting a form for send message', () => {
     const service = fixture.debugElement.injector.get(ChatService);
     const spy = spyOn(service, 'ajouterMessage').and.returnValue(of(fakeMsg));
     component.employeSelected = fakeEmployee ; 

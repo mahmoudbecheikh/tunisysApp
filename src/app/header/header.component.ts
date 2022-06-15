@@ -139,7 +139,7 @@ export class HeaderComponent implements OnInit {
           let data = {
             envoyeur: res.recepteur,
             recepteur: res.envoyeur,
-            contenu: 'Votre demande keblou hawka',
+            contenu: 'Votre invitation a été acceptée',
             ticket: res.ticket,
             lue: false,
           };
@@ -159,7 +159,7 @@ export class HeaderComponent implements OnInit {
           let data = {
             envoyeur: res.recepteur,
             recepteur: res.envoyeur,
-            contenu: 'Votre demande keblouch l masakh hawka',
+            contenu: 'Votre invitation a été rejetée',
             ticket: res.ticket,
             lue: false,
           };

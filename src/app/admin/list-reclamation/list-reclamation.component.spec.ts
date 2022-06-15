@@ -51,7 +51,7 @@ describe('ListReclamationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list reclamtion ', () => {
+  it('should list reclamtion ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
 
     spyOn(service, 'afficherReclamation').and.returnValue(of(fakeReclamation));
@@ -59,7 +59,7 @@ describe('ListReclamationComponent', () => {
     expect(component.reclamations).toEqual(fakeReclamation);
   });
 
-  it('supprimer et confirmer', () => {
+  it('should supprimer et confirmer', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     const spy = spyOn(service, 'supprimerReclamation').and.returnValue(
       of(fakeReclamation[0])
@@ -70,7 +70,7 @@ describe('ListReclamationComponent', () => {
     expect(spy).toHaveBeenCalledWith(_id);
   });
 
-  it('select', () => {
+  it('should select', () => {
     component.select(fakeReclamation[0]);
     expect(component.reclamationSelected).toEqual(fakeReclamation[0]);
   });

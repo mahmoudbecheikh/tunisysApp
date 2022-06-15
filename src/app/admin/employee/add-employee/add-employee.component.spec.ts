@@ -67,7 +67,7 @@ describe('AddEmployeeComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  it('submitting a form emits an employe', () => {
+  it('it should submitting a form emits an employe', () => {
     const service = fixture.debugElement.injector.get(EmployeeService);
     const spy = spyOn(service, 'ajouter').and.returnValue(of(fakeEmployee));
     expect(component.myForm.valid).toBeFalsy();
@@ -83,23 +83,16 @@ describe('AddEmployeeComponent', () => {
     expect(spy).toHaveBeenCalledWith(component.myForm.value);
   });
 
-
-
-
-  it('validator departement famech', () => {
+  it('should validator departement inexistant', () => {
     component.role.setValue(0);
     component.changeValue();
     expect(component.departement.validator).toBeNull();
   });
 
-  it('validator departement fama', () => {
+  it('should departement existe', () => {
     component.role.setValue(2);
     component.changeValue();
     expect(component.departement.validator).not.toBeNull();
   });
-
-
-
-
 
 });

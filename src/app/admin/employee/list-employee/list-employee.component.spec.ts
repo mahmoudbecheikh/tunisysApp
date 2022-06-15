@@ -81,21 +81,21 @@ describe('ListEmployeeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list employe isArray and length > 1  ', () => {
+  it('should list employe isArray and length > 1  ', () => {
     const service = fixture.debugElement.injector.get(EmployeeService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeEmployes));
     component.afficherListe();
     expect(component.employees).toEqual(fakeEmployes);
   });
 
-  it('list departement   ', () => {
+  it('should list departement   ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
     component.listDepartement();
     expect(component.departementsArray).toEqual(fakeDepartements);
   });
 
-  it('supprimer', () => {
+  it('should supprimer', () => {
     const service = fixture.debugElement.injector.get(EmployeeService);
     const toastrService = fixture.debugElement.injector.get(ToastrService);
     const toastrSpy = spyOn(toastrService, 'success')

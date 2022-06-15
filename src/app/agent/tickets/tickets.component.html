@@ -15,12 +15,12 @@
                     class="bx bx-info-circle"></i>
                     <br>
                     <span class="badge badge-info" placement="bottom"
-                        ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
-                        {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
+                        ngbTooltip='{{item.employe?.nomEmp }} {{item.employe?.prenomEmp}}'>
+                        {{item.employe?.prenomEmp?.substr(0,1)}}{{item.employe?.nomEmp?.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe?._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
@@ -28,7 +28,7 @@
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>
-                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div id="my-modal"  *ngIf="item.employe?._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content border-0">
                                     <div class="modal-body p-0">
@@ -39,10 +39,9 @@
                                                             data-dismiss="modal" aria-label="Close"> <span
                                                                 aria-hidden="true">&times;</span> </button></div>
                                                 </div>
-                                                <p class="font-weight-bold mb-2"> Berasmi theb tkharej {{collab.nomEmp}} {{collab.prenomEmp}}
+                                                <p class="font-weight-bold mb-2"> Voulez-vous vraiment exclure ce membre ? {{collab.nomEmp}} {{collab.prenomEmp}}
                                                     ?</p>
-                                                <p class="text-muted "> This change will reflect in your portal
-                                                    after an hour.</p>
+                                                <p class="text-muted "> Attention ce changement est irréversible.</p>
                                             </div>
                                             <div class="card-body px-sm-4 mb-2 pt-1 pb-0">
                                                 <div class="row justify-content-end no-gutters">
@@ -79,12 +78,12 @@
                     class="bx bx-info-circle"></i>
                     <br>
                     <span class="badge badge-info" placement="bottom"
-                        ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
-                        {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
+                        ngbTooltip='{{item.employe?.nomEmp }} {{item.employe?.prenomEmp}}'>
+                        {{item.employe?.prenomEmp?.substr(0,1)}}{{item.employe?.nomEmp?.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe?._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
@@ -92,7 +91,7 @@
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>
-                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div id="my-modal"  *ngIf="item.employe?._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content border-0">
                                     <div class="modal-body p-0">
@@ -140,12 +139,12 @@
                     <br>
 
                     <span class="badge badge-info" placement="bottom"
-                        ngbTooltip='{{item.employe.nomEmp }} {{item.employe.prenomEmp}}'>
-                        {{item.employe.prenomEmp.substr(0,1)}}{{item.employe.nomEmp.substr(0,1)}}
+                        ngbTooltip='{{item.employe?.nomEmp }} {{item.employe?.prenomEmp}}'>
+                        {{item.employe?.prenomEmp?.substr(0,1)}}{{item.employe?.nomEmp?.substr(0,1)}}
                     </span>
                     <ng-container *ngFor="let collab of item.collaborateurs">
 
-                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe._id==employe?._id ;else collabEmp"
+                        <span class="badge badge-warning" placement="bottom"  data-toggle="modal" data-target="#my-modal" *ngIf="item.employe?._id==employe?._id ;else collabEmp"
                         ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                         {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>                        
                         <ng-template #collabEmp>
@@ -153,7 +152,7 @@
                             ngbTooltip='{{collab.prenomEmp }} {{collab.nomEmp}}'>
                             {{collab.prenomEmp?.substr(0,1)}}{{collab.nomEmp?.substr(0,1)}} </span>
                         </ng-template>
-                        <div id="my-modal"  *ngIf="item.employe._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div id="my-modal"  *ngIf="item.employe?._id==employe?._id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content border-0">
                                     <div class="modal-body p-0">

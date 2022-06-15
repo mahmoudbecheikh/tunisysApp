@@ -22,8 +22,8 @@
                 itemsPerPage: 5,
                 currentPage :p,
                 totalItems: reclamations.length}">
-                <td>{{ rec.employe.nomEmp }} {{ rec.employe.prenomEmp }}</td>
-                <td > <a [routerLink]="['/admin/tickets/'+rec.ticket._id]">{{ rec.ticket.sujet }}</a> </td>
+                <td>{{ rec.employe?.nomEmp }} {{ rec.employe?.prenomEmp }}</td>
+                <td > <a [routerLink]="['/admin/tickets/'+rec.ticket?._id]">{{ rec.ticket?.sujet }}</a> </td>
                 <td> <div class="raison">
                     {{ rec.raison }}
                 </div> </td>

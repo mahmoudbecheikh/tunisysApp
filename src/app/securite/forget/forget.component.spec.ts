@@ -32,7 +32,7 @@ describe('ForgetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shyh', () => {
+  it('should correct', () => {
 
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'forget').and.returnValue(of({send : true}));
@@ -40,7 +40,7 @@ describe('ForgetComponent', () => {
     expect(component.error).toEqual('')
   });
 
-  it('mawselch', () => {
+  it('should not received', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'forget').and.returnValue(of({send : false}));
     component.envoyer();
@@ -53,7 +53,7 @@ describe('ForgetComponent', () => {
   });
  
   
-  it('mouch kifkif', () => {
+  it('should different', () => {
     const service = fixture.debugElement.injector.get(AuthService);
     spyOn(service, 'forget').and.returnValue(of(null));
     component.envoyer();

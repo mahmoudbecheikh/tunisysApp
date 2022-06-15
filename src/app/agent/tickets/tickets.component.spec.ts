@@ -148,7 +148,7 @@ describe('TicketsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list tickets ', () => {
+  it('should list tickets ', () => {
     const ticketService = fixture.debugElement.injector.get(TicketService);
     const authService = fixture.debugElement.injector.get(AuthService);
     spyOn(authService, 'getAuth').and.returnValue(of(fakeEmployee));
@@ -176,7 +176,7 @@ describe('TicketsComponent', () => {
 
 
 
-  it('quitter', () => {
+  it('should quitter', () => {
     const service = fixture.debugElement.injector.get(TicketService);
 
     const spy = spyOn(service, 'quitter').and.returnValue(new Observable());

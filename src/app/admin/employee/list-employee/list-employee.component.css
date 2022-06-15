@@ -74,8 +74,6 @@ i {
   color: #e71d34;
 }
 
-
-
 .badge {
   padding: 5px;
   color: white;
@@ -123,10 +121,6 @@ i {
   outline: none;
   background: #d4d4d4;
 }
-
-
-
-
 
 
 
@@ -219,9 +213,6 @@ label {
   border-width: 0 3px 3px 0;
   transform: rotate(45deg) scale(2)
 }
-
-
-
 
 
 div.text-muted {

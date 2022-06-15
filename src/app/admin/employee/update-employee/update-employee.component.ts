@@ -12,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { Employe } from 'src/models/employe';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Departement } from 'src/models/departement';
 import { DepartementService } from 'src/app/services/departement.service';
 
@@ -24,10 +23,9 @@ import { DepartementService } from 'src/app/services/departement.service';
 export class UpdateEmployeeComponent implements OnInit {
   departements: Departement[] = [];
   employe?: Employe;
-  id?: any;
+  id?: string;
   prenomEmp?: String;
   nomEmp?: String;
-  helper = new JwtHelperService();
 
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
@@ -40,9 +38,7 @@ export class UpdateEmployeeComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
-
   departement: FormControl = new FormControl('', Validators.required);
-
   cin: FormControl = new FormControl('', {
     validators: [
       Validators.required,
@@ -53,13 +49,11 @@ export class UpdateEmployeeComponent implements OnInit {
     asyncValidators: [this.validatorCin()],
     updateOn: 'blur',
   });
-
   email: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.email],
     asyncValidators: [this.validatorEmail()],
     updateOn: 'blur',
   });
-
   tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),

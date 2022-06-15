@@ -20,7 +20,6 @@ import { Departement } from 'src/models/departement';
 })
 export class AddEmployeeComponent implements OnInit {
   departements: Departement[] = [];
-
   myForm: FormGroup = new FormGroup({});
   prenom: FormControl = new FormControl('', [
     Validators.required,
@@ -32,9 +31,7 @@ export class AddEmployeeComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
   ]);
-
   departement: FormControl = new FormControl('', Validators.required);
-
   cin: FormControl = new FormControl('', {
     validators: [
       Validators.required,
@@ -45,7 +42,6 @@ export class AddEmployeeComponent implements OnInit {
     asyncValidators: [this.validatorCin()],
     updateOn: 'blur',
   });
-
   email: FormControl = new FormControl('', {
     validators: [Validators.required, Validators.email],
     asyncValidators: [this.validatorEmail()],
@@ -55,7 +51,6 @@ export class AddEmployeeComponent implements OnInit {
     Validators.required,
     Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/),
   ]);
-
   tel: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),

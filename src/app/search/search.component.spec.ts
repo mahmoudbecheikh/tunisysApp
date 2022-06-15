@@ -124,14 +124,14 @@ describe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list tickets ', () => {
+  it('should list tickets ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherListe').and.returnValue(of(fakeTickets));
     component.afficherListe();
     expect(component.tickets).toEqual(fakeTickets);
   });
 
-  it('filter data ', () => {
+  it('should filter data ', () => {
     component.tickets = fakeTickets 
     component.filterData('Lorem')
     expect(component.filterData.length).toEqual(1)

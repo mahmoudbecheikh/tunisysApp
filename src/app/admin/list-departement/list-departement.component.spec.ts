@@ -56,7 +56,7 @@ describe('ListDepartementComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('list departement ', () => {
+  it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
 
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
@@ -64,12 +64,12 @@ describe('ListDepartementComponent', () => {
     expect(component.departements).toEqual(fakeDepartements);
   });
 
-  it('form vide', () => {
+  it('should form vide', () => {
     component.reset();
     expect(component.departement).toBeUndefined();
   });
 
-  it('supprimer', () => {
+  it('should supprimer', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
     const toastrService = fixture.debugElement.injector.get(ToastrService);
     const toastrSpy = spyOn(toastrService, 'success')
