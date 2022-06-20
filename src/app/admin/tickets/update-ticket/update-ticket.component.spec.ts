@@ -6,7 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { DepartementService } from 'src/app/services/departement.service';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -117,7 +117,6 @@ describe('UpdateTicketComponent', () => {
 
 
   it('should afficher ticket', () => {
- 
     const service = fixture.debugElement.injector.get(TicketService);
     spyOn(service, 'afficherId').and.returnValue(of(fakeTicket));
     component.afficherTicket()
@@ -129,13 +128,6 @@ describe('UpdateTicketComponent', () => {
     expect(sujetElement.value).toContain('Lorem ipsum')
   });
 
-  it('should list departement ', () => {
-    const service = fixture.debugElement.injector.get(DepartementService);
-
-    spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
-    component.afficherListe();
-    expect(component.departements).toEqual(fakeDepartements);
-  });
 
   it('should submitting a form emits a ticket', () => {
     const service = fixture.debugElement.injector.get(TicketService);

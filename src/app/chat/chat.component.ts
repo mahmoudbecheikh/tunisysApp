@@ -31,13 +31,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   envoyeur: FormControl = new FormControl();
   recepteur: FormControl = new FormControl();
   files: FormControl = new FormControl();
-  messages: Message [] = [];
+  messages: Message[] = [];
   @Input() employeSelected: any;
-  enLigne: any = [];
+  @Input() connecte: any;
+
   previews: any = [];
   @ViewChild('scrollable') scrollable?: ElementRef;
-  @Output() deselectEmployeEvent  = new EventEmitter<any>();
-
+  @Output() deselectEmployeEvent = new EventEmitter<any>();
   shouldScrollDown?: boolean;
   iterableDiffer?: any;
   numberOfMessagesChanged: boolean = true;
@@ -59,8 +59,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
       this.numberOfMessagesChanged = false;
     }
-
-
   }
 
   scrollToBottom() {
@@ -73,15 +71,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnChanges() {
     if (this.employeSelected) {
       this.authService.getAuth().subscribe((employe) => {
-        this.employe = employe;
-        this.chatService
-        .afficherConversation(this.employe?._id, this.employeSelected._id)
-        .subscribe((res) => {
-          if (res) this.messages = res.messages;
-          else this.messages = [];
-        });
+        if (employe) {
+          this.employe = employe;
+          this.chatService.afficherConversation(this.employe?._id, this.employeSelected._id).subscribe((res) => {
+              if (res) this.messages = res.messages;
+              else this.messages = [];
+            });
+        }
       });
-
     }
 
     this.socketService.listen('updateMsg').subscribe((res) => {
@@ -96,21 +93,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.scrollToBottom();
-    this.afficherEmploye()
+    this.afficherEmploye();
     this.socketService.listen('newMsg').subscribe((msg) => {
       if (msg) {
         this.numberOfMessagesChanged = true;
         this.messages?.push(msg);
       }
     });
-
-    this.socketService.listen('enLigne').subscribe((res) => {
-      this.enLigne = []
-      for (const user of res) {
-        this.enLigne.push(user.id);
-      }
-    });
-
     this.createForm();
   }
 
@@ -123,12 +112,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  afficherEmploye(){
-    
+  afficherEmploye() {
     this.authService.getAuth().subscribe((employe) => {
-      this.employe = employe;
+      if (employe) this.employe = employe;
     });
-
   }
 
   download(fileName: string) {
@@ -144,10 +131,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       const reader = new FileReader();
       if (element.type.includes('image')) {
         reader.onload = () => {
-          this.previews.push({ type: 'image', data: reader.result as string , file : element});
+          this.previews.push({
+            type: 'image',
+            data: reader.result as string,
+            file: element,
+          });
         };
       } else {
-        this.previews.push({ type: 'file', data: element.name , file : element });
+        this.previews.push({ type: 'file', data: element.name, file: element });
       }
 
       reader.readAsDataURL(element);
@@ -160,11 +151,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.formdata.append('envoyeur', this.envoyeur.value);
     this.formdata.append('recepteur', this.recepteur.value);
     this.formdata.append('contenu', this.contenu.value);
-
     for (const prev of this.previews) {
-       this.formdata.append('files', prev.file);
+      this.formdata.append('files', prev.file);
     }
-
     this.chatService.ajouterMessage(this.formdata).subscribe((res) => {
       this.messages.push(res);
       this.contenu.setValue('');
@@ -185,17 +174,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (nonLue.length > 0)
       this.chatService
         .modifierMessages(this.employe?._id, this.employeSelected?._id, nonLue)
-        .subscribe((res) => {
-        });
+        .subscribe((res) => {});
   }
 
   close() {
     this.deselectEmployeEvent.emit(true);
   }
-  
 
   deleteFile(i: number) {
     this.previews.splice(i, 1);
-
   }
 }

@@ -13,7 +13,7 @@ export class ActiviteRecenteComponent implements OnInit {
   tickets: Ticket[] = [];
   p: number = 1;
 
-  constructor(private ticketService: TicketService, private router : Router) {}
+  constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.afficherListe();
@@ -21,17 +21,14 @@ export class ActiviteRecenteComponent implements OnInit {
 
   afficherListe() {
     this.ticketService.afficherListe().subscribe((res) => {
-      for (let i = 0; i < res.length; i++) {
-        const ticket = res[i];
-        if (ticket.manuel == 'assistant') this.tickets.push(ticket);
-      }
+      if(res) 
+        for (let i = 0; i < res.length; i++) {
+          const ticket = res[i];
+          if (ticket.manuel == 'assistant') this.tickets.push(ticket);
+        }
     });
   }
 
-  detail(id: any) {
-    const link = ['assistant/tickets/', id];
-    this.router.navigate(link);
-  }
 
 
 

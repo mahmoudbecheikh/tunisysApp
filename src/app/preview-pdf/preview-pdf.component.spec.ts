@@ -72,23 +72,18 @@ describe('PreviewPdfComponent', () => {
 
   it('should not select', () => {
     const service = fixture.debugElement.injector.get(TicketService);
-    const spy = spyOn(service, 'afficherId').and.returnValue(of({}));
+    spyOn(service, 'afficherId').and.returnValue(new Observable());
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.ticket).toEqual(fakeTicket);
-    const refElement: HTMLInputElement = fixture.debugElement.query(
-      By.css('#ref')
-    ).nativeElement;
-    if (fakeTicket.ref)
-      expect(refElement.innerText).toContain(String(fakeTicket.ref));
+    expect(component.ticket).not.toBeDefined();
+
   });
 
 
   it('should preview save', () => {
-  
     component.ticket = fakeTicket
-    let response = component.openPDF()
     fixture.detectChanges();
+    let response = component.openPDF()
     expect(response).toBeTruthy()
     
   });

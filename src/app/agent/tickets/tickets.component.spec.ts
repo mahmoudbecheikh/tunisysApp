@@ -54,7 +54,7 @@ describe('TicketsComponent', () => {
       sujet: 'Test',
       description: 'Lorem ipsum dolor sit amet',
       manuel: 'admin',
-      statut: 'resolu',
+      statut: 'a faire',
       emailClient: 'amen@gmail.com',
       nomClient: 'Amen',
       telClient: 20789456,
@@ -68,9 +68,9 @@ describe('TicketsComponent', () => {
         _id: '1',
         nom: 'maintenance',
       },
-      employe: undefined,
-      feedBack: undefined,
-
+      employe: {
+        _id : '1234'
+      },
       adresse: 'aouina',
       siteWeb: 'www.amen.tn',
       fJoint: [],
@@ -151,29 +151,21 @@ describe('TicketsComponent', () => {
   it('should list tickets ', () => {
     const ticketService = fixture.debugElement.injector.get(TicketService);
     const authService = fixture.debugElement.injector.get(AuthService);
+    const spy = spyOn(ticketService, 'changerStatut').and.returnValue(of(new Observable()));
     spyOn(authService, 'getAuth').and.returnValue(of(fakeEmployee));
     spyOn(ticketService, 'afficherEmploye').and.returnValue(of(fakeTickets));
     component.getListTicket();
     expect(component.tickets).toEqual(fakeTickets);
     expect(component.cours.length).toEqual(1);
-    expect(component.resolu.length).toEqual(1);
-    expect(component.faire.length).toEqual(0);
+    expect(component.resolu.length).toEqual(0);
+    expect(component.faire.length).toEqual(1);
     expect(component.changement.length).toEqual(0);
+    component.getListTicket();
+    component.resolu.push(component.cours[0])
+    component.cours.slice(0,1)
+    component.check()
+    expect(spy).toHaveBeenCalled();
   });
-
-
-
-  // it('check ', () => {
-  //   const service = fixture.debugElement.injector.get(TicketService);
-  //   component.resolu = fakeResolu
-  //   component.tickets = fakeTickets
-  //   component.check()
-
-  //   spyOn(service, 'changerStatut').and.returnValue(of(new Observable()));
-
-  //   expect(service.changerStatut).toHaveBeenCalled();
-  // });
-
 
 
   it('should quitter', () => {

@@ -48,24 +48,27 @@ export class TicketsComponent implements OnInit {
     this.cours = [];
     this.resolu = [];
     this.authService.getAuth().subscribe((res) => {
-      this.employe = res 
-      this.ticketService.afficherEmploye(res._id).subscribe((res) => {
-        this.tickets = res;
-        for (let i = 0; i < res.length; i++) {
-          let ticket = res[i];
-          switch (ticket.statut) {
-            case 'a faire':
-              this.faire.push(ticket);
-              break;
-            case 'en cours':
-              this.cours.push(ticket);
-              break;
-            case 'resolu':
-              this.resolu.push(ticket);
-              break;
+      if(res){
+        this.employe = res 
+        this.ticketService.afficherEmploye(res._id).subscribe((res) => {
+          this.tickets = res;
+          for (let i = 0; i < res.length; i++) {
+            let ticket = res[i];
+            switch (ticket.statut) {
+              case 'a faire':
+                this.faire.push(ticket);
+                break;
+              case 'en cours':
+                this.cours.push(ticket);
+                break;
+              case 'resolu':
+                this.resolu.push(ticket);
+                break;
+            }
           }
-        }
-      });
+        });
+      }
+
     });
   }
 
@@ -87,10 +90,7 @@ export class TicketsComponent implements OnInit {
     }
   }
 
-  detail(id: any) {
-    const link = ['agent/tickets/', id];
-    this.router.navigate(link);
-  }
+
 
   quitter(idTicket: any, idEmp: any) {
     this.ticketService.quitter(idTicket, idEmp).subscribe((res) => {
@@ -146,9 +146,11 @@ export class TicketsComponent implements OnInit {
     }
     if (this.changement.length > 0)
       this.ticketService.changerStatut({tickets :this.changement}).subscribe((res) => {
-        this.getListTicket();
-        this.toastr.info('', 'Changement effectué avec succès');
-        this.change = false;
+        if(res){
+          this.getListTicket();
+          this.toastr.info('', 'Changement effectué avec succès');
+          this.change = false;
+        }
       });
     else {
       this.changement = [];

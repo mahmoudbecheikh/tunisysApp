@@ -105,7 +105,7 @@ describe('RapportComponent', () => {
     expect(spy).toHaveBeenCalledWith(component.formdata);
   });
 
-  it('should submitting a form emits a rapport', () => {
+  it('should submitting a form for update a rapport', () => {
     const service = fixture.debugElement.injector.get(RapportService);
     const spy = spyOn(service, 'modifier').and.returnValue(of(fakeRapport));
     component.rapport = fakeRapport

@@ -75,7 +75,7 @@ describe('ActiviteRecenteComponent', () => {
   ];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,RouterTestingModule,ReactiveFormsModule,ToastrModule.forRoot()],
+      imports: [HttpClientTestingModule,ReactiveFormsModule,ToastrModule.forRoot()],
       providers: [TicketService],
       declarations: [ ActiviteRecenteComponent ]
     })

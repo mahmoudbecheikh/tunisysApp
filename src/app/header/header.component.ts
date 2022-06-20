@@ -57,8 +57,8 @@ export class HeaderComponent implements OnInit {
     this.socketService.listen('newMsg').subscribe((msg) => {
       if (msg) {
         this.afficherMsg();
-        this.audioPlayerRef.nativeElement.play();
-      }
+        this.ensureVideoPlays();
+            }
     });
 
     this.socketService.listen('updateMsg').subscribe((res) => {
@@ -102,9 +102,23 @@ export class HeaderComponent implements OnInit {
 
     this.socketService.listen('newNotif').subscribe((res) => {
       this.afficherNotif();
-      this.audioPlayerRef.nativeElement.play();
+      this.ensureVideoPlays();
+
     });
   }
+
+  ensureVideoPlays(): void{
+    const audio = document.querySelector("audio");
+    if(!audio) return;
+    const promise = audio.play();
+    if(promise !== undefined){
+        promise.then(() => {
+        }).catch(error => {
+          audio.muted = true;
+          audio.play();
+        });
+    }
+}
 
   afficherMsg() {
     this.nonLueMsg = 0;
@@ -124,10 +138,14 @@ export class HeaderComponent implements OnInit {
     this.nonLueNotif = 0;
     if (this.employe) {
       this.notifService.afficherRecep(this.employe?._id).subscribe((res) => {
-        this.notifications = res;
-        for (const notif of res) {
-          if (notif.lue == false) this.nonLueNotif += 1;
+        if(res){
+          this.notifications = res;
+          for (const notif of res) {
+            if (notif.lue == false) this.nonLueNotif += 1;
+          }
         }
+        else this.notifications = []
+        
       });
     }
   }

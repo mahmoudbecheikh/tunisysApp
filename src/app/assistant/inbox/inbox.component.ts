@@ -29,7 +29,7 @@ export class InboxComponent implements OnInit {
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+    Validators.pattern("^[a-zA-ZÀ-ÿ\/\' ]+[a-zA-ZÀ-ÿ]$"),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -62,7 +62,7 @@ export class InboxComponent implements OnInit {
   ]);
   departement: FormControl = new FormControl('', Validators.required);
 
-  dateLimite: FormControl = new FormControl();
+  dateLimite : FormControl = new FormControl('', [Validators.required]);
   dateNow= new Date();
   show = false;
 
@@ -173,11 +173,14 @@ export class InboxComponent implements OnInit {
   }
 
   select(mail: any) {
-    this.mailSelected = mail;
-    this.show = false;
-    this.formMail.reset();
-    this.formdata = new FormData();
-    this.mailFiles = [];
+    if(mail){
+      this.mailSelected = mail;
+      this.show = false;
+      this.formMail.reset();
+      this.formdata = new FormData();
+      this.mailFiles = [];
+    }
+ 
   }
 
   repondre(el: any) {
@@ -203,17 +206,21 @@ export class InboxComponent implements OnInit {
       this.ticketFiles.push(element);
     }
   }
+  deleteFile(i: any) {
+    this.ticketFiles.splice(i, 1);
+  }
 
   download(mail: any) {
-    let buff = Buffer.from(mail.content).toString('base64');
-    let encoded: string = atob(buff);
-    const arrayBuffer: ArrayBuffer = new ArrayBuffer(encoded.length);
-    const int8Array: Uint8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < encoded.length; i++) {
-      int8Array[i] = encoded.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: mail.contentType });
-    saveAs(blob, mail.filename);
+      let buff = Buffer.from(mail.content).toString('base64');
+      let encoded: string = atob(buff);
+      const arrayBuffer: ArrayBuffer = new ArrayBuffer(encoded.length);
+      const int8Array: Uint8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < encoded.length; i++) {
+        int8Array[i] = encoded.charCodeAt(i);
+      }
+      const blob = new Blob([int8Array], { type: mail.contentType });
+      saveAs(blob, mail.filename);
+    
   }
 
   vu(uid: any,index : number) {
@@ -232,8 +239,11 @@ export class InboxComponent implements OnInit {
       this.mailService.supprimer(uid).subscribe((res) => {
         if (res.deleted) {
           this.mails.splice(index, 1);
-          if (this.mailSelected.uid == uid) this.mailSelected = null;
+          if (this.mailSelected.uid == uid) {
+            this.mailSelected = null;
+          }
         }
+
       });
     }
   }
@@ -259,9 +269,7 @@ export class InboxComponent implements OnInit {
     });
   }
 
-  deleteFile(i: any) {
-    this.ticketFiles.splice(i, 1);
-  }
+
 
   afficherReponse() {
     this.mailService.afficherReponses().subscribe((res) => {

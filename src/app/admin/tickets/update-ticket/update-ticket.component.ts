@@ -24,14 +24,13 @@ export class UpdateTicketComponent implements OnInit {
   attachmentDeleted: any = [];
 
   minDate = new Date();
-  dateLimite: FormControl = new FormControl();
 
   formdata = new FormData();
   myForm: FormGroup = new FormGroup({});
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+    Validators.pattern("^[a-zA-ZÀ-ÿ/' ]+[a-zA-ZÀ-ÿ]$"),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -64,6 +63,8 @@ export class UpdateTicketComponent implements OnInit {
   ]);
   employe: FormControl = new FormControl();
   departement: FormControl = new FormControl('', [Validators.required]);
+  dateLimite: FormControl = new FormControl('', [Validators.required]);
+
   FjointDeleted: FormControl = new FormControl();
 
   employeCnt?: Employe;
@@ -79,32 +80,36 @@ export class UpdateTicketComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.createForm();
-    this.afficherListe();
     this.afficherTicket();
+    this.afficherListe();
     this.authService.getAuth().subscribe((res) => {
       if (res) this.employeCnt = res;
     });
   }
 
   onSelect(event: any) {
-    this.dateLimite.setValue(event);
+    if (event) this.dateLimite.setValue(event);
   }
 
   afficherTicket() {
     this.ticketService.afficherId(this.id).subscribe((res) => {
-      this.ticket = res;
-      this.sujet.setValue(this.ticket.sujet);
-      this.departement.setValue(this.ticket.departement?._id);
-      if (this.ticket.employe) this.employe.setValue(this.ticket.employe?._id);
-      this.description.setValue(this.ticket.description);
-      this.emailClient.setValue(this.ticket.emailClient);
-      this.nomClient.setValue(this.ticket.nomClient);
-      this.telClient.setValue(this.ticket.telClient);
-      this.adresse.setValue(this.ticket.adresse);
-      this.siteWeb.setValue(this.ticket.siteWeb);
-      this.attachmentList = this.ticket.fJoint;
-      if (this.ticket.dateLimite)
-        this.dateLimite.setValue(this.ticket.dateLimite);
+      if (res) {
+        this.ticket = res;
+        this.sujet.setValue(this.ticket.sujet);
+        this.departement.setValue(this.ticket.departement?._id);
+        if (this.ticket.employe)
+          this.employe.setValue(this.ticket.employe?._id);
+        this.description.setValue(this.ticket.description);
+        this.emailClient.setValue(this.ticket.emailClient);
+        this.nomClient.setValue(this.ticket.nomClient);
+        this.telClient.setValue(this.ticket.telClient);
+        this.adresse.setValue(this.ticket.adresse);
+        this.siteWeb.setValue(this.ticket.siteWeb);
+        this.attachmentList = this.ticket.fJoint;
+        if (this.ticket.dateLimite)
+          this.dateLimite.setValue(this.ticket.dateLimite);
+        this.afficherDepartement();
+      }
     });
   }
 
@@ -122,9 +127,25 @@ export class UpdateTicketComponent implements OnInit {
       dateLimite: this.dateLimite,
     });
   }
+
+  afficherDepartement() {
+    this.depService
+      .afficherId(this.ticket?.departement?._id)
+      .subscribe((res) => {
+        this.departementSelected = res;
+      });
+  }
+
   afficherListe() {
     this.depService.afficherListe().subscribe((res) => {
       this.departements = res;
+    });
+  }
+
+  getListDep() {
+    this.depService.afficherListe().subscribe((res) => {
+      if (Array.isArray(res)) this.departements = res;
+      else this.departements = [];
     });
   }
 

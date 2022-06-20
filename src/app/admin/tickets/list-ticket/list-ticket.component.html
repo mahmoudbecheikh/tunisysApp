@@ -12,7 +12,6 @@
                     <option value="date" [selected]="true">Date</option>
                     <option value="statut">Statut</option>
                     <option value="manuel">Manuel</option>
-                    <option value="departement">Departement</option>
                 </select>
             </div>
 
@@ -38,7 +37,9 @@
                         totalItems: ticketsFilter.length}">
                         <td scope="row"> <i *ngIf="verify(ticket._id)&& ticket.statut!='resolu'" style="color: red;"
                                 class="bx bx-info-circle"></i> {{ ticket.sujet }}</td>
-                        <td> {{ ticket.departement?.nom }}</td>
+                        <td *ngIf="ticket.departement"> {{ ticket.departement?.nom }}</td>
+                        <td *ngIf="!ticket.departement"> --- </td>
+
                         <td> {{ ticket.nomClient }}</td>
                         <td>
                             <span class="badge bg-secondary" *ngIf="ticket.statut=='en attente'">{{ ticket.statut
@@ -52,7 +53,7 @@
                         <td> {{ ticket.manuel }}</td>
                         <td>
                             <i class="lni lni-more-alt" [routerLink]="[ticket._id]" ></i>
-                            <i *ngIf="ticket.statut=='en attente'" class="bx bx-check-square"
+                            <i *ngIf="ticket.statut=='en attente' && ticket.dateLimite " class="bx bx-check-square"
                                 (click)="confirmer(ticket._id)"></i>
                             <i class="lni lni-trash-can" (click)="selectTicket(ticket)" data-toggle="modal" data-target="#modalDelete"></i>
                             <div id="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

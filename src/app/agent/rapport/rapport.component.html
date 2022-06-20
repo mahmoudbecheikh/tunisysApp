@@ -37,7 +37,7 @@
                         style="visibility: hidden;display: none;">
     
                         <div class="row files">
-                            <div class="col-sm-2 file" *ngFor="let file of attachmentList; let index = index;">
+                            <div class="col-sm-2 file" (click)='download(file.filename)' *ngFor="let file of attachmentList; let index = index;">
                                 
                                 
                                 <img src="../../assets/images/file.png">

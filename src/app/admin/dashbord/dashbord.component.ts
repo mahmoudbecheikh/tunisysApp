@@ -36,32 +36,35 @@ export class DashbordComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketService.afficherStat().subscribe((res) => {
-      for (const emp of res.notes) {
-        this.employesResLabel.push(emp._id.nomEmp + ' ' + emp._id.prenomEmp);
-        this.employesResData.push(emp.count);
-      }
-
-      for (let i = 1; i <= 12; i++) {
-        let number = this.verify(res.ticketParMois, i);
-        if (number != -1) {
-          this.ticketMoisData.push(number);
-        } else {
-          this.ticketMoisData.push(0);
+      if(res){
+        for (const emp of res.notes) {
+          this.employesResLabel.push(emp._id.nomEmp + ' ' + emp._id.prenomEmp);
+          this.employesResData.push(emp.count);
         }
+  
+        for (let i = 1; i <= 12; i++) {
+          let number = this.verify(res.ticketParMois, i);
+          if (number != -1) {
+            this.ticketMoisData.push(number);
+          } else {
+            this.ticketMoisData.push(0);
+          }
+        }
+  
+        for (const manuel of res.manuels) {
+          this.manuels.push(manuel.count);
+        }
+  
+  
+  
+        this.moyenneDate = res.moyenneDate ;
+        this.feedBacks = res.feedBacks 
+        this.statuts = res.statuts;
+        this.nbrDep = res.departement ; 
+        this.nbrEmp = res.employe ;
+        this.nbrTicket = res.ticket
       }
-
-      for (const manuel of res.manuels) {
-        this.manuels.push(manuel.count);
-      }
-
-
-
-      this.moyenneDate = res.moyenneDate ;
-      this.feedBacks = res.feedBacks 
-      this.statuts = res.statuts;
-      this.nbrDep = res.departement ; 
-      this.nbrEmp = res.employe ;
-      this.nbrTicket = res.ticket
+      
     });
   }
 

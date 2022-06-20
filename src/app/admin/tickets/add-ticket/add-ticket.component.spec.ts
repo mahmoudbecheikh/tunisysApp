@@ -120,10 +120,5 @@ describe('AddTicketComponent', () => {
   });
 
 
-  it('should return to list', () => {
-    const router = TestBed.get(Router);
-    const spy = spyOn(router, 'navigate');
-    component.returnToList()
-    expect(spy).toHaveBeenCalledWith(['admin/tickets']);
-  });
+
 });

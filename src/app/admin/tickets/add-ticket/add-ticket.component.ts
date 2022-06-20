@@ -24,7 +24,7 @@ export class AddTicketComponent implements OnInit {
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+    Validators.pattern("^[a-zA-ZÀ-ÿ\/\' ]+[a-zA-ZÀ-ÿ]$"),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -56,7 +56,7 @@ export class AddTicketComponent implements OnInit {
     Validators.pattern('^[234579][0-9]*$'),
   ]);
   departement: FormControl = new FormControl('', [Validators.required]);
-  dateLimite : FormControl = new FormControl();
+  dateLimite : FormControl = new FormControl('', [Validators.required]);
 
   constructor(
     private ticketService: TicketService,
@@ -117,7 +117,7 @@ export class AddTicketComponent implements OnInit {
     }
 
     this.ticketService.ajouter(this.formdata).subscribe((res) => {
-      if (res) {
+      if (res._id) {
         this.ticketService.confirmer(res._id).subscribe(response=>{
           this.toastr.success('', 'Ticket ajouté avec succès!');
           this.router.navigate(['admin/tickets']);

@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { MailService } from 'src/app/services/mail.service';
 import { Reponse } from 'src/models/reponse';
 import { NotificationService } from 'src/app/services/notification.service';
+import { RapportComponent } from 'src/app/agent/rapport/rapport.component';
 
 describe('DetailTicketComponent', () => {
   let component: DetailTicketComponent;
@@ -146,6 +147,14 @@ describe('DetailTicketComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'admin/tickets/rapport/:id', component: RapportComponent },
+          {
+            path: 'assistant/tickets/rapport/:id',
+            component: RapportComponent,
+          },
+          { path: 'agent/tickets/rapport/:id', component: RapportComponent },
+        ]),
         ReactiveFormsModule,
         ToastrModule.forRoot(),
         MatAutocompleteModule,
@@ -199,9 +208,9 @@ describe('DetailTicketComponent', () => {
 
   it('should list suggestion ', () => {
     const service = fixture.debugElement.injector.get(TicketService);
-    spyOn(service, 'suggestion').and.returnValue(of(fakeTicket));
+    spyOn(service, 'suggestion').and.returnValue(of([fakeTicket]));
     component.afficherSuggestion();
-    expect(component.suggestions).toEqual(fakeTicket);
+    expect(component.suggestions).toEqual([fakeTicket]);
   });
 
   it('should list tags ', () => {
@@ -246,12 +255,12 @@ describe('DetailTicketComponent', () => {
   });
 
   it('should rapport redirecte', () => {
-    component.rapport();
-    component.id = fakeTicket._id;
-    component.employe = fakeEmployee;
     const router = TestBed.get(Router);
     const spy = spyOn(router, 'navigate');
-    expect(spy).toHaveBeenCalled()
+    component.id = fakeTicket._id;
+    component.employe = fakeEmployee;
+    component.rapport();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should reset form', () => {
@@ -263,10 +272,6 @@ describe('DetailTicketComponent', () => {
   it('should inserer reponse predefinie', () => {
     component.inserer('test');
     expect(component.text.value).toEqual('test');
-    const textElement: HTMLInputElement = fixture.debugElement.query(
-      By.css('#desc')
-    ).nativeElement;
-    expect(textElement.value).toContain('test');
   });
 
   it('should verifier collab', () => {
@@ -282,13 +287,11 @@ describe('DetailTicketComponent', () => {
   it('should get notif', () => {
     const service = fixture.debugElement.injector.get(NotificationService);
     const spy = spyOn(service, 'afficherEnv').and.returnValue(of([]));
-    component.employe=fakeEmployee
+    component.employe = fakeEmployee;
     component.afficherNotifEnv();
-    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled();
     // component.employe = undefined
     // component.afficherNotifEnv();
     // expect(spy).not.toHaveBeenCalled()
-
   });
-
 });

@@ -40,8 +40,7 @@ export class DetailTicketComponent implements OnInit {
   id?: string;
   mails: any = [];
   notifEnv: any;
-  reclamation? : Reclamation 
-
+  reclamation?: Reclamation;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   filtredTags?: string[];
@@ -50,8 +49,6 @@ export class DetailTicketComponent implements OnInit {
   @ViewChild('tagInput') tagInput?: ElementRef<HTMLInputElement>;
   formTag: FormGroup = new FormGroup({});
   tagsCtrl = new FormControl();
-  
-
 
   raison: FormControl = new FormControl('', [
     Validators.required,
@@ -65,13 +62,9 @@ export class DetailTicketComponent implements OnInit {
     Validators.email,
   ]);
   sujet: FormControl = new FormControl('', [
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+    Validators.pattern("^[a-zA-ZÀ-ÿ\/\' ]+[a-zA-ZÀ-ÿ]$"),
   ]);
-  text: FormControl = new FormControl('', [
-    Validators.required,
-  ]);
-
- 
+  text: FormControl = new FormControl('', [Validators.required]);
 
   formReponse: FormGroup = new FormGroup({});
   titreReponse: FormControl = new FormControl('', [
@@ -86,7 +79,7 @@ export class DetailTicketComponent implements OnInit {
   file: FormControl = new FormControl('');
   employes: any;
   employeCtrl: FormControl = new FormControl();
-  admin?: Employe;
+  admins?: Employe[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private ticketService: TicketService,
@@ -122,17 +115,19 @@ export class DetailTicketComponent implements OnInit {
     this.createForm();
     this.afficherReponse();
     this.empService.afficherListe().subscribe((res) => {
-      for (const employe of res) {
-        if (employe.role == 0) this.admin = employe;
-        break;
+      if (res) {
+        let admins = [];
+        for (const employe of res) {
+          if (employe.role == 0) admins.push(employe);
+        }
+        this.admins = admins;
       }
     });
-
     this.socketService.listen('confirmNotif').subscribe((res) => {
       if (res) {
         this.afficherNotifEnv();
         this.ticketService.afficherId(this.id).subscribe((res) => {
-          this.collaborateurs = res.collaborateurs;
+          if (res) this.collaborateurs = res.collaborateurs;
         });
       }
     });
@@ -141,7 +136,7 @@ export class DetailTicketComponent implements OnInit {
       if (res) {
         this.afficherNotifEnv();
         this.ticketService.afficherId(this.id).subscribe((res) => {
-          this.collaborateurs = res.collaborateurs;
+          if (res) this.collaborateurs = res.collaborateurs;
         });
       }
     });
@@ -149,11 +144,10 @@ export class DetailTicketComponent implements OnInit {
     this.afficherTicket();
 
     this.tagsCtrl.valueChanges.subscribe((res) => {
-      // if (res == '') this.filtredTags = [];
-      // else {
-      //   this.filterData(res);
-      // }
-      this.filterData(res);
+      if (res == '') this.filtredTags = [];
+      else {
+        this.filterData(res);
+      }
     });
   }
 
@@ -167,13 +161,10 @@ export class DetailTicketComponent implements OnInit {
         this.files = res.fJoint;
         this.afficherMails(res?.emailClient, res.date);
         this.afficherSuggestion();
-        this.afficherReclamation()
+        this.afficherReclamation();
         this.afficherTags();
         this.afficherEmploye();
-        this.authService.getAuth().subscribe((res) => {
-          this.employe = res;
-          this.afficherNotifEnv();
-        });
+        this.employeCnt();
       }
     });
   }
@@ -185,50 +176,58 @@ export class DetailTicketComponent implements OnInit {
       option: 'ALL',
     };
     this.mailService.afficherDiscussion(data).subscribe((mails) => {
-        this.mails = mails;
+      if (mails) this.mails = mails;
     });
   }
 
   employeCnt() {
     this.authService.getAuth().subscribe((res) => {
-      this.employe = res;
+      if (res) {
+        this.employe = res;
+        this.afficherNotifEnv();
+      }
     });
   }
 
-  afficherReclamation(){
-    this.ticketService.afficherReclamationsTicket(this.id).subscribe(res=>{
-      console.log(res)
-      this.reclamation = res
-      this.raison.setValue(this.reclamation?.raison)
-    })
+  afficherReclamation() {
+    this.ticketService.afficherReclamationsTicket(this.id).subscribe((res) => {
+      if (res) {
+        this.reclamation = res;
+        this.raison.setValue(this.reclamation?.raison);
+      }
+    });
   }
 
   afficherEmploye() {
     this.depService
       .afficherId(this.ticket?.departement?._id)
       .subscribe((dep) => {
-        this.employes = dep.employes;
-        this.afficherNotifEnv();
+        if (dep) {
+          this.employes = dep.employes;
+          this.afficherNotifEnv();
+        }
       });
   }
 
   afficherNotifEnv() {
     if (this.employe?._id)
       this.notifService.afficherEnv(this.employe?._id).subscribe((res) => {
-        this.notifEnv = res;
+        if (res) this.notifEnv = res;
       });
   }
 
   afficherSuggestion() {
     this.ticketService.suggestion(this.ticket?._id).subscribe((res) => {
-      this.suggestions = res;
+      if (res) this.suggestions = res;
     });
   }
 
   confirmer() {
     this.ticketService.confirmer(this.ticket?._id).subscribe((res) => {
+      if (res) {
         this.toastr.success('', 'Ticket confirmé avec succès!');
         this.router.navigate(['assistant/tickets']);
+      }
     });
   }
 
@@ -253,9 +252,10 @@ export class DetailTicketComponent implements OnInit {
   }
 
   download(fileName: string) {
-    this.ticketService.downloadFile(fileName).subscribe((res) => {
-      saveAs(res, fileName);
-    });
+    if (fileName)
+      this.ticketService.downloadFile(fileName).subscribe((res) => {
+        saveAs(res, fileName);
+      });
   }
 
   envoyer() {
@@ -264,15 +264,13 @@ export class DetailTicketComponent implements OnInit {
     this.formdata.append('text', this.text.value);
     for (const file of this.attachements) {
       this.formdata.append('files', file);
-
     }
     this.mailService.envoyerMail(this.formdata).subscribe((res) => {
       this.sujet.setValue('');
       this.text.setValue('');
-      this.attachements = []
+      this.attachements = [];
     });
     this.formdata = new FormData();
-
   }
 
   uploadMultiple(event: any) {
@@ -301,7 +299,6 @@ export class DetailTicketComponent implements OnInit {
         link = ['agent/tickets/rapport/', this.id];
         this.router.navigate(link);
         break;
-   
     }
   }
 
@@ -352,31 +349,31 @@ export class DetailTicketComponent implements OnInit {
       ticket: this.ticket,
     };
     this.notifService.envoyer(data).subscribe((res) => {
-      this.afficherEmploye();
-      this.afficherNotifEnv();
+      if (res) {
+        this.afficherEmploye();
+        this.afficherNotifEnv();
+      }
     });
-    // this.socketService.emit('envoyerNotif',data)
   }
 
   verify(id: any) {
-
     if (this.notifEnv) {
       for (const notif of this.notifEnv) {
-        if (notif.recepteur._id == id && this.ticket?._id == notif.ticket._id)
+        if (notif?.recepteur?._id == id && this.ticket?._id == notif?.ticket?._id)
           return true;
       }
     }
     return false;
   }
-  
+
   supprimer(id: string) {
     let ticketId = this.ticket?._id;
     let notif = this.notifEnv.filter(function (el: any) {
-      return el.recepteur._id == id && el.ticket._id == ticketId;
+      return el?.recepteur?._id == id && el?.ticket?._id == ticketId;
     });
 
     if (notif[0]) {
-      this.notifService.supprimer(notif[0]._id).subscribe((res) => {
+      this.notifService.supprimer(notif[0]?._id).subscribe((res) => {
         if (res) {
           this.afficherEmploye();
         }
@@ -398,18 +395,21 @@ export class DetailTicketComponent implements OnInit {
       idEmp: this.employe?._id,
       idTicket: this.ticket?._id,
     };
-    let notification = {
-      envoyeur: this.employe,
-      recepteur: this.admin?._id,
-      contenu: 'reclamation',
-      ticket: this.ticket,
-    };
+
     this.ticketService.reclamer(reclamation).subscribe((res) => {
       if (res) {
-        this.afficherReclamation()
-        this.notifService.envoyer(notification).subscribe((res) => {
+        if (this.admins)
+          for (const admin of this.admins) {
+            let notification = {
+              envoyeur: this.employe,
+              recepteur: admin?._id,
+              contenu: 'reclamation',
+              ticket: this.ticket,
+            };
+            this.notifService.envoyer(notification).subscribe((res) => {});
+          }
+        this.afficherReclamation();
         this.raison.setValue('');
-        });
       }
     });
   }
@@ -425,6 +425,7 @@ export class DetailTicketComponent implements OnInit {
 
   afficherReponse() {
     this.mailService.afficherReponses().subscribe((res) => {
+      if(Array.isArray(res))
       this.reponses = res;
     });
   }
@@ -433,13 +434,16 @@ export class DetailTicketComponent implements OnInit {
     this.mailService
       .ajouterReponse(this.formReponse.value)
       .subscribe((reponse) => {
-        this.formReponse.reset();
+        if(reponse)
         this.afficherReponse();
+        this.formReponse.reset();
+
       });
   }
 
   supprimerReponse(id: any) {
     this.mailService.supprimerReponse(id).subscribe((res) => {
+      if(res)
       this.afficherReponse();
     });
   }

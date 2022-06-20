@@ -6,7 +6,7 @@
                 <div class="left">
                     <img src="../../assets/images/avatar.png" class="arrow">
                     <h2>{{employeSelected?.nomEmp}} {{employeSelected?.prenomEmp}} <i
-                            *ngIf="enLigne.includes(employeSelected?._id)" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
+                            *ngIf="connecte" style="font-size: 12px; background-color: #28B463;  border-radius: 50%;
                         " class="bx bx-circle"></i></h2>
                 </div>
                 <div class="right">
@@ -94,26 +94,19 @@
         </div>
         <div class="row previous" *ngIf="previews.length>0">
             <div *ngFor="let prv of previews ; let index = index" class="col-sm-3 previou">
-                <small (click)="deleteFile(index)">X</small>
+                <small (click)="deleteFile(index)" style="cursor: pointer; font-size:15px ;">X</small>
                 <div>
                     <img *ngIf="prv.type=='image';else fichier" [src]="prv.data" class="img_chat">
-
                     <ng-template #fichier>
                         <span class="file"> <i class="bx bx-file"></i> {{prv.data}}</span>
                     </ng-template>
-
                 </div>
-
-
             </div>
-
         </div>
 
 
         <div class="chat-footer">
-
             <form [formGroup]="myForm" (ngSubmit)="envoyer()" class="form-inline">
-
                 <textarea placeholder="Type a message" formControlName="contenu">
                 </textarea>
 

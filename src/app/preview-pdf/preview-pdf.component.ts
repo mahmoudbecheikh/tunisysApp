@@ -22,11 +22,10 @@ export class PreviewPdfComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.ticketService.afficherId(this.id).subscribe((res) => {
-        this.ticket = res ;
+      if (res) this.ticket = res;
     });
   }
 
-  
   public openPDF() {
     let DATA: any = document.getElementById('table');
     html2canvas(DATA).then((canvas) => {
@@ -36,9 +35,8 @@ export class PreviewPdfComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('ticket_'+this.ticket?.ref);
-      return true
+      PDF.save('ticket_' + this.ticket?.ref);
     });
+    return true;
   }
-
 }

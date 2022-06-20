@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { DashbordComponent } from 'src/app/admin/dashbord/dashbord.component';
 import { TicketsComponent } from 'src/app/agent/tickets/tickets.component';
 import { TicketAttComponent } from 'src/app/assistant/ticket/ticket-att/ticket-att.component';
@@ -65,6 +65,15 @@ describe('LoginComponent', () => {
       'Votre email ou votre mot de passe est incorrect'
     );
     expect(component.mdp.value).toEqual('');
+  });
+
+  it('return empty', () => {
+    const service = fixture.debugElement.injector.get(AuthService);
+    spyOn(service, 'login').and.returnValue(of(new Observable()));
+    component.onLogin();
+    fixture.detectChanges();
+    expect(component.error).toBeTruthy();
+
   });
 
   it('should show icon', () => {

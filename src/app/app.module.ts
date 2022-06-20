@@ -45,7 +45,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ActiviteRecenteComponent } from './assistant/ticket/activite-recente/activite-recente.component';
 import { RapportComponent } from './agent/rapport/rapport.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ErrorCatchingInterceptor } from './interceptors/error-catching.interceptor';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({

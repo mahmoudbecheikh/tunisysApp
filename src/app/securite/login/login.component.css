@@ -106,7 +106,7 @@ a:hover {
 img {
   width: 175px;
   height: 175px;
-  margin-left: 600px;
+  display:block; margin: 0 auto
 }
 
 h2 {

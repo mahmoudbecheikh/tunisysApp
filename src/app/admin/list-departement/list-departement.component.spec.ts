@@ -58,11 +58,19 @@ describe('ListDepartementComponent', () => {
 
   it('should list departement ', () => {
     const service = fixture.debugElement.injector.get(DepartementService);
-
     spyOn(service, 'afficherListe').and.returnValue(of(fakeDepartements));
     component.getListDep();
     expect(component.departements).toEqual(fakeDepartements);
   });
+
+
+
+  it('should select departement', () => {
+    component.selectDepartement(fakeDepartement);
+    expect(component.departement).toEqual(fakeDepartement);
+  });
+
+
 
   it('should form vide', () => {
     component.reset();
@@ -79,21 +87,6 @@ describe('ListDepartementComponent', () => {
     expect(spy).toHaveBeenCalledWith(_id);
     expect(toastrSpy).toHaveBeenCalled();
   });
-
-
-
-  // it('select departement', () => {
-  //   const service = fixture.debugElement.injector.get(DepartementService);
-  //   const spy = spyOn(service, 'afficherId').and.returnValue(of(fakeDepartement));
-  //   const _id = '1';
-  //   component.selectDepartement(fakeDepartement);
-  //   expect(spy).toHaveBeenCalledWith(_id);
-  //   expect(component.departement).toEqual(fakeDepartement);
-  //   const nameElement: HTMLInputElement = fixture.debugElement.query(
-  //     By.css('#nom')
-  //   ).nativeElement;
-  //   expect(nameElement.value).toContain('infrastructure');
-  // });
 
 
 });

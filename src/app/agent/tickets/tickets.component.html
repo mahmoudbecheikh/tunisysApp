@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+                    <i class="lni lni-more-alt" [routerLink]="['/agent/tickets/'+item._id]"></i>
 
 
                 </div>
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+                    <i class="lni lni-more-alt" [routerLink]="['/agent/tickets/'+item._id]"></i>
                 </div>
             </div>
         </div>
@@ -188,7 +188,7 @@
 
 
 
-                    <i class="lni lni-more-alt" (click)="detail(item._id)"></i>
+                    <i class="lni lni-more-alt" [routerLink]="['/agent/tickets/'+item._id]"></i>
                 </div>
             </div>
         </div>

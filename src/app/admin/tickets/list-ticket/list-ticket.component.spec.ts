@@ -9,7 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ticket } from 'src/models/ticket';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Departement } from 'src/models/departement';
 import { By } from '@angular/platform-browser';
 
@@ -161,8 +161,8 @@ describe('ListTicketComponent', () => {
     expect(component.tickets).toEqual(fakeTickets);
   });
 
+ 
   it('should select ticket ', () => {
-   
     component.selectTicket(fakeTicket);
     expect(component.ticketSelected).toEqual(fakeTicket);
   });

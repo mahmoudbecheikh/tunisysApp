@@ -126,7 +126,7 @@
 
     <app-header (selectEmployeEvent)="select($event)"></app-header>
     <div class="main">
-        <app-chat *ngIf="employeSelected"  (deselectEmployeEvent)="deselect($event)" [employeSelected]="employeSelected" ></app-chat>
+        <app-chat *ngIf="employeSelected"  (deselectEmployeEvent)="deselect($event)" [connecte]="connecte" [employeSelected]="employeSelected" ></app-chat>
 
         <router-outlet></router-outlet>
     </div>

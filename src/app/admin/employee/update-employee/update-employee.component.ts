@@ -73,20 +73,22 @@ export class UpdateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.depService.afficherListe().subscribe((res) => {
-      this.departements = res;
+      if (Array.isArray(res)) this.departements = res;
     });
     this.id = this.activatedRoute.snapshot.params['id'];
     this.empService.afficherId(this.id).subscribe((emp) => {
-      this.employe = emp;
-      this.prenomEmp = emp.prenomEmp;
-      this.nomEmp = emp.nomEmp;
-      this.prenom.setValue(this.prenomEmp);
-      this.departement.setValue(this.employe?.departement?._id);
-      this.nom.setValue(this.nomEmp);
-      this.cin.setValue(this.employe?.cin);
-      this.email.setValue(this.employe?.email);
-      this.role.setValue(this.employe?.role);
-      this.tel.setValue(this.employe?.tel);
+      if (emp) {
+        this.employe = emp;
+        this.prenomEmp = emp.prenomEmp;
+        this.nomEmp = emp.nomEmp;
+        this.prenom.setValue(this.prenomEmp);
+        this.departement.setValue(this.employe?.departement?._id);
+        this.nom.setValue(this.nomEmp);
+        this.cin.setValue(this.employe?.cin);
+        this.email.setValue(this.employe?.email);
+        this.role.setValue(this.employe?.role);
+        this.tel.setValue(this.employe?.tel);
+      }
     });
     if (this.role.value == 0 || this.role.value == 1) {
       this.departement.clearValidators();
@@ -110,8 +112,13 @@ export class UpdateEmployeeComponent implements OnInit {
     this.empService
       .modifier(this.employe?._id, this.myForm.value)
       .subscribe((res) => {
-        if (res) {
+        if (!res.errorDep) {
           this.toastr.success('', 'Employé modifié avec succès!');
+          this.router.navigate(['admin/employees']);
+        } else {
+          this.toastr.warning(
+            '',"vous ne pouvez pas modifier le département d'un agent qui possède déjà un ticket à faire ou en cours!"
+          );
           this.router.navigate(['admin/employees']);
         }
       });

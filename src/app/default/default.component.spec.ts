@@ -82,4 +82,7 @@ describe('DefaultComponent', () => {
     component.logout();
     expect(localStorage.getItem('token')).toBeNull();
   });
+
+
+
 });

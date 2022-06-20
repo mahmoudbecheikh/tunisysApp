@@ -142,17 +142,19 @@
                     <p id="siteWeb">Site : <span>{{ticket?.siteWeb}}</span></p>
                     <p>Date limite :
 
-                        <span *ngIf="ticket?.dateLimite">{{ ticket?.dateLimite | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                        <span *ngIf="ticket?.dateLimite">{{ ticket?.dateLimite | date: 'dd/MM/yyyy'}}</span>
                         <span *ngIf="!ticket?.dateLimite">---</span>
 
 
 
                 </div>
                 <div class="info col-sm">
-                    <p>Département : <span>{{ticket?.departement?.nom}}</span></p>
+                    <p>Département : <span *ngIf="ticket?.departement">{{ticket?.departement?.nom}}</span>
+                        <span *ngIf="!ticket?.departement"> --- </span>
+                    </p>
                     <p>Employe : <span *ngIf="ticket?.employe">{{ticket?.employe?.nomEmp}}
                             {{ticket?.employe?.prenomEmp}}</span>
-                        <span *ngIf="!ticket?.employe">---</span>
+                        <span *ngIf="!ticket?.employe"> --- </span>
                     </p>
                     <p>Collaborateurs :
                         <ng-container *ngIf="ticket?.collaborateurs?.length==0;else collab ; "> --- </ng-container>
@@ -283,7 +285,7 @@
                 <input type="text" class="form-control" name="sujet" id="sujet" formControlName="sujet"
                     placeholder="Objet">
                 <div class="form-group">
-                    <textarea class="form-control" formControlName="text" id="desc"
+                    <textarea class="form-control" formControlName="text" id="description"
                         placeholder="Rédigez votre rapport de résolution" rows="7"></textarea>
                     <div style="margin: 5px; background: #f5f5f5" *ngFor="let file of attachements;let index = index">
                         <p style="color: #0066FF;">{{file.name}}

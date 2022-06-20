@@ -31,7 +31,6 @@ export class ListTicketComponent implements OnInit {
   constructor(
     private ticketService: TicketService,
     private depService: DepartementService,
-    private router: Router,
     private toastr: ToastrService
   ) {}
 
@@ -112,11 +111,6 @@ export class ListTicketComponent implements OnInit {
             a.manuel > b.manuel ? 1 : -1
           );
           break;
-        case 'departement':
-          this.ticketsFilter = this.ticketsFilter.sort((a: any, b: any) =>
-            a.departement.nom > b.departement.nom ? 1 : -1
-          );
-          break;
         case 'statut':
           this.ticketsFilter = this.ticketsFilter.sort((a: any, b: any) =>
             a.statut.toLowerCase() > b.statut.toLowerCase() ? 1 : -1
@@ -152,37 +146,42 @@ export class ListTicketComponent implements OnInit {
 
   listDepartement() {
     this.depService.afficherListe().subscribe((res) => {
+      if(Array.isArray(res))
       this.departementsArray = res as Departement[];
     });
   }
 
   afficherList() {
     this.ticketService.afficherListe().subscribe((res) => {
-      this.tickets = res as Ticket[];
-      this.ticketsFilter = res;
+      if(res){
+        this.tickets = res as Ticket[];
+        this.ticketsFilter = res;
+      }
     });
   }
 
-
-
-  
-
   supprimer(id: any) {
     this.ticketService.supprimer(id).subscribe((res) => {
-      this.toastr.success('', 'Ticket supprimé avec succès!');
-      //if(this.t)
-      this.afficherList();
+      if(res){
+        this.toastr.success('', 'Ticket supprimé avec succès!');
+        this.afficherList();
+      }
+
     });
   }
 
   selectTicket(ticket:Ticket){
+    if(ticket)
     this.ticketSelected = ticket
   }
 
   confirmer(id: any) {
     this.ticketService.confirmer(id).subscribe((res) => {
+      if(res){
+        this.afficherList();
+        this.toastr.success('', 'Ticket confirmé avec succès!');
 
-      this.afficherList();
+      }
     });
   }
 }

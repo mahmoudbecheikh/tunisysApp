@@ -21,7 +21,7 @@ describe('SearchComponent', () => {
       sujet: 'Lorem ipsum dolor sit amet',
       description: 'Lorem ipsum dolor sit amet',
       manuel: 'admin',
-      statut: 'en cours',
+      statut: 'resolu',
       emailClient: 'amen@gmail.com',
       nomClient: 'Amen',
       telClient: 20789456,
@@ -91,9 +91,6 @@ describe('SearchComponent', () => {
         _id: '1',
         nom: 'maintenance',
       },
-      employe: undefined,
-      feedBack: undefined,
-
       adresse: 'aouina',
       siteWeb: 'www.amen.tn',
       fJoint: [],

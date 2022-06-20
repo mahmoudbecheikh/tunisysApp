@@ -17,13 +17,12 @@ export class TicketAttComponent implements OnInit {
   departements: Departement[] = [];
   myForm: FormGroup = new FormGroup({});
   ticketFiles: any = [];
-  dateLimite: FormControl = new FormControl();
   dateNow: any;
 
   sujet: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
-    Validators.pattern('[a-zA-ZÀ-ÿ ]*'),
+    Validators.pattern("^[a-zA-ZÀ-ÿ\/\' ]+[a-zA-ZÀ-ÿ]$"),
   ]);
   description: FormControl = new FormControl('', [
     Validators.required,
@@ -55,6 +54,7 @@ export class TicketAttComponent implements OnInit {
     Validators.pattern('^[234579][0-9]*$'),
   ]);
   departement: FormControl = new FormControl('', Validators.required);
+  dateLimite : FormControl = new FormControl('', [Validators.required]);
 
   formdata = new FormData();
   constructor(
@@ -86,12 +86,13 @@ export class TicketAttComponent implements OnInit {
 
   afficherListe() {
     this.ticketService.afficherAttente().subscribe((res) => {
-      this.tickets = res;
+      if(res)      this.tickets = res;
     });
   }
 
   afficherDepartements() {
     this.depService.afficherListe().subscribe((res) => {
+      if(res)
       this.departements = res;
     });
   }

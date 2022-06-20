@@ -90,7 +90,7 @@
 
 
                 <div class="form-group">
-                    <select class="form-control" formControlName="departement"  [attr.disabled]="ticket?.statut!='en attente'? '' : null">
+                    <select class="form-control" formControlName="departement" >
                         <option value="" disabled hidden selected>Sélectionnez un departement</option>
                         <option *ngFor="let dep of departements" [selected]="dep._id==ticket?.departement?._id" value="{{dep._id}}">{{dep.nom}}</option>
                     </select>

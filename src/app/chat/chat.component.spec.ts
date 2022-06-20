@@ -45,74 +45,6 @@ describe('ChatComponent', () => {
     tel: 20789456,
   };
 
-  let fakeMsgs : Message []= [
-    {
-      _id: '1122',
-      envoyeur: {
-        _id: '3',
-      },
-      contenu: 'Lorem',
-      conversation: {
-        _id: '1235',
-      },
-      lue: true,
-      fJoint: [],
-      date: '2022-04-06T13:12:37.974+00:00',
-    },
-    {
-      _id: '1123',
-      envoyeur: {
-        _id: '3',
-      },
-      contenu: 'Lorem',
-      conversation: {
-        _id: '1235',
-      },
-      lue: false,
-      fJoint: [],
-      date: '2022-04-06T13:12:37.974+00:00',
-    }
-  ]
-
-
-
-  let fakeConversation : Conversation  = {
-    _id : '1',
-    messages : [ {
-      _id: '1122',
-      envoyeur: {
-        _id: '3',
-      },
-      contenu: 'Lorem',
-      conversation: {
-        _id: '1235',
-      },
-      lue: true,
-      fJoint: [],
-      date: '2022-04-06T13:12:37.974+00:00',
-    },
-    {
-      _id: '1123',
-      envoyeur: {
-        _id: '3',
-      },
-      contenu: 'Lorem',
-      conversation: {
-        _id: '1235',
-      },
-      lue: false,
-      fJoint: [],
-      date: '2022-04-06T13:12:37.974+00:00',
-    }],
-    membres :[ {
-      _id:'101'
-    },
-    {_id:'202'}
-  ],
-  date : ''
-  }
-
-  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
 
@@ -146,14 +78,10 @@ describe('ChatComponent', () => {
 
   it('should ngOnChanges call', () => {
     component.employeSelected = fakeEmployee
-    const service = fixture.debugElement.injector.get(AuthService);
-    const chatService = fixture.debugElement.injector.get(ChatService);
-    
+    const service = fixture.debugElement.injector.get(AuthService);    
     spyOn(service, 'getAuth').and.returnValue(of(fakeEmployee));
-    // let spyChat = spyOn(chatService, 'afficherConversation').and.returnValue(of(fakeConversation));
     component.ngOnChanges()
     expect(component.employe).toEqual(fakeEmployee);
-    // expect(spyChat).toHaveBeenCalledWith(component.employe?._id,component.employeSelected._id)
 
   });
 
@@ -175,12 +103,8 @@ describe('ChatComponent', () => {
     component.recepteur.setValue(component.employe);
     component.contenu.setValue('Lorem ipsum dolor sit amet');
     component.files.setValue('');
-
     expect(component.myForm.valid).toBeTruthy();
-    console.log('aaaa',component.myForm.value)
     component.envoyer();
-    console.log()
-    // expect(component.formdata.get('contenu')).toEqual(component.contenu.value);
     expect(spy).toHaveBeenCalledWith(component.formdata);
   });
 });
