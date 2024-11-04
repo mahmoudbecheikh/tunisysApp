@@ -1,5 +1,24 @@
 # TunisysApp
 
+# Intelligent Ticket Management System
+
+## Description
+This project is an intelligent ticket management system designed to streamline the process of creating, tracking, and managing ticket statuses. It also features an automatic ticket assignment mechanism that assigns tickets to agents based on their availability and skill set.
+
+## Features
+- **Ticket Management**: 
+  - Create, update, and track the status of tickets.
+  - Manage ticket progression from creation to resolution.
+
+- **Automated Assignment**:
+  - Automatically assign tickets to agents based on their availability and expertise.
+  - Ensure efficient ticket handling by directing tasks to the most suitable agent.
+
+## Technologies Used
+- **Backend**: Node.js, Express.js
+- **Frontend**: Angular
+- **Database**: MongoDB
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
 
 ## Development server
