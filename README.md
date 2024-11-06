@@ -1,4 +1,3 @@
-![Screenshot from 2024-11-06 23-13-06](https://github.com/user-attachments/assets/5dec28df-c3d8-4050-9bc3-5e8417ecf4a8)# TunisysApp
 
 ## Description
 This project is an intelligent ticket management system designed to streamline the process of creating, tracking, and managing ticket statuses. It also features an automatic ticket assignment mechanism that assigns tickets to agents based on their availability and skill set.
